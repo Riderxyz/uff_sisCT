@@ -1,0 +1,44 @@
+<div class="toast-container" [ngClass]="position">
+  <div
+    *ngFor="let msg of messages; let i = index"
+    class="toast-item"
+    [ngClass]="msg.severity"
+    [@toastAnimation]="'visible'"
+    (click)="removeToast(i)">
+    <div class="toast-icon" [ngClass]="'icon-' + msg.severity">
+      <div [ngSwitch]="msg.severity">
+        <!-- Ícone de sucesso (check) -->
+        <div *ngSwitchCase="'success'" class="custom-icon success-icon">
+          <div class="checkmark"></div>
+        </div>
+
+        <!-- Ícone de informação (i) -->
+        <div *ngSwitchCase="'info'" class="custom-icon info-icon">
+          <div class="info-dot"></div>
+          <div class="info-line"></div>
+        </div>
+
+        <!-- Ícone de alerta (!) -->
+        <div *ngSwitchCase="'warn'" class="custom-icon warn-icon">
+          <div class="exclamation"></div>
+        </div>
+
+        <!-- Ícone de erro (x) -->
+        <div *ngSwitchCase="'error'" class="custom-icon error-icon">
+          <div class="error-x"></div>
+        </div>
+
+        <!-- Ícone padrão -->
+        <div *ngSwitchDefault class="custom-icon info-icon">
+          <div class="info-dot"></div>
+          <div class="info-line"></div>
+        </div>
+      </div>
+    </div>
+    <div class="toast-content">
+      <div class="toast-summary">{{msg.summary}}</div>
+      <div class="toast-detail" *ngIf="msg.detail">{{msg.detail}}</div>
+    </div>
+    <button class="toast-close-btn" (click)="removeToast(i); $event.stopPropagation()">×</button>
+  </div>
+</div>
