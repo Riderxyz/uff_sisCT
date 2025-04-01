@@ -10,23 +10,22 @@
         <!-- Ícone de sucesso (check) -->
         <div *ngSwitchCase="'success'" class="custom-icon success-icon">
           <!-- <div class="checkmark"></div> -->
-          <i class="fa-solid fa-2x fa-check"></i>
+          <i class="fa-solid fa-check"></i>
         </div>
 
         <!-- Ícone de informação (i) -->
         <div *ngSwitchCase="'info'" class="custom-icon info-icon">
-          <div class="info-dot"></div>
-          <div class="info-line"></div>
+          <i class="fa-solid fa-info"></i>
         </div>
 
         <!-- Ícone de alerta (!) -->
         <div *ngSwitchCase="'warn'" class="custom-icon warn-icon">
-          <div class="exclamation"></div>
+          <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
 
         <!-- Ícone de erro (x) -->
         <div *ngSwitchCase="'error'" class="custom-icon error-icon">
-          <div class="error-x"></div>
+          <i class="fa-solid fa-circle-exclamation"></i>
         </div>
 
         <!-- Ícone padrão -->
@@ -40,6 +39,8 @@
       <div class="toast-summary">{{msg.summary}}</div>
       <div class="toast-detail" *ngIf="msg.detail">{{msg.detail}}</div>
     </div>
-    <button class="toast-close-btn" (click)="removeToast(i); $event.stopPropagation()">×</button>
+    <button class="toast-close-btn" (click)="removeToast(i); $event.stopPropagation()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
   </div>
 </div>
