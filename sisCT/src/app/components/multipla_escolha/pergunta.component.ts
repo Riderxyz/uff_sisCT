@@ -5,7 +5,7 @@ import { Pergunta, Resposta } from './pergunta.model';
   selector: 'app-pergunta',
   standalone: false,
   templateUrl: './pergunta.component.html',
-  styleUrls: ['./pergunta.component.css']
+  styleUrls: ['./pergunta.component.scss']
 })
 
 export class PerguntaComponent {
