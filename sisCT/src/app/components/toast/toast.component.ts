@@ -16,6 +16,7 @@ import { ToastMessage, ToastService } from '../../services/toast.service';
             })),
             state('visible', style({
                 transform: 'translateX(0)',
+                'right': '18rem',
                 opacity: 1
             })),
             transition('void => visible', animate('300ms ease-out')),

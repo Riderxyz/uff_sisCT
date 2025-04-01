@@ -40,7 +40,7 @@
   background-color: #fff;
   position: relative;
   overflow: hidden;
-  min-width: 250px;
+  min-width: 666px;
   cursor: pointer;
 }
 .toast-item.success {
@@ -119,7 +119,7 @@
 .success-icon .checkmark {
   width: 14px;
   height: 8px;
-  border-left: 2px solid white;
+  border-left: 2px solid red;
   border-bottom: 2px solid white;
   transform: rotate(-45deg);
   margin-top: -3px;

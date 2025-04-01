@@ -1,31 +1,35 @@
 ﻿<div *ngIf="perguntaAtual" class="pergunta-container">
-    <h3>{{ perguntaAtual.nome }}</h3>
-    
-    <!-- Versão Vertical (quando direcao = 'V') -->
-    <div *ngIf="perguntaAtual.direcao === 'V'" class="respostas-vertical">
-      <div *ngFor="let resposta of perguntaAtual.respostas" class="resposta-item">
-        <label>
-          <input type="checkbox" 
-                 [checked]="resposta.selecionado" 
-                 (change)="onRespostaSelecionada(resposta, $event)">
-          {{ resposta.descricao }}
-        </label>
-      </div>
-    </div>
-    
-    <!-- Versão Horizontal (quando direcao = 'H') -->
-    <div *ngIf="perguntaAtual.direcao === 'H'" class="respostas-horizontal">
-      <div *ngFor="let resposta of perguntaAtual.respostas" class="resposta-item">
-        <label>
-          <input type="checkbox" 
-                 [checked]="resposta.selecionado" 
-                 (change)="onRespostaSelecionada(resposta, $event)">
-          {{ resposta.descricao }}
-        </label>
-      </div>
+  <h3>{{ perguntaAtual.nome }}</h3>
+
+  <!-- Versão Vertical (quando direcao = 'V') -->
+
+  <div *ngIf="perguntaAtual.direcao === 'V'" class="respostas-vertical">
+    <div *ngFor="let resposta of perguntaAtual.respostas" class="resposta-item">
+      <mat-checkbox
+        class="example-margin"
+        [(ngModel)]="resposta.selecionado"
+        (change)="onRespostaSelecionada(resposta)"
+      >
+        {{ resposta.descricao }}
+      </mat-checkbox>
     </div>
   </div>
-  
-  <div *ngIf="!perguntaAtual">
-    <p>Pergunta não encontrada ou ID não fornecido.</p>
+
+  <!-- Versão Horizontal (quando direcao = 'H') -->
+  <div *ngIf="perguntaAtual.direcao === 'H'" class="respostas-horizontal">
+    <div *ngFor="let resposta of perguntaAtual.respostas" class="resposta-item">
+      <label>
+        <input
+          type="checkbox"
+          [checked]="resposta.selecionado"
+          (change)="onRespostaSelecionada(resposta)"
+        />
+        {{ resposta.descricao }}
+      </label>
+    </div>
   </div>
+</div>
+
+<div *ngIf="!perguntaAtual">
+  <p>Pergunta não encontrada ou ID não fornecido.</p>
+</div>

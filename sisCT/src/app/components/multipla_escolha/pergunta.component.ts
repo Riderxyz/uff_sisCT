@@ -21,10 +21,10 @@ export class PerguntaComponent {
     }
   }
 
-  onRespostaSelecionada(resposta: Resposta, event: Event) {
-    const checkbox = event.target as HTMLInputElement;
+  onRespostaSelecionada(resposta: Resposta/* , event: Event */) {
+   /*  const checkbox = event.target as HTMLInputElement;
     resposta.selecionado = checkbox.checked;
-
+ */
     this.respostaSelecionada.emit({
       perguntaId: this.perguntaId!,
       respostaId: resposta.id,
