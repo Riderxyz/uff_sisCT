@@ -17,6 +17,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import { ToastComponent } from './toast/toast.component';
 import { PerguntaComponent } from './multipla_escolha/pergunta.component';
 import { HeaderComponent } from './header/header.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -33,9 +35,9 @@ const materialModules = [
   MatDividerModule,
 ];
 @NgModule({
-  declarations: [PerguntaComponent, ToastComponent, HeaderComponent],
+  declarations: [PerguntaComponent, ToastComponent, HeaderComponent, SidebarComponent, FooterComponent],
   imports: [CommonModule, FormsModule, ...materialModules],
-  exports: [ToastComponent, PerguntaComponent, HeaderComponent],
+  exports: [ToastComponent, PerguntaComponent, HeaderComponent, SidebarComponent, FooterComponent],
   providers: [],
 })
 export class ComponentModule {}
