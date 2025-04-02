@@ -1,0 +1,19 @@
+.starter-container{
+  height: calc(100vh - 4rem);
+  width: 100vw;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgb(21, 151, 9) 0%, rgb(4, 107, 0) 100%);
+  button{
+    width: 30rem;
+    height: 35rem;
+/*     display: flex;
+    flex-direction: column;
+    gap: 40rem; */
+    span{
+      font-size: 3rem;
+    }
+  }
+}

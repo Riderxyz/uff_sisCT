@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { StarterRoutingModule } from './starter-routing.module';
 import { StarterComponent } from './starter.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 @NgModule({
@@ -11,6 +15,15 @@ import { StarterComponent } from './starter.component';
   ],
   imports: [
     CommonModule,
+
+
+
+    MatButtonModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule,
+
+
     StarterRoutingModule
   ]
 })
