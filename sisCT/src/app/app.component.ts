@@ -17,6 +17,6 @@ export class AppComponent {
 
   showTestingToast() {
     this.toastSrv.showError('qwqw', 'isso é um teste', 600000);
-this.toastSrv.showSuccess('qwqw', 'isso é um teste', 600000)
+this.toastSrv.showWarn('qwqw', 'isso é um teste', 600000)
   }
 }

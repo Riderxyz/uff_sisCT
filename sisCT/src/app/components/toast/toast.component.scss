@@ -2,6 +2,28 @@ $toast-spacing: 20px;
 $border-radius: 10px;
 $box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 
+
+
+
+
+
+
+$success-bg: #EFF8F1;
+$success-text: #0A440F;
+$success-border: #168821;
+
+$info-bg: #EFF8FC;
+$info-text: #0A2F44;
+$info-border: #1266C5;
+
+$warn-bg: #FFF8EF;
+$warn-text: #663B00;
+$warn-border: #E68200;
+
+$error-bg: #FFEFEF;
+$error-text: #DC3545;
+$error-border: #DC3545;
+
 .toast-container {
   position: fixed;
   z-index: 9999;
@@ -50,23 +72,24 @@ $box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 
   &.success {
-    background-color: #EFF8F1;
-    color: #0A440F;
-    border: 1px solid #168821;
-   /*  border-left: 6px solid #4CAF50; */
+    background-color: $success-bg;
+    color: $success-text;
+    border: 1px solid $success-border;
   }
   &.info {
-    background-color: #EFF8FC;
-   /*  border-left: 6px solid #2196F3; */
+    background-color: $info-bg;
+    color: $info-text;
+    border: 1px solid $info-border;
   }
   &.warn {
-    background-color: #FFF8EF;
-   /*  border-left: 6px solid #FF9800; */
+    background-color: $warn-bg;
+    color: $warn-text;
+    border: 1px solid $warn-border;
   }
   &.error {
-    background-color: #FFEFEF;
-    color: #DC3545;
-    border: 1px solid #DC3545;
+    background-color: $error-bg;
+    color: $error-text;
+    border: 1px solid $error-border;
    /*  border-left: 6px solid #F44336; */
   }
 }
