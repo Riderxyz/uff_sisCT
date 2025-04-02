@@ -1,10 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', pathMatch: 'full', redirectTo: 'starter' },
+  {
+    path: 'starter',
+    loadChildren: () =>
+      import('./pages/starter/starter.module').then((m) => m.StarterModule),
+  },
+  {
+    path: 'sisCtCadastro',
+    loadChildren: () =>
+      import('./pages/sis-ct-cadastro/sis-ct-cadastro.module').then(
+        (m) => m.SisCtCadastroModule
+      ),
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -1,5 +1,7 @@
 <app-toast></app-toast>
-<app-header></app-header>
+<div [@expandOnEnter] *ngIf="showHeader">
+  <app-header></app-header>
+</div>
 
 <mat-sidenav-container class="sidenav-container">
   <!-- Menu lateral -->
@@ -10,7 +12,7 @@
   <!-- Conteúdo principal -->
   <mat-sidenav-content>
     <div class="content">
-      <button (click)="showTestingToast()">teste</button>
+      <!-- <button (click)="showTestingToast()">teste</button>
 
       <button mat-button class="severity-primary">Primary</button>
       <button mat-button class="severity-success">Success</button>
@@ -28,7 +30,7 @@
       </button>
 
       <app-teste-multipla-escolha></app-teste-multipla-escolha>
-
+ -->
       <router-outlet />
     </div>
   </mat-sidenav-content>
