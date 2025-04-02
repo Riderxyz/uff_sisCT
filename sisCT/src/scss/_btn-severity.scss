@@ -8,74 +8,93 @@
 }
 
 /* Estilização para os botões do Angular Material */
-.mat-mdc-button.severity-primary {
-  background-color: var(--primary-color);
-  color: white !important;
+.mat-mdc-button {
+  &.severity-primary {
+    background-color: var(--primary-color);
+    color: white !important;
+
+    &:hover,
+    &:focus {
+      background-color: #4f46e5;
+    }
+  }
+
+  &.severity-success {
+    background-color: var(--success-color);
+    color: white !important;
+
+    &:hover,
+    &:focus {
+      background-color: #16a34a;
+    }
+  }
+
+  &.severity-info {
+    background-color: var(--info-color);
+    color: white !important;
+
+    &:hover,
+    &:focus {
+      background-color: #2563eb;
+    }
+  }
+
+  &.severity-warn {
+    background-color: var(--warn-color);
+    color: white !important;
+
+    &:hover,
+    &:focus {
+      background-color: #d97706;
+    }
+  }
+
+  &.severity-danger {
+    background-color: var(--danger-color);
+    color: white !important;
+
+    &:hover,
+    &:focus {
+      background-color: #dc2626;
+    }
+  }
+
+  &.severity-help {
+    background-color: var(--help-color);
+    color: white !important;
+
+    &:hover,
+    &:focus {
+      background-color: #9333ea;
+    }
+  }
 }
-.mat-mdc-fab{
+
+.mat-mdc-fab {
   &.severity-primary {
     background-color: var(--primary-color);
     color: white;
   }
+
   &.severity-success {
     background-color: var(--success-color);
     color: white;
   }
-}
 
-
-.mat-mdc-button.severity-success {
-  background-color: var(--success-color);
-  color: white;
-}
-
-.mat-mdc-button.severity-info {
-  background-color: var(--info-color);
-  color: white;
-}
-
-.mat-mdc-button.severity-warn {
-  background-color: var(--warn-color);
-  color: white;
-}
-
-.mat-mdc-button.severity-danger {
-  background-color: var(--danger-color);
-  color: white;
-}
-
-.mat-mdc-button.severity-help {
-  background-color: var(--help-color);
-  color: white;
-}
-
-/* Para botões com hover e foco */
-.mat-mdc-button.severity-primary:hover,
-.mat-mdc-button.severity-primary:focus {
-  background-color: #4f46e5;
-}
-
-.mat-mdc-button.severity-success:hover,
-.mat-mdc-button.severity-success:focus {
-  background-color: #16a34a;
-}
-
-.mat-mdc-button.severity-info:hover,
-.mat-mdc-button.severity-info:focus {
-  background-color: #2563eb;
-}
-
-.mat-mdc-button.severity-warn:hover,
-.mat-mdc-button.severity-warn:focus {
-  background-color: #d97706;
-}
-
-.mat-mdc-button.severity-danger:hover,
-.mat-mdc-button.severity-danger:focus {
-  background-color: #dc2626;
-}
-
-.mat-mdc-button.severity-help:hover,
-.mat-mdc-button.severity-help:focus {
-  background-color: #9333ea;
+  &.severity-info {
+    background-color: var(--info-color);
+    color: white;
+  }
+  &.severity-warn {
+    background-color: var(--warn-color);
+    color: white;
+  }
+  &.severity-danger {
+    background-color: var(--danger-color);
+    color: white;
+  }
+  &.severity-help {
+    background-color: var(--help-color);
+    color: white;
+  }
 }
