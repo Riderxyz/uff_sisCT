@@ -1,0 +1,70 @@
+mat-toolbar {
+  justify-content: space-between;
+
+  .left-side-container {
+    display: flex;
+    gap: 10px;
+    .menu-btn {
+      color: #1351b4;
+    }
+    .header-title {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      color: #333333;
+      .title {
+        font-weight: 600;
+        font-size: 18px;
+      }
+      .subtitle {
+        font-weight: 400;
+        font-size: 14px;
+      }
+    }
+  }
+  .right-side-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .btns-container {
+      display: flex;
+      gap: 1rem;
+
+      .control-btn {
+        color: #1351b4;
+      }
+    }
+    mat-divider {
+      height: 3rem;
+    }
+    .user-profile-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      .user-profile-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 50%;
+        background-color: #1351b4;
+        display: flex;
+        align-items: center;
+        font-size: 1rem;
+        justify-content: center;
+        color: white;
+      }
+      .user-profile-text {
+        display: flex;
+        flex-direction: column;
+        color: #1351b4;
+        font-size: 14px;
+        .user-profile-welcome {
+          font-weight: 600;
+        }
+        .user-profile-name {
+          font-weight: bolder;
+        }
+      }
+    }
+  }
+}
