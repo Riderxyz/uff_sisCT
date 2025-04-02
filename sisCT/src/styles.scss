@@ -2,12 +2,15 @@
 @import "./scss/btn-severity";
 @import "@fortawesome/fontawesome-free/css/all.css";
 @import "@fontsource-variable/exo-2";
-
+@import "primeflex/primeflex.css";
 html,
 body {
   height: 100%;
 }
 body {
   margin: 0;
-  font-family: "Exo 2 Variable", sans-serif;
+
+  font-family: "Exo 2 Variable", sans-serif !important;
 }
+
+

@@ -1,0 +1,48 @@
+<mat-toolbar>
+  <div class="left-side-container" style="display: flex">
+    <button
+      mat-icon-button
+      class="menu-btn"
+      aria-label="Example icon-button with menu icon"
+      (click)="openMenu()"
+    >
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="header-title">
+      <span class="title"> SIGLA DO SISTEMA </span>
+      <span class="subtitle"> Subtítulo do sistema | versão 1.0.0 </span>
+    </div>
+  </div>
+
+  <div class="right-side-container">
+    <div class="btns-container">
+      <button
+        mat-icon-button
+        class="control-btn"
+        aria-label="Alterne entre modo claro e escuro"
+      >
+        <i class="fa-solid fa-circle-half-stroke"></i>
+      </button>
+      <button mat-icon-button class="control-btn" aria-label="Notificações">
+        <i class="fa-solid fa-bell"></i>
+      </button>
+      <button
+        mat-icon-button
+        class="control-btn"
+        aria-label="Pesquise sobre algo"
+      >
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+    <mat-divider [vertical]="true"></mat-divider>
+    <div class="user-profile-container">
+      <div class="user-profile-icon">
+        <i class="fa-solid fa-user"></i>
+      </div>
+      <div class="user-profile-text">
+        <div class="user-profile-welcome">Bem vindo(a)!</div>
+        <div class="user-profile-name">Nome do Usuário</div>
+      </div>
+    </div>
+  </div>
+</mat-toolbar>

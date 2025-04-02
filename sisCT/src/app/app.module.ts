@@ -11,7 +11,8 @@ import { TesteMultiplaEscolhaComponent } from './teste-multipla-escolha/teste-mu
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import {MatIconModule} from '@angular/material/icon';
     ComponentModule,
     AppRoutingModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule,
 
   ],
   providers: [],
