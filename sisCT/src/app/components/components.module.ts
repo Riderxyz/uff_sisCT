@@ -11,16 +11,17 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatDialogModule} from '@angular/material/dialog';
 
-
-import { ToastComponent } from './toast/toast.component';
 import { PerguntaComponent } from './multipla_escolha/pergunta.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FooterComponent } from './footer/footer.component';
-
-
+import { LoaderComponent } from './dialogs/loader/loader.component';
+import { ToastComponent } from './toast/toast.component';
+import { ConfirmDialogComponent } from './dialogs/ConfirmDialog/ConfirmDialog.component';
 
 const materialModules = [
   MatCheckboxModule,
@@ -33,11 +34,34 @@ const materialModules = [
   MatButtonModule,
   MatIconModule,
   MatDividerModule,
+  MatProgressSpinnerModule,
+  MatDialogModule,
+
 ];
+
+
+const dialogsComponents = [
+  LoaderComponent,
+  ConfirmDialogComponent,
+  ToastComponent,
+]
 @NgModule({
-  declarations: [PerguntaComponent, ToastComponent, HeaderComponent, SidebarComponent, FooterComponent],
+  declarations: [
+    PerguntaComponent,
+
+    HeaderComponent,
+    SidebarComponent,
+    FooterComponent,
+    ...dialogsComponents,
+  ],
   imports: [CommonModule, FormsModule, ...materialModules],
-  exports: [ToastComponent, PerguntaComponent, HeaderComponent, SidebarComponent, FooterComponent],
+  exports: [
+    ToastComponent,
+    PerguntaComponent,
+    HeaderComponent,
+    SidebarComponent,
+    FooterComponent,
+  ],
   providers: [],
 })
 export class ComponentModule {}

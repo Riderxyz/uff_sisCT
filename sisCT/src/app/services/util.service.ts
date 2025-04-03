@@ -9,6 +9,7 @@ import {
 } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ToastService, ToastSeverity } from './toast.service';
 @Injectable({providedIn: 'root'})
 export class UtilService {
 
@@ -16,6 +17,7 @@ export class UtilService {
 
     private snackBar: MatSnackBar = inject(MatSnackBar);
     private bottomSheet: MatBottomSheet = inject(MatBottomSheet);
+    private toastSrv: ToastService = inject(ToastService);
   constructor() { }
 
 
@@ -23,6 +25,71 @@ export class UtilService {
   showConfirmDialog(message: string, title: string, accept: () => void, reject: () => void) {
 
   }
+
+
+
+
+
+    /**
+   * Exibe um toast de sucesso
+   * @param summary Título da mensagem
+   * @param detail Detalhe da mensagem (opcional)
+   * @param life Duração em ms (padrão: 3000)
+   */
+  showSuccess(summary: string, detail?: string, life?: number): void {
+    this.toastSrv.show({
+      severity: ToastSeverity.SUCCESS,
+      summary,
+      detail,
+      life
+    });
+  }
+
+  /**
+   * Exibe um toast informativo
+   * @param summary Título da mensagem
+   * @param detail Detalhe da mensagem (opcional)
+   * @param life Duração em ms (padrão: 3000)
+   */
+  showInfo(summary: string, detail?: string, life?: number): void {
+    this.toastSrv.show({
+      severity: ToastSeverity.INFO,
+      summary,
+      detail,
+      life
+    });
+  }
+
+  /**
+   * Exibe um toast de alerta
+   * @param summary Título da mensagem
+   * @param detail Detalhe da mensagem (opcional)
+   * @param life Duração em ms (padrão: 4000)
+   */
+  showWarn(summary: string, detail?: string, life?: number): void {
+    this.toastSrv.show({
+      severity: ToastSeverity.WARN,
+      summary,
+      detail,
+      life
+    });
+  }
+
+  /**
+   * Exibe um toast de erro
+   * @param summary Título da mensagem
+   * @param detail Detalhe da mensagem (opcional)
+   * @param life Duração em ms (padrão: 5000)
+   */
+  showError(summary: string, detail?: string, life?: number): void {
+    this.toastSrv.show({
+      severity: ToastSeverity.ERROR,
+      summary,
+      detail,
+      life
+    });
+  }
+
 
 
 

@@ -17,3 +17,40 @@
     }
   }
 }
+
+
+
+.flip-container {
+  perspective: 1000px;
+  width: 300px; // Ajuste conforme necessário
+//  margin: 20px auto;
+  cursor: pointer;
+}
+
+.flipper {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.front, .back {
+  backface-visibility: hidden;
+/*   position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%; */
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+mat-card {
+  height: 400px; // Ajuste conforme necessário
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-content {
+  flex: 1;
+}

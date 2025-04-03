@@ -1,0 +1,11 @@
+/* Estilos para dialogs */
+.custom-dialog-container .mat-dialog-container {
+  padding: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.transparent-dialog .mat-dialog-container {
+  background: transparent;
+  box-shadow: none;
+}
