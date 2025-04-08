@@ -1,0 +1,25 @@
+
+.subsection-container{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  mat-expansion-panel{
+    min-height: 5rem;
+    .mat-panel-title{
+      margin-top: 1rem;
+    }
+    .section-header{
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+      .title{
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+      .subtitle{
+        font-size: 0.8rem;
+        font-weight: 400;
+      }
+    }
+  }
+}
