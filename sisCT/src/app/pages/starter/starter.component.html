@@ -6,9 +6,8 @@
 
 
 
-  <div class="flip-container" (click)="toggleFlip()">
+ <!--  <div class="flip-container" (click)="toggleFlip()">
     <div class="flipper" [@flipState]="flip">
-      <!-- Frente do card -->
       <mat-card class="front" *ngIf="flip === 'inactive'">
         <mat-card-header>
           <mat-card-title>Frente do Card</mat-card-title>
@@ -20,7 +19,7 @@
         </mat-card-content>
       </mat-card>
 
-      <!-- Verso do card -->
+
       <mat-card class="back" *ngIf="flip === 'active'">
         <mat-card-header>
           <mat-card-title>Verso do Card</mat-card-title>
@@ -36,5 +35,14 @@
   <button mat-button class="severity-primary" (click)="onCtContratos()">
     <span> SISCT </span>
     <span> CONTRATOS </span>
-  </button>
+  </button> -->
+<div class="container">
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="openSisCtCadastro()">
+      SisCTCadastro
+    </button>
+    <button mat-raised-button color="accent" (click)="openSisCtConsulta()">
+      SisCtConsulta
+    </button>
+  </div>
 </div>

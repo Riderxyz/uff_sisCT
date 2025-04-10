@@ -22,6 +22,9 @@ import { FooterComponent } from './footer/footer.component';
 import { LoaderComponent } from './dialogs/loader/loader.component';
 import { ToastComponent } from './toast/toast.component';
 import { ConfirmDialogComponent } from './dialogs/ConfirmDialog/ConfirmDialog.component';
+import { CnpjDialogComponent } from './cnpj-dialog/cnpj-dialog.component';
+
+
 
 const materialModules = [
   MatCheckboxModule,
@@ -46,14 +49,15 @@ const dialogsComponents = [
   ToastComponent,
 ]
 @NgModule({
-  declarations: [
+/*   declarations: [
     PerguntaComponent,
 
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
     ...dialogsComponents,
-  ],
+  ], */
+  declarations: [PerguntaComponent, ToastComponent, HeaderComponent, SidebarComponent, FooterComponent, CnpjDialogComponent],
   imports: [CommonModule, FormsModule, ...materialModules],
   exports: [
     ToastComponent,
