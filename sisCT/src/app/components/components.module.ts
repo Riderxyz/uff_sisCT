@@ -19,6 +19,7 @@ import { PerguntaComponent } from './multipla_escolha/pergunta.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FooterComponent } from './footer/footer.component';
+import { CnpjDialogComponent } from './cnpj-dialog/cnpj-dialog.component';
 
 
 
@@ -35,7 +36,7 @@ const materialModules = [
   MatDividerModule,
 ];
 @NgModule({
-  declarations: [PerguntaComponent, ToastComponent, HeaderComponent, SidebarComponent, FooterComponent],
+  declarations: [PerguntaComponent, ToastComponent, HeaderComponent, SidebarComponent, FooterComponent, CnpjDialogComponent],
   imports: [CommonModule, FormsModule, ...materialModules],
   exports: [ToastComponent, PerguntaComponent, HeaderComponent, SidebarComponent, FooterComponent],
   providers: [],

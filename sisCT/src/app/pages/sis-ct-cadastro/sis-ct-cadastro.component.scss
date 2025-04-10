@@ -3,10 +3,11 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  padding: 0 1rem;
   mat-expansion-panel{
     min-height: 5rem;
-    .mat-panel-title{
-      margin-top: 1rem;
+    mat-panel-title{
+      margin-top: 1.5rem;
     }
     .section-header{
       display: flex;
