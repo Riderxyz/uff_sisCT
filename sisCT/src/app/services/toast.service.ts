@@ -38,69 +38,10 @@ export class ToastService {
       closable: message.closable !== undefined ? message.closable : true,
       life: message.life !== undefined ? message.life : this.getDefaultLifeByType(message.severity)
     };
-    
+
     this.toastSubject.next(defaultMessage);
   }
 
-  /**
-   * Exibe um toast de sucesso
-   * @param summary Título da mensagem
-   * @param detail Detalhe da mensagem (opcional)
-   * @param life Duração em ms (padrão: 3000)
-   */
-  showSuccess(summary: string, detail?: string, life?: number): void {
-    this.show({
-      severity: ToastSeverity.SUCCESS,
-      summary,
-      detail,
-      life
-    });
-  }
-
-  /**
-   * Exibe um toast informativo
-   * @param summary Título da mensagem
-   * @param detail Detalhe da mensagem (opcional)
-   * @param life Duração em ms (padrão: 3000)
-   */
-  showInfo(summary: string, detail?: string, life?: number): void {
-    this.show({
-      severity: ToastSeverity.INFO,
-      summary,
-      detail,
-      life
-    });
-  }
-
-  /**
-   * Exibe um toast de alerta
-   * @param summary Título da mensagem
-   * @param detail Detalhe da mensagem (opcional)
-   * @param life Duração em ms (padrão: 4000)
-   */
-  showWarn(summary: string, detail?: string, life?: number): void {
-    this.show({
-      severity: ToastSeverity.WARN,
-      summary,
-      detail,
-      life
-    });
-  }
-
-  /**
-   * Exibe um toast de erro
-   * @param summary Título da mensagem
-   * @param detail Detalhe da mensagem (opcional)
-   * @param life Duração em ms (padrão: 5000)
-   */
-  showError(summary: string, detail?: string, life?: number): void {
-    this.show({
-      severity: ToastSeverity.ERROR,
-      summary,
-      detail,
-      life
-    });
-  }
 
   /**
    * Obtém a duração padrão do toast com base no tipo

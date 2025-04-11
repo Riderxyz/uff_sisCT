@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Inserir CNPJ</h2>
+<mat-dialog-content>
+  <form #cnpjForm="ngForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label>CNPJ</mat-label>
+      <input
+        matInput
+        name="cnpj"
+        [(ngModel)]="cnpj"
+        #cnpjFieldCtrl="ngModel"
+        required
+        mask="00.000.000/0000-00"
+        (ngModelChange)="validateCnpj(cnpjFieldCtrl)"
+        placeholder="00.000.000/0000-00"
+      />
+      <mat-error *ngIf="cnpjFieldCtrl.invalid && cnpjFieldCtrl.touched && cnpj === ''">
+        CNPJ é obrigatório
+      </mat-error>
+      <mat-error
+        *ngIf="cnpjFieldCtrl.errors?.['invalidCnpj'] && cnpjFieldCtrl.touched"
+      >
+        CNPJ precisa ser valido
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button
+    mat-button
+    type="submit"
+    [disabled]="!cnpjForm.valid"
+    color="primary"
+    (click)="cnpjForm.ngSubmit.emit()"
+  >
+    Confirmar
+  </button>
+</mat-dialog-actions>

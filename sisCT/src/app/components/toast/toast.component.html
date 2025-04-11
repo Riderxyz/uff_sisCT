@@ -4,7 +4,8 @@
     class="toast-item"
     [ngClass]="msg.severity"
     [@toastAnimation]="'visible'"
-    (click)="removeToast(i)">
+    (click)="removeToast(i)"
+  >
     <div class="toast-icon" [ngClass]="'icon-' + msg.severity">
       <div [ngSwitch]="msg.severity">
         <!-- Ícone de sucesso (check) -->
@@ -36,10 +37,13 @@
       </div>
     </div>
     <div class="toast-content">
-      <div class="toast-summary">{{msg.summary}}</div>
-      <div class="toast-detail" *ngIf="msg.detail">{{msg.detail}}</div>
+      <div class="toast-summary">{{ msg.summary }}</div>
+      <div class="toast-detail" *ngIf="msg.detail">{{ msg.detail }}</div>
     </div>
-    <button class="toast-close-btn" (click)="removeToast(i); $event.stopPropagation()">
+    <button
+      class="toast-close-btn"
+      (click)="removeToast(i); $event.stopPropagation()"
+    >
       <i class="fa-solid fa-xmark"></i>
     </button>
   </div>
