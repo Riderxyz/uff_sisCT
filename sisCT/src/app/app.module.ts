@@ -14,6 +14,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatDialogModule} from '@angular/material/dialog';
+import { provideEnvironmentNgxMask,  NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,9 +30,12 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatSidenavModule,
     MatToolbarModule,
     MatDialogModule,
-
+    NgxMaskDirective, NgxMaskPipe
   ],
-  providers: [],
+  providers: [
+
+    provideEnvironmentNgxMask(),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

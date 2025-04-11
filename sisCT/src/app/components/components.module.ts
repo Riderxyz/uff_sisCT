@@ -2,6 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import {
+  provideEnvironmentNgxMask,
+  NgxMaskDirective,
+  NgxMaskPipe,
+} from 'ngx-mask';
+
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatRippleModule } from '@angular/material/core';
@@ -13,7 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { PerguntaComponent } from './multipla_escolha/pergunta.component';
 import { HeaderComponent } from './header/header.component';
@@ -22,9 +28,8 @@ import { FooterComponent } from './footer/footer.component';
 import { LoaderComponent } from './dialogs/loader/loader.component';
 import { ToastComponent } from './toast/toast.component';
 import { ConfirmDialogComponent } from './dialogs/ConfirmDialog/ConfirmDialog.component';
-import { CnpjDialogComponent } from './cnpj-dialog/cnpj-dialog.component';
-
-
+import { CnpjDialogComponent } from './dialogs/cnpj-dialog/cnpj-dialog.component';
+import { MatInputModule } from '@angular/material/input';
 
 const materialModules = [
   MatCheckboxModule,
@@ -35,30 +40,33 @@ const materialModules = [
   MatSidenavModule,
   MatToolbarModule,
   MatButtonModule,
+  MatInputModule,
   MatIconModule,
   MatDividerModule,
   MatProgressSpinnerModule,
   MatDialogModule,
-
+  MatProgressSpinnerModule,
+  MatIconModule,
+  MatCheckboxModule,
 ];
-
 
 const dialogsComponents = [
   LoaderComponent,
   ConfirmDialogComponent,
   ToastComponent,
-]
-@NgModule({
-/*   declarations: [
-    PerguntaComponent,
+  CnpjDialogComponent,
+];
 
+const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
+@NgModule({
+  declarations: [
+    PerguntaComponent,
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
     ...dialogsComponents,
-  ], */
-  declarations: [PerguntaComponent, ToastComponent, HeaderComponent, SidebarComponent, FooterComponent, CnpjDialogComponent],
-  imports: [CommonModule, FormsModule, ...materialModules],
+  ],
+  imports: [CommonModule, FormsModule, ...materialModules, ...ngxMasks],
   exports: [
     ToastComponent,
     PerguntaComponent,

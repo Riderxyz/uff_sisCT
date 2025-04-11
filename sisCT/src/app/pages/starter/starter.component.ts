@@ -10,7 +10,8 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { CnpjDialogComponent } from '../../components/cnpj-dialog/cnpj-dialog.component';
+import { CnpjDialogComponent } from '../../components/dialogs/cnpj-dialog/cnpj-dialog.component';
+import { QuestionService } from '../../services/question.service';
 
 @Component({
   selector: 'app-starter',
@@ -38,6 +39,7 @@ import { CnpjDialogComponent } from '../../components/cnpj-dialog/cnpj-dialog.co
 })
 export class StarterComponent implements OnInit {
   utilSrv = inject(UtilService);
+  questionSrv = inject(QuestionService);
   flip: string = 'inactive';
   private dialog: MatDialog = inject(MatDialog);
   private snackBar: MatSnackBar = inject(MatSnackBar);
@@ -66,13 +68,10 @@ export class StarterComponent implements OnInit {
       data: { cnpj: '' },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: string) => {
       if (result && this.validateCnpj(result)) {
+        this.questionSrv.selectedCnpj = result;
         this.router.navigate(['/sisCtCadastro']);
-      } else if (result) {
-        this.snackBar.open('CNPJ inválido!', 'Fechar', {
-          duration: 3000,
-        });
       }
     });
   }
@@ -85,9 +84,6 @@ export class StarterComponent implements OnInit {
   }
 
   private validateCnpj(cnpj: string): boolean {
-    // Implementação básica de validação de CNPJ
-    // Você pode substituir por uma validação mais robusta
-    const cleaned = cnpj.replace(/\D/g, '');
-    return cleaned.length === 14;
+    return this.utilSrv.isValidCNPJ(cnpj);
   }
 }
