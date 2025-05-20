@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Pergunta } from '../../components/multipla_escolha/pergunta.model';
+import { Component, ViewChild } from '@angular/core';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-sis-ct-cadastro',
@@ -10,8 +10,7 @@ import { Pergunta } from '../../components/multipla_escolha/pergunta.model';
 export class SisCtCadastroComponent {
   perguntaSelecionadaId: string = 'PERGUNTA_2';
 
-  // No seu componente pai
-
+  @ViewChild('stepper') stepper!: MatStepper;
 
   subsectionArrForSection1 = [
     {
@@ -351,6 +350,17 @@ export class SisCtCadastroComponent {
         'O campo estará disponível apenas se a entidade marcar “área de atuação” uma CT.  Preenchimento obrigatório',
     },
   ];
+
+  public formData = {
+    secaoI: {
+      infoGerais: { cnpj: '', quantidadeFiliais: 0 },
+      representanteLegal: { nome: '', cpf: '' },
+    },
+    secaoII: {
+      comunidadeTerapeutica: { licencaSanitaria: false },
+      entidadeCuidado: { publicoAlvo: '' },
+    },
+  };
   constructor() {
     // Inicialização do componente, se necessário
   }
@@ -362,5 +372,10 @@ export class SisCtCadastroComponent {
   }) {
     console.log('Resposta selecionada:', event);
     // Atualize seu estado aqui conforme necessário
+  }
+
+  onSubmit() {
+    console.log('Dados enviados:', this.formData);
+    alert('Formulário enviado!');
   }
 }

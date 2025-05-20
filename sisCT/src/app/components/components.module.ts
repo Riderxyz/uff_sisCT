@@ -21,7 +21,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { PerguntaComponent } from './multipla_escolha/pergunta.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -60,7 +59,6 @@ const dialogsComponents = [
 const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
 @NgModule({
   declarations: [
-    PerguntaComponent,
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
@@ -69,7 +67,6 @@ const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
   imports: [CommonModule, FormsModule, ...materialModules, ...ngxMasks],
   exports: [
     ToastComponent,
-    PerguntaComponent,
     HeaderComponent,
     SidebarComponent,
     FooterComponent,

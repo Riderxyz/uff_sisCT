@@ -1,26 +1,81 @@
-<mat-tab-group>
-  <mat-tab label="SEÇÃO I: DADOS DA ENTIDADE ">
-    <div class="subsection-container">
-      @for (item of subsectionArrForSection1; track $index) {
-      <mat-expansion-panel hideToggle>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <div class="section-header">
-              <span class="title">{{ item.title }}</span>
-              <span class="subtitle">{{ item.subtitle }}</span>
-            </div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-pergunta
-          [perguntas]="listaDePerguntas"
-          [perguntaId]="perguntaSelecionadaId"
-          (respostaSelecionada)="onRespostaSelecionada($event)"
-        >
-        </app-pergunta>
+<mat-horizontal-stepper #stepper>
+  <!-- ========== SEÇÃO I ========== -->
+  <mat-step label="Seção I: Dados da Matriz">
+    <mat-accordion>
+      <!-- Subseção 1: Informações Gerais -->
+      <mat-expansion-panel expanded>
+        <mat-expansion-panel-header>1. Informações Gerais</mat-expansion-panel-header>
+
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [(ngModel)]="formData.secaoI.infoGerais.cnpj"
+                   name="cnpj" placeholder="CNPJ" required>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="formData.secaoI.infoGerais.quantidadeFiliais"
+                   name="quantidadeFiliais" placeholder="Quantidade de Filiais">
+          </mat-form-field>
+        </div>
       </mat-expansion-panel>
 
-      }
+      <!-- Subseção 3: Representante Legal -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>3. Representante Legal</mat-expansion-panel-header>
+
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput [(ngModel)]="formData.secaoI.representanteLegal.nome"
+                   name="nomeRepresentante" placeholder="Nome" required>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput [(ngModel)]="formData.secaoI.representanteLegal.cpf"
+                   name="cpfRepresentante" placeholder="CPF" required>
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="stepper-actions">
+      <button mat-button matStepperNext>Próximo</button>
     </div>
-  </mat-tab>
-  <mat-tab label="SEÇÃO II: DADOS ESPECÍFICOS POR ÁREA DE ATUAÇÃO "> Content 2 </mat-tab>
-</mat-tab-group>
+  </mat-step>
+
+  <!-- ========== SEÇÃO II ========== -->
+  <mat-step label="Seção II: Dados Específicos">
+    <mat-accordion>
+      <!-- Subseção 6: Comunidade Terapêutica -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>6. Comunidade Terapêutica</mat-expansion-panel-header>
+
+        <div class="form-group">
+          <mat-checkbox [(ngModel)]="formData.secaoII.comunidadeTerapeutica.licencaSanitaria"
+                        name="licencaSanitaria">
+            Possui licença sanitária?
+          </mat-checkbox>
+        </div>
+      </mat-expansion-panel>
+
+      <!-- Subseção 7: Entidades de Cuidado -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>7. Entidades de Cuidado</mat-expansion-panel-header>
+
+        <div class="form-group">
+          <mat-form-field>
+            <mat-label>Público-Alvo</mat-label>
+            <mat-select [(ngModel)]="formData.secaoII.entidadeCuidado.publicoAlvo" name="publicoAlvo">
+              <mat-option value="adultos">Adultos</mat-option>
+              <mat-option value="idosos">Idosos</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <div class="stepper-actions">
+      <button mat-button matStepperPrevious>Voltar</button>
+      <button mat-button (click)="onSubmit()">Enviar</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
