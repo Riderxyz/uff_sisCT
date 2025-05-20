@@ -14,6 +14,7 @@ import { SisCtCadastroComponent } from './sis-ct-cadastro.component';
 import { ComponentModule } from '../../components/components.module';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { AreaDeAtuacaoComponent } from './components/area-de-atuacao/area-de-atuacao.component';
 
 const MaterialModules = [
   MatTabsModule,
@@ -27,7 +28,7 @@ const MaterialModules = [
 ];
 
 @NgModule({
-  declarations: [SisCtCadastroComponent],
+  declarations: [SisCtCadastroComponent, AreaDeAtuacaoComponent],
   imports: [
     CommonModule,
     ...MaterialModules,
