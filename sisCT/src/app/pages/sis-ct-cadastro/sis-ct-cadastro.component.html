@@ -1,11 +1,5 @@
 <mat-tab-group>
   <mat-tab label="SEÇÃO I: DADOS DA ENTIDADE ">
-    <!--     <app-pergunta
-    [perguntas]="listaDePerguntas"
-    [perguntaId]="perguntaSelecionadaId"
-    (respostaSelecionada)="onRespostaSelecionada($event)"
-  >
-  </app-pergunta> -->
     <div class="subsection-container">
       @for (item of subsectionArrForSection1; track $index) {
       <mat-expansion-panel hideToggle>
@@ -16,9 +10,6 @@
               <span class="subtitle">{{ item.subtitle }}</span>
             </div>
           </mat-panel-title>
-          <!--         <mat-panel-description>
-            This is a summary of the content
-          </mat-panel-description> -->
         </mat-expansion-panel-header>
         <app-pergunta
           [perguntas]="listaDePerguntas"
