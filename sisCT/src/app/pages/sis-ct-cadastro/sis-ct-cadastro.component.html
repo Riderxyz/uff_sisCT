@@ -1,13 +1,26 @@
 <mat-tab-group>
-  <mat-tab label="First">
-    <app-pergunta
-    [perguntas]="listaDePerguntas"
-    [perguntaId]="perguntaSelecionadaId"
-    (respostaSelecionada)="onRespostaSelecionada($event)"
-  >
-  </app-pergunta>
+  <mat-tab label="SEÇÃO I: DADOS DA ENTIDADE ">
+    <div class="subsection-container">
+      @for (item of subsectionArrForSection1; track $index) {
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div class="section-header">
+              <span class="title">{{ item.title }}</span>
+              <span class="subtitle">{{ item.subtitle }}</span>
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-pergunta
+          [perguntas]="listaDePerguntas"
+          [perguntaId]="perguntaSelecionadaId"
+          (respostaSelecionada)="onRespostaSelecionada($event)"
+        >
+        </app-pergunta>
+      </mat-expansion-panel>
 
+      }
+    </div>
   </mat-tab>
-  <mat-tab label="Second"> Content 2 </mat-tab>
-  <mat-tab label="Third"> Content 3 </mat-tab>
+  <mat-tab label="SEÇÃO II: DADOS ESPECÍFICOS POR ÁREA DE ATUAÇÃO "> Content 2 </mat-tab>
 </mat-tab-group>

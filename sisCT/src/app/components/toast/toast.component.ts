@@ -1,5 +1,5 @@
 ﻿import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ToastMessage, ToastService } from '../../services/toast.service';
 
@@ -31,11 +31,11 @@ export class ToastComponent implements OnInit, OnDestroy {
     messages: ToastMessage[] = [];
     private subscription: Subscription | undefined;
     private autoCloseTimers: any[] = [];
-
-    constructor(private toastService: ToastService) { }
+    private toastSrv: ToastService = inject(ToastService);
+    constructor() { }
 
     ngOnInit(): void {
-        this.subscription = this.toastService.toast$.subscribe(message => {
+        this.subscription = this.toastSrv.toast$.subscribe(message => {
             this.addToast(message);
         });
     }
