@@ -63,7 +63,8 @@ export class StarterComponent implements OnInit {
   }
 
   openSisCtCadastro() {
-    const dialogRef = this.dialog.open(CnpjDialogComponent, {
+      this.router.navigate(['/sisCtCadastro']);
+   /*  const dialogRef = this.dialog.open(CnpjDialogComponent, {
       width: '400px',
       data: { cnpj: '' },
     });
@@ -73,7 +74,7 @@ export class StarterComponent implements OnInit {
         this.questionSrv.selectedCnpj = result;
         this.router.navigate(['/sisCtCadastro']);
       }
-    });
+    }); */
   }
 
   openSisCtConsulta() {
