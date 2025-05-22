@@ -114,7 +114,7 @@ export class InfoGeraisComponent implements AfterViewInit {
       this.getEndereco();
     } else {
       this.questionSrv.matriz.seccao1.dados.informacaoGerais = this.formModel;
-      this.questionSrv.onMatrizDatachange();
+      this.questionSrv.onMatrizDatachange('informacoes-gerais');
     }
   }
 }

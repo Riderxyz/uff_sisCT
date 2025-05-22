@@ -1,32 +1,40 @@
 <mat-horizontal-stepper #stepper>
   <!-- ========== SEÇÃO I ========== -->
   <mat-step label="Seção I: Dados da Matriz">
+
     <mat-accordion>
-      <!-- Subseção 1: Informações Gerais -->
+      @for (subSection of paginasSection1; track $index) {
       <mat-expansion-panel>
-        <mat-expansion-panel-header
-          >1. Áreas de Atuação</mat-expansion-panel-header
-        >
-
-        <app-area-de-atuacao></app-area-de-atuacao>
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{ subSection.header }} </mat-panel-title>
+          <mat-panel-description
+            class="flex justify-content-end align-items-center"
+          >
+            @if ( subSection.showSavingIcon ) {
+            <i
+              [@fadeInOnEnter]
+              [@fadeOutOnLeave]
+              class="fa-solid fa-floppy-disk fa-lg fa-bounce p-1"
+            ></i>
+            }
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        @switch (
+          subSection.component
+        ) {
+          @case ('app-area-de-atuacao') {
+            <app-area-de-atuacao></app-area-de-atuacao>
+          }
+          @case ('app-info-gerais') {
+            <app-info-gerais></app-info-gerais>
+          }
+          @case ('app-representante-legal') {
+            <app-representate-legal-matriz></app-representate-legal-matriz>
+          }
+        }
       </mat-expansion-panel>
-
-      <!-- Subseção 2: . Informações Gerais -->
-      <mat-expansion-panel>
-        <mat-expansion-panel-header
-          >2. Informações Gerais</mat-expansion-panel-header
-        >
-        <app-info-gerais></app-info-gerais>
-      </mat-expansion-panel>
-      <!-- Subseção 3: . Quanto ao Representante legal da matriz -->
-      <mat-expansion-panel expanded>
-        <mat-expansion-panel-header
-          >3. Quanto ao Representante legal da matriz</mat-expansion-panel-header
-        >
-        <app-representate-legal-matriz></app-representate-legal-matriz>
-      </mat-expansion-panel>
+    }
     </mat-accordion>
-
     <div class="stepper-actions">
       <button mat-button matStepperNext>Próximo</button>
     </div>
@@ -35,48 +43,37 @@
   <!-- ========== SEÇÃO II ========== -->
   <mat-step label="Seção II: Dados Específicos">
     <mat-accordion>
-      <!-- Subseção 6: Comunidade Terapêutica -->
+      @for (subSection of paginaSection2; track $index) {
       <mat-expansion-panel>
-        <mat-expansion-panel-header
-          >6. Comunidade Terapêutica</mat-expansion-panel-header
-        >
-
-        <div class="form-group">
-          <mat-checkbox
-            [(ngModel)]="
-              formData.secaoII.comunidadeTerapeutica.licencaSanitaria
-            "
-            name="licencaSanitaria"
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{ subSection.header }} </mat-panel-title>
+          <mat-panel-description
+            class="flex justify-content-end align-items-center"
           >
-            Possui licença sanitária?
-          </mat-checkbox>
-        </div>
+            @if ( subSection.showSavingIcon ) {
+            <i
+              [@fadeInOnEnter]
+              [@fadeOutOnLeave]
+              class="fa-solid fa-spin fa-2x fa-spinner p-1"
+            ></i>
+            }
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        @switch (
+          subSection.component
+        ) {
+          @case ('app-comunidade-terapeutica') {
+            <app-area-de-atuacao></app-area-de-atuacao>
+          }
+          @case ('app-entidades-de-cuidado') {
+            <app-area-de-atuacao></app-area-de-atuacao>
+          }
+        }
       </mat-expansion-panel>
-
-      <!-- Subseção 7: Entidades de Cuidado -->
-      <mat-expansion-panel>
-        <mat-expansion-panel-header
-          >7. Entidades de Cuidado</mat-expansion-panel-header
-        >
-
-        <div class="form-group">
-          <mat-form-field>
-            <mat-label>Público-Alvo</mat-label>
-            <mat-select
-              [(ngModel)]="formData.secaoII.entidadeCuidado.publicoAlvo"
-              name="publicoAlvo"
-            >
-              <mat-option value="adultos">Adultos</mat-option>
-              <mat-option value="idosos">Idosos</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </mat-expansion-panel>
+    }
     </mat-accordion>
-
     <div class="stepper-actions">
       <button mat-button matStepperPrevious>Voltar</button>
-      <button mat-button (click)="onSubmit()">Enviar</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

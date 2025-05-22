@@ -40,7 +40,7 @@ export class RepresentateLegalMatrizComponent implements AfterViewInit {
       //this.getEndereco();
     } else {
       this.questionSrv.matriz.seccao1.dados.representanteLegal = this.formModel;
-      this.questionSrv.onMatrizDatachange();
+      this.questionSrv.onMatrizDatachange('representante-legal');
     }
   }
 }
