@@ -17,6 +17,9 @@ export class QuestionService {
         informacaoGerais: {
           registro: {
             cnpj: '',
+            emailInstitucional: '',
+            contato: '',
+            tipoContato: 'email',
             nomeFantasia: '',
             codigoDeAtividadesEconomicasPrimarias: '',
             codigoDeAtividadesEconomicasSecundarias: '',

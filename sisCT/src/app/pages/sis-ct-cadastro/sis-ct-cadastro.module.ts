@@ -16,8 +16,9 @@ import { ComponentModule } from '../../components/components.module';
 import { SisCtCadastroComponent } from './sis-ct-cadastro.component';
 import { AreaDeAtuacaoComponent } from './components/area-de-atuacao/area-de-atuacao.component';
 import { InfoGeraisComponent } from './components/info-gerais/info-gerais.component';
-
 import { SisCtCadastroRoutingModule } from './sis-ct-cadastro-routing.module';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+
 
 const MaterialModules = [
   MatTabsModule,
@@ -40,9 +41,12 @@ const MaterialModules = [
   imports: [
     CommonModule,
     ...MaterialModules,
+      NgxMaskDirective, NgxMaskPipe,
     FormsModule,
     ComponentModule,
     SisCtCadastroRoutingModule,
   ],
+  providers:[
+  ]
 })
 export class SisCtCadastroModule {}

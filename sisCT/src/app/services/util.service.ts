@@ -14,6 +14,9 @@ import {
 } from '@angular/material/snack-bar';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ToastService, ToastSeverity } from './toast.service';
+import { HttpClient } from '@angular/common/http';
+import { EnderecoResponseInterface } from '../interface/enderecoResponse.interface';
+import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class UtilService {
   public dialog: MatDialog = inject(MatDialog);
@@ -21,6 +24,7 @@ export class UtilService {
   private snackBar: MatSnackBar = inject(MatSnackBar);
   private bottomSheet: MatBottomSheet = inject(MatBottomSheet);
   private toastSrv: ToastService = inject(ToastService);
+  private http = inject(HttpClient);
   constructor() {}
 
   showConfirmDialog(
@@ -172,6 +176,12 @@ export class UtilService {
     return cnpj.replace(
       /^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/,
       '$1.$2.$3/$4-$5'
+    );
+  }
+
+  getAdressByCEP(cep: string): Observable<EnderecoResponseInterface> {
+    return this.http.get<EnderecoResponseInterface>(
+      `https://viacep.com.br/ws/${cep}/json/`
     );
   }
 }

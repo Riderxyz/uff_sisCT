@@ -31,6 +31,9 @@ export interface Registro {
   nomeFantasia: string;
   codigoDeAtividadesEconomicasPrimarias: string;
   codigoDeAtividadesEconomicasSecundarias: string;
+  emailInstitucional:string;
+  contato: string;
+  tipoContato: 'email' | 'telefone';
   razaoSocial: string;
 }
 
