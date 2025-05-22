@@ -13,14 +13,19 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
+import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
 
 @Component({
   selector: 'app-info-gerais',
   templateUrl: './info-gerais.component.html',
   styleUrl: './info-gerais.component.scss',
+  animations: [
+    fadeInOnEnterAnimation(),
+    fadeOutOnLeaveAnimation()
+  ],
 })
 export class InfoGeraisComponent implements AfterViewInit {
-  questionSrv: QuestionService = inject(QuestionService);
+  readonly questionSrv: QuestionService = inject(QuestionService);
   utilSrv: UtilService = inject(UtilService);
   formModel: InformacaoGerais = {
     registro: {
