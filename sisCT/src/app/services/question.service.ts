@@ -1,113 +1,128 @@
 import { Injectable } from '@angular/core';
 import { config } from '../services/config';
+import { MatrizInterface } from '../interface/matriz.interface';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
   private _selectedCnpj: string = '';
 
-  matriz = {
-    areaDeAtuacao: {
-      comunidadeTerapeutica: false,
-      entidadeDeCuidado: false,
-    },
-    informacaoGerais: {
-      registro: {
-        cnpj: '',
-        nomeFantasia: '',
-        codigoDeAtivadesEconoimicasPrimarias: '',
-        codigoDeAtivadesEconoimicasSecundarias: '',
-        razaoSocial: '',
-      },
-      localizacao: {
-        cep: '',
-        logradouro: '',
-        numero: '',
-        complemento: '',
-        bairro: '',
-        cidade: '',
-        estado: '',
-        pais: '',
-      },
-    },
-    representanteLegal: {
-      nome: '',
-      anoDeTerminoDeMandato: '',
-      cpf: '',
-      dataDeNascimento: '',
-      escolaridade: '',
-      cursoProfissao: '',
-      telefone: '',
-      email: '',
-    },
-    representanteTecnico: {
-      nome: '',
-      cpf: '',
-      dataDeNascimento: '',
-      escolaridade: '',
-      cursoProfissao: '',
-      telefone: '',
-      email: '',
-      possuiExperienciaComprovada: false,
-      representanteTecnicoSustituto: {
-        nome: '',
-        cpf: '',
-        dataDeNascimento: '',
-        escolaridade: '',
-        cursoProfissao: '',
-        telefone: '',
-        email: '',
-        possuiExperienciaComprovada: false,
-      },
-    },
-    fonteRecursos: {
-      receitaBruta: 0,
-      recursoPublicos: {
-        financiamentoComAUniao: {
-          possui: false,
-          modalidadeDeFinanciamento: {
-            contrato: false,
-            termoFomento: false,
-            termoColaboração: false,
+  matriz:MatrizInterface = {
+    seccao1: {
+      titulo: 'Seção I: Dados da Matriz',
+      dados: {
+        areaDeAtuacao: {
+          comunidadeTerapeutica: false,
+          entidadeDeCuidado: false,
+        },
+        informacaoGerais: {
+          registro: {
+            cnpj: '',
+            nomeFantasia: '',
+            codigoDeAtividadesEconomicasPrimarias: '',
+            codigoDeAtividadesEconomicasSecundarias: '',
+            razaoSocial: '',
+          },
+          localizacao: {
+            cep: '',
+            logradouro: '',
+            numero: '',
+            complemento: '',
+            bairro: '',
+            cidade: '',
+            estado: '',
+            pais: '',
+          },
+        },
+        representanteLegal: {
+          nome: '',
+
+          anoDeTerminoDeMandato: '',
+          cpf: '',
+          dataDeNascimento: '',
+          escolaridade: '',
+          cursoProfissao: '',
+          telefone: '',
+          email: '',
+        },
+        representanteTecnico: {
+          nome: '',
+          cpf: '',
+          dataDeNascimento: '',
+          escolaridade: '',
+          cursoProfissao: '',
+          telefone: '',
+          email: '',
+          possuiExperienciaComprovada: false,
+          representanteTecnicoSubstituto: {
+            nome: '',
+            cpf: '',
+            dataDeNascimento: '',
+            escolaridade: '',
+            cursoProfissao: '',
+            telefone: '',
+            email: '',
+            possuiExperienciaComprovada: false,
+          },
+        },
+        fonteRecursos: {
+          receitaBruta: 0,
+          recursoPublicos: {
+            financiamentoComAUniao: {
+              possui: false,
+              modalidadeDeFinanciamento: {
+                contrato: false,
+                termoFomento: false,
+                termoColaboracao: false,
+                outrosEspecificar: false,
+                outrosEspecificarDescricao: '',
+                emendasParlamentares: false,
+                parcerias: false,
+                editaisSelecao: false,
+              },
+            },
+            financiamentoEstadual: {
+              possui: false,
+              modalidadeDeFinanciamento: {
+                emendasParlamentares: false,
+                parcerias: false,
+editaisSelecao: false
+              },
+            },
+            financiamentoMunicipal: {
+              possui: false,
+              modalidadeDeFinanciamento: {
+                emendasParlamentares: false,
+                parcerias: false,
+                editaisSelecao: false,
+              },
+            },
+          },
+          recursosDeOutrasFontes: {
+            doacoesFinanceirasTerceiros: false,
+            parceriasPrivadas: false,
             outrosEspecificar: false,
             outrosEspecificarDescricao: '',
-            emendasParlamentares: false,
-            parcerias: false,
-            editaisSeleção: false,
-          },
-        },
-        financiamentoEstadual: {
-          possui: false,
-          modalidadeDeFinanciamento: {
-            emendasParlamentares: false,
-            parcerias: false,
-            editaisSeleção: false,
-          },
-        },
-        financiamentoMunicipal: {
-          possui: false,
-          modalidadeDeFinanciamento: {
-            emendasParlamentares: false,
-            parcerias: false,
-            editaisSeleção: false,
+            receitasProprias: {
+              mensalidadesPorParteDosAcolhidos: false,
+              campanhasArrecadacao: false,
+              doacoesAssociados: false,
+              vendaProdutos: false,
+              outrosEspecificar: false,
+              outrosEspecificarDescricao: '',
+            },
           },
         },
       },
-      recursosDeOutrasFontes: {
-        doaçõesFinanceirasTerceiros: false,
-        parceriasPrivadas: false,
-        outrosEspecificar: false,
-        outrosEspecificarDescricao: '',
-        receitasProprias: {
-          mensalidadesPorParteDosAcolhidos: false,
-          campanhasArrecadação: false,
-          doacoesAssociados: false,
-          vendaProdutos: false,
-          OutrosEspecificar: false,
-          OutrosEspecificarDescricao: '',
-        },
+    },
+
+    seccao2: {
+      titulo: 'Seção II: Dados Específicos por area de atuação da matriz',
+      dados: {
+        comunidadeTerapeutica: {},
       },
     },
   };
+
   constructor() {}
 
   get selectedCnpj(): string {

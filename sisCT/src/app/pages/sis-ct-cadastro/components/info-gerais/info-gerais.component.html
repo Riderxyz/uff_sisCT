@@ -1,0 +1,91 @@
+<form #f="ngForm" class="p-fluid p-grid p-3">
+
+  <!-- CNPJ da Matriz -->
+  <div class="p-col-12 p-md-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>CNPJ da Matriz</mat-label>
+      <input matInput name="cnpjMatriz" [(ngModel)]="formModel.registro.cnpj" required />
+      <mat-hint>O CNPJ é primeira regra de identificação da entidade</mat-hint>
+    </mat-form-field>
+  </div>
+
+    <!-- Telefone -->
+  <div class="p-col-12 p-md-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Nome Fantasia</mat-label>
+      <input matInput name="telefone" [(ngModel)]="formModel.registro.nomeFantasia" />
+    </mat-form-field>
+  </div>
+
+
+  <!-- Quantidade de Filiais -->
+<!--   <div class="p-col-12 p-md-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Quantidade de Filiais</mat-label>
+      <input matInput type="number" name="qtdFiliais" [(ngModel)]="formModel.registro" required />
+      <mat-hint>Informe quantas filiais são no total</mat-hint>
+    </mat-form-field>
+  </div>
+ -->
+  <!-- Filiais -->
+<!--   <div class="p-col-12" *ngFor="let filial of formModel.filiais; let i = index">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Filial {{ i + 1 }} – CNPJ</mat-label>
+      <input matInput name="filialCnpj{{i}}" [(ngModel)]="filial.cnpj" />
+      <mat-hint>Se certificável, abrir a janela para preenchimento dos dados da filial</mat-hint>
+    </mat-form-field>
+  </div> -->
+
+  <!-- Atividade Principal -->
+  <div class="p-col-12">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Atividade Econômica Principal (CNAE)</mat-label>
+      <input matInput name="atividadePrincipal" [(ngModel)]="formModel.registro.codigoDeAtividadesEconomicasPrimarias" />
+      <mat-hint>Lista de seleção – ver qual a base de referência</mat-hint>
+    </mat-form-field>
+  </div>
+
+
+  <!-- Atividade Secundária -->
+  <div class="p-col-12">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Atividades Econômicas Secundárias (CNAE)</mat-label>
+      <input matInput name="atividadeSecundaria" [(ngModel)]="formModel.registro.codigoDeAtividadesEconomicasPrimarias" />
+      <mat-hint>Lista de seleção – ver qual a base de referência</mat-hint>
+    </mat-form-field>
+  </div>
+
+  <!-- Estado -->
+<!--   <div class="p-col-12 p-md-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Estado</mat-label>
+      <mat-select name="estado" [(ngModel)]="formModel.estado">
+        <mat-option *ngFor="let estado of estados" [value]="estado">{{ estado }}</mat-option>
+      </mat-select>
+      <mat-hint>Lista de seleção</mat-hint>
+    </mat-form-field>
+  </div> -->
+
+  <!-- Município -->
+  <div class="p-col-12 p-md-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Município</mat-label>
+      <input matInput name="municipio" [(ngModel)]="formModel.localizacao.cidade" />
+    </mat-form-field>
+  </div>
+
+
+  <!-- E-mail -->
+  <div class="p-col-12 p-md-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>E-mail Institucional</mat-label>
+      <input matInput name="email" type="email" [(ngModel)]="formModel.registro.razaoSocial" />
+    </mat-form-field>
+  </div>
+
+  <!-- Botão de envio -->
+  <div class="p-col-12">
+    <button mat-raised-button color="primary" [disabled]="!f.valid">Salvar</button>
+  </div>
+
+</form>
