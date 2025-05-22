@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { config } from '../services/config';
 import { MatrizInterface } from '../interface/matriz.interface';
 import { UtilService } from './util.service';
+import { CentralRxJsService } from './centralRXJS.service';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
@@ -39,7 +40,7 @@ export class QuestionService {
         },
         representanteLegal: {
           nome: '',
-
+          seuPapelnaMatriz: '',
           anoDeTerminoDeMandato: '',
           cpf: '',
           dataDeNascimento: '',
@@ -127,6 +128,7 @@ export class QuestionService {
     },
   };
   private readonly utilSrv = inject(UtilService);
+  private readonly centralRxjsSrv = inject(CentralRxJsService);
   constructor() {}
 
   get selectedCnpj(): string {
@@ -145,12 +147,18 @@ export class QuestionService {
     this._selectedCnpj = value;
   }
 
-  onMatrizDatachange() {
-    this.isSavingLocally = true;
+  onMatrizDatachange(subsection: string) {
+    this.centralRxjsSrv.sendData({
+      key: config.senderKeys.matrizChange,
+      data: { matriz: this.matriz, subsection: subsection },
+    });
     localStorage.setItem('matriz', JSON.stringify(this.matriz));
-   // this.utilSrv.showSuccess('Matriz atualizada com sucesso!');
+
     setTimeout(() => {
-      this.isSavingLocally = false;
+      this.centralRxjsSrv.sendData({
+        key: config.senderKeys.matrizChange,
+        data: { matriz: this.matriz, subsection: subsection },
+      });
     }, 1500);
   }
 }

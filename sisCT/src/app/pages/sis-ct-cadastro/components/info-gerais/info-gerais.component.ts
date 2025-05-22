@@ -26,7 +26,7 @@ import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animati
 })
 export class InfoGeraisComponent implements AfterViewInit {
   readonly questionSrv: QuestionService = inject(QuestionService);
-  utilSrv: UtilService = inject(UtilService);
+  readonly utilSrv: UtilService = inject(UtilService);
   formModel: InformacaoGerais = {
     registro: {
       cnpj: '',
@@ -114,7 +114,7 @@ export class InfoGeraisComponent implements AfterViewInit {
       this.getEndereco();
     } else {
       this.questionSrv.matriz.seccao1.dados.informacaoGerais = this.formModel;
-      this.questionSrv.onMatrizDatachange();
+      this.questionSrv.onMatrizDatachange('informacoes-gerais');
     }
   }
 }
