@@ -19,6 +19,7 @@ import { InfoGeraisComponent } from './components/info-gerais/info-gerais.compon
 import { SisCtCadastroRoutingModule } from './sis-ct-cadastro-routing.module';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { RepresentateLegalMatrizComponent } from './components/representate-legal-matriz/representate-legal-matriz.component';
+import { ResponsavelTecnicoComponent } from './components/responsavel-tecnico/responsavel-tecnico.component';
 
 
 const MaterialModules = [
@@ -39,6 +40,7 @@ const MaterialModules = [
     AreaDeAtuacaoComponent,
     InfoGeraisComponent,
     RepresentateLegalMatrizComponent,
+    ResponsavelTecnicoComponent,
   ],
   imports: [
     CommonModule,

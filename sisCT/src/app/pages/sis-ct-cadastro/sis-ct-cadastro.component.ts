@@ -38,6 +38,12 @@ export class SisCtCadastroComponent {
       component: 'app-representante-legal',
       showSavingIcon: false,
     },
+       {
+      id: 'reponsavel-tecnico',
+      header: '4. Quanto ao Responsável Técnico da matriz',
+      component: 'app-responsavel-tecnico',
+      showSavingIcon: false,
+    },
   ];
   paginaSection2 = [
     {
