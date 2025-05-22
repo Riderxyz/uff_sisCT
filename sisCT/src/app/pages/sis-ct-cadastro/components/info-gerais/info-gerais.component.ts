@@ -39,6 +39,7 @@ export class InfoGeraisComponent implements AfterViewInit {
   constructor() {}
   ngAfterViewInit(): void {
     this.formModel = this.questionSrv.matriz.seccao1.dados.informacaoGerais;
+    this.formModel.registro.tipoContato
   }
 
   validateCnpj(control: NgModel) {
