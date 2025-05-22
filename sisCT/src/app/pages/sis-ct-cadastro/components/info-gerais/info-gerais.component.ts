@@ -3,7 +3,16 @@ import { QuestionService } from '../../../../services/question.service';
 import { InformacaoGerais } from '../../../../interface/matriz.interface';
 import { NgModel } from '@angular/forms';
 import { UtilService } from '../../../../services/util.service';
-import { catchError, debounceTime, filter, map, of, switchMap } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  delay,
+  filter,
+  map,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-info-gerais',
@@ -58,42 +67,42 @@ export class InfoGeraisComponent implements AfterViewInit {
   }
 
   getEndereco() {
-  this.isLoadingAdress = true;
-
-  of(this.formModel.localizacao.cep)
-    .pipe(
-      debounceTime(1000),
-      filter((cep) => !!cep && cep.length === 8),
-      switchMap((cep) =>
-        this.utilSrv.getAdressByCEP(cep).pipe(
-          map((res) => {
-            if ((res as any).erro) {
-              throw new Error('CEP inválido');
-            }
-            return res;
-          })
-        )
-      ),
-      catchError((err) => {
-        this.utilSrv.showError(
-          'CEP inválido',
-          'Verifique se o CEP digitado está correto',
-          5000
-        );
+    of(this.formModel.localizacao.cep)
+      .pipe(
+        tap(() => this.isLoadingAdress = true),
+        debounceTime(1500),
+        delay(500),
+        filter((cep) => !!cep && cep.length === 8),
+        switchMap((cep) =>
+          this.utilSrv.getAdressByCEP(cep).pipe(
+            map((res) => {
+              if ((res as any).erro) {
+                throw new Error('CEP inválido');
+              }
+              return res;
+            })
+          )
+        ),
+        catchError((err) => {
+          this.utilSrv.showError(
+            'CEP inválido',
+            'Verifique se o CEP digitado está correto',
+            5000
+          );
+          this.isLoadingAdress = false;
+          return of(null); // retorna observable vazio para completar o fluxo
+        })
+      )
+      .subscribe((res) => {
+        if (!res) return;
+        this.formModel.localizacao.cep = res.cep;
+        this.formModel.localizacao.logradouro = res.logradouro;
+        this.formModel.localizacao.bairro = res.bairro;
+        this.formModel.localizacao.cidade = res.localidade;
+        this.formModel.localizacao.estado = res.uf;
         this.isLoadingAdress = false;
-        return of(null); // retorna observable vazio para completar o fluxo
-      })
-    )
-    .subscribe((res) => {
-      if (!res) return;
-      this.formModel.localizacao.cep = res.cep;
-      this.formModel.localizacao.logradouro = res.logradouro;
-      this.formModel.localizacao.bairro = res.bairro;
-      this.formModel.localizacao.cidade = res.localidade;
-      this.formModel.localizacao.estado = res.uf;
-      this.isLoadingAdress = false;
-    });
-}
+      });
+  }
 
   onFieldChange(isItCep?: boolean) {
     if (isItCep) {
