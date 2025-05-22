@@ -1,0 +1,16 @@
+<div class="grid">
+  <div class="col-12">
+    <mat-radio-group
+      aria-labelledby="example-radio-group-label"
+      class="radio-group"
+      [(ngModel)]="selectedOption"
+      (ngModelChange)="onSelectChange()"
+    >
+      @for (season of opcoes; track season) {
+      <mat-radio-button class="example-radio-button" [value]="season">{{
+        season
+      }}</mat-radio-button>
+      }
+    </mat-radio-group>
+  </div>
+</div>

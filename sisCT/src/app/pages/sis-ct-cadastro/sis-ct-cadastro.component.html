@@ -3,37 +3,20 @@
   <mat-step label="Seção I: Dados da Matriz">
     <mat-accordion>
       <!-- Subseção 1: Informações Gerais -->
-      <mat-expansion-panel expanded>
-        <mat-expansion-panel-header>1. Informações Gerais</mat-expansion-panel-header>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header
+          >1. Áreas de Atuação</mat-expansion-panel-header
+        >
 
-        <div class="form-group">
-          <mat-form-field>
-            <input matInput [(ngModel)]="formData.secaoI.infoGerais.cnpj"
-                   name="cnpj" placeholder="CNPJ" required>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput type="number" [(ngModel)]="formData.secaoI.infoGerais.quantidadeFiliais"
-                   name="quantidadeFiliais" placeholder="Quantidade de Filiais">
-          </mat-form-field>
-        </div>
+        <app-area-de-atuacao></app-area-de-atuacao>
       </mat-expansion-panel>
 
-      <!-- Subseção 3: Representante Legal -->
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>3. Representante Legal</mat-expansion-panel-header>
-
-        <div class="form-group">
-          <mat-form-field>
-            <input matInput [(ngModel)]="formData.secaoI.representanteLegal.nome"
-                   name="nomeRepresentante" placeholder="Nome" required>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput [(ngModel)]="formData.secaoI.representanteLegal.cpf"
-                   name="cpfRepresentante" placeholder="CPF" required>
-          </mat-form-field>
-        </div>
+      <!-- Subseção 2: . Informações Gerais c -->
+      <mat-expansion-panel expanded>
+        <mat-expansion-panel-header
+          >2. Informações Gerais</mat-expansion-panel-header
+        >
+        <app-info-gerais></app-info-gerais>
       </mat-expansion-panel>
     </mat-accordion>
 
@@ -47,11 +30,17 @@
     <mat-accordion>
       <!-- Subseção 6: Comunidade Terapêutica -->
       <mat-expansion-panel>
-        <mat-expansion-panel-header>6. Comunidade Terapêutica</mat-expansion-panel-header>
+        <mat-expansion-panel-header
+          >6. Comunidade Terapêutica</mat-expansion-panel-header
+        >
 
         <div class="form-group">
-          <mat-checkbox [(ngModel)]="formData.secaoII.comunidadeTerapeutica.licencaSanitaria"
-                        name="licencaSanitaria">
+          <mat-checkbox
+            [(ngModel)]="
+              formData.secaoII.comunidadeTerapeutica.licencaSanitaria
+            "
+            name="licencaSanitaria"
+          >
             Possui licença sanitária?
           </mat-checkbox>
         </div>
@@ -59,12 +48,17 @@
 
       <!-- Subseção 7: Entidades de Cuidado -->
       <mat-expansion-panel>
-        <mat-expansion-panel-header>7. Entidades de Cuidado</mat-expansion-panel-header>
+        <mat-expansion-panel-header
+          >7. Entidades de Cuidado</mat-expansion-panel-header
+        >
 
         <div class="form-group">
           <mat-form-field>
             <mat-label>Público-Alvo</mat-label>
-            <mat-select [(ngModel)]="formData.secaoII.entidadeCuidado.publicoAlvo" name="publicoAlvo">
+            <mat-select
+              [(ngModel)]="formData.secaoII.entidadeCuidado.publicoAlvo"
+              name="publicoAlvo"
+            >
               <mat-option value="adultos">Adultos</mat-option>
               <mat-option value="idosos">Idosos</mat-option>
             </mat-select>
