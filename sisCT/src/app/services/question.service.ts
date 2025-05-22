@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { config } from '../services/config';
 import { MatrizInterface } from '../interface/matriz.interface';
+import { UtilService } from './util.service';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
   private _selectedCnpj: string = '';
 
-  matriz:MatrizInterface = {
+  matriz: MatrizInterface = {
     seccao1: {
       titulo: 'Seção I: Dados da Matriz',
       dados: {
@@ -88,7 +89,7 @@ export class QuestionService {
               modalidadeDeFinanciamento: {
                 emendasParlamentares: false,
                 parcerias: false,
-editaisSelecao: false
+                editaisSelecao: false,
               },
             },
             financiamentoMunicipal: {
@@ -125,7 +126,7 @@ editaisSelecao: false
       },
     },
   };
-
+private readonly utilSrv = inject(UtilService)
   constructor() {}
 
   get selectedCnpj(): string {
@@ -142,5 +143,10 @@ editaisSelecao: false
   set selectedCnpj(value: string) {
     localStorage.setItem(config.localStorageKeys.selectedCnpj, value);
     this._selectedCnpj = value;
+  }
+
+  onMatrizDatachange() {
+    localStorage.setItem('matriz', JSON.stringify(this.matriz));
+    this.utilSrv.showSuccess('Matriz atualizada com sucesso!');
   }
 }

@@ -3,7 +3,7 @@ import { QuestionService } from '../../../../services/question.service';
 import { InformacaoGerais } from '../../../../interface/matriz.interface';
 import { NgModel } from '@angular/forms';
 import { UtilService } from '../../../../services/util.service';
-import { debounceTime } from 'rxjs';
+import { catchError, debounceTime, filter, map, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-info-gerais',
@@ -39,7 +39,7 @@ export class InfoGeraisComponent implements AfterViewInit {
   constructor() {}
   ngAfterViewInit(): void {
     this.formModel = this.questionSrv.matriz.seccao1.dados.informacaoGerais;
-    this.formModel.registro.tipoContato
+    this.formModel.localizacao;
   }
 
   validateCnpj(control: NgModel) {
@@ -58,22 +58,49 @@ export class InfoGeraisComponent implements AfterViewInit {
   }
 
   getEndereco() {
-    this.isLoadingAdress = true;
-    this.utilSrv
-      .getAdressByCEP(this.formModel.localizacao.cep)
-      .pipe(debounceTime(1000))
-      .subscribe({
-        next: (res) => {
-          this.formModel.localizacao.cep = res.cep;
-          this.formModel.localizacao.logradouro = res.logradouro;
-          this.formModel.localizacao.bairro = res.bairro;
-          this.formModel.localizacao.cidade = res.localidade;
-          this.formModel.localizacao.estado = res.uf;
-          this.isLoadingAdress = false;
-        },
-        error: () => {
-          this.isLoadingAdress = false;
-        },
-      });
+  this.isLoadingAdress = true;
+
+  of(this.formModel.localizacao.cep)
+    .pipe(
+      debounceTime(1000),
+      filter((cep) => !!cep && cep.length === 8),
+      switchMap((cep) =>
+        this.utilSrv.getAdressByCEP(cep).pipe(
+          map((res) => {
+            if ((res as any).erro) {
+              throw new Error('CEP inválido');
+            }
+            return res;
+          })
+        )
+      ),
+      catchError((err) => {
+        this.utilSrv.showError(
+          'CEP inválido',
+          'Verifique se o CEP digitado está correto',
+          5000
+        );
+        this.isLoadingAdress = false;
+        return of(null); // retorna observable vazio para completar o fluxo
+      })
+    )
+    .subscribe((res) => {
+      if (!res) return;
+      this.formModel.localizacao.cep = res.cep;
+      this.formModel.localizacao.logradouro = res.logradouro;
+      this.formModel.localizacao.bairro = res.bairro;
+      this.formModel.localizacao.cidade = res.localidade;
+      this.formModel.localizacao.estado = res.uf;
+      this.isLoadingAdress = false;
+    });
+}
+
+  onFieldChange(isItCep?: boolean) {
+    if (isItCep) {
+      this.getEndereco();
+    } else {
+      this.questionSrv.matriz.seccao1.dados.informacaoGerais = this.formModel;
+      this.questionSrv.onMatrizDatachange();
+    }
   }
 }

@@ -1,114 +1,313 @@
 <form #f="ngForm" class="grid 3">
-<div class="col-12">
-  <h3>
-    Quanto ao Registro
-  </h3>
-</div>
+  <div class="col-12">
+    <h3>Quanto ao Registro</h3>
+  </div>
+
   <!-- CNPJ da Matriz -->
   <div class="col-12">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>CNPJ da Matriz</mat-label>
-        <input
+      <input
         matInput
         name="cnpj"
         [(ngModel)]="formModel.registro.cnpj"
         #cnpjFieldCtrl="ngModel"
         required
         mask="00.000.000/0000-00"
-        (ngModelChange)="validateCnpj(cnpjFieldCtrl)"
         placeholder="00.000.000/0000-00"
       />
-      <mat-hint>O CNPJ é primeira regra de identificação da entidade</mat-hint>
+      <mat-hint>O CNPJ é a primeira regra de identificação da entidade</mat-hint>
+      <mat-error *ngIf="cnpjFieldCtrl.invalid && cnpjFieldCtrl.touched">
+        CNPJ é obrigatório
+      </mat-error>
     </mat-form-field>
   </div>
 
-    <div class="col-12 md-6">
+  <!-- Email Institucional -->
+  <div class="col-12 md-6">
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Email</mat-label>
-      <input matInput name="email" [(ngModel)]="formModel.registro.emailInstitucional" />
+      <mat-label>Email Institucional</mat-label>
+      <input
+        matInput
+        name="email"
+        [(ngModel)]="formModel.registro.emailInstitucional"
+        #emailInstitucionalCtrl="ngModel"
+        email
+        required
+      />
+      <mat-error *ngIf="emailInstitucionalCtrl.invalid && emailInstitucionalCtrl.touched">
+        {{
+          emailInstitucionalCtrl.errors?.['required']
+            ? 'Email institucional é obrigatório'
+            : 'Formato de email inválido'
+        }}
+      </mat-error>
     </mat-form-field>
   </div>
 
+  <!-- Nome Fantasia -->
   <div class="col-12 md-6">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Nome Fantasia</mat-label>
-      <input matInput name="nomeFantasia" [(ngModel)]="formModel.registro.nomeFantasia" />
+      <input
+        matInput
+        name="nomeFantasia"
+        [(ngModel)]="formModel.registro.nomeFantasia"
+        #nomeFantasiaCtrl="ngModel"
+        required
+      />
+      <mat-error *ngIf="nomeFantasiaCtrl.invalid && nomeFantasiaCtrl.touched">
+        Nome fantasia é obrigatório
+      </mat-error>
     </mat-form-field>
   </div>
 
+  <!-- Tipo de Contato -->
+  <div class="col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Tipo de Contato</mat-label>
+      <mat-select
+        name="tipoContato"
+        [(ngModel)]="formModel.registro.tipoContato"
+        #tipoContatoCtrl="ngModel"
+        required
+      >
+        <mat-option value="email">Email</mat-option>
+        <mat-option value="telefone">Telefone</mat-option>
+      </mat-select>
+      <mat-error *ngIf="tipoContatoCtrl.invalid && tipoContatoCtrl.touched">
+        Tipo de contato é obrigatório
+      </mat-error>
+    </mat-form-field>
+  </div>
 
-<!-- Tipo de Contato -->
+  <!-- Contato (Email ou Telefone com ngx-mask) -->
+  <div class="col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Contato</mat-label>
+      <input
+        matInput
+        name="contato"
+        [(ngModel)]="formModel.registro.contato"
+        #contatoCtrl="ngModel"
+        [type]="formModel.registro.tipoContato === 'email' ? 'email' : 'tel'"
+        [required]="true"
+        [mask]="formModel.registro.tipoContato === 'telefone' ? '(00) 00000-0000' : ''"
+        [placeholder]="
+          formModel.registro.tipoContato === 'email'
+            ? 'email@exemplo.com'
+            : '(00) 00000-0000'
+        "
+        [pattern]="
+          formModel.registro.tipoContato === 'email'
+            ? '^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$'
+            : '^(\\(\\d{2}\\)\\s?)?(\\d{4,5}\\-\\d{4})$'
+        "
+      />
+      <mat-error *ngIf="contatoCtrl.invalid && contatoCtrl.touched">
+        {{
+          formModel.registro.tipoContato === 'email'
+            ? (contatoCtrl.errors?.['required']
+                ? 'Email é obrigatório'
+                : 'Formato de email inválido')
+            : (contatoCtrl.errors?.['required']
+                ? 'Telefone é obrigatório'
+                : 'Formato de telefone inválido. Use (00) 00000-0000')
+        }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Atividade Econômica Principal -->
+  <div class="col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Atividade Econômica Principal (CNAE)</mat-label>
+      <input
+        matInput
+        name="atividadePrincipal"
+        [(ngModel)]="formModel.registro.codigoDeAtividadesEconomicasPrimarias"
+        #atividadePrincipalCtrl="ngModel"
+        required
+      />
+      <mat-hint>Lista de seleção – ver qual a base de referência</mat-hint>
+      <mat-error *ngIf="atividadePrincipalCtrl.invalid && atividadePrincipalCtrl.touched">
+        Atividade econômica principal é obrigatória
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <!-- Atividade Econômica Secundária -->
+  <div class="col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Atividades Econômicas Secundárias (CNAE)</mat-label>
+      <input
+        matInput
+        name="atividadeSecundaria"
+        [(ngModel)]="formModel.registro.codigoDeAtividadesEconomicasPrimarias"
+        #atividadeSecundariaCtrl="ngModel"
+      />
+      <mat-hint>Lista de seleção – ver qual a base de referência</mat-hint>
+      <!-- Se quiser tornar esse campo obrigatório também, descomente abaixo -->
+      <!-- <mat-error *ngIf="atividadeSecundariaCtrl.invalid && atividadeSecundariaCtrl.touched">
+        Atividade econômica secundária é obrigatória
+      </mat-error> -->
+    </mat-form-field>
+  </div>
+
+  <!-- Quanto à localização da matriz -->
+<div class="col-12">
+  <h3>Quanto à localização da matriz</h3>
+</div>
+
+<!-- CEP -->
 <div class="col-6">
   <mat-form-field appearance="outline" class="w-full">
-    <mat-label>Tipo de Contato</mat-label>
-    <mat-select
-      name="tipoContato"
-      [(ngModel)]="formModel.registro.tipoContato"
+    <mat-label>CEP</mat-label>
+    <input
+      matInput
+      name="cep"
+      [(ngModel)]="formModel.localizacao.cep"
+      #cepCtrl="ngModel"
       required
-    >
-      <mat-option value="email">Email</mat-option>
-      <mat-option value="telefone">Telefone</mat-option>
-    </mat-select>
+      mask="00000-000"
+      placeholder="00000-000"
+      (ngModelChange)="onFieldChange(true)"
+    />
+    <mat-error *ngIf="cepCtrl.invalid && cepCtrl.touched">
+      CEP é obrigatório
+    </mat-error>
   </mat-form-field>
 </div>
 
-<!-- Contato (Email ou Telefone com ngx-mask) -->
+<!-- Logradouro -->
 <div class="col-6">
   <mat-form-field appearance="outline" class="w-full">
-    <mat-label>Contato</mat-label>
+    <mat-label>Logradouro</mat-label>
     <input
       matInput
-      name="contato"
-      [(ngModel)]="formModel.registro.contato"
-      #contatoCtrl="ngModel"
-      [type]="formModel.registro.tipoContato === 'email' ? 'email' : 'tel'"
-      [required]="true"
-      [mask]="formModel.registro.tipoContato === 'telefone' ? '(00) 00000-0000' : ''"
-      [placeholder]="formModel.registro.tipoContato === 'email' ? 'email@exemplo.com' : '(00) 00000-0000'"
-      [pattern]="formModel.registro.tipoContato === 'email'
-                  ? '^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$'
-                  : '^(\\(\\d{2}\\)\\s?)?(\\d{4,5}\\-\\d{4})$'"
+      name="logradouro"
+      [(ngModel)]="formModel.localizacao.logradouro"
+      #logradouroCtrl="ngModel"
+      required
     />
-    <mat-error *ngIf="contatoCtrl.invalid && contatoCtrl.touched">
-      {{
-        formModel.registro.tipoContato === 'email'
-          ? 'Email inválido'
-          : 'Telefone inválido. Use (00) 00000-0000'
-      }}
+    <mat-error *ngIf="logradouroCtrl.invalid && logradouroCtrl.touched">
+      Logradouro é obrigatório
+    </mat-error>
+  </mat-form-field>
+</div>
+
+<!-- Número -->
+<div class="col-6">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Número</mat-label>
+    <input
+      matInput
+      name="numero"
+      [(ngModel)]="formModel.localizacao.numero"
+      #numeroCtrl="ngModel"
+      required
+    />
+    <mat-error *ngIf="numeroCtrl.invalid && numeroCtrl.touched">
+      Número é obrigatório
+    </mat-error>
+  </mat-form-field>
+</div>
+
+<!-- Complemento -->
+<div class="col-6">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Complemento</mat-label>
+    <input
+      matInput
+      name="complemento"
+      [(ngModel)]="formModel.localizacao.complemento"
+      #complementoCtrl="ngModel"
+    />
+    <!-- Complemento é opcional -->
+  </mat-form-field>
+</div>
+
+<!-- Bairro -->
+<div class="col-6">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Bairro</mat-label>
+    <input
+      matInput
+      name="bairro"
+      [(ngModel)]="formModel.localizacao.bairro"
+      #bairroCtrl="ngModel"
+      required
+      disabled
+      readonly
+    />
+    <mat-error *ngIf="bairroCtrl.invalid && bairroCtrl.touched">
+      Bairro é obrigatório
+    </mat-error>
+  </mat-form-field>
+</div>
+
+<!-- Cidade -->
+<div class="col-6">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Cidade</mat-label>
+    <input
+      matInput
+      name="cidade"
+      [(ngModel)]="formModel.localizacao.cidade"
+      #cidadeCtrl="ngModel"
+      required
+      disabled
+      readonly
+    />
+    <mat-error *ngIf="cidadeCtrl.invalid && cidadeCtrl.touched">
+      Cidade é obrigatória
+    </mat-error>
+  </mat-form-field>
+</div>
+
+<!-- Estado -->
+<div class="col-6">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>Estado</mat-label>
+    <input
+      matInput
+      name="estado"
+      [(ngModel)]="formModel.localizacao.estado"
+      #estadoCtrl="ngModel"
+      required
+      disabled
+      readonly
+    />
+    <mat-error *ngIf="estadoCtrl.invalid && estadoCtrl.touched">
+      Estado é obrigatório
+    </mat-error>
+  </mat-form-field>
+</div>
+
+<!-- País -->
+<div class="col-6">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>País</mat-label>
+    <input
+      matInput
+      name="pais"
+      [(ngModel)]="formModel.localizacao.pais"
+      #paisCtrl="ngModel"
+      required
+      disabled
+      readonly
+    />
+    <mat-error *ngIf="paisCtrl.invalid && paisCtrl.touched">
+      País é obrigatório
     </mat-error>
   </mat-form-field>
 </div>
 
 
-
-    <!-- Atividade Principal -->
-  <div class="col-6">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Atividade Econômica Principal (CNAE)</mat-label>
-      <input matInput name="atividadePrincipal" [(ngModel)]="formModel.registro.codigoDeAtividadesEconomicasPrimarias" />
-      <mat-hint>Lista de seleção – ver qual a base de referência</mat-hint>
-    </mat-form-field>
-  </div>
-
-
-  <!-- Atividade Secundária -->
-  <div class="col-6">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Atividades Econômicas Secundárias (CNAE)</mat-label>
-      <input matInput name="atividadeSecundaria" [(ngModel)]="formModel.registro.codigoDeAtividadesEconomicasPrimarias" />
-      <mat-hint>Lista de seleção – ver qual a base de referência</mat-hint>
-    </mat-form-field>
-  </div>
-
-
-  <div class="col-12">
-  <h3>
-    Quanto à localização da matriz
-  </h3>
-</div>
   <!-- Botão de envio -->
   <div class="col-12">
-    <button mat-raised-button color="primary" [disabled]="!f.valid">Salvar</button>
+    <button mat-raised-button color="primary" [disabled]="!f.valid">
+      Salvar
+    </button>
   </div>
-
 </form>
