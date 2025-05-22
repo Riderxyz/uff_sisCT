@@ -6,7 +6,7 @@ import { UtilService } from './util.service';
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
   private _selectedCnpj: string = '';
-
+  isSavingLocally: boolean = false;
   matriz: MatrizInterface = {
     seccao1: {
       titulo: 'Seção I: Dados da Matriz',
@@ -126,7 +126,7 @@ export class QuestionService {
       },
     },
   };
-private readonly utilSrv = inject(UtilService)
+  private readonly utilSrv = inject(UtilService);
   constructor() {}
 
   get selectedCnpj(): string {
@@ -146,7 +146,11 @@ private readonly utilSrv = inject(UtilService)
   }
 
   onMatrizDatachange() {
+    this.isSavingLocally = true;
     localStorage.setItem('matriz', JSON.stringify(this.matriz));
-    this.utilSrv.showSuccess('Matriz atualizada com sucesso!');
+   // this.utilSrv.showSuccess('Matriz atualizada com sucesso!');
+    setTimeout(() => {
+      this.isSavingLocally = false;
+    }, 1500);
   }
 }
