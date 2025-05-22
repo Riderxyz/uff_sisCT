@@ -39,7 +39,7 @@ export class QuestionService {
         },
         representanteLegal: {
           nome: '',
-
+          seuPapelnaMatriz: '',
           anoDeTerminoDeMandato: '',
           cpf: '',
           dataDeNascimento: '',

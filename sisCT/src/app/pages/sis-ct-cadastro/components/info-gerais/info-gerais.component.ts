@@ -26,7 +26,7 @@ import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animati
 })
 export class InfoGeraisComponent implements AfterViewInit {
   readonly questionSrv: QuestionService = inject(QuestionService);
-  utilSrv: UtilService = inject(UtilService);
+  readonly utilSrv: UtilService = inject(UtilService);
   formModel: InformacaoGerais = {
     registro: {
       cnpj: '',

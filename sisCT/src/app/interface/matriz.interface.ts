@@ -56,6 +56,7 @@ export interface RepresentanteLegal {
   escolaridade: string;
   cursoProfissao: string;
   telefone: string;
+  seuPapelnaMatriz: string;
   email: string;
 }
 
