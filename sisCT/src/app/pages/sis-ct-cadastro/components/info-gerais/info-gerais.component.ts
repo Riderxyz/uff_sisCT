@@ -17,6 +17,7 @@ import {
   fadeInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
 } from 'angular-animations';
+import { CadastroStep1Id } from '../../../../interface/subSection.interface';
 
 @Component({
   selector: 'app-info-gerais',
@@ -114,7 +115,7 @@ export class InfoGeraisComponent implements AfterViewInit {
       this.getEndereco();
     } else {
       this.questionSrv.matriz.seccao1.dados.informacaoGerais = this.formModel;
-      this.questionSrv.onMatrizDatachange('informacoes-gerais');
+      this.questionSrv.onMatrizDatachange(CadastroStep1Id.InfoGerais);
     }
   }
 }
