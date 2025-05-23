@@ -2,6 +2,7 @@ import { AfterViewInit, Component, inject } from '@angular/core';
 import { QuestionService } from '../../../../services/question.service';
 import { UtilService } from '../../../../services/util.service';
 import { RepresentanteTecnico } from '../../../../interface/matriz.interface';
+import { CadastroStep1Id } from '../../../../interface/subSection.interface';
 
 @Component({
   selector: 'app-responsavel-tecnico',
@@ -28,6 +29,6 @@ export class ResponsavelTecnicoComponent implements AfterViewInit {
 
   onFieldChange() {
     this.questionSrv.matriz.seccao1.dados.representanteTecnico = this.formModel;
-    this.questionSrv.onMatrizDatachange('reponsavel-tecnico');
+    this.questionSrv.onMatrizDatachange(CadastroStep1Id.ResponsavelTecnico);
   }
 }

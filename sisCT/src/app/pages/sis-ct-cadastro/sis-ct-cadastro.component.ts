@@ -7,14 +7,15 @@ import {
 import { CentralRxJsService } from '../../services/centralRXJS.service';
 import { config } from '../../services/config';
 import {
-SubSection, CadastroStep1Id, CadastroStep2Id } from '../../interface/subSection.interface';
+  SubSection,
+  CadastroStep1Id,
+  CadastroStep2Id,
+} from '../../interface/subSection.interface';
 import { AreaDeAtuacaoComponent } from './components/area-de-atuacao/area-de-atuacao.component';
 import { InfoGeraisComponent } from './components/info-gerais/info-gerais.component';
 import { ResponsavelTecnicoComponent } from './components/responsavel-tecnico/responsavel-tecnico.component';
 import { RepresentateLegalMatrizComponent } from './components/representate-legal-matriz/representate-legal-matriz.component';
-
-
-
+import { FonteRecursosComponent } from './components/fonte-recursos/fonte-recursos.component';
 
 @Component({
   selector: 'app-sis-ct-cadastro',
@@ -28,7 +29,7 @@ export class SisCtCadastroComponent {
 
   @ViewChild('stepper') stepper!: MatStepper;
 
- readonly paginasSection1: SubSection[] = [
+  readonly paginasSection1: SubSection[] = [
     {
       id: CadastroStep1Id.AreaDeAtuacao,
       header: '1. Áreas de Atuação',
@@ -53,6 +54,12 @@ export class SisCtCadastroComponent {
       component: ResponsavelTecnicoComponent,
       showSavingIcon: false,
     },
+    {
+      id: CadastroStep1Id.FonteRecursos,
+      header: '5. Fonte de Recursos',
+      component: FonteRecursosComponent,
+      showSavingIcon: false,
+    },
   ];
 
   readonly paginaSection2: SubSection[] = [
@@ -75,8 +82,8 @@ export class SisCtCadastroComponent {
     this.centralRxjs.dataToReceive.subscribe(({ key, data }) => {
       if (key === config.senderKeys.matrizChange) {
         const section =
-          this.paginasSection1.find(p => p.id === data.subsection) ??
-          this.paginaSection2.find(p => p.id === data.subsection);
+          this.paginasSection1.find((p) => p.id === data.subsection) ??
+          this.paginaSection2.find((p) => p.id === data.subsection);
 
         if (section) section.showSavingIcon = !section.showSavingIcon;
       }

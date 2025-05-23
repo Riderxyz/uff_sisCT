@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
 import { QuestionService } from '../../../../services/question.service';
+import { CadastroStep1Id } from '../../../../interface/subSection.interface';
 
 @Component({
   selector: 'app-area-de-atuacao',
@@ -34,13 +35,13 @@ export class AreaDeAtuacaoComponent implements AfterViewInit {
         true;
       this.questionSrv.matriz.seccao1.dados.areaDeAtuacao.entidadeDeCuidado =
         false;
-      this.questionSrv.onMatrizDatachange('areas-de-atuacao');
+      this.questionSrv.onMatrizDatachange(CadastroStep1Id.AreaDeAtuacao);
     } else {
       this.questionSrv.matriz.seccao1.dados.areaDeAtuacao.comunidadeTerapeutica =
         false;
       this.questionSrv.matriz.seccao1.dados.areaDeAtuacao.entidadeDeCuidado =
         true;
-      this.questionSrv.onMatrizDatachange('areas-de-atuacao');
+      this.questionSrv.onMatrizDatachange(CadastroStep1Id.AreaDeAtuacao);
     }
   }
 }

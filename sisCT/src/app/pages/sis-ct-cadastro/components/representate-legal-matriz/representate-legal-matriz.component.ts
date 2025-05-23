@@ -5,6 +5,7 @@ import {
 } from '../../../../interface/matriz.interface';
 import { QuestionService } from '../../../../services/question.service';
 import { UtilService } from '../../../../services/util.service';
+import { CadastroStep1Id } from '../../../../interface/subSection.interface';
 
 @Component({
   selector: 'app-representate-legal-matriz',
@@ -40,7 +41,7 @@ export class RepresentateLegalMatrizComponent implements AfterViewInit {
       //this.getEndereco();
     } else {
       this.questionSrv.matriz.seccao1.dados.representanteLegal = this.formModel;
-      this.questionSrv.onMatrizDatachange('representante-legal');
+      this.questionSrv.onMatrizDatachange(CadastroStep1Id.RepresentanteLegal);
     }
   }
 }
