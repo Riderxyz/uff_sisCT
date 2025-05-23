@@ -25,4 +25,9 @@ export class ResponsavelTecnicoComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.formModel = this.questionSrv.matriz.seccao1.dados.representanteTecnico;
   }
+
+  onFieldChange() {
+    this.questionSrv.matriz.seccao1.dados.representanteTecnico = this.formModel;
+    this.questionSrv.onMatrizDatachange('reponsavel-tecnico');
+  }
 }

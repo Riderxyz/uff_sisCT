@@ -13,16 +13,16 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { fadeInOnEnterAnimation, fadeOutOnLeaveAnimation } from 'angular-animations';
+import {
+  fadeInOnEnterAnimation,
+  fadeOutOnLeaveAnimation,
+} from 'angular-animations';
 
 @Component({
   selector: 'app-info-gerais',
   templateUrl: './info-gerais.component.html',
   styleUrl: './info-gerais.component.scss',
-  animations: [
-    fadeInOnEnterAnimation(),
-    fadeOutOnLeaveAnimation()
-  ],
+  animations: [fadeInOnEnterAnimation(), fadeOutOnLeaveAnimation()],
 })
 export class InfoGeraisComponent implements AfterViewInit {
   readonly questionSrv: QuestionService = inject(QuestionService);
@@ -74,7 +74,7 @@ export class InfoGeraisComponent implements AfterViewInit {
   getEndereco() {
     of(this.formModel.localizacao.cep)
       .pipe(
-        tap(() => this.isLoadingAdress = true),
+        tap(() => (this.isLoadingAdress = true)),
         debounceTime(1500),
         delay(500),
         filter((cep) => !!cep && cep.length === 8),

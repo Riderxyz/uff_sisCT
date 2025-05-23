@@ -16,6 +16,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatDialogModule} from '@angular/material/dialog';
 import { provideEnvironmentNgxMask,  NgxMaskDirective, NgxMaskPipe} from 'ngx-mask';
 import { HttpClientModule } from '@angular/common/http';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,8 @@ import { HttpClientModule } from '@angular/common/http';
     NgxMaskDirective, NgxMaskPipe
   ],
   providers: [
+    provideNativeDateAdapter(),
+    {provide: MAT_DATE_LOCALE, useValue: 'pt-br'},
     provideEnvironmentNgxMask(),
   ],
   bootstrap: [AppComponent]
