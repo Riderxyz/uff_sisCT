@@ -12,6 +12,7 @@ import { AreaDeAtuacaoComponent } from './components/area-de-atuacao/area-de-atu
 import { InfoGeraisComponent } from './components/info-gerais/info-gerais.component';
 import { ResponsavelTecnicoComponent } from './components/responsavel-tecnico/responsavel-tecnico.component';
 import { RepresentateLegalMatrizComponent } from './components/representate-legal-matriz/representate-legal-matriz.component';
+import { FonteRecursosComponent } from './components/fonte-recursos/fonte-recursos.component';
 
 
 
@@ -51,6 +52,12 @@ export class SisCtCadastroComponent {
       id: CadastroStep1Id.ResponsavelTecnico,
       header: '4. Responsável Técnico',
       component: ResponsavelTecnicoComponent,
+      showSavingIcon: false,
+    },
+      {
+      id: CadastroStep1Id.FonteRecursos,
+      header: '5. Fonte de Recursos',
+      component: FonteRecursosComponent,
       showSavingIcon: false,
     },
   ];
