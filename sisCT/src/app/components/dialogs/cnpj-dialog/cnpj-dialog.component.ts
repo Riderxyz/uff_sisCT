@@ -1,5 +1,5 @@
 import { Component, inject, Inject } from '@angular/core';
-import { NgForm, NgModel } from '@angular/forms';
+import { NgModel } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UtilService } from '../../../services/util.service';
 

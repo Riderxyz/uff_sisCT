@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -10,7 +10,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatRadioButton } from '@angular/material/radio';
+import {  MatRadioModule } from '@angular/material/radio';
+import {MatDatepickerModule} from '@angular/material/datepicker'
 import { ComponentModule } from '../../components/components.module';
 
 import { SisCtCadastroComponent } from './sis-ct-cadastro.component';
@@ -31,7 +32,8 @@ const MaterialModules = [
   MatInputModule,
   MatButtonModule,
   MatCheckboxModule,
-  MatRadioButton,
+  MatDatepickerModule,
+  MatRadioModule,
 ];
 
 @NgModule({
@@ -44,9 +46,10 @@ const MaterialModules = [
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     ...MaterialModules,
       NgxMaskDirective, NgxMaskPipe,
-    FormsModule,
     ComponentModule,
     SisCtCadastroRoutingModule,
   ],

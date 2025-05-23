@@ -6,6 +6,15 @@ import {
 } from 'angular-animations';
 import { CentralRxJsService } from '../../services/centralRXJS.service';
 import { config } from '../../services/config';
+import {
+SubSection, CadastroStep1Id, CadastroStep2Id } from '../../interface/subSection.interface';
+import { AreaDeAtuacaoComponent } from './components/area-de-atuacao/area-de-atuacao.component';
+import { InfoGeraisComponent } from './components/info-gerais/info-gerais.component';
+import { ResponsavelTecnicoComponent } from './components/responsavel-tecnico/responsavel-tecnico.component';
+import { RepresentateLegalMatrizComponent } from './components/representate-legal-matriz/representate-legal-matriz.component';
+
+
+
 
 @Component({
   selector: 'app-sis-ct-cadastro',
@@ -19,65 +28,57 @@ export class SisCtCadastroComponent {
 
   @ViewChild('stepper') stepper!: MatStepper;
 
-  paginasSection1 = [
+ readonly paginasSection1: SubSection[] = [
     {
-      id: 'areas-de-atuacao',
+      id: CadastroStep1Id.AreaDeAtuacao,
       header: '1. Áreas de Atuação',
-      component: 'app-area-de-atuacao',
+      component: AreaDeAtuacaoComponent,
       showSavingIcon: false,
     },
     {
-      id: 'informacoes-gerais',
+      id: CadastroStep1Id.InfoGerais,
       header: '2. Informações Gerais',
-      component: 'app-info-gerais',
+      component: InfoGeraisComponent,
       showSavingIcon: false,
     },
     {
-      id: 'representante-legal',
-      header: '3. Quanto ao Representante legal da matriz',
-      component: 'app-representante-legal',
+      id: CadastroStep1Id.RepresentanteLegal,
+      header: '3. Representante Legal',
+      component: RepresentateLegalMatrizComponent,
       showSavingIcon: false,
     },
-       {
-      id: 'reponsavel-tecnico',
-      header: '4. Quanto ao Responsável Técnico da matriz',
-      component: 'app-responsavel-tecnico',
+    {
+      id: CadastroStep1Id.ResponsavelTecnico,
+      header: '4. Responsável Técnico',
+      component: ResponsavelTecnicoComponent,
       showSavingIcon: false,
     },
   ];
-  paginaSection2 = [
+
+  readonly paginaSection2: SubSection[] = [
     {
-      id: 'comunidade-terapeutica',
-      header: '6. Comunidade Terapeutica',
-      component: 'app-comunidade-terapeutica',
+      id: CadastroStep2Id.ComunidadeTerap,
+      header: '6. Comunidade Terapêutica',
+      component: ResponsavelTecnicoComponent,
       showSavingIcon: false,
     },
     {
-      id: 'entidades-de-cuidado',
-      header: '7. Entidades de cuidado',
-      component: 'app-entidades-de-cuidado',
+      id: CadastroStep2Id.EntidadesCuidado,
+      header: '7. Entidades de Cuidado',
+      component: ResponsavelTecnicoComponent,
       showSavingIcon: false,
     },
   ];
+
   private readonly centralRxjs = inject(CentralRxJsService);
   constructor() {
-    this.centralRxjs.dataToReceive.subscribe((data) => {
-      if (data.key === config.senderKeys.matrizChange) {
-        switch (data.data.subsection) {
-          case 'areas-de-atuacao':
-            this.paginasSection1[0].showSavingIcon =
-              !this.paginasSection1[0].showSavingIcon;
-            break;
-          case 'informacoes-gerais':
-            this.paginasSection1[1].showSavingIcon =
-              !this.paginasSection1[1].showSavingIcon;
-            break;
+    this.centralRxjs.dataToReceive.subscribe(({ key, data }) => {
+      if (key === config.senderKeys.matrizChange) {
+        const section =
+          this.paginasSection1.find(p => p.id === data.subsection) ??
+          this.paginaSection2.find(p => p.id === data.subsection);
 
-          case 'representante-legal':
-            this.paginasSection1[2].showSavingIcon =
-              !this.paginasSection1[2].showSavingIcon;
-            break;
-        }
+        if (section) section.showSavingIcon = !section.showSavingIcon;
       }
     });
   }

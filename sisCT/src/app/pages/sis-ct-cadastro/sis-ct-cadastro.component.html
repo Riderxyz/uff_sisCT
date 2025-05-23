@@ -1,79 +1,57 @@
 <mat-horizontal-stepper #stepper>
-  <!-- ========== SEÇÃO I ========== -->
-  <mat-step label="Seção I: Dados da Matriz">
 
+  <!-- SEÇÃO I -->
+  <mat-step label="Seção I: Dados da Matriz">
     <mat-accordion>
       @for (subSection of paginasSection1; track $index) {
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title> {{ subSection.header }} </mat-panel-title>
-          <mat-panel-description
-            class="flex justify-content-end align-items-center"
-          >
-            @if ( subSection.showSavingIcon ) {
-            <i
-              [@fadeInOnEnter]
-              [@fadeOutOnLeave]
-              class="fa-solid fa-floppy-disk fa-lg fa-bounce p-1"
-            ></i>
-            }
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        @switch (
-          subSection.component
-        ) {
-          @case ('app-area-de-atuacao') {
-            <app-area-de-atuacao></app-area-de-atuacao>
-          }
-          @case ('app-info-gerais') {
-            <app-info-gerais></app-info-gerais>
-          }
-          @case ('app-representante-legal') {
-            <app-representate-legal-matriz></app-representate-legal-matriz>
-          }
-        }
-      </mat-expansion-panel>
-    }
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ subSection.header }}</mat-panel-title>
+            <mat-panel-description class="flex justify-content-end align-items-center">
+              @if (subSection.showSavingIcon) {
+                <i
+                  [@fadeInOnEnter]
+                  [@fadeOutOnLeave]
+                  class="fa-solid fa-floppy-disk fa-lg fa-bounce p-1"
+                ></i>
+              }
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <ng-container *ngComponentOutlet="subSection.component" />
+        </mat-expansion-panel>
+      }
     </mat-accordion>
     <div class="stepper-actions">
       <button mat-button matStepperNext>Próximo</button>
     </div>
   </mat-step>
 
-  <!-- ========== SEÇÃO II ========== -->
+  <!-- SEÇÃO II -->
   <mat-step label="Seção II: Dados Específicos">
     <mat-accordion>
       @for (subSection of paginaSection2; track $index) {
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title> {{ subSection.header }} </mat-panel-title>
-          <mat-panel-description
-            class="flex justify-content-end align-items-center"
-          >
-            @if ( subSection.showSavingIcon ) {
-            <i
-              [@fadeInOnEnter]
-              [@fadeOutOnLeave]
-              class="fa-solid fa-spin fa-2x fa-spinner p-1"
-            ></i>
-            }
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        @switch (
-          subSection.component
-        ) {
-          @case ('app-comunidade-terapeutica') {
-            <app-area-de-atuacao></app-area-de-atuacao>
-          }
-          @case ('app-entidades-de-cuidado') {
-            <app-area-de-atuacao></app-area-de-atuacao>
-          }
-        }
-      </mat-expansion-panel>
-    }
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ subSection.header }}</mat-panel-title>
+            <mat-panel-description class="flex justify-content-end align-items-center">
+              @if (subSection.showSavingIcon) {
+                <i
+                  [@fadeInOnEnter]
+                  [@fadeOutOnLeave]
+                  class="fa-solid fa-spin fa-2x fa-spinner p-1"
+                ></i>
+              }
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <ng-container *ngComponentOutlet="subSection.component" />
+        </mat-expansion-panel>
+      }
     </mat-accordion>
     <div class="stepper-actions">
       <button mat-button matStepperPrevious>Voltar</button>
     </div>
   </mat-step>
+
 </mat-horizontal-stepper>
