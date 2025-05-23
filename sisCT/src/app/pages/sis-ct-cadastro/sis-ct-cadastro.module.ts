@@ -21,6 +21,7 @@ import { SisCtCadastroRoutingModule } from './sis-ct-cadastro-routing.module';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { RepresentateLegalMatrizComponent } from './components/representate-legal-matriz/representate-legal-matriz.component';
 import { ResponsavelTecnicoComponent } from './components/responsavel-tecnico/responsavel-tecnico.component';
+import { FonteRecursosComponent } from './components/fonte-recursos/fonte-recursos.component';
 
 
 const MaterialModules = [
@@ -43,6 +44,7 @@ const MaterialModules = [
     InfoGeraisComponent,
     RepresentateLegalMatrizComponent,
     ResponsavelTecnicoComponent,
+    FonteRecursosComponent,
   ],
   imports: [
     CommonModule,
