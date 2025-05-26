@@ -18,7 +18,7 @@ export interface FinanciamentoFonte {
 }
 
 export type ModalidadeFinanciamento = 'Contrato' | 'Termo de Fomento' | 'Termo de Colaboração' | 'Outros' | 'Emendas Parlamentares' | 'Parcerias' | 'Editais de seleção';
-
+export type NivelFonte = 'uniao' | 'estadual' | 'municipal';
 export interface OutrasFontes {
   doacoesFinanceirasTerceiros: boolean;
   parceriasPrivadas: boolean;

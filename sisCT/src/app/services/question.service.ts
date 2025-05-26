@@ -71,50 +71,16 @@ export class QuestionService {
         },
         fonteRecursos: {
           receitaBruta: 0,
-          recursoPublicos: {
-            financiamentoComAUniao: {
-              possui: false,
-              modalidadeDeFinanciamento: {
-                contrato: false,
-                termoFomento: false,
-                termoColaboracao: false,
-                outrosEspecificar: false,
-                outrosEspecificarDescricao: '',
-                emendasParlamentares: false,
-                parcerias: false,
-                editaisSelecao: false,
-              },
-            },
-            financiamentoEstadual: {
-              possui: false,
-              modalidadeDeFinanciamento: {
-                emendasParlamentares: false,
-                parcerias: false,
-                editaisSelecao: false,
-              },
-            },
-            financiamentoMunicipal: {
-              possui: false,
-              modalidadeDeFinanciamento: {
-                emendasParlamentares: false,
-                parcerias: false,
-                editaisSelecao: false,
-              },
-            },
+          recursosPublicos: {
+            uniao: { possui: false, modalidades: [] },
+            estadual: { possui: false, modalidades: [] },
+            municipal: { possui: false, modalidades: [] },
           },
-          recursosDeOutrasFontes: {
+          outrasFontes: {
             doacoesFinanceirasTerceiros: false,
             parceriasPrivadas: false,
-            outrosEspecificar: false,
-            outrosEspecificarDescricao: '',
-            receitasProprias: {
-              mensalidadesPorParteDosAcolhidos: false,
-              campanhasArrecadacao: false,
-              doacoesAssociados: false,
-              vendaProdutos: false,
-              outrosEspecificar: false,
-              outrosEspecificarDescricao: '',
-            },
+            receitasProprias: [],
+            outros: '',
           },
         },
       },

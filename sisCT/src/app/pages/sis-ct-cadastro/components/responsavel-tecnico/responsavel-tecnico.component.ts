@@ -1,7 +1,7 @@
+import { RepresentanteTecnicoInterface } from './../../../../interface/representanteTecnico.interface';
 import { AfterViewInit, Component, inject } from '@angular/core';
 import { QuestionService } from '../../../../services/question.service';
 import { UtilService } from '../../../../services/util.service';
-import { RepresentanteTecnico } from '../../../../interface/matriz.interface';
 import { CadastroStep1Id } from '../../../../interface/subSection.interface';
 
 @Component({
@@ -12,7 +12,7 @@ import { CadastroStep1Id } from '../../../../interface/subSection.interface';
 export class ResponsavelTecnicoComponent implements AfterViewInit {
   readonly questionSrv: QuestionService = inject(QuestionService);
   readonly utilSrv: UtilService = inject(UtilService);
-  formModel: RepresentanteTecnico = {
+  formModel: RepresentanteTecnicoInterface = {
     nome: '',
     cpf: '',
     dataDeNascimento: '',

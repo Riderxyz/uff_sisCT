@@ -1,116 +1,100 @@
-<form #infoGeraisForm="ngForm" class="grid">
+<form #formRef="ngForm" class="p-fluid p-grid gap-4">
   <div class="col-12">
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>* Informe a Receita bruta da filial:</mat-label>
+      <mat-label>Informe a Receita bruta da filial</mat-label>
       <input
         matInput
         name="receitaBruta"
-        [(ngModel)]="formModel.receitaBruta"
-        #receitaBrutaCtrl="ngModel"
-        placeholder="Informe a Receita bruta da filial"
         type="number"
+        [(ngModel)]="formModel.receitaBruta"
+        required
         (blur)="onFieldChange()"
       />
-
-      <i matPrefix class="fa-solid fa-dollar-sign p-3"></i>
-
     </mat-form-field>
   </div>
-  <!-- Recursos Públicos -->
-  <div class="p-col-12">
-    <h3>5.1 Quanto a Recursos Públicos</h3>
 
-    <!-- União -->
-    <label>Possui financiamento com a União?</label>
-    <mat-radio-group [(ngModel)]="formModel.recursoPublicos.financiamentoComAUniao.possui" name="uniao">
-      <mat-radio-button [value]="true">Sim</mat-radio-button>
-      <mat-radio-button [value]="false">Não</mat-radio-button>
-    </mat-radio-group>
+  <div class="col-12">
+    <h3>5.1 Quanto à Recursos Públicos</h3>
 
-    <div *ngIf="formModel.recursoPublicos.financiamentoComAUniao.possui" class="p-grid">
-      <div class="p-col-12 p-md-6" *ngFor="let tipo of uniaoTipos">
-        <mat-checkbox [(ngModel)]="formModel.recursoPublicos.financiamentoComAUniao.modalidades[]" name="{{tipo.key}}">
-          {{ tipo.label }}
-        </mat-checkbox>
-      </div>
-      <div class="p-col-12" *ngIf="formModel.recursoPublicos.financiamentoComAUniao.modalidadeDeFinanciamento.outrosEspecificar">
-        <mat-form-field class="w-full">
-          <mat-label>Outros - especificar</mat-label>
-          <input matInput name="uniaoOutros" [(ngModel)]="formModel.recursoPublicos.financiamentoComAUniao.modalidadeDeFinanciamento.outrosEspecificarDescricao">
-        </mat-form-field>
-      </div>
-    </div>
-
-    <!-- Estadual -->
-    <label>Possui financiamento Estadual?</label>
-    <mat-radio-group [(ngModel)]="formModel.recursoPublicos.financiamentoEstadual.possui" name="estadual">
-      <mat-radio-button [value]="true">Sim</mat-radio-button>
-      <mat-radio-button [value]="false">Não</mat-radio-button>
-    </mat-radio-group>
-
-    <div class="p-col-12 p-grid" *ngIf="formModel.recursoPublicos.financiamentoEstadual.possui">
-      <div class="p-col-12 p-md-4" *ngFor="let tipo of simplesTipos">
-        <mat-checkbox [(ngModel)]="formModel.recursoPublicos.financiamentoEstadual.modalidadeDeFinanciamento[tipo.key]" name="estadual_{{tipo.key}}">
-          {{ tipo.label }}
-        </mat-checkbox>
-      </div>
-    </div>
-
-    <!-- Municipal -->
-    <label>Possui financiamento Municipal?</label>
-    <mat-radio-group [(ngModel)]="formModel.recursoPublicos.financiamentoMunicipal.possui" name="municipal">
-      <mat-radio-button [value]="true">Sim</mat-radio-button>
-      <mat-radio-button [value]="false">Não</mat-radio-button>
-    </mat-radio-group>
-
-    <div class="p-col-12 p-grid" *ngIf="formModel.recursoPublicos.financiamentoMunicipal.possui">
-      <div class="p-col-12 p-md-4" *ngFor="let tipo of simplesTipos">
-        <mat-checkbox [(ngModel)]="formModel.recursoPublicos.financiamentoMunicipal.modalidadeDeFinanciamento[tipo.key]" name="municipal_{{tipo.key}}">
-          {{ tipo.label }}
-        </mat-checkbox>
+    <div *ngFor="let nivel of niveisFonte" class="col-12">
+      <div class="grid align-items-center">
+        <div class="col-2">
+          <mat-checkbox
+            [(ngModel)]="formModel.recursosPublicos[nivel].possui"
+            [name]="nivel + '_possui'"
+            (blur)="onFieldChange()"
+          >
+            Possui financiamento com {{ nivel }}?
+          </mat-checkbox>
+        </div>
+        <div class="col-10" *ngIf="formModel.recursosPublicos[nivel].possui">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Modalidades</mat-label>
+            <mat-select
+              [(ngModel)]="formModel.recursosPublicos[nivel].modalidades"
+              [name]="nivel + '_modalidades'"
+              multiple
+              (blur)="onFieldChange()"
+            >
+              <mat-option *ngFor="let m of modalidades" [value]="m">{{
+                m
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Outras fontes -->
-  <div class="p-col-12">
-    <h3>5.2 Quanto a outras fontes de recursos</h3>
-
-    <mat-checkbox name="doacoesFinanceirasTerceiros" [(ngModel)]="formModel.recursosDeOutrasFontes.doacoesFinanceirasTerceiros">
-      Doações financeiras de terceiros
-    </mat-checkbox>
-    <br />
-    <mat-checkbox name="parceriasPrivadas" [(ngModel)]="formModel.recursosDeOutrasFontes.parceriasPrivadas">
-      Parcerias privadas
-    </mat-checkbox>
-    <br />
-    <mat-checkbox name="receitasProprias" [(ngModel)]="usaReceitasProprias">
-      Receitas próprias
-    </mat-checkbox>
-
-    <div class="p-grid p-col-12" *ngIf="usaReceitasProprias">
-      <div class="p-col-12 p-md-6" *ngFor="let tipo of receitasTipos">
-        <mat-checkbox [(ngModel)]="formModel.recursosDeOutrasFontes.receitasProprias[tipo.key]" name="receitas_{{tipo.key}}">
-          {{ tipo.label }}
+  <div class="col-12">
+    <h3>5.2 Quanto à outras fontes de recursos</h3>
+    <div class="grid">
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.outrasFontes.doacoesFinanceirasTerceiros"
+          name="doacoesFinanceirasTerceiros"
+          (blur)="onFieldChange()"
+        >
+          Doações financeiras de terceiros
         </mat-checkbox>
       </div>
-      <div class="p-col-12" *ngIf="formModel.recursosDeOutrasFontes.receitasProprias.outrosEspecificar">
-        <mat-form-field class="w-full">
-          <mat-label>Outros - especificar</mat-label>
-          <input matInput name="receitasOutros" [(ngModel)]="formModel.recursosDeOutrasFontes.receitasProprias.outrosEspecificarDescricao">
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.outrasFontes.parceriasPrivadas"
+          name="parceriasPrivadas"
+          (blur)="onFieldChange()"
+        >
+          Parcerias privadas
+        </mat-checkbox>
+      </div>
+
+      <div class="col-12">
+        <mat-label>Receitas próprias</mat-label>
+        <mat-selection-list
+          [(ngModel)]="formModel.outrasFontes.receitasProprias"
+          name="receitasProprias"
+          (blur)="onFieldChange()"
+        >
+          <mat-list-option
+            *ngFor="let receita of receitasProprias"
+            [value]="receita.value"
+          >
+            {{ receita.label }}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+
+      <div class="col-12">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Outros</mat-label>
+          <input
+            matInput
+            name="outros"
+            [(ngModel)]="formModel.outrasFontes.outros"
+            (blur)="onFieldChange()"
+          />
         </mat-form-field>
       </div>
-    </div>
-
-    <!-- Outros recursos -->
-    <mat-checkbox name="outrosRecursos" [(ngModel)]="formModel.recursosDeOutrasFontes.outrosEspecificar">
-      Outros
-    </mat-checkbox>
-    <div *ngIf="formModel.recursosDeOutrasFontes.outrosEspecificar" class="p-col-12">
-      <mat-form-field class="w-full">
-        <mat-label>Especificar</mat-label>
-        <input matInput name="outrosEspecificarDescricao" [(ngModel)]="formModel.recursosDeOutrasFontes.outrosEspecificarDescricao">
-      </mat-form-field>
     </div>
   </div>
 </form>

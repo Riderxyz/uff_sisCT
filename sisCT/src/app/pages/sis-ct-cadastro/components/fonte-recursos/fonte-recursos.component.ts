@@ -1,11 +1,8 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
-import {
-  FonteRecursos,
-  RepresentanteLegal,
-} from '../../../../interface/matriz.interface';
 import { QuestionService } from '../../../../services/question.service';
 import { UtilService } from '../../../../services/util.service';
 import { CadastroStep1Id } from '../../../../interface/subSection.interface';
+import { FonteRecursosInterface, NivelFonte } from '../../../../interface/fonteRecursos.interfaces';
 
 @Component({
   selector: 'app-fonte-recursos',
@@ -15,36 +12,23 @@ import { CadastroStep1Id } from '../../../../interface/subSection.interface';
 export class FonteRecursosComponent implements AfterViewInit {
   readonly questionSrv: QuestionService = inject(QuestionService);
   readonly utilSrv: UtilService = inject(UtilService);
-  formModel: FonteRecursos = {
-    receitaBruta: 0,
-    recursoPublicos: {
-      financiamentoComAUniao: {
-        possui: false,
-        modalidades: [],
-        outrosEspecificarDescricao: '',
-      },
-      financiamentoEstadual: {
-        possui: false,
-        modalidadeDeFinanciamento: []
-      },
-      financiamentoMunicipal: {
-        possui: false,
-        modalidadeDeFinanciamento: []
-      },
+  formModel:  FonteRecursosInterface = {
+    receitaBruta: null,
+    recursosPublicos: {
+      uniao: { possui: false, modalidades: [] },
+      estadual: { possui: false, modalidades: [] },
+      municipal: { possui: false, modalidades: [] },
     },
-    recursosDeOutrasFontes: {
-      receitasProprias: {
-        modalidades: [],
-        outrosEspecificarDescricao: '',
-      },
+    outrasFontes: {
       doacoesFinanceirasTerceiros: false,
-      outrosEspecificar: false,
-      outrosEspecificarDescricao: '',
       parceriasPrivadas: false,
+      receitasProprias: [],
+      outros: '',
     },
   };
 
 
+niveisFonte: NivelFonte[] = ['uniao', 'estadual', 'municipal'];
 
 
 
@@ -54,34 +38,22 @@ export class FonteRecursosComponent implements AfterViewInit {
 
 
 
-
-
-
-
-    usaReceitasProprias = false;
-
-  uniaoTipos = [
-    { key: 'contrato', label: 'Contrato' },
-    { key: 'termoFomento', label: 'Termo de Fomento' },
-    { key: 'termoColaboracao', label: 'Termo de Colaboração' },
-    { key: 'emendasParlamentares', label: 'Emendas Parlamentares' },
-    { key: 'parcerias', label: 'Parcerias' },
-    { key: 'editaisSelecao', label: 'Editais de Seleção' },
-    { key: 'outrosEspecificar', label: 'Outros' }
+  modalidades = [
+    'Contrato',
+    'Termo de Fomento',
+    'Termo de Colaboração',
+    'Outros',
+    'Emendas Parlamentares',
+    'Parcerias',
+    'Editais de seleção',
   ];
 
-  simplesTipos = [
-    { key: 'emendasParlamentares', label: 'Emendas Parlamentares' },
-    { key: 'parcerias', label: 'Parcerias' },
-    { key: 'editaisSelecao', label: 'Editais de Seleção' }
-  ];
-
-  receitasTipos = [
-    { key: 'mensalidadesPorParteDosAcolhidos', label: 'Mensalidades dos acolhidos/famílias' },
-    { key: 'campanhasArrecadacao', label: 'Campanhas de arrecadação' },
-    { key: 'doacoesAssociados', label: 'Doações dos associados' },
-    { key: 'vendaProdutos', label: 'Venda de produtos' },
-    { key: 'outrosEspecificar', label: 'Outros' }
+  receitasProprias = [
+    { label: 'Mensalidades por parte dos acolhidos/famílias', value: 'Mensalidades' },
+    { label: 'Campanhas de arrecadação', value: 'Campanhas' },
+    { label: 'Doações dos associados', value: 'DoacoesAssociados' },
+    { label: 'Venda de produtos', value: 'VendaProdutos' },
+    { label: 'Outros', value: 'Outros' },
   ];
   constructor() {}
 
