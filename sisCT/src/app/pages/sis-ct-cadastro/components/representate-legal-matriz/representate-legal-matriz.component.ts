@@ -1,11 +1,8 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
-import {
-  InformacaoGerais,
-  RepresentanteLegal,
-} from '../../../../interface/matriz.interface';
 import { QuestionService } from '../../../../services/question.service';
 import { UtilService } from '../../../../services/util.service';
 import { CadastroStep1Id } from '../../../../interface/subSection.interface';
+import { RepresentanteLegalInterface } from '../../../../interface/representanteLegal.interface';
 
 @Component({
   selector: 'app-representate-legal-matriz',
@@ -15,7 +12,7 @@ import { CadastroStep1Id } from '../../../../interface/subSection.interface';
 export class RepresentateLegalMatrizComponent implements AfterViewInit {
   readonly questionSrv: QuestionService = inject(QuestionService);
   readonly utilSrv: UtilService = inject(UtilService);
-  formModel: RepresentanteLegal = {
+  formModel: RepresentanteLegalInterface = {
     nome: '',
     anoDeTerminoDeMandato: '',
     seuPapelnaMatriz: '',

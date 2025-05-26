@@ -1,6 +1,5 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
 import { QuestionService } from '../../../../services/question.service';
-import { InformacaoGerais } from '../../../../interface/matriz.interface';
 import { NgModel } from '@angular/forms';
 import { UtilService } from '../../../../services/util.service';
 import {
@@ -18,6 +17,7 @@ import {
   fadeOutOnLeaveAnimation,
 } from 'angular-animations';
 import { CadastroStep1Id } from '../../../../interface/subSection.interface';
+import { InformacaoGeraisInterface } from '../../../../interface/informacaoGerais.interface';
 
 @Component({
   selector: 'app-info-gerais',
@@ -28,7 +28,7 @@ import { CadastroStep1Id } from '../../../../interface/subSection.interface';
 export class InfoGeraisComponent implements AfterViewInit {
   readonly questionSrv: QuestionService = inject(QuestionService);
   readonly utilSrv: UtilService = inject(UtilService);
-  formModel: InformacaoGerais = {
+  formModel: InformacaoGeraisInterface = {
     registro: {
       cnpj: '',
       nomeFantasia: '',

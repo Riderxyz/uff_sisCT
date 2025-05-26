@@ -11,7 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import {  MatRadioModule } from '@angular/material/radio';
-import {MatDatepickerModule} from '@angular/material/datepicker'
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatListModule} from '@angular/material/list';
 import { ComponentModule } from '../../components/components.module';
 
 import { SisCtCadastroComponent } from './sis-ct-cadastro.component';
@@ -35,6 +36,7 @@ const MaterialModules = [
   MatCheckboxModule,
   MatDatepickerModule,
   MatRadioModule,
+  MatListModule,
 ];
 
 @NgModule({

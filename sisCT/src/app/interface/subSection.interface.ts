@@ -1,4 +1,3 @@
-import { FonteRecursos } from './matriz.interface';
 import { Type } from '@angular/core';
 
 export interface SubSection {
