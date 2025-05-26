@@ -20,38 +20,16 @@ import { config } from '../../services/config';
   standalone: false,
   templateUrl: './starter.component.html',
   styleUrl: './starter.component.scss',
-  animations: [
-    trigger('flipState', [
-      state(
-        'active',
-        style({
-          transform: 'rotateY(180deg)',
-        })
-      ),
-      state(
-        'inactive',
-        style({
-          transform: 'rotateY(0)',
-        })
-      ),
-      transition('active => inactive', animate('500ms ease-out')),
-      transition('inactive => active', animate('500ms ease-in')),
-    ]),
-  ],
 })
 export class StarterComponent implements OnInit {
   private readonly utilSrv = inject(UtilService);
   private readonly questionSrv = inject(QuestionService);
-  flip: string = 'inactive';
   private dialog: MatDialog = inject(MatDialog);
-  private snackBar: MatSnackBar = inject(MatSnackBar);
   private router: Router = inject(Router);
 
   constructor() {}
 
   ngOnInit() {
-    // this.toastSrv.showError('qwqw', 'isso é um teste', 600000);
-    // this.toastSrv.showWarn('qwqw', 'isso é um teste', 600000);
     const termsAcceptedRaw = localStorage.getItem(
       config.localStorageKeys.termsOfServiceAccepted
     );
@@ -69,10 +47,6 @@ export class StarterComponent implements OnInit {
     }
   }
 
-  toggleFlip() {
-    this.flip = this.flip == 'inactive' ? 'active' : 'inactive';
-  }
-
   openSisCtCadastro() {
     this.router.navigate(['/sisCtCadastro']);
     /*  const dialogRef = this.dialog.open(CnpjDialogComponent, {
@@ -88,14 +62,4 @@ export class StarterComponent implements OnInit {
     }); */
   }
 
-  openSisCtConsulta() {
-    console.log('Em desenvolvimento');
-    this.snackBar.open('Funcionalidade em desenvolvimento', 'Fechar', {
-      duration: 3000,
-    });
-  }
-
-  private validateCnpj(cnpj: string): boolean {
-    return this.utilSrv.isValidCNPJ(cnpj);
-  }
 }
