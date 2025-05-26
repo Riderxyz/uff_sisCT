@@ -23,6 +23,7 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { RepresentateLegalMatrizComponent } from './components/representate-legal-matriz/representate-legal-matriz.component';
 import { ResponsavelTecnicoComponent } from './components/responsavel-tecnico/responsavel-tecnico.component';
 import { FonteRecursosComponent } from './components/fonte-recursos/fonte-recursos.component';
+import { ComunidadeTerapeuticaComponent } from './components/section2/comunidade-terapeutica/comunidade-terapeutica.component';
 
 
 const MaterialModules = [
@@ -47,6 +48,7 @@ const MaterialModules = [
     RepresentateLegalMatrizComponent,
     ResponsavelTecnicoComponent,
     FonteRecursosComponent,
+    ComunidadeTerapeuticaComponent,
   ],
   imports: [
     CommonModule,
