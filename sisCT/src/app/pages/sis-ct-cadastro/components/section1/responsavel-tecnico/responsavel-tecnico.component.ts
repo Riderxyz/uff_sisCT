@@ -1,8 +1,9 @@
-import { RepresentanteTecnicoInterface } from './../../../../interface/representanteTecnico.interface';
 import { AfterViewInit, Component, inject } from '@angular/core';
-import { QuestionService } from '../../../../services/question.service';
-import { UtilService } from '../../../../services/util.service';
-import { CadastroStep1Id } from '../../../../interface/subSection.interface';
+import { RepresentanteTecnicoInterface } from '../../../../../interface/representanteTecnico.interface';
+import { CadastroStep1Id } from '../../../../../interface/subSection.interface';
+import { QuestionService } from '../../../../../services/question.service';
+import { UtilService } from '../../../../../services/util.service';
+
 
 @Component({
   selector: 'app-responsavel-tecnico',

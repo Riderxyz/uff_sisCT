@@ -1,0 +1,19 @@
+.termos-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+  .termos-container__title {
+    font-size: 1.15rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  .termos-container__content {
+    overflow-y: auto;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+
+  }
+}

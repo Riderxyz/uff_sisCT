@@ -1,7 +1,5 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
-import { QuestionService } from '../../../../services/question.service';
 import { NgModel } from '@angular/forms';
-import { UtilService } from '../../../../services/util.service';
 import {
   catchError,
   debounceTime,
@@ -16,8 +14,11 @@ import {
   fadeInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
 } from 'angular-animations';
-import { CadastroStep1Id } from '../../../../interface/subSection.interface';
-import { InformacaoGeraisInterface } from '../../../../interface/informacaoGerais.interface';
+import { InformacaoGeraisInterface } from '../../../../../interface/informacaoGerais.interface';
+import { CadastroStep1Id } from '../../../../../interface/subSection.interface';
+import { QuestionService } from '../../../../../services/question.service';
+import { UtilService } from '../../../../../services/util.service';
+
 
 @Component({
   selector: 'app-info-gerais',

@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CnpjDialogComponent } from '../../components/dialogs/cnpj-dialog/cnpj-dialog.component';
 import { QuestionService } from '../../services/question.service';
+import { TermosDeUsoDialogComponent } from '../../components/dialogs/termos-de-uso-dialog/termos-de-uso-dialog.component';
 
 @Component({
   selector: 'app-starter',
@@ -50,6 +51,17 @@ export class StarterComponent implements OnInit {
   ngOnInit() {
     // this.toastSrv.showError('qwqw', 'isso é um teste', 600000);
     // this.toastSrv.showWarn('qwqw', 'isso é um teste', 600000);
+
+    const dialogRef = this.dialog.open(TermosDeUsoDialogComponent, {
+      width: '50vw',
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result && this.validateCnpj(result)) {
+        this.questionSrv.selectedCnpj = result;
+        this.router.navigate(['/sisCtCadastro']);
+      }
+    });
   }
 
   onCtCadastro() {}
@@ -63,8 +75,8 @@ export class StarterComponent implements OnInit {
   }
 
   openSisCtCadastro() {
-      this.router.navigate(['/sisCtCadastro']);
-   /*  const dialogRef = this.dialog.open(CnpjDialogComponent, {
+    this.router.navigate(['/sisCtCadastro']);
+    /*  const dialogRef = this.dialog.open(CnpjDialogComponent, {
       width: '400px',
       data: { cnpj: '' },
     });
