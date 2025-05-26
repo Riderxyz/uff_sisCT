@@ -1,0 +1,104 @@
+<div class="dialog-header" mat-dialog-title>
+  <span class="dialog-title">Termos de Uso</span>
+</div>
+<div class="termos-container" mat-dialog-content>
+  <div class="termos-container__title">
+    DECLARAÇÃO DE CIÊNCIA E ACEITE - Etapa anterior ao preenchimento pela
+    entidade (antes de prosseguir com o preenchimento do cadastro, a entidade
+    deverá declarar ciência e concordância com as normativas vigentes que
+    regulamentam sua atuação no âmbito das políticas públicas sobre drogas)
+  </div>
+  <div class="termos-container__content">
+    <b> Atenção: </b>
+    É imprescindível a leitura atenta das seguintes normativas: Elencar rol de
+    normativas no sistema do Cadastro conforme segue: 1. Normativas referentes
+    às entidades atuantes na redução das demandas de drogas.
+
+    <ul class="mb-3">
+      <li>
+        Lei nº 13.840, de 5 de junho de 2019 - Dispõe sobre o Sistema Nacional
+        de Políticas Públicas sobre Drogas e as condições de atenção aos
+        usuários ou dependentes de drogas e para tratar do financiamento das
+        políticas sobre drogas, incluindo e regulando as comunidades
+        terapêuticas com a adição do Art. 26-A na Lei nº 11.343, de 23 de agosto
+        de 2006.
+      </li>
+      <li>
+        Lei nº 11.343, de 23 de agosto de 2006 – Institui o Sistema Nacional de
+        Políticas Públicas sobre Drogas - Sisnad; prescreve medidas para
+        prevenção do uso indevido, atenção e reinserção social de usuários e
+        dependentes de drogas; estabelece normas para repressão à produção não
+        autorizada e ao tráfico ilícito de drogas; define crimes e dá outras
+        providências.
+      </li>
+      <li>
+        Decreto nº 9.761, de 11 de abril de 2019 - Aprova a nova Política
+        Nacional sobre Drogas, atuando de maneira intersetorial,
+        interdisciplinar e transversal, a partir da visão holística do ser
+        humano, oferecendo serviços de acolhimento às pessoas com problemas
+        decorrentes do uso, do uso indevido ou da dependência do álcool e de
+        outras drogas, principalmente àquelas em maior vulnerabilidade
+      </li>
+      <li>
+        Resolução da Diretoria Colegiada - RDC nº 29/2011 – ANVISA - Dispõe
+        sobre os requisitos de segurança sanitária para o funcionamento de
+        instituições que prestam serviços de atenção a pessoas com transtornos
+        decorrentes do uso nocivo, abuso ou dependência de substâncias
+        psicoativas.
+      </li>
+      <li>
+        Resolução nº 01, de 19 de agosto de 2015 - Conselho Nacional de
+        Políticas sobre Drogas - Regulamenta, no âmbito do Sistema Nacional de
+        Políticas Públicas sobre Drogas - SISNAD, as entidades que realizam o
+        acolhimento de pessoas, em caráter voluntário, com problemas associados
+        ao uso, abuso ou dependência de substância psicoativa, caracterizadas
+        como comunidades terapêuticas.
+      </li>
+      <li>
+        Resolução nº 249, de 10 de julho de 2024 - Dispõe sobre a proibição do
+        acolhimento de crianças e adolescentes em comunidades terapêuticas.
+      </li>
+      <li>
+        Lei Complementar nº 187, de 16 de dezembro de 2021 – Dispõe sobre a
+        certificação de entidades beneficentes e define critérios para a
+        imunidade de contribuições sociais.
+      </li>
+      <li>
+        Decreto nº 11.791, de 21 de novembro de 2023 – Regulamenta dispositivos
+        da LC nº 187/2021, estabelecendo procedimentos para concessão,
+        manutenção e fiscalização da certificação das entidades beneficentes.
+      </li>
+      <li>
+        Portaria MDS nº xx, de xx de 2025 - Dispõe sobre a instituição do
+        Cadastro de Gestão das Entidades Atuantes na Redução das Demandas de
+        Drogas, no âmbito do Ministério do Desenvolvimento e Assistência Social,
+        Família e Combate à Fome, nos termos da Lei Complementar nº 187, de 16
+        de dezembro de 2021, e do Decreto nº 11.791, de 21 de novembro de 2023.
+      </li>
+    </ul>
+    <mat-divider class="p-3"></mat-divider>
+    <mat-checkbox [(ngModel)]="hasUserAccepted">
+      <p>
+        Declaro que li, compreendi e estou ciente das normativas acima
+        elencadas, assumindo total responsabilidade pelo cumprimento das
+        disposições legais e regulamentares aplicáveis à atuação da entidade no
+        âmbito das políticas públicas sobre drogas para fins da Certificação de
+        Entidades Beneficentes de Assistência Social – Cebas. Também aceito os
+        termos e condições para o prosseguimento do cadastro, conforme os
+        dispositivos legais vigentes.
+      </p>
+    </mat-checkbox>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button
+      mat-button
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+      [disabled]="!hasUserAccepted"
+      (click)="onAcceptTerms()"
+    >
+      Aceito e concordo
+    </button>
+  </mat-dialog-actions>
+</div>

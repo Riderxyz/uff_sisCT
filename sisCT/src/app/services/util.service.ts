@@ -17,6 +17,7 @@ import { ToastService, ToastSeverity } from './toast.service';
 import { HttpClient } from '@angular/common/http';
 import { EnderecoResponseInterface } from '../interface/enderecoResponse.interface';
 import { Observable } from 'rxjs';
+import { config } from './config';
 @Injectable({ providedIn: 'root' })
 export class UtilService {
   public dialog: MatDialog = inject(MatDialog);
@@ -26,6 +27,13 @@ export class UtilService {
   private toastSrv: ToastService = inject(ToastService);
   private http = inject(HttpClient);
   constructor() {}
+
+  userHasAceptedTerms() {
+    localStorage.setItem(
+      config.localStorageKeys.termsOfServiceAccepted,
+      'true'
+    );
+  }
 
   showConfirmDialog(
     message: string,
