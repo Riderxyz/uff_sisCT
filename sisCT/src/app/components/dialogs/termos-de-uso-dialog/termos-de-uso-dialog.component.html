@@ -14,7 +14,7 @@
     normativas no sistema do Cadastro conforme segue: 1. Normativas referentes
     às entidades atuantes na redução das demandas de drogas.
 
-    <ul>
+    <ul class="mb-3">
       <li>
         Lei nº 13.840, de 5 de junho de 2019 - Dispõe sobre o Sistema Nacional
         de Políticas Públicas sobre Drogas e as condições de atenção aos
@@ -76,7 +76,7 @@
         de dezembro de 2021, e do Decreto nº 11.791, de 21 de novembro de 2023.
       </li>
     </ul>
-<mat-divider></mat-divider>
+    <mat-divider class="p-3"></mat-divider>
     <mat-checkbox [(ngModel)]="hasUserAccepted">
       <p>
         Declaro que li, compreendi e estou ciente das normativas acima
@@ -96,6 +96,7 @@
       [mat-dialog-close]="true"
       cdkFocusInitial
       [disabled]="!hasUserAccepted"
+      (click)="onAcceptTerms()"
     >
       Aceito e concordo
     </button>
