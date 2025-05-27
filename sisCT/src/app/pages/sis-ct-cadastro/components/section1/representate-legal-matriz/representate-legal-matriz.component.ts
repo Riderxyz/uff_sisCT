@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
-import { QuestionService } from '../../../../services/question.service';
-import { UtilService } from '../../../../services/util.service';
-import { CadastroStep1Id } from '../../../../interface/subSection.interface';
-import { RepresentanteLegalInterface } from '../../../../interface/representanteLegal.interface';
-
+import { RepresentanteLegalInterface } from '../../../../../interface/representanteLegal.interface';
+import { CadastroStep1Id } from '../../../../../interface/subSection.interface';
+import { QuestionService } from '../../../../../services/question.service';
+import { UtilService } from '../../../../../services/util.service';
 @Component({
   selector: 'app-representate-legal-matriz',
   templateUrl: './representate-legal-matriz.component.html',

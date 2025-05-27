@@ -29,6 +29,7 @@ import { ToastComponent } from './toast/toast.component';
 import { ConfirmDialogComponent } from './dialogs/ConfirmDialog/ConfirmDialog.component';
 import { CnpjDialogComponent } from './dialogs/cnpj-dialog/cnpj-dialog.component';
 import { MatInputModule } from '@angular/material/input';
+import { TermosDeUsoDialogComponent } from './dialogs/termos-de-uso-dialog/termos-de-uso-dialog.component';
 
 const materialModules = [
   MatCheckboxModule,
@@ -45,7 +46,6 @@ const materialModules = [
   MatProgressSpinnerModule,
   MatDialogModule,
   MatProgressSpinnerModule,
-  MatIconModule,
   MatCheckboxModule,
 ];
 
@@ -54,6 +54,7 @@ const dialogsComponents = [
   ConfirmDialogComponent,
   ToastComponent,
   CnpjDialogComponent,
+  TermosDeUsoDialogComponent,
 ];
 
 const ngxMasks = [NgxMaskDirective, NgxMaskPipe];

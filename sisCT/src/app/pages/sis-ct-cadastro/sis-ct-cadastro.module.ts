@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,15 +17,20 @@ import {MatListModule} from '@angular/material/list';
 import { ComponentModule } from '../../components/components.module';
 
 import { SisCtCadastroComponent } from './sis-ct-cadastro.component';
-import { AreaDeAtuacaoComponent } from './components/area-de-atuacao/area-de-atuacao.component';
-import { InfoGeraisComponent } from './components/info-gerais/info-gerais.component';
+
+
+import { AreaDeAtuacaoComponent } from './components/section1/area-de-atuacao/area-de-atuacao.component';
+import { ComunidadeTerapeuticaComponent } from './components/section2/comunidade-terapeutica/comunidade-terapeutica.component';
+import { EntidadeDeCuidadoComponent } from './components/section2/entidade-de-cuidado/entidade-de-cuidado.component';
+import { FonteRecursosComponent } from './components/section1/fonte-recursos/fonte-recursos.component';
+import { InfoGeraisComponent } from './components/section1/info-gerais/info-gerais.component';
+import { RepresentateLegalMatrizComponent } from './components/section1/representate-legal-matriz/representate-legal-matriz.component';
+import { ResponsavelTecnicoComponent } from './components/section1/responsavel-tecnico/responsavel-tecnico.component';
+
+
+
 import { SisCtCadastroRoutingModule } from './sis-ct-cadastro-routing.module';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { RepresentateLegalMatrizComponent } from './components/representate-legal-matriz/representate-legal-matriz.component';
-import { ResponsavelTecnicoComponent } from './components/responsavel-tecnico/responsavel-tecnico.component';
-import { FonteRecursosComponent } from './components/fonte-recursos/fonte-recursos.component';
-import { ComunidadeTerapeuticaComponent } from './components/section2/comunidade-terapeutica/comunidade-terapeutica.component';
-
 
 const MaterialModules = [
   MatTabsModule,
@@ -49,6 +55,7 @@ const MaterialModules = [
     ResponsavelTecnicoComponent,
     FonteRecursosComponent,
     ComunidadeTerapeuticaComponent,
+    EntidadeDeCuidadoComponent,
   ],
   imports: [
     CommonModule,

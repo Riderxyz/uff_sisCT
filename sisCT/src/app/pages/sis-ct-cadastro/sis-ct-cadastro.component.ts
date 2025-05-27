@@ -11,11 +11,11 @@ import {
   CadastroStep1Id,
   CadastroStep2Id,
 } from '../../interface/subSection.interface';
-import { AreaDeAtuacaoComponent } from './components/area-de-atuacao/area-de-atuacao.component';
-import { InfoGeraisComponent } from './components/info-gerais/info-gerais.component';
-import { ResponsavelTecnicoComponent } from './components/responsavel-tecnico/responsavel-tecnico.component';
-import { RepresentateLegalMatrizComponent } from './components/representate-legal-matriz/representate-legal-matriz.component';
-import { FonteRecursosComponent } from './components/fonte-recursos/fonte-recursos.component';
+import { AreaDeAtuacaoComponent } from './components/section1/area-de-atuacao/area-de-atuacao.component';
+import { FonteRecursosComponent } from './components/section1/fonte-recursos/fonte-recursos.component';
+import { InfoGeraisComponent } from './components/section1/info-gerais/info-gerais.component';
+import { RepresentateLegalMatrizComponent } from './components/section1/representate-legal-matriz/representate-legal-matriz.component';
+import { ResponsavelTecnicoComponent } from './components/section1/responsavel-tecnico/responsavel-tecnico.component';
 
 @Component({
   selector: 'app-sis-ct-cadastro',
