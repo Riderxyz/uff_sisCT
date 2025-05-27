@@ -3,12 +3,12 @@ import { QuestionService } from '../../../../../services/question.service';
 import { UtilService } from '../../../../../services/util.service';
 
 @Component({
-  selector: 'app-comunidade-terapeutica',
-  templateUrl: './comunidade-terapeutica.component.html',
-  styleUrl: './comunidade-terapeutica.component.scss',
+  selector: 'app-entidade-de-cuidado',
+  templateUrl: './entidade-de-cuidado.component.html',
+  styleUrl: './entidade-de-cuidado.component.scss',
 })
-export class ComunidadeTerapeuticaComponent implements AfterViewInit {
-    readonly questionSrv: QuestionService = inject(QuestionService);
+export class EntidadeDeCuidadoComponent implements AfterViewInit {
+  readonly questionSrv: QuestionService = inject(QuestionService);
   readonly utilSrv: UtilService = inject(UtilService);
   constructor() {}
 

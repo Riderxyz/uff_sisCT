@@ -6,5 +6,6 @@ export const config = {
   },
   localStorageKeys: {
     selectedCnpj: 'selectedCnpj',
+    termsOfServiceAccepted: 'termsOfServiceAccepted',
   },
 }

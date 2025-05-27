@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
-import { QuestionService } from '../../../../services/question.service';
-import { CadastroStep1Id } from '../../../../interface/subSection.interface';
-
+import { CadastroStep1Id } from '../../../../../interface/subSection.interface';
+import { QuestionService } from '../../../../../services/question.service';
 @Component({
   selector: 'app-area-de-atuacao',
   templateUrl: './area-de-atuacao.component.html',
