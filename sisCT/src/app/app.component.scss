@@ -1,1 +1,15 @@
-//@import "../scss/btn-severity";
+.sidenav-container {
+  height: calc(100vh - 64px - 50px);
+}
+
+.content {
+  padding: 20px;
+  height: 100%;
+}
+
+// Estilo específico para a página de autenticação
+:host-context(.auth-page) {
+  .sidenav-container {
+    height: 100vh;
+  }
+}

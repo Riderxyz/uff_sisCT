@@ -1,39 +1,23 @@
 <app-toast></app-toast>
-<div [@expandOnEnter] *ngIf="showHeader">
+
+<ng-container *ngIf="showHeader">
   <app-header></app-header>
-</div>
+</ng-container>
 
 <mat-sidenav-container class="sidenav-container">
   <!-- Menu lateral -->
-  <mat-sidenav #sidenav mode="side" [opened]="showMenu">
-    <app-sidebar></app-sidebar>
+  <mat-sidenav #sidenav mode="side" [opened]="showSidebar">
+    <app-sidebar *ngIf="showSidebar"></app-sidebar>
   </mat-sidenav>
 
   <!-- Conteúdo principal -->
   <mat-sidenav-content>
     <div class="content">
-      <!-- <button (click)="showTestingToast()">teste</button>
-
-      <button mat-button class="severity-primary">Primary</button>
-      <button mat-button class="severity-success">Success</button>
-      <button mat-button class="severity-info">Info</button>
-      <button mat-button class="severity-warn">Warn</button>
-      <button mat-button class="severity-danger">Danger</button>
-      <button mat-button class="severity-help">Help</button>
-
-      <button
-        mat-fab
-        class="severity-primary"
-        aria-label="Example icon button with a delete icon"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
-
-      <app-teste-multipla-escolha></app-teste-multipla-escolha>
- -->
-      
       <router-outlet />
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-<app-footer></app-footer>
+
+<ng-container *ngIf="showFooter">
+  <app-footer></app-footer>
+</ng-container>

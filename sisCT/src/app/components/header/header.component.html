@@ -9,8 +9,8 @@
       <i class="fa-solid fa-bars"></i>
     </button>
     <div class="header-title">
-      <span class="title"> SIGLA DO SISTEMA </span>
-      <span class="subtitle"> Subtítulo do sistema | versão 1.0.0 </span>
+      <span class="title"> SisCT </span>
+      <span class="subtitle"> Sistema de Cadastro de Comunidades Terapêuticas | versão 1.0.0 </span>
     </div>
   </div>
 
@@ -41,8 +41,11 @@
       </div>
       <div class="user-profile-text">
         <div class="user-profile-welcome">Bem vindo(a)!</div>
-        <div class="user-profile-name">Nome do Usuário</div>
+        <div class="user-profile-name">{{ authService.currentUserValue?.name || 'Usuário' }}</div>
       </div>
+      <button mat-icon-button class="logout-btn" (click)="logout()" aria-label="Sair do sistema">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
     </div>
   </div>
 </mat-toolbar>
