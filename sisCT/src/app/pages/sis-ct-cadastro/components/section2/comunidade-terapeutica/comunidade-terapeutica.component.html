@@ -1,1 +1,217 @@
-<p>comunidade-terapeutica works!</p>
+<form #form="ngForm" class="w-full grid">
+  <!-- Seção 6 -->
+  <h2 class="col-12">6. Comunidade Terapêutica</h2>
+
+  <mat-checkbox
+    class="col-12"
+    name="possuiLicencaSanitaria"
+    [(ngModel)]="formModel.comunidadeTerapeutica.possuiLicencaSanitaria"
+    (change)="onSanitaryChange()"
+    >Possui licença sanitária atualizada</mat-checkbox
+  >
+
+  <div class="col-12 md:col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Validade da Licença - Término</mat-label>
+      <input
+        matInput
+        type="date"
+        name="validadeLicenca"
+        [(ngModel)]="formModel.comunidadeTerapeutica.validadeLicenca"
+        (blur)="onFieldBlur('validadeLicenca')"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 md:col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Prazo do Projeto Terapêutico (meses)</mat-label>
+      <input
+        matInput
+        type="number"
+        name="prazoProjeto"
+        [(ngModel)]="formModel.comunidadeTerapeutica.prazoProjeto"
+        (ngModelChange)="onFieldChange('prazoProjeto')"
+      />
+    </mat-form-field>
+  </div>
+
+  <mat-checkbox
+    class="col-12"
+    name="matrizPossuiCEBAS"
+    [(ngModel)]="formModel.comunidadeTerapeutica.matrizPossuiCEBAS"
+    (change)="onCEBASChange()"
+    >A matriz da entidade possui CEBAS?</mat-checkbox
+  >
+
+  <ng-container *ngIf="formModel.comunidadeTerapeutica.matrizPossuiCEBAS">
+    <div class="col-6">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Início da validade CEBAS</mat-label>
+        <input
+          matInput
+          type="date"
+          name="inicioCEBAS"
+          [(ngModel)]="formModel.comunidadeTerapeutica.periodoCEBAS!.inicio"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Término da validade CEBAS</mat-label>
+        <input
+          matInput
+          type="date"
+          name="terminoCEBAS"
+          [(ngModel)]="formModel.comunidadeTerapeutica.periodoCEBAS!.termino"
+        />
+      </mat-form-field>
+    </div>
+  </ng-container>
+
+  <div class="col-12">
+    <mat-checkbox
+      name="requerimentoDEPAD"
+      [(ngModel)]="formModel.comunidadeTerapeutica.requerimentoDEPAD"
+      >A entidade possui requerimento CEBAS no DEPAD?</mat-checkbox
+    >
+  </div>
+
+  <div class="col-6">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Ano do protocolo</mat-label>
+      <input
+        matInput
+        type="number"
+        name="anoProtocolo"
+        [(ngModel)]="formModel.comunidadeTerapeutica.anoProtocolo"
+      />
+    </mat-form-field>
+  </div>
+  <div class="col-6">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Número do protocolo</mat-label>
+      <input
+        matInput
+        name="numeroProtocolo"
+        [(ngModel)]="formModel.comunidadeTerapeutica.numeroProtocolo"
+      />
+    </mat-form-field>
+  </div>
+
+  <mat-checkbox
+    class="col-12"
+    name="atendeLegislacao"
+    [(ngModel)]="formModel.comunidadeTerapeutica.atendeLegislacao"
+    >Cumpre dispositivos legais?</mat-checkbox
+  >
+
+  <!-- Seção 6.1 -->
+  <h2 class="col-12">6.1 Capacidade de Atendimento</h2>
+
+  <div class="col-12">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Capacidade total de vagas</mat-label>
+      <input
+        matInput
+        type="number"
+        name="totalVagas"
+        [(ngModel)]="formModel.capacidadeAtendimento.totalVagas"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="col-4">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>{{ "adulto Feminino" | titlecase }}</mat-label>
+      <input
+        matInput
+        type="number"
+        name="adultoFeminino"
+        [(ngModel)]="formModel.capacidadeAtendimento.publico.adultoFeminino"
+      />
+    </mat-form-field>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>{{ "adulto Masculino" | titlecase }}</mat-label>
+      <input
+        matInput
+        type="number"
+        name="adultoMasculino"
+        [(ngModel)]="formModel.capacidadeAtendimento.publico.adultoMasculino"
+      />
+    </mat-form-field>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>{{ "maes Nutrizes" | titlecase }}</mat-label>
+      <input
+        matInput
+        type="number"
+        name="maesNutrizes"
+        [(ngModel)]="formModel.capacidadeAtendimento.publico.maesNutrizes"
+      />
+    </mat-form-field>
+  </div>
+
+  <!-- Seção 6.3 -->
+  <h2 class="col-12">6.3 Reconhecimento da Entidade</h2>
+
+  <div class="col-12">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Inscrição em Conselho Municipal</mat-label>
+      <mat-select
+        [(ngModel)]="formModel.reconhecimentoMunicipio.conselhoMunicipal"
+        name="conselhoMunicipal"
+      >
+        <mat-option value="assistenciaSocial">Assistência Social</mat-option>
+        <mat-option value="politicasDrogas">Políticas sobre Drogas</mat-option>
+        <mat-option value="saude">Saúde</mat-option>
+        <mat-option value="outro">Outro</mat-option>
+        <mat-option value="naoPossui">Não Possui</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div
+    class="col-12"
+    *ngIf="formModel.reconhecimentoMunicipio.conselhoMunicipal === 'outro'"
+  >
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Outro conselho municipal</mat-label>
+      <input
+        matInput
+        name="outroConselhoMunicipal"
+        [(ngModel)]="formModel.reconhecimentoMunicipio.outroConselhoMunicipal"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="col-12">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Conselho Estadual</mat-label>
+      <input
+        matInput
+        name="conselhoEstadual"
+        [(ngModel)]="formModel.reconhecimentoMunicipio.conselhoEstadual"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="col-12">
+    <mat-label>Reconhecimento por autoridade pública</mat-label>
+    <mat-radio-group
+      class="ml-2"
+      [(ngModel)]="formModel.reconhecimentoMunicipio.reconhecimentoPublico"
+      name="reconhecimentoPublico"
+    >
+      <mat-radio-button value="Uniao">União</mat-radio-button>
+      <mat-radio-button value="Estados">Estados</mat-radio-button>
+      <mat-radio-button value="DF e municipios"
+        >DF e municípios</mat-radio-button
+      >
+      <mat-radio-button value="">Não</mat-radio-button>
+    </mat-radio-group>
+  </div>
+</form>

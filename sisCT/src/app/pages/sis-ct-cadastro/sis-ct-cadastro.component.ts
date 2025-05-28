@@ -16,6 +16,8 @@ import { FonteRecursosComponent } from './components/section1/fonte-recursos/fon
 import { InfoGeraisComponent } from './components/section1/info-gerais/info-gerais.component';
 import { RepresentateLegalMatrizComponent } from './components/section1/representate-legal-matriz/representate-legal-matriz.component';
 import { ResponsavelTecnicoComponent } from './components/section1/responsavel-tecnico/responsavel-tecnico.component';
+import { ComunidadeTerapeuticaComponent } from './components/section2/comunidade-terapeutica/comunidade-terapeutica.component';
+import { EntidadeDeCuidadoComponent } from './components/section2/entidade-de-cuidado/entidade-de-cuidado.component';
 
 @Component({
   selector: 'app-sis-ct-cadastro',
@@ -66,13 +68,13 @@ export class SisCtCadastroComponent {
     {
       id: CadastroStep2Id.ComunidadeTerap,
       header: '6. Comunidade Terapêutica',
-      component: ResponsavelTecnicoComponent,
+      component: ComunidadeTerapeuticaComponent,
       showSavingIcon: false,
     },
     {
       id: CadastroStep2Id.EntidadesCuidado,
       header: '7. Entidades de Cuidado',
-      component: ResponsavelTecnicoComponent,
+      component: EntidadeDeCuidadoComponent,
       showSavingIcon: false,
     },
   ];
