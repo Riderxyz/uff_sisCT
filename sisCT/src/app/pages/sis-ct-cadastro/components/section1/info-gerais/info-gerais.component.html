@@ -4,7 +4,7 @@
   </div>
 
   <!-- CNPJ da Matriz -->
-  <div class="col-12">
+  <div class="col-4" [class.col-4]="isFilial" [class.col-6]="!isFilial">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>CNPJ da Matriz</mat-label>
       <input
@@ -24,6 +24,88 @@
         CNPJ é obrigatório
       </mat-error>
     </mat-form-field>
+  </div>
+
+  <div class="col-4" [class.col-4]="isFilial" [class.col-6]="!isFilial">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Filial ?</mat-label>
+      <mat-select
+        name="filial"
+        [(ngModel)]="isFilial"
+        #filialQuestionCtrl="ngModel"
+        required
+      >
+        <mat-option [value]="true">Sim</mat-option>
+        <mat-option [value]="false">Não</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="col-4" *ngIf="isFilial">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Informe o CNPJ da Matriz</mat-label>
+      <input
+        matInput
+        name="cnpj"
+        [(ngModel)]="formModel.registro.cnpj"
+        #cnpjFieldCtrl="ngModel"
+        required
+        mask="00.000.000/0000-00"
+        placeholder="00.000.000/0000-00"
+        (blur)="onFieldChange()"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="grid col-12">
+    <div
+      *ngIf="isFilial"
+      [class.col-6]="selectedFilialOption.value !== ''"
+      [class.col-12]="selectedFilialOption.value === 'certificavelDepad' || selectedFilialOption.value === ''"
+    >
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Filial 1</mat-label>
+        <mat-select
+          name="filialOptions"
+          [(ngModel)]="selectedFilialOption"
+          #filialOptionsCtrl="ngModel"
+          (ngModelChange)="logThis()"
+          required
+        >
+          @for (item of filialOptions; track $index) {
+          <mat-option [value]="item">{{ item.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div *ngIf="selectedFilialOption.value === 'naoCertificavel'" class="col-6">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label
+          >Especifique (Informe o tipo de atividade que executa):
+        </mat-label>
+        <input
+          matInput
+          name="especifique"
+          [(ngModel)]="areaNaoCertificavelDescription"
+          #especifiqueCtrl="ngModel"
+          (blur)="onFieldChange()"
+        />
+      </mat-form-field>
+    </div>
+    <div *ngIf="selectedFilialOption.value === 'outraPoliticaPublica'"
+      class="col-6"
+    >
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Qual a Policica</mat-label>
+        <input
+          matInput
+          name="especifique"
+          [(ngModel)]="areaNaoCertificavelDescription"
+          #especifiqueCtrl="ngModel"
+          (blur)="onFieldChange()"
+        />
+      </mat-form-field>
+    </div>
   </div>
 
   <!-- Email Institucional -->
@@ -328,7 +410,11 @@
 
   <!-- Botão de envio -->
   <div class="col-12">
-    <button mat-raised-button color="primary" [disabled]="!infoGeraisForm.valid">
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!infoGeraisForm.valid"
+    >
       Salvar
     </button>
   </div>

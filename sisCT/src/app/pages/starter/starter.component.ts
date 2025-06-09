@@ -44,6 +44,8 @@ export class StarterComponent implements OnInit {
       dialogRef.afterClosed().subscribe((result: string) => {
         this.router.navigate(['/sisCtCadastro']);
       });
+    } else {
+      this.router.navigate(['/sisCtCadastro']);
     }
   }
 

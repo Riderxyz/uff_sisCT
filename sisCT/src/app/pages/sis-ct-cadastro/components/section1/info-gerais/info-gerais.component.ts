@@ -19,7 +19,6 @@ import { CadastroStep1Id } from '../../../../../interface/subSection.interface';
 import { QuestionService } from '../../../../../services/question.service';
 import { UtilService } from '../../../../../services/util.service';
 
-
 @Component({
   selector: 'app-info-gerais',
   templateUrl: './info-gerais.component.html',
@@ -51,7 +50,31 @@ export class InfoGeraisComponent implements AfterViewInit {
       logradouro: '',
     },
   };
+  isFilial = false;
   isLoadingAdress = false;
+
+  filialOptions: {
+    label: string;
+    value: string;
+  }[] = [
+    {
+      label: 'certificável pelo DEPAD',
+      value: 'certificavelDepad',
+    },
+    {
+      label: 'Área não certificável',
+      value: 'naoCertificavel',
+    },
+    {
+      label: 'Certificável por outra Política Pública',
+      value: 'outraPoliticaPublica',
+    },
+  ];
+  selectedFilialOption: {
+    label: string;
+    value: string;
+  } = { label: '', value: '' };
+  areaNaoCertificavelDescription = '';
   constructor() {}
   ngAfterViewInit(): void {
     this.formModel = this.questionSrv.matriz.seccao1.dados.informacaoGerais;
@@ -71,6 +94,11 @@ export class InfoGeraisComponent implements AfterViewInit {
         );
       }
     }
+  }
+
+
+  logThis() {
+    console.log(this.selectedFilialOption);
   }
 
   getEndereco() {
