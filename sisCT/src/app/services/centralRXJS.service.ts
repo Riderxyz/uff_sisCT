@@ -15,8 +15,12 @@ export class CentralRxJsService {
   constructor() {}
 
   /** Envia um novo valor para os assinantes */
-  sendData(value: SenderRXJS): void {
-    this.inputStream.next(value);
+  sendData(keyOrValue: string | SenderRXJS, data?: any): void {
+    if (typeof keyOrValue === 'string') {
+      this.inputStream.next({ key: keyOrValue, data });
+    } else {
+      this.inputStream.next(keyOrValue);
+    }
   }
 
   /** Observable para componentes assinarem e receberem os dados */
