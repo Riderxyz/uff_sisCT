@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ColDef, GridApi, GridReadyEvent } from 'ag-grid-community';
+import { ColDef, GridApi, GridReadyEvent, ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
 import { RlContato } from '../../interface/contato.interface';
 import { ContatoService } from '../../services/contato.service';
+
+// Registrar os módulos do AG Grid
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 @Component({
   selector: 'app-contatos',
   templateUrl: './contatos.component.html',
-  styleUrls: ['./contatos.component.scss']
+  styleUrls: ['./contatos.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ContatosComponent implements OnInit {
   private gridApi!: GridApi<RlContato>;
@@ -36,9 +40,20 @@ export class ContatosComponent implements OnInit {
     },
     {
       headerName: 'Ações',
-      cellRenderer: this.acoesCellRenderer,
-      cellRendererParams: {
-        componentParent: this
+      cellRenderer: (params: any) => {
+        const element = document.createElement('button');
+        element.innerHTML = '<i class="fas fa-trash"></i>';
+        element.className = 'btn btn-danger btn-sm';
+        element.style.backgroundColor = '#dc3545';
+        element.style.color = 'white';
+        element.style.border = 'none';
+        element.style.borderRadius = '4px';
+        element.style.padding = '4px 8px';
+        element.style.cursor = 'pointer';
+        element.addEventListener('click', () => {
+          this.excluirContato(params.data.PK_RLCONTATO);
+        });
+        return element;
       },
       width: 100
     }
@@ -63,26 +78,51 @@ export class ContatosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Gerar dados de exemplo para teste
     this.contatoService.getContatos().subscribe(contatos => {
       this.rowData = contatos.filter(c => c.ST_CONTATO_ATIVO === 'S');
+      
+      // Se não houver dados, adicionar alguns para teste
+      if (this.rowData.length === 0) {
+        this.adicionarContatosTeste();
+      }
+    });
+  }
+
+  private adicionarContatosTeste(): void {
+    const contatos: RlContato[] = [
+      {
+        PK_RLCONTATO: 1,
+        CO_CONTATO: 'exemplo@email.com',
+        PK_TIPO_CONTATO: 2,
+        ST_CONTATO_ATIVO: 'S',
+        DT_ATUALIZACAO: new Date().toISOString(),
+        PK_CADASTRO_NACIONAL: 12345,
+        PK_REPRESENTANTE_LEGAL: null,
+        PK_REPRESENTANTE_TECNICO: null
+      },
+      {
+        PK_RLCONTATO: 2,
+        CO_CONTATO: '(21) 98765-4321',
+        PK_TIPO_CONTATO: 1,
+        ST_CONTATO_ATIVO: 'S',
+        DT_ATUALIZACAO: new Date().toISOString(),
+        PK_CADASTRO_NACIONAL: null,
+        PK_REPRESENTANTE_LEGAL: 67890,
+        PK_REPRESENTANTE_TECNICO: null
+      }
+    ];
+    
+    contatos.forEach(contato => {
+      this.contatoService.adicionarContato(contato);
     });
   }
 
   onGridReady(params: GridReadyEvent<RlContato>) {
     this.gridApi = params.api;
-    this.gridApi.sizeColumnsToFit();
-  }
-
-  acoesCellRenderer(params: any) {
-    const element = document.createElement('button');
-    element.innerHTML = '<i class="fas fa-trash"></i>';
-    element.className = 'btn btn-danger btn-sm';
-    element.addEventListener('click', () => {
-      if (params.context && params.context.componentParent) {
-        params.context.componentParent.excluirContato(params.data.PK_RLCONTATO);
-      }
-    });
-    return element;
+    setTimeout(() => {
+      this.gridApi.sizeColumnsToFit();
+    }, 100);
   }
 
   adicionarContato() {

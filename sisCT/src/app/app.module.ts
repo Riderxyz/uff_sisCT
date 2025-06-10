@@ -10,6 +10,10 @@ import { AppComponent } from './app.component';
 import { ComponentModule } from './components/components.module';
 import { TesteMultiplaEscolhaComponent } from './teste-multipla-escolha/teste-multipla-escolha.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
+
+// Registrar os módulos do AG Grid
+ModuleRegistry.registerModules([AllCommunityModule]);
 
 @NgModule({
   declarations: [

@@ -16,7 +16,7 @@
         <mat-label>CNPJ</mat-label>
         <input matInput name="cnpj" [(ngModel)]="formModel.registro.cnpj" #cnpjFieldCtrl="ngModel" required
           mask="00.000.000/0000-00" placeholder="00.000.000/0000-00" (blur)="validateCnpj(cnpjFieldCtrl)" />
-        <mat-hint>O CNPJ é a primeira regra de identificação da entidade</mat-hint>
+        <!-- <mat-hint>O CNPJ é a primeira regra de identificação da entidade</mat-hint> -->
         <mat-error *ngIf="cnpjFieldCtrl.invalid && cnpjFieldCtrl.touched">
           CNPJ é obrigatório
         </mat-error>
@@ -24,7 +24,7 @@
     </div>
 
     <!-- Email Institucional -->
-    <div class="col-fixed p-0 px-1" style="width: 350px;">
+    <div class="col-fixed p-0 px-1" style="width: 250px;">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Email Institucional</mat-label>
         <input matInput name="email" [(ngModel)]="formModel.registro.emailInstitucional"
@@ -52,48 +52,9 @@
     </div>
   </div>
 
-  <!-- Tipo de Contato -->
-  <div class="col-6">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Tipo de Contato</mat-label>
-      <mat-select name="tipoContato" [(ngModel)]="formModel.registro.tipoContato" #tipoContatoCtrl="ngModel" required>
-        <mat-option value="email">Email</mat-option>
-        <mat-option value="telefone">Telefone</mat-option>
-      </mat-select>
-      <mat-error *ngIf="tipoContatoCtrl.invalid && tipoContatoCtrl.touched">
-        Tipo de contato é obrigatório
-      </mat-error>
-    </mat-form-field>
-  </div>
-
-  <!-- Contato (Email ou Telefone com ngx-mask) -->
-  <div class="col-6">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Contato</mat-label>
-      <input matInput name="contato" [(ngModel)]="formModel.registro.contato" #contatoCtrl="ngModel"
-        [type]="formModel.registro.tipoContato === 'email' ? 'email' : 'tel'" [required]="true" [mask]="
-          formModel.registro.tipoContato === 'telefone' ? '(00) 00000-0000' : ''
-        " [placeholder]="
-          formModel.registro.tipoContato === 'email'
-            ? 'email@exemplo.com'
-            : '(00) 00000-0000'
-        " [pattern]="
-          formModel.registro.tipoContato === 'email'
-            ? '^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$'
-            : '^(\\(\\d{2}\\)\\s?)?(\\d{4,5}\\-\\d{4})$'
-        " (blur)="onFieldChange()" />
-      <mat-error *ngIf="contatoCtrl.invalid && contatoCtrl.touched">
-        {{
-        formModel.registro.tipoContato === 'email'
-        ? (contatoCtrl.errors?.['required']
-        ? 'Email é obrigatório'
-        : 'Formato de email inválido')
-        : (contatoCtrl.errors?.['required']
-        ? 'Telefone é obrigatório'
-        : 'Formato de telefone inválido. Use (00) 00000-0000')
-        }}
-      </mat-error>
-    </mat-form-field>
+  <!-- Componente de Contatos -->
+  <div class="col-12">
+    <app-contatos></app-contatos>
   </div>
 
   <!-- Atividade Econômica Principal -->

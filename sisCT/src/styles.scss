@@ -1,6 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-@import "ag-grid-community/styles/ag-grid.css";
-@import "ag-grid-community/styles/ag-theme-alpine.css";
 @import "@fontsource-variable/exo-2";
 @import "@fortawesome/fontawesome-free/css/all.min.css";
 
@@ -16,7 +14,10 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
 
-/* Estilos para o componente de contatos */
+/* AG Grid Styles */
+@import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-alpine.css";
+
 .ag-theme-alpine {
   --ag-header-height: 40px;
   --ag-header-foreground-color: #333;
