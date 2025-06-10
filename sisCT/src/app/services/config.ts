@@ -3,6 +3,7 @@ export const config = {
     openMenu: 'OPENMENU',
     closeMenu: 'CLOSEMENU',
     matrizChange: 'MATRIZCHANGE',
+    filialStatus: 'filialStatus',
   },
   localStorageKeys: {
     selectedCnpj: 'selectedCnpj',

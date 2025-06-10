@@ -28,6 +28,9 @@ import { EntidadeDeCuidadoComponent } from './components/section2/entidade-de-cu
 })
 export class SisCtCadastroComponent {
   perguntaSelecionadaId: string = 'PERGUNTA_2';
+  secaoILabel: string = 'Seção I: Dados da Matriz';
+  isFilial: boolean = false;
+  cnpjMatriz: string = '';
 
   @ViewChild('stepper') stepper!: MatStepper;
 
@@ -82,6 +85,8 @@ export class SisCtCadastroComponent {
   private readonly centralRxjs = inject(CentralRxJsService);
   constructor() {
     this.centralRxjs.dataToReceive.subscribe(({ key, data }) => {
+      console.log('Recebido evento:', key, data);
+      
       if (key === config.senderKeys.matrizChange) {
         const section =
           this.paginasSection1.find((p) => p.id === data.subsection) ??
@@ -89,7 +94,24 @@ export class SisCtCadastroComponent {
 
         if (section) section.showSavingIcon = !section.showSavingIcon;
       }
+      
+      // Atualizar o label da Seção I quando o status de filial mudar
+      if (key === config.senderKeys.filialStatus) {
+        console.log('Atualizando status de filial:', data);
+        this.isFilial = data.isFilial;
+        this.cnpjMatriz = data.cnpjMatriz || '';
+        this.atualizarLabelSecaoI();
+      }
     });
+  }
+  
+  atualizarLabelSecaoI() {
+    if (this.isFilial && this.cnpjMatriz) {
+      this.secaoILabel = `Seção I: Filial da matriz ${this.cnpjMatriz}`;
+    } else {
+      this.secaoILabel = 'Seção I: Dados da Matriz';
+    }
+    console.log('Label atualizado:', this.secaoILabel);
   }
 
   onRespostaSelecionada(event: {

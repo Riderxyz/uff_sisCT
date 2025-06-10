@@ -3,135 +3,63 @@
     <h3>Quanto ao Registro</h3>
   </div>
 
-  <!-- CNPJ da Matriz -->
-  <div class="col-4" [class.col-4]="isFilial" [class.col-6]="!isFilial">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>CNPJ da Matriz</mat-label>
-      <input
-        matInput
-        name="cnpj"
-        [(ngModel)]="formModel.registro.cnpj"
-        #cnpjFieldCtrl="ngModel"
-        required
-        mask="00.000.000/0000-00"
-        placeholder="00.000.000/0000-00"
-        (blur)="onFieldChange()"
-      />
-      <mat-hint
-        >O CNPJ é a primeira regra de identificação da entidade</mat-hint
-      >
-      <mat-error *ngIf="cnpjFieldCtrl.invalid && cnpjFieldCtrl.touched">
-        CNPJ é obrigatório
-      </mat-error>
-    </mat-form-field>
+  <div class="col-12" *ngIf="formModel.registro.cnpj && cnpjInvalido">
+    <div class="p-2 mb-2 border-round bg-red-100">
+      <span class="font-bold text-red-700">CNPJ inválido</span>
+    </div>
   </div>
 
-  <div class="col-4" [class.col-4]="isFilial" [class.col-6]="!isFilial">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Filial ?</mat-label>
-      <mat-select
-        name="filial"
-        [(ngModel)]="isFilial"
-        #filialQuestionCtrl="ngModel"
-        required
-      >
-        <mat-option [value]="true">Sim</mat-option>
-        <mat-option [value]="false">Não</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <div class="col-4" *ngIf="isFilial">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Informe o CNPJ da Matriz</mat-label>
-      <input
-        matInput
-        name="cnpj"
-        [(ngModel)]="formModel.registro.cnpj"
-        #cnpjFieldCtrl="ngModel"
-        required
-        mask="00.000.000/0000-00"
-        placeholder="00.000.000/0000-00"
-        (blur)="onFieldChange()"
-      />
-    </mat-form-field>
-  </div>
-
-  <div class="grid col-12">
-    <div
-      *ngIf="isFilial"
-      [class.col-6]="selectedFilialOption.value !== ''"
-      [class.col-12]="selectedFilialOption.value === 'certificavelDepad' || selectedFilialOption.value === ''"
-    >
+  <div class="grid col-12 p-0 m-0">
+    <!-- CNPJ -->
+    <div class="col-6 p-0 pr-1">
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Filial 1</mat-label>
-        <mat-select
-          name="filialOptions"
-          [(ngModel)]="selectedFilialOption"
-          #filialOptionsCtrl="ngModel"
-          (ngModelChange)="logThis()"
+        <mat-label>CNPJ</mat-label>
+        <input
+          matInput
+          name="cnpj"
+          [(ngModel)]="formModel.registro.cnpj"
+          #cnpjFieldCtrl="ngModel"
           required
+          mask="00.000.000/0000-00"
+          placeholder="00.000.000/0000-00"
+          (blur)="validateCnpj(cnpjFieldCtrl)"
+        />
+        <mat-hint
+          >O CNPJ é a primeira regra de identificação da entidade</mat-hint
         >
-          @for (item of filialOptions; track $index) {
-          <mat-option [value]="item">{{ item.label }}</mat-option>
-          }
-        </mat-select>
+        <mat-error *ngIf="cnpjFieldCtrl.invalid && cnpjFieldCtrl.touched">
+          CNPJ é obrigatório
+        </mat-error>
       </mat-form-field>
     </div>
-    <div *ngIf="selectedFilialOption.value === 'naoCertificavel'" class="col-6">
+
+    <!-- Email Institucional -->
+    <div class="col-6 p-0 pl-1">
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label
-          >Especifique (Informe o tipo de atividade que executa):
-        </mat-label>
+        <mat-label>Email Institucional</mat-label>
         <input
           matInput
-          name="especifique"
-          [(ngModel)]="areaNaoCertificavelDescription"
-          #especifiqueCtrl="ngModel"
+          name="email"
+          [(ngModel)]="formModel.registro.emailInstitucional"
+          #emailInstitucionalCtrl="ngModel"
+          email
+          required
           (blur)="onFieldChange()"
         />
-      </mat-form-field>
-    </div>
-    <div *ngIf="selectedFilialOption.value === 'outraPoliticaPublica'"
-      class="col-6"
-    >
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Qual a Policica</mat-label>
-        <input
-          matInput
-          name="especifique"
-          [(ngModel)]="areaNaoCertificavelDescription"
-          #especifiqueCtrl="ngModel"
-          (blur)="onFieldChange()"
-        />
+        <mat-error
+          *ngIf="emailInstitucionalCtrl.invalid && emailInstitucionalCtrl.touched"
+        >
+          {{
+            emailInstitucionalCtrl.errors?.['required']
+              ? 'Email institucional é obrigatório'
+              : 'Formato de email inválido'
+          }}
+        </mat-error>
       </mat-form-field>
     </div>
   </div>
 
-  <!-- Email Institucional -->
-  <div class="col-12 md-6">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Email Institucional</mat-label>
-      <input
-        matInput
-        name="email"
-        [(ngModel)]="formModel.registro.emailInstitucional"
-        #emailInstitucionalCtrl="ngModel"
-        email
-        required
-        (blur)="onFieldChange()"
-      />
-      <mat-error
-        *ngIf="emailInstitucionalCtrl.invalid && emailInstitucionalCtrl.touched"
-      >
-        {{
-          emailInstitucionalCtrl.errors?.['required']
-            ? 'Email institucional é obrigatório'
-            : 'Formato de email inválido'
-        }}
-      </mat-error>
-    </mat-form-field>
-  </div>
+
 
   <!-- Nome Fantasia -->
   <div class="col-12 md-6">
