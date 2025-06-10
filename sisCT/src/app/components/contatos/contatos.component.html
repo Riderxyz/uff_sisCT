@@ -1,0 +1,49 @@
+<div class="contatos-container">
+  <div class="contatos-header">
+    <h2>CONTATOS</h2>
+    <button mat-raised-button color="primary" (click)="adicionarContato()" [disabled]="!contatoForm.valid">
+      <i class="fas fa-plus"></i> Adicionar Contato
+    </button>
+  </div>
+
+  <div class="contato-form">
+    <form [formGroup]="contatoForm" class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="PK_TIPO_CONTATO">
+          <mat-option [value]="1">Telefone</mat-option>
+          <mat-option [value]="2">Email</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="contato-input">
+        <mat-label>Contato</mat-label>
+        <input matInput formControlName="CO_CONTATO" placeholder="Digite o contato">
+        <mat-error *ngIf="contatoForm.get('CO_CONTATO')?.hasError('required')">
+          Contato é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Campos ocultos para associação -->
+      <input type="hidden" formControlName="PK_CADASTRO_NACIONAL">
+      <input type="hidden" formControlName="PK_REPRESENTANTE_LEGAL">
+      <input type="hidden" formControlName="PK_REPRESENTANTE_TECNICO">
+    </form>
+  </div>
+
+  <div class="ag-grid-container">
+    <ag-grid-angular
+      class="ag-theme-alpine"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [context]="{componentParent: this}"
+      (gridReady)="onGridReady($event)"
+      (cellValueChanged)="onCellValueChanged($event)"
+      [suppressMovableColumns]="true"
+      [animateRows]="true"
+      [rowSelection]="'single'"
+      domLayout="autoHeight">
+    </ag-grid-angular>
+  </div>
+</div>

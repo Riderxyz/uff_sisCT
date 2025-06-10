@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import {
   provideEnvironmentNgxMask,
@@ -30,6 +31,7 @@ import { ConfirmDialogComponent } from './dialogs/ConfirmDialog/ConfirmDialog.co
 import { CnpjDialogComponent } from './dialogs/cnpj-dialog/cnpj-dialog.component';
 import { MatInputModule } from '@angular/material/input';
 import { TermosDeUsoDialogComponent } from './dialogs/termos-de-uso-dialog/termos-de-uso-dialog.component';
+import { ContatosModule } from './contatos/contatos.module';
 
 const materialModules = [
   MatCheckboxModule,
@@ -65,13 +67,14 @@ const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
     FooterComponent,
     ...dialogsComponents,
   ],
-  imports: [CommonModule, FormsModule, ...materialModules, ...ngxMasks],
+  imports: [CommonModule, FormsModule, RouterModule, ...materialModules, ...ngxMasks, ContatosModule],
   exports: [
     ToastComponent,
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
+    ContatosModule,
   ],
-  providers: [],
+  providers: [provideEnvironmentNgxMask()],
 })
 export class ComponentModule {}
