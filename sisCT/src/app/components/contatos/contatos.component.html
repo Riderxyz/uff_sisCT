@@ -1,12 +1,12 @@
 <div class="contatos-container">
   <div class="contatos-header">
     <h2>Contatos</h2>
-    <button mat-raised-button color="primary" (click)="adicionarContato()" [disabled]="!contatoForm.valid">
-      <i class="fas fa-plus"></i> Adicionar Contato
+    <button mat-stroked-button color="primary" (click)="abrirPopupNovoContato()">
+      <mat-icon>add</mat-icon> Novo Contato
     </button>
   </div>
 
-  <div class="contato-form">
+  <!-- <div class="contato-form">
     <form [formGroup]="contatoForm" class="form-row">
       <mat-form-field appearance="outline">
         <mat-label>Tipo</mat-label>
@@ -24,7 +24,7 @@
         </mat-error>
       </mat-form-field>
     </form>
-  </div>
+  </div> -->
 
   <div class="ag-grid-container">
     <div style="height: 150px; width: 100%;" class="ag-theme-alpine">

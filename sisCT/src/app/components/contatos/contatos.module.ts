@@ -5,13 +5,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask } from 'ngx-mask';
+
 import { AgGridModule } from 'ag-grid-angular';
 
 import { ContatosComponent } from './contatos.component';
+import { ContatoDialogComponent } from './contato-dialog.component';
 
 @NgModule({
   declarations: [
-    ContatosComponent
+    ContatosComponent,
+    ContatoDialogComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +26,14 @@ import { ContatosComponent } from './contatos.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatIconModule,
+    MatDialogModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
     AgGridModule
+  ],
+  providers: [
+    provideEnvironmentNgxMask()
   ],
   exports: [
     ContatosComponent

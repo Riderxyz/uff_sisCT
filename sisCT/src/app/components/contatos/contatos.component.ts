@@ -1,8 +1,15 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ColDef, GridApi, GridReadyEvent, ModuleRegistry, AllCommunityModule } from 'ag-grid-community';
+import { MatDialog } from '@angular/material/dialog';
+import { AllCommunityModule, ColDef, GridApi, GridReadyEvent, ModuleRegistry } from 'ag-grid-community';
 import { RlContato } from '../../interface/contato.interface';
 import { ContatoService } from '../../services/contato.service';
+import { ContatoDialogComponent } from './contato-dialog.component';
+
+interface Contato {
+  tipo: string;
+  valor: string;
+}
 
 // Registrar os módulos do AG Grid
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -18,10 +25,44 @@ export class ContatosComponent implements OnInit {
   public rowData: RlContato[] = [];
   public contatoForm: FormGroup;
 
+  constructor(
+    private contatoService: ContatoService,
+    private fb: FormBuilder,
+    public dialog: MatDialog
+  ) {
+    this.contatoForm = this.fb.group({
+      PK_TIPO_CONTATO: [2, Validators.required],
+      CO_CONTATO: ['', Validators.required],
+      PK_CADASTRO_NACIONAL: [null],
+      PK_REPRESENTANTE_LEGAL: [null],
+      PK_REPRESENTANTE_TECNICO: [null]
+    });
+  }
+
+
+  contatos: Contato[] = []; // Array para armazenar os contatos adicionados
+
+  abrirPopupNovoContato(): void {
+    const dialogRef = this.dialog.open(ContatoDialogComponent, {
+      width: '450px', // Ajuste a largura conforme necessário
+      data: {} // Pode passar dados iniciais aqui se for editar um contato
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) { // result é o objeto {tipo: '...', valor: '...'} retornado pelo dialog
+        this.contatos.push(result);
+        // Aqui você pode adicionar lógica para salvar o contato, por exemplo, emitir um evento ou chamar um serviço
+        console.log('Contato salvo:', result);
+      }
+    });
+  }
+
+
+
   public columnDefs: ColDef[] = [
-    { 
-      field: 'PK_TIPO_CONTATO', 
-      headerName: 'Tipo', 
+    {
+      field: 'PK_TIPO_CONTATO',
+      headerName: 'Tipo',
       editable: true,
       cellEditor: 'agSelectCellEditor',
       cellEditorParams: {
@@ -32,9 +73,9 @@ export class ContatosComponent implements OnInit {
       },
       width: 120
     },
-    { 
-      field: 'CO_CONTATO', 
-      headerName: 'Contato', 
+    {
+      field: 'CO_CONTATO',
+      headerName: 'Contato',
       editable: true,
       flex: 1
     },
@@ -64,24 +105,13 @@ export class ContatosComponent implements OnInit {
     filter: true
   };
 
-  constructor(
-    private contatoService: ContatoService,
-    private fb: FormBuilder
-  ) {
-    this.contatoForm = this.fb.group({
-      PK_TIPO_CONTATO: [2, Validators.required],
-      CO_CONTATO: ['', Validators.required],
-      PK_CADASTRO_NACIONAL: [null],
-      PK_REPRESENTANTE_LEGAL: [null],
-      PK_REPRESENTANTE_TECNICO: [null]
-    });
-  }
+
 
   ngOnInit(): void {
     // Gerar dados de exemplo para teste
     this.contatoService.getContatos().subscribe(contatos => {
       this.rowData = contatos.filter(c => c.ST_CONTATO_ATIVO === 'S');
-      
+
       // Se não houver dados, adicionar alguns para teste
       if (this.rowData.length === 0) {
         this.adicionarContatosTeste();
@@ -112,7 +142,7 @@ export class ContatosComponent implements OnInit {
         PK_REPRESENTANTE_TECNICO: null
       }
     ];
-    
+
     contatos.forEach(contato => {
       this.contatoService.adicionarContato(contato);
     });
