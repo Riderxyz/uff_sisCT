@@ -7,6 +7,17 @@
   width: 100%;
 }
 
+.container-padrao {
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  background-color: #fafafa;
+  height: 100%;
+}
+
 .atividades-container {
   padding: 16px;
   width: 100%;
@@ -80,4 +91,9 @@ mat-form-field {
   .p-0.pl-1 {
     padding: 0 !important;
   }
+}
+
+// Espaçamento simples e fixo para campos de formulário
+.form-field {
+  padding: 0 10px;
 }
