@@ -1,1 +1,51 @@
-<p>entidade-de-cuidado works!</p>
+<form #form="ngForm" class="w-full grid">
+  <div class="col-12">
+    <h4>
+      Entidades de cuidado, de prevenção, de apoio, de mútua ajuda, de
+      atendimento psicossocial e de ressocialização de dependentes do álcool e
+      de outras drogas e seus familiares
+    </h4>
+  </div>
+  <h2 class="col-12">7.1 Quanto à caracterização do público-alvo</h2>
+<h6>
+  * Especifique o publico-alvo da entidade
+</h6>
+  <div class="col-4">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>{{ "adulto Feminino" | titlecase }}</mat-label>
+      <input
+        matInput
+        type="number"
+        name="adultoFeminino"
+        [(ngModel)]="formModel.capacidadeAtendimento.publico.adultoFeminino"
+      />
+    </mat-form-field>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>{{ "adulto Masculino" | titlecase }}</mat-label>
+      <input
+        matInput
+        type="number"
+        name="adultoMasculino"
+        [(ngModel)]="formModel.capacidadeAtendimento.publico.adultoMasculino"
+      />
+    </mat-form-field>
+  </div>
+  <div class="col-4">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>{{ "maes Nutrizes" | titlecase }}</mat-label>
+      <input
+        matInput
+        type="number"
+        name="maesNutrizes"
+        [(ngModel)]="formModel.capacidadeAtendimento.publico.maesNutrizes"
+      />
+    </mat-form-field>
+  </div>
+
+  <h2 class="col-12">7.2 Quanto à Estrutura física</h2>
+  <h2 class="col-12">7.3 Quanto ao quadro de Recursos Humanos</h2>
+  <h2 class="col-12">7.4 Quanto ao Reconhecimento da entidade no município</h2>
+  <h2 class="col-12">7.5 Quanto às Atividades desenvolvidas</h2>
+</form>
