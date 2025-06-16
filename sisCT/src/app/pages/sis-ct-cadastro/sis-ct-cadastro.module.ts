@@ -1,4 +1,3 @@
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +14,7 @@ import {  MatRadioModule } from '@angular/material/radio';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatListModule} from '@angular/material/list';
 import { ComponentModule } from '../../components/components.module';
+import { ContatosModule } from '../../components/contatos/contatos.module';
 
 import { SisCtCadastroComponent } from './sis-ct-cadastro.component';
 
@@ -62,8 +62,9 @@ const MaterialModules = [
     FormsModule,
     ReactiveFormsModule,
     ...MaterialModules,
-      NgxMaskDirective, NgxMaskPipe,
+    NgxMaskDirective, NgxMaskPipe,
     ComponentModule,
+    ContatosModule,
     SisCtCadastroRoutingModule,
   ],
   providers:[
