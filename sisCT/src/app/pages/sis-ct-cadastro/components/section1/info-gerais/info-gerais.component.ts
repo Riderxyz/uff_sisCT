@@ -1,24 +1,32 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, inject } from '@angular/core';
-import { NgModel } from '@angular/forms';
+import { AfterViewInit, Component, OnInit, ViewChild, ElementRef, inject } from '@angular/core';
+import { FormControl, NgModel } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import {
   fadeInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
 } from 'angular-animations';
 import {
+  Observable,
+  ReplaySubject,
+  Subject,
   catchError,
   debounceTime,
   delay,
   filter,
   map,
   of,
+  startWith,
   switchMap,
+  takeUntil,
   tap,
 } from 'rxjs';
+import { Cnae } from '../../../../../interfaces_crud/cnae.interface';
 import { InformacaoGeraisInterface } from '../../../../../interface/informacaoGerais.interface';
 import { CadastroStep1Id } from '../../../../../interface/subSection.interface';
 import { CentralRxJsService } from '../../../../../services/centralRXJS.service';
+import { CnaeService } from '../../../../../services/cnae.service';
 import { config } from '../../../../../services/config';
 import { QuestionService } from '../../../../../services/question.service';
 import { UtilService } from '../../../../../services/util.service';
@@ -30,12 +38,91 @@ import { DialogComponent } from '../../../../../shared/components/dialog/dialog.
   styleUrl: './info-gerais.component.scss',
   animations: [fadeInOnEnterAnimation(), fadeOutOnLeaveAnimation()],
 })
-export class InfoGeraisComponent implements AfterViewInit {
+export class InfoGeraisComponent implements AfterViewInit, OnInit {
   readonly questionSrv: QuestionService = inject(QuestionService);
   readonly utilSrv: UtilService = inject(UtilService);
   readonly http: HttpClient = inject(HttpClient);
   readonly dialog: MatDialog = inject(MatDialog);
   readonly centralRxjs: CentralRxJsService = inject(CentralRxJsService);
+  
+  // CNAE filter controls
+  cnaeFilterPrincipal: FormControl = new FormControl('');
+  cnaeFilterSecundario: FormControl = new FormControl('');
+  
+  // Filtered CNAEs
+  filteredCnaesPrincipal: Observable<Cnae[]>;
+  filteredCnaesSecundario: Observable<Cnae[]>;
+  
+  // All CNAEs
+  cnaes: Cnae[] = [];
+  
+  // For cleanup
+  private _onDestroy = new Subject<void>();
+  
+  // Reference to the secondary CNAE input field
+  @ViewChild('atividadeSecundariaInput') atividadeSecundariaInput!: ElementRef<HTMLInputElement>;
+  
+  constructor(private cnaeService: CnaeService) {
+    // Initialize filtered CNAEs
+    this.filteredCnaesPrincipal = of([]);
+    this.filteredCnaesSecundario = of([]);
+  }
+
+  ngOnInit() {
+    // Subscribe to the CNAE list
+    this.cnaeService.cnaeList$.subscribe(cnaes => {
+      this.cnaes = cnaes;
+      this.setupCnaeFilters();
+    });
+    
+    // Load CNAEs if not already loaded
+    this.cnaeService.getCnaes().subscribe();
+    
+    // Initialize the secondary CNAEs as an array if it's not already
+    if (!Array.isArray(this.formModel.registro.codigoDeAtividadesEconomicasSecundarias)) {
+      this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = [];
+    }
+  }
+  
+  setupCnaeFilters() {
+    // Filter for primary CNAE
+    this.filteredCnaesPrincipal = this.cnaeFilterPrincipal.valueChanges.pipe(
+      startWith(''),
+      map(search => this.filterCnaes(search || ''))
+    );
+    
+    // Filter for secondary CNAE
+    this.filteredCnaesSecundario = this.cnaeFilterSecundario.valueChanges.pipe(
+      startWith(''),
+      map(search => this.filterCnaes(search || ''))
+    );
+  }
+  
+  // Helper method to ensure we always have an array for ngFor
+  getSecundariosArray(): string[] {
+    if (!this.formModel.registro.codigoDeAtividadesEconomicasSecundarias) {
+      this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = [];
+    }
+    
+    if (Array.isArray(this.formModel.registro.codigoDeAtividadesEconomicasSecundarias)) {
+      return this.formModel.registro.codigoDeAtividadesEconomicasSecundarias;
+    }
+    
+    // If it's a string, convert to array with one item
+    return [this.formModel.registro.codigoDeAtividadesEconomicasSecundarias];
+  }
+  
+  filterCnaes(search: string): Cnae[] {
+    if (!search) {
+      return this.cnaes.slice(0, 100); // Return first 100 for performance
+    }
+    
+    const searchLower = search.toLowerCase();
+    return this.cnaes.filter(cnae => 
+      cnae.id.includes(search) || 
+      cnae.descricao.toLowerCase().includes(searchLower)
+    ).slice(0, 100); // Limit results for performance
+  }
 
   formModel: InformacaoGeraisInterface = {
     registro: {
@@ -43,7 +130,7 @@ export class InfoGeraisComponent implements AfterViewInit {
       nomeFantasia: '',
       razaoSocial: '',
       codigoDeAtividadesEconomicasPrimarias: '',
-      codigoDeAtividadesEconomicasSecundarias: '',
+      codigoDeAtividadesEconomicasSecundarias: [],
       emailInstitucional: '',
       contato: '',
       tipoContato: 'email',
@@ -65,7 +152,6 @@ export class InfoGeraisComponent implements AfterViewInit {
   isVerificandoCnpj = false;
   cnpjInvalido = false;
 
-  constructor() { }
   ngAfterViewInit(): void {
     this.formModel = this.questionSrv.matriz.seccao1.dados.informacaoGerais;
     this.formModel.localizacao;
@@ -133,7 +219,7 @@ export class InfoGeraisComponent implements AfterViewInit {
         cnpjMatriz: this.cnpjMatriz
       }
     });
-    
+
     console.log('Notificando status de filial:', this.isFilial, this.cnpjMatriz);
 
     setTimeout(() => {
@@ -214,6 +300,55 @@ export class InfoGeraisComponent implements AfterViewInit {
     } else {
       this.questionSrv.matriz.seccao1.dados.informacaoGerais = this.formModel;
       this.questionSrv.onMatrizDatachange(CadastroStep1Id.InfoGerais);
+    }
+  }
+  
+  // Display function for the autocomplete
+  displayCnae(cnaeId: string): string {
+    if (!cnaeId) return '';
+    
+    const cnae = this.cnaes.find(c => c.id === cnaeId);
+    return cnae ? `${cnae.id} - ${cnae.descricao}` : cnaeId;
+  }
+  
+  // Get CNAE description by ID
+  getCnaeDescricao(cnaeId: string): string {
+    const cnae = this.cnaes.find(c => c.id === cnaeId);
+    return cnae ? `${cnae.id} - ${cnae.descricao}` : cnaeId;
+  }
+  
+  // Add a secondary CNAE
+  adicionarCnaeSecundario(event: MatAutocompleteSelectedEvent): void {
+    const value = event.option.value;
+    if (!value) return;
+    
+    // Initialize the array if it's not already
+    if (!Array.isArray(this.formModel.registro.codigoDeAtividadesEconomicasSecundarias)) {
+      this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = [];
+    }
+    
+    // Add the value if it's not already in the array
+    const secundarios = this.formModel.registro.codigoDeAtividadesEconomicasSecundarias as string[];
+    if (!secundarios.includes(value)) {
+      secundarios.push(value);
+      this.onFieldChange();
+    }
+    
+    // Clear the input
+    if (this.atividadeSecundariaInput) {
+      this.atividadeSecundariaInput.nativeElement.value = '';
+    }
+    this.cnaeFilterSecundario.setValue('');
+  }
+  
+  // Remove a secondary CNAE
+  removerCnaeSecundario(cnaeId: string): void {
+    const secundarios = this.getSecundariosArray();
+    const index = secundarios.indexOf(cnaeId);
+    if (index >= 0) {
+      secundarios.splice(index, 1);
+      this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = secundarios;
+      this.onFieldChange();
     }
   }
 }

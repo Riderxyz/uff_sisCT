@@ -68,11 +68,20 @@
         <!-- Atividade Econômica Principal -->
         <mat-form-field appearance="outline" class="w-full mb-3">
           <mat-label>Atividade Econômica Principal (CNAE)</mat-label>
-          <input matInput name="atividadePrincipal"
-            [(ngModel)]="formModel.registro.codigoDeAtividadesEconomicasPrimarias" #atividadePrincipalCtrl="ngModel"
-            required (blur)="onFieldChange()" />
-          <mat-hint>Lista de seleção ver qual a base de referência</mat-hint>
-          <mat-error *ngIf="atividadePrincipalCtrl.invalid && atividadePrincipalCtrl.touched">
+          <input type="text"
+                 matInput
+                 name="atividadePrincipal"
+                 [(ngModel)]="formModel.registro.codigoDeAtividadesEconomicasPrimarias"
+                 required
+                 [matAutocomplete]="autoPrincipal"
+                 (blur)="onFieldChange()">
+          <mat-autocomplete #autoPrincipal="matAutocomplete" [displayWith]="displayCnae.bind(this)">
+            <mat-option *ngFor="let cnae of filteredCnaesPrincipal | async" [value]="cnae.id">
+              {{ cnae.id }} - {{ cnae.descricao }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-hint>Digite o código ou descrição do CNAE</mat-hint>
+          <mat-error>
             Atividade econômica principal é obrigatória
           </mat-error>
         </mat-form-field>
@@ -80,10 +89,25 @@
         <!-- Atividade Econômica Secundária -->
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Atividades Econômicas Secundárias (CNAE)</mat-label>
-          <input matInput name="atividadeSecundaria"
-            [(ngModel)]="formModel.registro.codigoDeAtividadesEconomicasPrimarias" #atividadeSecundariaCtrl="ngModel"
-            (blur)="onFieldChange()" />
-          <mat-hint>Lista de seleção – ver qual a base de referência</mat-hint>
+          <mat-chip-grid #chipGrid>
+            <mat-chip-row *ngFor="let cnaeId of getSecundariosArray()" 
+                         (removed)="removerCnaeSecundario(cnaeId)">
+              {{getCnaeDescricao(cnaeId)}}
+              <button matChipRemove><mat-icon>cancel</mat-icon></button>
+            </mat-chip-row>
+          </mat-chip-grid>
+          <input type="text"
+                 matInput
+                 name="atividadeSecundaria"
+                 #atividadeSecundariaInput
+                 [matAutocomplete]="autoSecundario"
+                 [matChipInputFor]="chipGrid">
+          <mat-autocomplete #autoSecundario="matAutocomplete" (optionSelected)="adicionarCnaeSecundario($event)">
+            <mat-option *ngFor="let cnae of filteredCnaesSecundario | async" [value]="cnae.id">
+              {{ cnae.id }} - {{ cnae.descricao }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-hint>Digite o código ou descrição do CNAE</mat-hint>
         </mat-form-field>
       </div>
     </div>

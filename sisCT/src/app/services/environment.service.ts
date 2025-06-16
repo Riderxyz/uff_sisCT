@@ -9,6 +9,9 @@ export class EnvironmentService {
   // API URL configuration with environment variable fallback
   public apiUrl: string;
   
+  // CNAE API URL
+  public cnaeApiUrl: string;
+  
   // Other environment configurations can be added here
   public production = false;
   public version = '1.0.0';
@@ -17,6 +20,10 @@ export class EnvironmentService {
     // Try to get API URL from environment variable, fallback to default if not available
     const envApiUrl = this.getEnvironmentVariable('API_URL');
     this.apiUrl = envApiUrl || 'http://localhost:3000/api';
+    
+    // Try to get CNAE API URL from environment variable, fallback to default if not available
+    const envCnaeApiUrl = this.getEnvironmentVariable('CNAE_API_URL');
+    this.cnaeApiUrl = envCnaeApiUrl || 'https://servicodados.ibge.gov.br/api/v2/cnae/subclasses/';
   }
   
   private getEnvironmentVariable(name: string): string | null {
