@@ -56,14 +56,14 @@ router-outlet + * {
 .col-12 {
   width: 100%;
 }
+.w-full {
+  width: 100%;
+}
 
 .col-6 {
   width: 50%;
 } */
 
-.w-full {
-  width: 100%;
-}
 
 mat-form-field {
   width: 100%;
