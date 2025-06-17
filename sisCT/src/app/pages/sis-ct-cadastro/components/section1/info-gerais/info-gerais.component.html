@@ -68,14 +68,10 @@
         <!-- Atividade Econômica Principal -->
         <mat-form-field appearance="outline" class="w-full mb-3">
           <mat-label>Atividade Econômica Principal (CNAE)</mat-label>
-          <input type="text"
-                 matInput
-                 name="atividadePrincipal"
-                 [(ngModel)]="formModel.registro.codigoDeAtividadesEconomicasPrimarias"
-                 required
-                 [matAutocomplete]="autoPrincipal"
-                 (blur)="onFieldChange()">
-          <mat-autocomplete #autoPrincipal="matAutocomplete" [displayWith]="displayCnae.bind(this)">
+          <input type="text" matInput name="atividadePrincipal" [formControl]="cnaeFilterPrincipal"
+            [matAutocomplete]="autoPrincipal" (blur)="onCnaePrincipalBlur()">
+          <mat-autocomplete #autoPrincipal="matAutocomplete" [displayWith]="displayCnae.bind(this)"
+            (optionSelected)="onCnaePrincipalSelected($event)">
             <mat-option *ngFor="let cnae of filteredCnaesPrincipal | async" [value]="cnae.id">
               {{ cnae.id }} - {{ cnae.descricao }}
             </mat-option>
@@ -88,21 +84,17 @@
 
         <!-- Atividade Econômica Secundária -->
         <mat-form-field appearance="outline" class="w-full">
-          <mat-label>Atividades Econômicas Secundárias (CNAE)</mat-label>
-          <mat-chip-grid #chipGrid>
-            <mat-chip-row *ngFor="let cnaeId of getSecundariosArray()" 
-                         (removed)="removerCnaeSecundario(cnaeId)">
-              {{getCnaeDescricao(cnaeId)}}
-              <button matChipRemove><mat-icon>cancel</mat-icon></button>
-            </mat-chip-row>
-          </mat-chip-grid>
-          <input type="text"
-                 matInput
-                 name="atividadeSecundaria"
+          <mat-label>Atividade Econômica Secundária (CNAE)</mat-label>
+          <input type="text" 
+                 matInput 
+                 name="atividadeSecundaria" 
                  #atividadeSecundariaInput
+                 [formControl]="cnaeFilterSecundario" 
                  [matAutocomplete]="autoSecundario"
-                 [matChipInputFor]="chipGrid">
-          <mat-autocomplete #autoSecundario="matAutocomplete" (optionSelected)="adicionarCnaeSecundario($event)">
+                 (blur)="onCnaeSecundarioBlur()">
+          <mat-autocomplete #autoSecundario="matAutocomplete" 
+                           [displayWith]="displayCnae.bind(this)"
+                           (optionSelected)="onCnaeSecundarioSelected($event)">
             <mat-option *ngFor="let cnae of filteredCnaesSecundario | async" [value]="cnae.id">
               {{ cnae.id }} - {{ cnae.descricao }}
             </mat-option>

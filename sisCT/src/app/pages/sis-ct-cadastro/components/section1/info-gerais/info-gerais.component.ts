@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit, ViewChild, ElementRef, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { FormControl, NgModel } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatDialog } from '@angular/material/dialog';
 import {
   fadeInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
 } from 'angular-animations';
 import {
   Observable,
-  ReplaySubject,
   Subject,
   catchError,
   debounceTime,
@@ -19,12 +18,11 @@ import {
   of,
   startWith,
   switchMap,
-  takeUntil,
-  tap,
+  tap
 } from 'rxjs';
-import { Cnae } from '../../../../../interfaces_crud/cnae.interface';
 import { InformacaoGeraisInterface } from '../../../../../interface/informacaoGerais.interface';
 import { CadastroStep1Id } from '../../../../../interface/subSection.interface';
+import { Cnae } from '../../../../../interfaces_crud/cnae.interface';
 import { CentralRxJsService } from '../../../../../services/centralRXJS.service';
 import { CnaeService } from '../../../../../services/cnae.service';
 import { config } from '../../../../../services/config';
@@ -44,24 +42,24 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
   readonly http: HttpClient = inject(HttpClient);
   readonly dialog: MatDialog = inject(MatDialog);
   readonly centralRxjs: CentralRxJsService = inject(CentralRxJsService);
-  
+
   // CNAE filter controls
   cnaeFilterPrincipal: FormControl = new FormControl('');
   cnaeFilterSecundario: FormControl = new FormControl('');
-  
+
   // Filtered CNAEs
   filteredCnaesPrincipal: Observable<Cnae[]>;
   filteredCnaesSecundario: Observable<Cnae[]>;
-  
+
   // All CNAEs
   cnaes: Cnae[] = [];
-  
+
   // For cleanup
   private _onDestroy = new Subject<void>();
-  
+
   // Reference to the secondary CNAE input field
   @ViewChild('atividadeSecundariaInput') atividadeSecundariaInput!: ElementRef<HTMLInputElement>;
-  
+
   constructor(private cnaeService: CnaeService) {
     // Initialize filtered CNAEs
     this.filteredCnaesPrincipal = of([]);
@@ -74,52 +72,53 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
       this.cnaes = cnaes;
       this.setupCnaeFilters();
     });
-    
+
     // Load CNAEs if not already loaded
     this.cnaeService.getCnaes().subscribe();
-    
-    // Initialize the secondary CNAEs as an array if it's not already
-    if (!Array.isArray(this.formModel.registro.codigoDeAtividadesEconomicasSecundarias)) {
-      this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = [];
-    }
+
+    // Setup input change listeners
+    this.cnaeFilterPrincipal.valueChanges.subscribe(value => {
+      if (typeof value === 'string') {
+        // User is typing, not selecting from dropdown
+        this.validateCnaeInput(value, this.cnaeFilterPrincipal);
+      }
+    });
+
+    this.cnaeFilterSecundario.valueChanges.subscribe(value => {
+      if (typeof value === 'string') {
+        // User is typing, not selecting from dropdown
+        this.validateCnaeInput(value, this.cnaeFilterSecundario);
+      }
+    });
   }
-  
+
   setupCnaeFilters() {
     // Filter for primary CNAE
     this.filteredCnaesPrincipal = this.cnaeFilterPrincipal.valueChanges.pipe(
       startWith(''),
       map(search => this.filterCnaes(search || ''))
     );
-    
+
     // Filter for secondary CNAE
     this.filteredCnaesSecundario = this.cnaeFilterSecundario.valueChanges.pipe(
       startWith(''),
       map(search => this.filterCnaes(search || ''))
     );
   }
-  
-  // Helper method to ensure we always have an array for ngFor
+
+  // This method is no longer needed but kept for compatibility
   getSecundariosArray(): string[] {
-    if (!this.formModel.registro.codigoDeAtividadesEconomicasSecundarias) {
-      this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = [];
-    }
-    
-    if (Array.isArray(this.formModel.registro.codigoDeAtividadesEconomicasSecundarias)) {
-      return this.formModel.registro.codigoDeAtividadesEconomicasSecundarias;
-    }
-    
-    // If it's a string, convert to array with one item
-    return [this.formModel.registro.codigoDeAtividadesEconomicasSecundarias];
+    return [];
   }
-  
+
   filterCnaes(search: string): Cnae[] {
     if (!search) {
       return this.cnaes.slice(0, 100); // Return first 100 for performance
     }
-    
+
     const searchLower = search.toLowerCase();
-    return this.cnaes.filter(cnae => 
-      cnae.id.includes(search) || 
+    return this.cnaes.filter(cnae =>
+      cnae.id.includes(search) ||
       cnae.descricao.toLowerCase().includes(searchLower)
     ).slice(0, 100); // Limit results for performance
   }
@@ -302,53 +301,94 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
       this.questionSrv.onMatrizDatachange(CadastroStep1Id.InfoGerais);
     }
   }
-  
+
   // Display function for the autocomplete
   displayCnae(cnaeId: string): string {
     if (!cnaeId) return '';
-    
+
     const cnae = this.cnaes.find(c => c.id === cnaeId);
     return cnae ? `${cnae.id} - ${cnae.descricao}` : cnaeId;
   }
-  
+
+  // Validate CNAE input to ensure only valid options are accepted
+  validateCnaeInput(value: string, control: FormControl): void {
+    if (!value) return;
+
+    // Check if the value is a valid CNAE ID
+    const isValid = this.cnaes.some(cnae =>
+      cnae.id === value ||
+      cnae.id.includes(value) ||
+      cnae.descricao.toLowerCase().includes(value.toLowerCase())
+    );
+
+    if (!isValid) {
+      // If not valid, mark the control as having an error
+      control.setErrors({ invalidCnae: true });
+    }
+  }
+
+  // Handle primary CNAE selection
+  onCnaePrincipalSelected(event: MatAutocompleteSelectedEvent): void {
+    const value = event.option.value;
+    if (!value) return;
+
+    // Update the form model
+    this.formModel.registro.codigoDeAtividadesEconomicasPrimarias = value;
+    this.onFieldChange();
+  }
+
+  // Handle primary CNAE blur event
+  onCnaePrincipalBlur(): void {
+    const value = this.cnaeFilterPrincipal.value;
+
+    // If the value is a valid CNAE ID, update the form model
+    const cnae = this.cnaes.find(c => c.id === value);
+    if (cnae) {
+      this.formModel.registro.codigoDeAtividadesEconomicasPrimarias = cnae.id;
+      this.onFieldChange();
+    } else {
+      // If not valid, reset to the current form model value
+      //    this.cnaeFilterPrincipal.setValue(this.formModel.registro.codigoDeAtividadesEconomicasPrimarias);
+    }
+  }
+
   // Get CNAE description by ID
   getCnaeDescricao(cnaeId: string): string {
     const cnae = this.cnaes.find(c => c.id === cnaeId);
     return cnae ? `${cnae.id} - ${cnae.descricao}` : cnaeId;
   }
-  
-  // Add a secondary CNAE
-  adicionarCnaeSecundario(event: MatAutocompleteSelectedEvent): void {
+
+  // Handle secondary CNAE selection
+  onCnaeSecundarioSelected(event: MatAutocompleteSelectedEvent): void {
     const value = event.option.value;
     if (!value) return;
     
-    // Initialize the array if it's not already
-    if (!Array.isArray(this.formModel.registro.codigoDeAtividadesEconomicasSecundarias)) {
-      this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = [];
-    }
-    
-    // Add the value if it's not already in the array
-    const secundarios = this.formModel.registro.codigoDeAtividadesEconomicasSecundarias as string[];
-    if (!secundarios.includes(value)) {
-      secundarios.push(value);
-      this.onFieldChange();
-    }
-    
-    // Clear the input
-    if (this.atividadeSecundariaInput) {
-      this.atividadeSecundariaInput.nativeElement.value = '';
-    }
-    this.cnaeFilterSecundario.setValue('');
+    // Update the form model with a single value
+    this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = value;
+    this.onFieldChange();
   }
   
-  // Remove a secondary CNAE
-  removerCnaeSecundario(cnaeId: string): void {
-    const secundarios = this.getSecundariosArray();
-    const index = secundarios.indexOf(cnaeId);
-    if (index >= 0) {
-      secundarios.splice(index, 1);
-      this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = secundarios;
+  // Handle secondary CNAE blur event
+  onCnaeSecundarioBlur(): void {
+    const value = this.cnaeFilterSecundario.value;
+    
+    // If the value is a valid CNAE ID, update the form model
+    const cnae = this.cnaes.find(c => c.id === value);
+    if (cnae) {
+      this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = cnae.id;
       this.onFieldChange();
+    } else {
+      // If not valid, reset to the current form model value
+      this.cnaeFilterSecundario.setValue(this.formModel.registro.codigoDeAtividadesEconomicasSecundarias);
     }
+  }
+  
+  // These methods are no longer needed but kept for compatibility
+  adicionarCnaeSecundario(event: MatAutocompleteSelectedEvent): void {
+    this.onCnaeSecundarioSelected(event);
+  }
+  
+  removerCnaeSecundario(cnaeId: string): void {
+    // No longer needed as we're not using chips
   }
 }
