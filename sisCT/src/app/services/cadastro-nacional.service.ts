@@ -21,7 +21,7 @@ export class CadastroNacionalService {
     DT_VALIDADE_LICENSA: undefined,
     NO_FANTASIA: 'teste de apontamento',
     NO_RAZAO_SOCIAL: '',
-    NU_CNPJ: '',
+    NU_CNPJ: '45555555',
     DS_ATIVIDADE_FILIAL: '',
     CO_CNAE_PRINCIPAL: '',
     CO_CNAE_SECUNDARIO: '',

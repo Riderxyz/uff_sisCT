@@ -1,0 +1,18 @@
+.form-container {
+    padding: 16px;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite quebra de linha em telas pequenas */
+    gap: 16px;
+    /* Espaçamento entre os campos */
+    align-items: flex-end;
+    /* Alinha todos os campos pela base */
+}
+
+.flex-field {
+    flex: 1 1 200px;
+    /* Distribui igualmente, com largura mínima de 200px */
+}

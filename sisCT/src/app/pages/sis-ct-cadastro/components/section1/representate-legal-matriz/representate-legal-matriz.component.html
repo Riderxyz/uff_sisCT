@@ -1,121 +1,89 @@
 <form #representanteLegalForm="ngForm" class="grid">
-  <div class="col-12">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Nome do Representante Legal</mat-label>
-      <input
-        matInput
-        name="nome"
-        [(ngModel)]="formModel.nome"
-        #nomeCtrl="ngModel"
-        required
-        (blur)="onFieldChange()"
-      />
-      <mat-error *ngIf="nomeCtrl.invalid && nomeCtrl.touched">
-        Nome do Representante Legal é obrigatório
-      </mat-error>
-    </mat-form-field>
-  </div>
+  <div class="grid col-12 p-0 m-0">
+    <div class="col p-0 pr-1">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Nome do Representante Legal</mat-label>
+        <input matInput name="nome" [(ngModel)]="formModel.nome" #nomeCtrl="ngModel" required
+          (blur)="onFieldChange()" />
+        <mat-error *ngIf="nomeCtrl.invalid && nomeCtrl.touched">
+          Nome do Representante Legal é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-  <div class="col-4">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>CPF do Representante Legal</mat-label>
-      <input
-        matInput
-        name="cpf"
-        [(ngModel)]="formModel.cpf"
-        #cpfCtrl="ngModel"
-        required
-        mask="000.000.000-00"
-        placeholder="000.000.000-00"
-        (blur)="onFieldChange()"
-      />
-      <mat-error *ngIf="cpfCtrl.invalid && cpfCtrl.touched">
-        CPF do Representante Legal é obrigatório
-      </mat-error>
-    </mat-form-field>
+    <div class="col-3 p-0 pl-1">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>CPF do Representante Legal</mat-label>
+        <input matInput name="cpf" [(ngModel)]="formModel.cpf" #cpfCtrl="ngModel" required mask="000.000.000-00"
+          placeholder="000.000.000-00" (blur)="onFieldChange()" />
+        <mat-error *ngIf="cpfCtrl.invalid && cpfCtrl.touched">
+          CPF do Representante Legal é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
   </div>
-  <div class="col-4">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Telefone</mat-label>
-      <input
-        matInput
-        name="telefone"
-        [(ngModel)]="formModel.telefone"
-        #telefoneCtrl="ngModel"
-        required
-        mask="(00) 00000-0000"
-        placeholder="(00) 00000-0000"
-        (blur)="onFieldChange()"
-      />
-      <mat-error *ngIf="telefoneCtrl.invalid && telefoneCtrl.touched">
-        Telefone do Representante Legal é obrigatório
-      </mat-error>
-    </mat-form-field>
+  <!-- <div class="form-container"> -->
+  <div class="grid col-12 p-0 m-0">
+
+    <!-- Telefone -->
+    <div class="col p-0 pl-0">
+      <mat-form-field appearance="outline" class="flex-field">
+        <mat-label>Telefone</mat-label>
+        <input matInput name="telefone" [(ngModel)]="formModel.telefone" #telefoneCtrl="ngModel" required
+          mask="(00) 00000-0000" placeholder="(00) 00000-0000" (blur)="onFieldChange()" />
+        <mat-error *ngIf="telefoneCtrl.invalid && telefoneCtrl.touched">
+          Telefone é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <!-- Email -->
+    <div class="col p-0 pl-1">
+      <mat-form-field appearance="outline" class="flex-field">
+        <mat-label>Email</mat-label>
+        <input matInput name="email" [(ngModel)]="formModel.email" #emailCtrl="ngModel" required email
+          placeholder="email@exemplo.com" (blur)="onFieldChange()" />
+        <mat-error *ngIf="emailCtrl.invalid && emailCtrl.touched">
+          Email é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+
+    <!-- Papel na Matriz -->
+    <div class="col p-0 pl-1">
+      <mat-form-field appearance="outline" class="flex-field">
+        <mat-label>Qual o seu papel na composição da mesa diretora da Matriz?</mat-label>
+        <mat-select name="mesaDirectoraMatriz" [(ngModel)]="formModel.seuPapelnaMatriz"
+          #mesaDirectoraMatrizCtrl="ngModel" required>
+          <mat-option value="presidente">Presidente</mat-option>
+          <mat-option value="vice-presidente">Vice-presidente</mat-option>
+          <mat-option value="conselheiro">Conselheiro</mat-option>
+          <mat-option value="outros">Outros</mat-option>
+        </mat-select>
+        <mat-error *ngIf="mesaDirectoraMatrizCtrl.invalid && mesaDirectoraMatrizCtrl.touched">
+          Seu papel na Matriz é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- Escolaridade -->
+    <div class="col p-0 pl-1">
+      <mat-form-field appearance="outline" class="flex-field">
+        <mat-label>Escolaridade</mat-label>
+        <mat-select name="escolaridade" [(ngModel)]="formModel.escolaridade" #escolaridadeCtrl="ngModel" required>
+          <mat-option value="nível fundamental">Nível Fundamental</mat-option>
+          <mat-option value="nível médio">Nível Médio</mat-option>
+          <mat-option value="Graduação">Graduação</mat-option>
+          <mat-option value="pós-graduação">Pós-Graduação</mat-option>
+          <mat-option value="mestrado">Mestrado</mat-option>
+          <mat-option value="doutorado">Doutorado</mat-option>
+        </mat-select>
+        <mat-error *ngIf="escolaridadeCtrl.invalid && escolaridadeCtrl.touched">
+          Escolaridade é obrigatória
+        </mat-error>
+      </mat-form-field>
+    </div>
+
   </div>
-  <div class="col-4">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Email</mat-label>
-      <input
-        matInput
-        name="email"
-        [(ngModel)]="formModel.email"
-        #emailCtrl="ngModel"
-        required
-        email
-        placeholder="email@exemplo.com"
-        (blur)="onFieldChange()"
-      />
-      <mat-error *ngIf="emailCtrl.invalid && emailCtrl.touched">
-        Email do Representante Legal é obrigatório
-      </mat-error>
-    </mat-form-field>
-  </div>
-  <div class="col-6">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label
-        >Qual o seu papel na composição da mesa diretora da Matriz?</mat-label
-      >
-      <mat-select
-        name="mesaDirectoraMatriz"
-        [(ngModel)]="formModel.seuPapelnaMatriz"
-        #mesaDirectoraMatrizCtrl="ngModel"
-        required
-      >
-        <mat-option value="presidente">Presidente</mat-option>
-        <mat-option value="vice-presidente">Vice-presidente</mat-option>
-        <mat-option value="conselheiro">Conselheiro</mat-option>
-        <mat-option value="outros">Outros</mat-option>
-      </mat-select>
-      <mat-error
-        *ngIf="
-          mesaDirectoraMatrizCtrl.invalid && mesaDirectoraMatrizCtrl.touched
-        "
-      >
-        Seu papel na Matriz é obrigatório
-      </mat-error>
-    </mat-form-field>
-  </div>
-  <div class="col-6">
-    <mat-form-field appearance="outline" class="w-full">
-      <mat-label
-        >Escolaridade</mat-label
-      >
-      <mat-select
-        name="mesaDirectoraFilial"
-        [(ngModel)]="formModel.escolaridade"
-        #escolaridadeCtrl="ngModel"
-        required
-      >
-        <mat-option value="nível fundamental">Nível Fundamental</mat-option>
-        <mat-option value="nível médio">Nível Médio</mat-option>
-        <mat-option value="Graduação">Graduação</mat-option>
-        <mat-option value="pós-graduação">Pós-Graduação</mat-option>
-        <mat-option value="mestrado">Mestrado</mat-option>
-        <mat-option value="doutorado">Doutorado</mat-option>
-      </mat-select>
-      <mat-error *ngIf="escolaridadeCtrl.invalid && escolaridadeCtrl.touched">
-        Escolaridade é obrigatório
-      </mat-error>
-    </mat-form-field>
-  </div>
+  <!-- </div> -->
 </form>
