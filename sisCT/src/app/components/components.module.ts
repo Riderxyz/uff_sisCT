@@ -21,6 +21,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -47,6 +49,8 @@ const materialModules = [
   MatDividerModule,
   MatProgressSpinnerModule,
   MatDialogModule,
+  MatAutocompleteModule,
+  MatChipsModule,
   MatProgressSpinnerModule,
   MatCheckboxModule,
 ];

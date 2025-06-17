@@ -6,26 +6,6 @@
     </button>
   </div>
 
-  <!-- <div class="contato-form">
-    <form [formGroup]="contatoForm" class="form-row">
-      <mat-form-field appearance="outline">
-        <mat-label>Tipo</mat-label>
-        <mat-select formControlName="PK_TIPO_CONTATO">
-          <mat-option [value]="1">Telefone</mat-option>
-          <mat-option [value]="2">Email</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="contato-input">
-        <mat-label>Contato</mat-label>
-        <input matInput formControlName="CO_CONTATO" placeholder="Digite o contato">
-        <mat-error *ngIf="contatoForm.get('CO_CONTATO')?.hasError('required')">
-          Contato é obrigatório
-        </mat-error>
-      </mat-form-field>
-    </form>
-  </div> -->
-
   <div class="ag-grid-container">
     <div style="height: 21vh; width: 100%;" class="ag-theme-material">
       <ag-grid-angular style="width: 100%; height: 20vh;" class="ag-theme-material" [columnDefs]="columnDefs"

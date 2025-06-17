@@ -8,7 +8,7 @@ export interface RegistroInterface {
   cnpj: string;
   nomeFantasia: string;
   codigoDeAtividadesEconomicasPrimarias: string;
-  codigoDeAtividadesEconomicasSecundarias: string;
+  codigoDeAtividadesEconomicasSecundarias: string[] | string;
   emailInstitucional:string;
   contato: string;
   tipoContato: 'email' | 'telefone';
