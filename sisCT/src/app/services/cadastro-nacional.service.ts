@@ -19,7 +19,7 @@ export class CadastroNacionalService {
     DS_OUTRO_CONSELHO_MUNICIPAL: '',
     DS_INSCRICAO_CONSELHO_ESTADUAL: '',
     DT_VALIDADE_LICENSA: undefined,
-    NO_FANTASIA: '',
+    NO_FANTASIA: 'teste de apontamento',
     NO_RAZAO_SOCIAL: '',
     NU_CNPJ: '',
     DS_ATIVIDADE_FILIAL: '',

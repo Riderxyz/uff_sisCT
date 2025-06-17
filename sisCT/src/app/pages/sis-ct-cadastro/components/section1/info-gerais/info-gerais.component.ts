@@ -27,8 +27,8 @@ import { Endereco } from '../../../../../interfaces_crud/endereco.interface';
 import { CadastroNacionalService } from '../../../../../services/cadastro-nacional.service';
 import { CentralRxJsService } from '../../../../../services/centralRXJS.service';
 import { CnaeService } from '../../../../../services/cnae.service';
-import { EnderecoService } from '../../../../../services/endereco.service';
 import { config } from '../../../../../services/config';
+import { EnderecoService } from '../../../../../services/endereco.service';
 import { QuestionService } from '../../../../../services/question.service';
 import { UtilService } from '../../../../../services/util.service';
 import { DialogComponent } from '../../../../../shared/components/dialog/dialog.component';
@@ -63,15 +63,10 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
   // Reference to the secondary CNAE input field
   @ViewChild('atividadeSecundariaInput') atividadeSecundariaInput!: ElementRef<HTMLInputElement>;
 
-  // Endereco object for the form
-  endereco: Endereco = {
-    NU_NUMERO: '',
-    NU_CEP: '',
-    PK_CADASTRO_NACIONAL: 0
-  };
+  // We'll use the endereco from the EnderecoService
 
   constructor(
-    private cnaeService: CnaeService, 
+    private cnaeService: CnaeService,
     public cadastroService: CadastroNacionalService,
     private enderecoService: EnderecoService
   ) {
@@ -104,12 +99,45 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
         this.validateCnaeInput(value, this.cnaeFilterSecundario);
       }
     });
-    
-    // Initialize the endereco object with the cadastro nacional ID
+
+    // Initialize the endereco with the cadastro nacional ID
     const currentCadastro = this.cadastroService.getCurrentCadastro();
     if (currentCadastro && currentCadastro.PK_CADASTRO_NACIONAL) {
-      this.endereco.PK_CADASTRO_NACIONAL = currentCadastro.PK_CADASTRO_NACIONAL;
+      this.enderecoService.loadEnderecoByCadastroNacional(currentCadastro.PK_CADASTRO_NACIONAL);
     }
+
+    // Subscribe to endereco changes
+    this.enderecoService.endereco$.subscribe(endereco => {
+      // Update the form model with the endereco values
+      if (endereco.DS_LOGRADOURO) this.formModel.localizacao.logradouro = endereco.DS_LOGRADOURO;
+      if (endereco.NU_NUMERO) this.formModel.localizacao.numero = endereco.NU_NUMERO;
+      if (endereco.DS_COMPLEMENTO) this.formModel.localizacao.complemento = endereco.DS_COMPLEMENTO;
+      if (endereco.NO_BAIRRO) this.formModel.localizacao.bairro = endereco.NO_BAIRRO;
+      if (endereco.DS_CIDADE) this.formModel.localizacao.cidade = endereco.DS_CIDADE;
+      if (endereco.CO_ESTADO) this.formModel.localizacao.estado = endereco.CO_ESTADO;
+      if (endereco.DS_PAIS) this.formModel.localizacao.pais = endereco.DS_PAIS;
+      if (endereco.NU_CEP) this.formModel.localizacao.cep = endereco.NU_CEP;
+      
+      // Update the question service model
+      this.questionSrv.matriz.seccao1.dados.informacaoGerais = this.formModel;
+    });
+    
+    // Subscribe to cadastro nacional changes
+    this.cadastroService.cadastro$.subscribe(cadastro => {
+      // Update the form model with the cadastro nacional values
+      if (cadastro.NU_CNPJ) this.formModel.registro.cnpj = cadastro.NU_CNPJ;
+      if (cadastro.NO_FANTASIA) this.formModel.registro.nomeFantasia = cadastro.NO_FANTASIA;
+      if (cadastro.NO_RAZAO_SOCIAL) this.formModel.registro.razaoSocial = cadastro.NO_RAZAO_SOCIAL;
+      if (cadastro.CO_CNAE_PRINCIPAL) this.formModel.registro.codigoDeAtividadesEconomicasPrimarias = cadastro.CO_CNAE_PRINCIPAL;
+      if (cadastro.CO_CNAE_SECUNDARIO) this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = cadastro.CO_CNAE_SECUNDARIO;
+      
+      // Update CNAE filter values
+      if (cadastro.CO_CNAE_PRINCIPAL) this.cnaeFilterPrincipal.setValue(cadastro.CO_CNAE_PRINCIPAL, {emitEvent: false});
+      if (cadastro.CO_CNAE_SECUNDARIO) this.cnaeFilterSecundario.setValue(cadastro.CO_CNAE_SECUNDARIO, {emitEvent: false});
+      
+      // Update the question service model
+      this.questionSrv.matriz.seccao1.dados.informacaoGerais = this.formModel;
+    });
   }
 
   setupCnaeFilters() {
@@ -173,7 +201,82 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit(): void {
     this.formModel = this.questionSrv.matriz.seccao1.dados.informacaoGerais;
-    this.formModel.localizacao;
+
+    // If we have form values, update the endereco in the service
+    if (this.formModel.localizacao) {
+      // Only update if the fields have values
+      const enderecoUpdates: Partial<Endereco> = {};
+
+      if (this.formModel.localizacao.logradouro) {
+        enderecoUpdates.DS_LOGRADOURO = this.formModel.localizacao.logradouro;
+      }
+
+      if (this.formModel.localizacao.numero) {
+        enderecoUpdates.NU_NUMERO = this.formModel.localizacao.numero;
+      }
+
+      if (this.formModel.localizacao.complemento) {
+        enderecoUpdates.DS_COMPLEMENTO = this.formModel.localizacao.complemento;
+      }
+
+      if (this.formModel.localizacao.bairro) {
+        enderecoUpdates.NO_BAIRRO = this.formModel.localizacao.bairro;
+      }
+
+      if (this.formModel.localizacao.cidade) {
+        enderecoUpdates.DS_CIDADE = this.formModel.localizacao.cidade;
+      }
+
+      if (this.formModel.localizacao.estado) {
+        enderecoUpdates.CO_ESTADO = this.formModel.localizacao.estado;
+      }
+
+      if (this.formModel.localizacao.pais) {
+        enderecoUpdates.DS_PAIS = this.formModel.localizacao.pais;
+      }
+
+      if (this.formModel.localizacao.cep) {
+        enderecoUpdates.NU_CEP = this.formModel.localizacao.cep;
+      }
+
+      // Only update if we have values
+      if (Object.keys(enderecoUpdates).length > 0) {
+        this.enderecoService.updateEndereco(enderecoUpdates);
+      }
+    }
+    
+    // If we have form values, update the cadastro nacional in the service
+    if (this.formModel.registro) {
+      // Only update if the fields have values
+      const cadastroUpdates: Partial<any> = {};
+
+      // if (this.formModel.registro.cnpj) {
+      //   cadastroUpdates.NU_CNPJ = this.formModel.registro.cnpj;
+      // }
+
+      // if (this.formModel.registro.nomeFantasia) {
+      //   cadastroUpdates.NO_FANTASIA = this.formModel.registro.nomeFantasia;
+      // }
+
+      // if (this.formModel.registro.razaoSocial) {
+      //   cadastroUpdates.NO_RAZAO_SOCIAL = this.formModel.registro.razaoSocial;
+      // }
+
+      // if (this.formModel.registro.codigoDeAtividadesEconomicasPrimarias) {
+      //   cadastroUpdates.CO_CNAE_PRINCIPAL = this.formModel.registro.codigoDeAtividadesEconomicasPrimarias;
+      //   this.cnaeFilterPrincipal.setValue(this.formModel.registro.codigoDeAtividadesEconomicasPrimarias, {emitEvent: false});
+      // }
+
+      // if (this.formModel.registro.codigoDeAtividadesEconomicasSecundarias) {
+      //   cadastroUpdates.CO_CNAE_SECUNDARIO = this.formModel.registro.codigoDeAtividadesEconomicasSecundarias;
+      //   this.cnaeFilterSecundario.setValue(this.formModel.registro.codigoDeAtividadesEconomicasSecundarias, {emitEvent: false});
+      // }
+
+      // Only update if we have values
+      if (Object.keys(cadastroUpdates).length > 0) {
+        this.cadastroService.updateCadastro(cadastroUpdates);
+      }
+    }
   }
 
   validateCnpj(control: NgModel) {
@@ -194,7 +297,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
       }
       // Verificar se é filial quando o CNPJ é válido
       this.verificarFilial(this.formModel.registro.cnpj);
-      
+
       // Update the cadastro nacional with the CNPJ
       this.cadastroService.updateCadastro({
         NU_CNPJ: this.formModel.registro.cnpj
@@ -309,24 +412,23 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
       )
       .subscribe((res) => {
         if (!res) return;
-        
+
         // Update the form model
         this.formModel.localizacao.cep = res.cep;
         this.formModel.localizacao.logradouro = res.logradouro;
         this.formModel.localizacao.bairro = res.bairro;
         this.formModel.localizacao.cidade = res.localidade;
         this.formModel.localizacao.estado = res.uf;
-        
-        // Update the endereco object
-        this.endereco.NU_CEP = res.cep;
-        this.endereco.DS_LOGRADOURO = res.logradouro;
-        this.endereco.NO_BAIRRO = res.bairro;
-        this.endereco.DS_CIDADE = res.localidade;
-        this.endereco.CO_ESTADO = res.uf;
-        
-        // Update the endereco service
-        this.updateEndereco();
-        
+
+        // Update the endereco in the service
+        this.enderecoService.updateEndereco({
+          NU_CEP: res.cep,
+          DS_LOGRADOURO: res.logradouro,
+          NO_BAIRRO: res.bairro,
+          DS_CIDADE: res.localidade,
+          CO_ESTADO: res.uf
+        });
+
         this.isLoadingAdress = false;
       });
   }
@@ -338,12 +440,12 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
       // Update the local model
       this.questionSrv.matriz.seccao1.dados.informacaoGerais = this.formModel;
       this.questionSrv.onMatrizDatachange(CadastroStep1Id.InfoGerais);
-      
-      // Update the cadastro nacional service
+
+      // Update the cadastro nacional service and endereco service
       this.updateCadastroNacional();
     }
   }
-  
+
   // Update the cadastro nacional object with form values
   updateCadastroNacional() {
     this.cadastroService.updateCadastro({
@@ -351,12 +453,20 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
       NU_CNPJ: this.formModel.registro.cnpj,
       NO_FANTASIA: this.formModel.registro.nomeFantasia,
       NO_RAZAO_SOCIAL: this.formModel.registro.razaoSocial,
-      
+
       // CNAE codes
       CO_CNAE_PRINCIPAL: this.formModel.registro.codigoDeAtividadesEconomicasPrimarias,
-      CO_CNAE_SECUNDARIO: this.formModel.registro.codigoDeAtividadesEconomicasSecundarias as string,
-      
-      // Location data
+      CO_CNAE_SECUNDARIO: this.formModel.registro.codigoDeAtividadesEconomicasSecundarias as string
+    });
+
+    // Update the endereco in the service
+    this.updateEnderecoFromForm();
+  }
+
+  // Update the endereco in the service with form values
+  updateEnderecoFromForm() {
+    // Update the endereco with form values
+    this.enderecoService.updateEndereco({
       DS_LOGRADOURO: this.formModel.localizacao.logradouro,
       NU_NUMERO: this.formModel.localizacao.numero,
       DS_COMPLEMENTO: this.formModel.localizacao.complemento,
@@ -364,7 +474,8 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
       DS_CIDADE: this.formModel.localizacao.cidade,
       CO_ESTADO: this.formModel.localizacao.estado,
       DS_PAIS: this.formModel.localizacao.pais,
-      NU_CEP: this.formModel.localizacao.cep
+      NU_CEP: this.formModel.localizacao.cep,
+      DT_ATUALIZACAO: new Date()
     });
   }
 
@@ -400,12 +511,12 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
 
     // Update the form model
     this.formModel.registro.codigoDeAtividadesEconomicasPrimarias = value;
-    
+
     // Update the cadastro nacional
     this.cadastroService.updateCadastro({
       CO_CNAE_PRINCIPAL: value
     });
-    
+
     this.onFieldChange();
   }
 
@@ -417,12 +528,12 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
     const cnae = this.cnaes.find(c => c.id === value);
     if (cnae) {
       this.formModel.registro.codigoDeAtividadesEconomicasPrimarias = cnae.id;
-      
+
       // Update the cadastro nacional
       this.cadastroService.updateCadastro({
         CO_CNAE_PRINCIPAL: cnae.id
       });
-      
+
       this.onFieldChange();
     } else {
       // If not valid, reset to the current form model value
@@ -443,12 +554,12 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
 
     // Update the form model with a single value
     this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = value;
-    
+
     // Update the cadastro nacional
     this.cadastroService.updateCadastro({
       CO_CNAE_SECUNDARIO: value
     });
-    
+
     this.onFieldChange();
   }
 
@@ -460,12 +571,12 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
     const cnae = this.cnaes.find(c => c.id === value);
     if (cnae) {
       this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = cnae.id;
-      
+
       // Update the cadastro nacional
       this.cadastroService.updateCadastro({
         CO_CNAE_SECUNDARIO: cnae.id
       });
-      
+
       this.onFieldChange();
     } else {
       // If not valid, reset to the current form model value
