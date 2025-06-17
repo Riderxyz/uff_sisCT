@@ -1,4 +1,4 @@
-<form #formRef="ngForm" class="p-fluid p-grid gap-4">
+<form #formRef="ngForm" class="grid">
   <div class="col-12">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Informe a Receita bruta da filial</mat-label>
@@ -34,7 +34,7 @@
     </div>
   </div>
 
-  <div class="col-5">
+  <div class="col-6">
     <div class="recursos-container">
       <div class="recursos-header">
         <h2>5.2 Quanto à outras fontes de recursos</h2>
@@ -62,7 +62,7 @@
       </div>
     </div>
   </div>
-  <div class="col-5">
+  <div class="col-6">
     <div class="recursos-container">
       <div class="recursos-header">
         <h2>5.2 Quanto à outras fontes de recursos</h2>
@@ -74,13 +74,12 @@
           {{ receita.label }}
         </mat-list-option>
       </mat-selection-list>
-    </div>
-
-    <div class="col-12">
-      <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Outros</mat-label>
-        <input matInput name="outros" [(ngModel)]="formModel.outrasFontes.outros" (blur)="onFieldChange()" />
-      </mat-form-field>
+      <div class="col">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Outros</mat-label>
+          <input matInput name="outros" [(ngModel)]="formModel.outrasFontes.outros" (blur)="onFieldChange()" />
+        </mat-form-field>
+      </div>
     </div>
   </div>
 
