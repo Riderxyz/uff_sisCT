@@ -1,0 +1,35 @@
+.recursos-container {
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #fafafa;
+    height: 100%;
+}
+
+.recursos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.dense-select .mat-option {
+    line-height: 1.5;
+    height: 32px;
+}
+
+.checkbox-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.checkbox-item {
+    margin-bottom: 0px;
+    margin-top: 0px;
+    /* Espaço entre os checkboxes */
+}
