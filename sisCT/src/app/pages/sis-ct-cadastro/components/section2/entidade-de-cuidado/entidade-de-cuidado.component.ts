@@ -2,6 +2,7 @@ import { AfterViewInit, Component, inject } from '@angular/core';
 import { QuestionService } from '../../../../../services/question.service';
 import { UtilService } from '../../../../../services/util.service';
 import { EntidadeDeCuidadoInterface } from '../../../../../interface/entidadeDeCuidado.interface';
+import { entidadeCuidadoFormOptions } from './options';
 
 @Component({
   selector: 'app-entidade-de-cuidado',
@@ -13,11 +14,6 @@ export class EntidadeDeCuidadoComponent implements AfterViewInit {
   readonly utilSrv: UtilService = inject(UtilService);
 
    formModel: EntidadeDeCuidadoInterface = {
-    // 7. Entidades de cuidado
-    entidadeRealizaAcolhimento: false,
-    entidadeRealizaAcolhimentoProvisorio: false,
-    entidadeTemCapacidadeTerapeutica: false,
-
     // 7.1 Caracterização do público-alvo
     publicoAlvo: {
       adultoFeminino: 0,
@@ -29,13 +25,6 @@ export class EntidadeDeCuidadoComponent implements AfterViewInit {
     capacidadeAtendimento: 'grupos10',
     formaAcesso: 'espontaneamente',
 
-    tiposAtendimento: {
-      atendimentoDeterminacaoJudicial: false,
-      projetosFinanciadosSetorPublico: false,
-      encaminhamentosOrganizacoesSociedadeCivil: false,
-      outroEspecificar: ''
-    },
-
     // 7.2 Estrutura física
     espacoEntidade: 'proprio',
     possuiEspacoAtendimentoColetivo: false,
@@ -43,11 +32,8 @@ export class EntidadeDeCuidadoComponent implements AfterViewInit {
 
     // 7.3 Recursos Humanos
     possuiQuadroTecnico: false,
-    profissionaisAtuantes: '',
     quantidadeProfissionaisAtuantes: '',
-    tipoProfissionaisVinculo: '',
 
-    profissionais: [],
 
     // 7.4 Reconhecimento da entidade
     possuiInscricaoConselhoMunicipal: false,
@@ -160,22 +146,23 @@ export class EntidadeDeCuidadoComponent implements AfterViewInit {
       outrosEspecificar: ''
     }
   };
+  entidadeCuidadoFormOptionsObj = entidadeCuidadoFormOptions;
   constructor() {}
 
   ngAfterViewInit(): void {}
 
     adicionarProfissional() {
-    this.formModel.profissionais.push({
+/*     this.formModel.profissionais.push({
       nome: '',
       profissao: '',
       cargaHoraria: '',
       tipoVinculo: 'voluntario'
-    });
+    }); */
   }
 
   // Método para remover profissional
   removerProfissional(index: number) {
-    this.formModel.profissionais.splice(index, 1);
+    //this.formModel.profissionais.splice(index, 1);
   }
 
   // Método para submeter o formulário

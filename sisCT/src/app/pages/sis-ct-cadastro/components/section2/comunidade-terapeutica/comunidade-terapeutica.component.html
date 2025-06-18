@@ -3,27 +3,30 @@
   <h2 class="col-12">6. Comunidade Terapêutica</h2>
 
   <mat-checkbox
-    class="col-12"
+    class="col-12 md:col-4"
     name="possuiLicencaSanitaria"
     [(ngModel)]="formModel.comunidadeTerapeutica.possuiLicencaSanitaria"
     (change)="onSanitaryChange()"
     >Possui licença sanitária atualizada</mat-checkbox
   >
 
-  <div class="col-12 md:col-6">
+  <div class="col-12 md:col-4">
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Validade da Licença - Término</mat-label>
+      <mat-label>Validade da Licença</mat-label>
+
       <input
-        matInput
-        type="date"
         name="validadeLicenca"
+        matInput
+        [matDatepicker]="dp"
         [(ngModel)]="formModel.comunidadeTerapeutica.validadeLicenca"
-        (blur)="onFieldBlur('validadeLicenca')"
       />
+      <mat-hint>Dia/Mes/Ano</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker #dp></mat-datepicker>
     </mat-form-field>
   </div>
 
-  <div class="col-12 md:col-6">
+  <div class="col-12 md:col-4">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Prazo do Projeto Terapêutico (meses)</mat-label>
       <input
@@ -37,39 +40,56 @@
   </div>
 
   <mat-checkbox
-    class="col-12"
+    [class.md:col-6]="!formModel.comunidadeTerapeutica.matrizPossuiCEBAS"
+    [class.md:col-3]="formModel.comunidadeTerapeutica.matrizPossuiCEBAS"
     name="matrizPossuiCEBAS"
     [(ngModel)]="formModel.comunidadeTerapeutica.matrizPossuiCEBAS"
     (change)="onCEBASChange()"
     >A matriz da entidade possui CEBAS?</mat-checkbox
   >
+  @if (formModel.comunidadeTerapeutica.matrizPossuiCEBAS) {
+  <div class="col-3">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Início da validade CEBAS</mat-label>
 
-  <ng-container *ngIf="formModel.comunidadeTerapeutica.matrizPossuiCEBAS">
-    <div class="col-6">
-      <mat-form-field class="w-full" appearance="outline">
-        <mat-label>Início da validade CEBAS</mat-label>
-        <input
-          matInput
-          type="date"
-          name="inicioCEBAS"
-          [(ngModel)]="formModel.comunidadeTerapeutica.periodoCEBAS!.inicio"
-        />
-      </mat-form-field>
-    </div>
-    <div class="col-6">
-      <mat-form-field class="w-full" appearance="outline">
-        <mat-label>Término da validade CEBAS</mat-label>
-        <input
-          matInput
-          type="date"
-          name="terminoCEBAS"
-          [(ngModel)]="formModel.comunidadeTerapeutica.periodoCEBAS!.termino"
-        />
-      </mat-form-field>
-    </div>
-  </ng-container>
+      <input
+        name="inicioCEBAS"
+        matInput
+        [matDatepicker]="periodoCEBASInicio"
+        [(ngModel)]="formModel.comunidadeTerapeutica.periodoCEBAS!.inicio"
+      />
+      <mat-hint>Dia/Mes/Ano</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="periodoCEBASInicio"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #periodoCEBASInicio></mat-datepicker>
+    </mat-form-field>
+  </div>
+  <div class="col-3">
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Término da validade CEBAS</mat-label>
 
-  <div class="col-12">
+      <input
+        name="terminoCEBAS"
+        matInput
+        [matDatepicker]="periodoCEBASTermino"
+        [(ngModel)]="formModel.comunidadeTerapeutica.periodoCEBAS!.termino"
+      />
+      <mat-hint>Dia/Mes/Ano</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="periodoCEBASTermino"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #periodoCEBASTermino></mat-datepicker>
+    </mat-form-field>
+  </div>
+  }
+
+  <div
+    [class.col-6]="!formModel.comunidadeTerapeutica.matrizPossuiCEBAS"
+    [class.col-3]="formModel.comunidadeTerapeutica.matrizPossuiCEBAS"
+  >
     <mat-checkbox
       name="requerimentoDEPAD"
       [(ngModel)]="formModel.comunidadeTerapeutica.requerimentoDEPAD"
@@ -158,11 +178,19 @@
       />
     </mat-form-field>
   </div>
-  
+
   <!-- Seção 6.3 -->
   <h2 class="col-12">6.3 Reconhecimento da Entidade</h2>
 
-  <div class="col-12">
+  <div
+    class="col-6"
+    [class.col-6]="
+      formModel.reconhecimentoMunicipio.conselhoMunicipal !== 'outro'
+    "
+    [class.col-4]="
+      formModel.reconhecimentoMunicipio.conselhoMunicipal === 'outro'
+    "
+  >
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>Inscrição em Conselho Municipal</mat-label>
       <mat-select
@@ -179,7 +207,7 @@
   </div>
 
   <div
-    class="col-12"
+    class="col-4"
     *ngIf="formModel.reconhecimentoMunicipio.conselhoMunicipal === 'outro'"
   >
     <mat-form-field class="w-full" appearance="outline">
@@ -192,7 +220,14 @@
     </mat-form-field>
   </div>
 
-  <div class="col-12">
+  <div
+    [class.col-6]="
+      formModel.reconhecimentoMunicipio.conselhoMunicipal !== 'outro'
+    "
+    [class.col-4]="
+      formModel.reconhecimentoMunicipio.conselhoMunicipal === 'outro'
+    "
+  >
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>Conselho Estadual</mat-label>
       <input

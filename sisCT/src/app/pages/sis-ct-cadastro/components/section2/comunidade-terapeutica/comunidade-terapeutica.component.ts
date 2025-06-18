@@ -52,6 +52,11 @@ export class ComunidadeTerapeuticaComponent implements AfterViewInit {
   onCEBASChange() {
     if (!this.formModel.comunidadeTerapeutica.matrizPossuiCEBAS) {
       this.formModel.comunidadeTerapeutica.periodoCEBAS = undefined;
+    } else {
+      this.formModel.comunidadeTerapeutica.periodoCEBAS = {
+        inicio: '',
+        termino: '',
+      };
     }
   }
 
