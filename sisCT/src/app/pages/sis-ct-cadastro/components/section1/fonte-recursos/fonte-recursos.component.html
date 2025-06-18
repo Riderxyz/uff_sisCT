@@ -68,9 +68,9 @@
         <h2>5.2 Quanto à outras fontes de recursos</h2>
       </div>
       <mat-label>Receitas próprias</mat-label>
-      <mat-selection-list [(ngModel)]="formModel.outrasFontes.receitasProprias" name="receitasProprias"
-        (blur)="onFieldChange()">
-        <mat-list-option *ngFor="let receita of receitasProprias" [value]="receita.value">
+      <mat-selection-list class="label-position-before" [(ngModel)]="formModel.outrasFontes.receitasProprias"
+        name="receitasProprias" (blur)="onFieldChange()">
+        <mat-list-option [togglePosition]="'before'" *ngFor="let receita of receitasProprias" [value]="receita.value">
           {{ receita.label }}
         </mat-list-option>
       </mat-selection-list>
