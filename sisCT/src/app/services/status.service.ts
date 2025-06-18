@@ -55,7 +55,7 @@ export class StatusService {
     const index = this.statusArray.findIndex(
       item => item.secao === status.secao && item.campo === status.campo
     );
-    
+
     if (index >= 0) {
       // Item exists, update it
       this.statusArray[index] = { ...status };
@@ -63,7 +63,7 @@ export class StatusService {
       // Item doesn't exist, add it
       this.statusArray.push({ ...status });
     }
-    
+
     this.notifyChanges();
   }
 
@@ -93,7 +93,7 @@ export class StatusService {
     }
 
     // Check if all items have situacao === 0 (approved)
-    return secaoItems.every(item => item.situacao === 0);
+    return secaoItems.every(item => item.situacao);
   }
 
   // Verify and update status based on cadastro nacional data
@@ -111,10 +111,7 @@ export class StatusService {
       // Update status.situacao based on field value
       if (fieldValue === null || fieldValue === undefined || fieldValue === '') {
         // Field is empty or null, set status to 2
-        this.statusArray[i] = { ...status, situacao: 2 };
-      } else {
-        // Field has a value, set status to 0 (approved)
-        this.statusArray[i] = { ...status, situacao: 0 };
+        this.statusArray[i] = { ...status, situacao: false };
       }
     }
 

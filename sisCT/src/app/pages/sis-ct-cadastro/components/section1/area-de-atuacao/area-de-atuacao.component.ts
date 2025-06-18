@@ -49,7 +49,7 @@ export class AreaDeAtuacaoComponent implements OnInit {
     this.statusService.update({
       secao: 1,
       campo: 'ST_AREA_ATUACAO',
-      situacao: 0,
+      situacao: this.selectedOption ? true : false,
       nome: 'Informe a Área de Atuação',
       descricao: ''
     })
@@ -67,7 +67,7 @@ export class AreaDeAtuacaoComponent implements OnInit {
     this.statusService.update({
       secao: 1,
       campo: 'ST_AREA_ATUACAO',
-      situacao: 1,
+      situacao: this.selectedOption ? true : false,
       nome: 'Informe a Área de Atuação',
       descricao: ''
     })
