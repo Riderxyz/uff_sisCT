@@ -2,7 +2,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AllCommunityModule, ColDef, GridApi, GridReadyEvent, ModuleRegistry } from 'ag-grid-community';
-import { RlContato } from '../../interface/contato.interface';
+
+import { RlContato } from '../../interfaces_crud/contato.interface';
 import { ContatoService } from '../../services/contato.service';
 import { ContatoDialogComponent } from './contato-dialog.component';
 
@@ -126,20 +127,20 @@ export class ContatosComponent implements OnInit {
         CO_CONTATO: 'exemplo@email.com',
         PK_TIPO_CONTATO: 2,
         ST_CONTATO_ATIVO: 'S',
-        DT_ATUALIZACAO: new Date().toISOString(),
+        DT_ATUALIZACAO: new Date(),
         PK_CADASTRO_NACIONAL: 12345,
-        PK_REPRESENTANTE_LEGAL: null,
-        PK_REPRESENTANTE_TECNICO: null
+        PK_REPRESENTANTE_LEGAL: -1,
+        PK_REPRESENTANTE_TECNICO: -1
       },
       {
         PK_RLCONTATO: 2,
         CO_CONTATO: '(21) 98765-4321',
         PK_TIPO_CONTATO: 1,
         ST_CONTATO_ATIVO: 'S',
-        DT_ATUALIZACAO: new Date().toISOString(),
-        PK_CADASTRO_NACIONAL: null,
+        DT_ATUALIZACAO: new Date(),
+        PK_CADASTRO_NACIONAL: -1,
         PK_REPRESENTANTE_LEGAL: 67890,
-        PK_REPRESENTANTE_TECNICO: null
+        PK_REPRESENTANTE_TECNICO: -1
       }
     ];
 
@@ -162,7 +163,7 @@ export class ContatosComponent implements OnInit {
         CO_CONTATO: this.contatoForm.value.CO_CONTATO,
         PK_TIPO_CONTATO: this.contatoForm.value.PK_TIPO_CONTATO,
         ST_CONTATO_ATIVO: 'S',
-        DT_ATUALIZACAO: new Date().toISOString(),
+        DT_ATUALIZACAO: new Date(),
         PK_CADASTRO_NACIONAL: this.contatoForm.value.PK_CADASTRO_NACIONAL,
         PK_REPRESENTANTE_LEGAL: this.contatoForm.value.PK_REPRESENTANTE_LEGAL,
         PK_REPRESENTANTE_TECNICO: this.contatoForm.value.PK_REPRESENTANTE_TECNICO

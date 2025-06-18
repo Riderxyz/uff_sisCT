@@ -1,46 +1,60 @@
-import { AfterViewInit, Component, inject } from '@angular/core';
-import { CadastroStep1Id } from '../../../../../interface/subSection.interface';
-import { QuestionService } from '../../../../../services/question.service';
+// src/app/pages/sis-ct-cadastro/components/section1/area-de-atuacao/area-de-atuacao.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { CadastroNacionalService } from '../../../../../services/cadastro-nacional.service';
+
+interface AreaDeAtuacaoOption {
+  value: number;
+  label: string;
+}
+
 @Component({
   selector: 'app-area-de-atuacao',
   templateUrl: './area-de-atuacao.component.html',
-  styleUrl: './area-de-atuacao.component.scss',
+  styleUrls: ['./area-de-atuacao.component.scss']
 })
-export class AreaDeAtuacaoComponent implements AfterViewInit {
-  constructor() {}
-  opcoes = [
-    {
-      label: 'Comunidade Terapêutica – SEÇÃO II – Item 6',
-      value: 'comunidadeTerapeutica',
-    },
-    {
-      label:
-        'Entidades de cuidado, de prevenção, de apoio, de mútua ajuda, de atendimento psicossocial e de ressocialização de dependentes do álcool e de outras drogas e seus familiares SEÇÃO II – Item 7',
-      value: 'entidadesDeCuidado',
-    },
+export class AreaDeAtuacaoComponent implements OnInit {
+  // Options for the radio buttons
+  opcoes: AreaDeAtuacaoOption[] = [
+    { value: 1, label: 'Comunidade Terapêutica' },
+    { value: 2, label: 'Entidade de Cuidado' },
+    { value: 3, label: 'Outra Área de Atuação' }
   ];
 
-  questionSrv: QuestionService = inject(QuestionService);
-  selectedOption: {
-    label: string;
-    value: string;
-  } = { label: '', value: '' };
-  ngAfterViewInit(): void {}
+  // Selected option
+  selectedOption: AreaDeAtuacaoOption | null = null;
+  selectedOptionValue = 2;
 
-  onSelectChange() {
-    console.log(this.selectedOption);
-    if (this.selectedOption.value === 'comunidadeTerapeutica') {
-      this.questionSrv.matriz.seccao1.dados.areaDeAtuacao.comunidadeTerapeutica =
-        true;
-      this.questionSrv.matriz.seccao1.dados.areaDeAtuacao.entidadeDeCuidado =
-        false;
-      this.questionSrv.onMatrizDatachange(CadastroStep1Id.AreaDeAtuacao);
-    } else {
-      this.questionSrv.matriz.seccao1.dados.areaDeAtuacao.comunidadeTerapeutica =
-        false;
-      this.questionSrv.matriz.seccao1.dados.areaDeAtuacao.entidadeDeCuidado =
-        true;
-      this.questionSrv.onMatrizDatachange(CadastroStep1Id.AreaDeAtuacao);
+  // Current section name
+  sectionName = 'area_atuacao';
+
+  constructor(public cadastroService: CadastroNacionalService) {
+    //debugger
+  }
+
+  ngOnInit(): void {
+    // Get current value from service if available
+    const currentCadastro = this.cadastroService.getCurrentCadastro();
+    this.selectedOption = this.opcoes[this.cadastroService.cadastroSubject.getValue().ST_AREA_ATUACAO!];
+    if (currentCadastro && currentCadastro.ST_AREA_ATUACAO) {
+      this.selectedOption = this.opcoes.find(opt => opt.value === currentCadastro.ST_AREA_ATUACAO) || null;
+    }
+    // Subscribe to changes in the cadastro
+    this.cadastroService.cadastro$.subscribe(cadastro => {
+      if (cadastro && cadastro.ST_AREA_ATUACAO) {
+        this.selectedOption = this.opcoes.find(opt => opt.value === cadastro.ST_AREA_ATUACAO) || null;
+      }
+    });
+  }
+
+  onSelectChange(): void {
+    if (this.selectedOption) {
+      // Update the cadastro nacional with the selected area de atuacao
+
+      console.log(this.selectedOption.value, 'selected option value', this.selectedOptionValue);
+      this.cadastroService.updateCadastro({
+        ST_AREA_ATUACAO: this.selectedOptionValue - 1
+      });
     }
   }
 }
