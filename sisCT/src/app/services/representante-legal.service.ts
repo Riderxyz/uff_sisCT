@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { RepresentanteLegalInterface } from '../interface/representanteLegal.interface';
@@ -10,10 +10,10 @@ import { EnvironmentService } from './environment.service';
 })
 export class RepresentanteLegalService {
   private apiUrl: string;
-  
+
   // BehaviorSubject to store and share the current representante legal
   private representanteSubject = new BehaviorSubject<RepresentanteLegalInterface>({
-    nome: '',
+    nome: 'Nilton',
     anoDeTerminoDeMandato: '',
     cpf: '',
     dataDeNascimento: '',
@@ -23,7 +23,7 @@ export class RepresentanteLegalService {
     seuPapelnaMatriz: '',
     email: ''
   });
-  
+
   // Observable to expose the representante legal instance
   public representante$ = this.representanteSubject.asObservable();
 
@@ -33,22 +33,22 @@ export class RepresentanteLegalService {
   ) {
     this.apiUrl = `${this.environmentService.apiUrl}/representante-legal`;
   }
-  
+
   // Get the current representante legal instance
   getCurrentRepresentante(): RepresentanteLegalInterface {
     return this.representanteSubject.getValue();
   }
-  
+
   // Update the current representante legal instance
   updateRepresentante(representante: Partial<RepresentanteLegalInterface>): void {
     const current = this.representanteSubject.getValue();
     this.representanteSubject.next({ ...current, ...representante });
   }
-  
+
   // Reset the representante legal instance to default values
   resetRepresentante(): void {
     this.representanteSubject.next({
-      nome: '',
+      nome: 'NILTON',
       anoDeTerminoDeMandato: '',
       cpf: '',
       dataDeNascimento: '',

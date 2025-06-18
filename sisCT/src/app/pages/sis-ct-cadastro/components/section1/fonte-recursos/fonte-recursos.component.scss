@@ -29,7 +29,31 @@
 }
 
 .checkbox-item {
-    margin-bottom: 0px;
+    margin-bottom: -0px;
     margin-top: 0px;
     /* Espaço entre os checkboxes */
+}
+
+/* CSS para Solução 1 - mat-checkbox com labelPosition="before" */
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checkbox-group mat-checkbox {
+    margin-bottom: 8px;
+}
+
+/* CSS para Solução 2 - mat-selection-list simulando labelPosition */
+.label-position-before .mat-list-item-content {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+}
+
+.label-position-before .mat-pseudo-checkbox {
+    order: -1 !important;
+    margin-right: 12px !important;
+    margin-left: 0 !important;
 }
