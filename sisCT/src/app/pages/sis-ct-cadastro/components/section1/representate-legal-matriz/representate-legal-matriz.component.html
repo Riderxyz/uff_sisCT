@@ -3,7 +3,7 @@
     <div class="col p-0 pr-1">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Nome do Representante Legal</mat-label>
-        <input matInput name="nome" [(ngModel)]="formModel.nome" #nomeCtrl="ngModel" required
+        <input matInput name="nome" [(ngModel)]="representanteService.getCurrentRepresentante().nome" #nomeCtrl="ngModel" required
           (blur)="onFieldChange()" />
         <mat-error *ngIf="nomeCtrl.invalid && nomeCtrl.touched">
           Nome do Representante Legal é obrigatório
@@ -14,7 +14,7 @@
     <div class="col-3 p-0 pl-1">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>CPF do Representante Legal</mat-label>
-        <input matInput name="cpf" [(ngModel)]="formModel.cpf" #cpfCtrl="ngModel" required mask="000.000.000-00"
+        <input matInput name="cpf" [(ngModel)]="representanteService.getCurrentRepresentante().cpf" #cpfCtrl="ngModel" required mask="000.000.000-00"
           placeholder="000.000.000-00" (blur)="onFieldChange()" />
         <mat-error *ngIf="cpfCtrl.invalid && cpfCtrl.touched">
           CPF do Representante Legal é obrigatório
@@ -29,7 +29,7 @@
     <div class="col p-0 pl-0">
       <mat-form-field appearance="outline" class="flex-field">
         <mat-label>Telefone</mat-label>
-        <input matInput name="telefone" [(ngModel)]="formModel.telefone" #telefoneCtrl="ngModel" required
+        <input matInput name="telefone" [(ngModel)]="representanteService.getCurrentRepresentante().telefone" #telefoneCtrl="ngModel" required
           mask="(00) 00000-0000" placeholder="(00) 00000-0000" (blur)="onFieldChange()" />
         <mat-error *ngIf="telefoneCtrl.invalid && telefoneCtrl.touched">
           Telefone é obrigatório
@@ -40,7 +40,7 @@
     <div class="col p-0 pl-1">
       <mat-form-field appearance="outline" class="flex-field">
         <mat-label>Email</mat-label>
-        <input matInput name="email" [(ngModel)]="formModel.email" #emailCtrl="ngModel" required email
+        <input matInput name="email" [(ngModel)]="representanteService.getCurrentRepresentante().email" #emailCtrl="ngModel" required email
           placeholder="email@exemplo.com" (blur)="onFieldChange()" />
         <mat-error *ngIf="emailCtrl.invalid && emailCtrl.touched">
           Email é obrigatório
@@ -53,7 +53,7 @@
     <div class="col p-0 pl-1">
       <mat-form-field appearance="outline" class="flex-field">
         <mat-label>Qual o seu papel na composição da mesa diretora da Matriz?</mat-label>
-        <mat-select name="mesaDirectoraMatriz" [(ngModel)]="formModel.seuPapelnaMatriz"
+        <mat-select name="mesaDirectoraMatriz" [(ngModel)]="representanteService.getCurrentRepresentante().seuPapelnaMatriz"
           #mesaDirectoraMatrizCtrl="ngModel" required>
           <mat-option value="presidente">Presidente</mat-option>
           <mat-option value="vice-presidente">Vice-presidente</mat-option>
@@ -70,7 +70,7 @@
     <div class="col p-0 pl-1">
       <mat-form-field appearance="outline" class="flex-field">
         <mat-label>Escolaridade</mat-label>
-        <mat-select name="escolaridade" [(ngModel)]="formModel.escolaridade" #escolaridadeCtrl="ngModel" required>
+        <mat-select name="escolaridade" [(ngModel)]="representanteService.getCurrentRepresentante().escolaridade" #escolaridadeCtrl="ngModel" required>
           <mat-option value="nível fundamental">Nível Fundamental</mat-option>
           <mat-option value="nível médio">Nível Médio</mat-option>
           <mat-option value="Graduação">Graduação</mat-option>

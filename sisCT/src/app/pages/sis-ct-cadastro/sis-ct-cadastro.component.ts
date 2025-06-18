@@ -84,9 +84,13 @@ export class SisCtCadastroComponent {
 
   private readonly centralRxjs = inject(CentralRxJsService);
   constructor() {
+
+    setTimeout(() => {
+this.stepper.selectedIndex = 1;
+    }, 100);
     this.centralRxjs.dataToReceive.subscribe(({ key, data }) => {
       console.log('Recebido evento:', key, data);
-      
+
       if (key === config.senderKeys.matrizChange) {
         const section =
           this.paginasSection1.find((p) => p.id === data.subsection) ??
@@ -94,7 +98,7 @@ export class SisCtCadastroComponent {
 
         if (section) section.showSavingIcon = !section.showSavingIcon;
       }
-      
+
       // Atualizar o label da Seção I quando o status de filial mudar
       if (key === config.senderKeys.filialStatus) {
         console.log('Atualizando status de filial:', data);
@@ -104,7 +108,7 @@ export class SisCtCadastroComponent {
       }
     });
   }
-  
+
   atualizarLabelSecaoI() {
     if (this.isFilial && this.cnpjMatriz) {
       this.secaoILabel = `Seção I: Filial da matriz ${this.cnpjMatriz}`;
