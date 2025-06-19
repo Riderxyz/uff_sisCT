@@ -2,6 +2,7 @@
 
 import { Component, OnInit } from '@angular/core';
 import { CadastroNacionalService } from '../../../../../services/cadastro-nacional.service';
+import { StatusService } from '../../../../../services/status.service';
 
 interface AreaDeAtuacaoOption {
   value: number;
@@ -28,7 +29,7 @@ export class AreaDeAtuacaoComponent implements OnInit {
   // Current section name
   sectionName = 'area_atuacao';
 
-  constructor(public cadastroService: CadastroNacionalService) {
+  constructor(public cadastroService: CadastroNacionalService, private statusService: StatusService) {
     //debugger
   }
 
@@ -45,6 +46,13 @@ export class AreaDeAtuacaoComponent implements OnInit {
         this.selectedOption = this.opcoes.find(opt => opt.value === cadastro.ST_AREA_ATUACAO) || null;
       }
     });
+    this.statusService.update({
+      secao: 1,
+      campo: 'ST_AREA_ATUACAO',
+      situacao: this.selectedOption ? true : false,
+      nome: 'Informe a Área de Atuação',
+      descricao: ''
+    })
   }
 
   onSelectChange(): void {
@@ -56,5 +64,12 @@ export class AreaDeAtuacaoComponent implements OnInit {
         ST_AREA_ATUACAO: this.selectedOptionValue - 1
       });
     }
+    this.statusService.update({
+      secao: 1,
+      campo: 'ST_AREA_ATUACAO',
+      situacao: this.selectedOption ? true : false,
+      nome: 'Informe a Área de Atuação',
+      descricao: ''
+    })
   }
 }

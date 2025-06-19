@@ -5,6 +5,7 @@ export interface SubSection {
   header: string;
   component: Type<any>;
   showSavingIcon: boolean;
+  secao: number;
 }
 export enum CadastroStep1Id {
   AreaDeAtuacao = 'areas-de-atuacao',

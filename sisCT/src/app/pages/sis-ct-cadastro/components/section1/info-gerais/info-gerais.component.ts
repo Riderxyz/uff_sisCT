@@ -30,6 +30,7 @@ import { CnaeService } from '../../../../../services/cnae.service';
 import { config } from '../../../../../services/config';
 import { EnderecoService } from '../../../../../services/endereco.service';
 import { QuestionService } from '../../../../../services/question.service';
+import { StatusService } from '../../../../../services/status.service';
 import { UtilService } from '../../../../../services/util.service';
 import { DialogComponent } from '../../../../../shared/components/dialog/dialog.component';
 
@@ -68,7 +69,8 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
   constructor(
     private cnaeService: CnaeService,
     public cadastroService: CadastroNacionalService,
-    private enderecoService: EnderecoService
+    private enderecoService: EnderecoService,
+    private statusService: StatusService
   ) {
     // Initialize filtered CNAEs
     this.filteredCnaesPrincipal = of([]);
@@ -117,11 +119,12 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
       if (endereco.CO_ESTADO) this.formModel.localizacao.estado = endereco.CO_ESTADO;
       if (endereco.DS_PAIS) this.formModel.localizacao.pais = endereco.DS_PAIS;
       if (endereco.NU_CEP) this.formModel.localizacao.cep = endereco.NU_CEP;
-      
+
       // Update the question service model
       this.questionSrv.matriz.seccao1.dados.informacaoGerais = this.formModel;
+      this.statusUpdate();
     });
-    
+
     // Subscribe to cadastro nacional changes
     this.cadastroService.cadastro$.subscribe(cadastro => {
       // Update the form model with the cadastro nacional values
@@ -130,14 +133,34 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
       if (cadastro.NO_RAZAO_SOCIAL) this.formModel.registro.razaoSocial = cadastro.NO_RAZAO_SOCIAL;
       if (cadastro.CO_CNAE_PRINCIPAL) this.formModel.registro.codigoDeAtividadesEconomicasPrimarias = cadastro.CO_CNAE_PRINCIPAL;
       if (cadastro.CO_CNAE_SECUNDARIO) this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = cadastro.CO_CNAE_SECUNDARIO;
-      
+
       // Update CNAE filter values
-      if (cadastro.CO_CNAE_PRINCIPAL) this.cnaeFilterPrincipal.setValue(cadastro.CO_CNAE_PRINCIPAL, {emitEvent: false});
-      if (cadastro.CO_CNAE_SECUNDARIO) this.cnaeFilterSecundario.setValue(cadastro.CO_CNAE_SECUNDARIO, {emitEvent: false});
-      
+      if (cadastro.CO_CNAE_PRINCIPAL) this.cnaeFilterPrincipal.setValue(cadastro.CO_CNAE_PRINCIPAL, { emitEvent: false });
+      if (cadastro.CO_CNAE_SECUNDARIO) this.cnaeFilterSecundario.setValue(cadastro.CO_CNAE_SECUNDARIO, { emitEvent: false });
+
       // Update the question service model
       this.questionSrv.matriz.seccao1.dados.informacaoGerais = this.formModel;
+      this.statusUpdate();
     });
+
+
+  }
+
+  statusUpdate() {
+    this.statusService.update({ secao: 2, campo: 'NU_CNPJ', situacao: this.formModel.registro.cnpj != '' ? true : false, nome: 'CNPJ' });
+    this.statusService.update({ secao: 2, campo: 'NO_FANTASIA', situacao: this.formModel.registro.nomeFantasia != '' ? true : false, nome: 'Nome Fantasia' });
+    this.statusService.update({ secao: 2, campo: 'CO_CNAE_PRINCIPAL', situacao: this.formModel.registro.codigoDeAtividadesEconomicasPrimarias != '' ? true : false, nome: 'CNAE Principal' });
+    this.statusService.update({ secao: 2, campo: 'CO_CNAE_SECUNDARIO', situacao: this.formModel.registro.codigoDeAtividadesEconomicasSecundarias != '' ? true : false, nome: 'CNAE Secundário' });
+    this.statusService.update({ secao: 2, campo: 'NO_RAZAO_SOCIAL', situacao: this.formModel.registro.razaoSocial != '' ? true : false, nome: 'Razão Social' });
+
+    this.statusService.update({ secao: 2, campo: 'DS_LOGRADOURO', situacao: this.formModel.localizacao.logradouro != '' ? true : false, nome: 'Logradouro' });
+    this.statusService.update({ secao: 2, campo: 'NU_NUMERO', situacao: this.formModel.localizacao.numero != '' ? true : false, nome: 'Logradouro' });
+    this.statusService.update({ secao: 2, campo: 'DS_COMPLEMENTO', situacao: this.formModel.localizacao.complemento != '' ? true : false, nome: 'Logradouro' });
+    this.statusService.update({ secao: 2, campo: 'NO_BAIRRO', situacao: this.formModel.localizacao.bairro != '' ? true : false, nome: 'Logradouro' });
+    this.statusService.update({ secao: 2, campo: 'DS_CIDADE', situacao: this.formModel.localizacao.cidade != '' ? true : false, nome: 'Logradouro' });
+    this.statusService.update({ secao: 2, campo: 'CO_ESTADO', situacao: this.formModel.localizacao.estado != '' ? true : false, nome: 'Logradouro' });
+    this.statusService.update({ secao: 2, campo: 'DS_PAIS', situacao: this.formModel.localizacao.pais != '' ? true : false, nome: 'Logradouro' });
+    this.statusService.update({ secao: 2, campo: 'NU_CEP', situacao: this.formModel.localizacao.cep != '' ? true : false, nome: 'Logradouro' });
   }
 
   setupCnaeFilters() {
@@ -243,8 +266,9 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
       if (Object.keys(enderecoUpdates).length > 0) {
         this.enderecoService.updateEndereco(enderecoUpdates);
       }
+      // this.statusUpdate();
     }
-    
+
     // If we have form values, update the cadastro nacional in the service
     if (this.formModel.registro) {
       // Only update if the fields have values
@@ -461,6 +485,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
 
     // Update the endereco in the service
     this.updateEnderecoFromForm();
+    this.statusUpdate();
   }
 
   // Update the endereco in the service with form values
@@ -477,6 +502,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
       NU_CEP: this.formModel.localizacao.cep,
       DT_ATUALIZACAO: new Date()
     });
+    this.statusUpdate();
   }
 
   // Display function for the autocomplete
