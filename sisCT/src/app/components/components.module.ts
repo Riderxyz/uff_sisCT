@@ -32,15 +32,16 @@ import { CnpjDialogComponent } from './dialogs/cnpj-dialog/cnpj-dialog.component
 import { LoaderComponent } from './dialogs/loader/loader.component';
 import { TermosDeUsoDialogComponent } from './dialogs/termos-de-uso-dialog/termos-de-uso-dialog.component';
 import { AdicionarProfissionalDialogComponent } from './dialogs/adicionar-profissional-dialog/adicionar-profissional-dialog.component';
-import { AdicionarVagaDialogComponent } from './dialogs/adicionar-vaga-dialog/adicionar-vaga-dialog.component';
+import { AdicionarVagaDialogComponent } from './dialogs/editar-vaga-dialog/editar-vaga-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ToastComponent } from './toast/toast.component';
-import { MapaDeVagasComponent } from './mapa-de-vagas/mapa-de-vagas.component';
-import { ContatosComponent } from './contatos/contatos.component';
+import { MapaDeVagasComponent } from './ag_grids/mapa-de-vagas/mapa-de-vagas.component';
+import { ContatosComponent } from './ag_grids/contatos/contatos.component';
 import { ContatoDialogComponent } from './dialogs/contato-dialog/contato-dialog.component';
+import { RecursosHumanosComponent } from './ag_grids/recursos-humanos/recursos-humanos.component';
 
 const materialModules = [
   MatCheckboxModule,
@@ -89,6 +90,7 @@ const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
 ...agGridComponents,
     FooterComponent,
     ...dialogsComponents,
+    RecursosHumanosComponent,
   ],
   imports: [CommonModule, FormsModule, RouterModule, ...materialModules, ...ngxMasks],
   exports: [

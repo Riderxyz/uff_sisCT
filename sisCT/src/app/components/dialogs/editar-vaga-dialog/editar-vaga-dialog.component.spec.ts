@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdicionarVagaDialogComponent } from './adicionar-vaga-dialog.component';
+import { AdicionarVagaDialogComponent } from './editar-vaga-dialog.component';
 
 describe('AdicionarVagaDialogComponent', () => {
   let component: AdicionarVagaDialogComponent;
@@ -11,7 +11,7 @@ describe('AdicionarVagaDialogComponent', () => {
       declarations: [AdicionarVagaDialogComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(AdicionarVagaDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

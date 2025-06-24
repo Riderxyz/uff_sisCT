@@ -1,17 +1,17 @@
 import { Component, inject } from '@angular/core';
-import { MapasVagas } from '../../../interface/ComunidadeTerapeutica.interface';
 import { NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MapaDeVagas } from '../../../interfaces_crud/mapa_vagas.interface';
 @Component({
   selector: 'app-adicionar-vaga-dialog',
-  templateUrl: './adicionar-vaga-dialog.component.html',
-  styleUrl: './adicionar-vaga-dialog.component.scss'
+  templateUrl: './editar-vaga-dialog.component.html',
+  styleUrl: './editar-vaga-dialog.component.scss'
 })
 export class AdicionarVagaDialogComponent {
 
-  mapa: MapasVagas = {
-    vaga: '',
+  mapa: any = {
+
     disponibilidade: false,
     acolhidoIdentificacao: '',
     cpf: '',

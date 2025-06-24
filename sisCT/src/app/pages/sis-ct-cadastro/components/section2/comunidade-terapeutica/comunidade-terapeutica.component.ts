@@ -3,7 +3,6 @@ import { QuestionService } from '../../../../../services/question.service';
 import { UtilService } from '../../../../../services/util.service';
 import {
   ComunidadeTerapeuticaInterface,
-  MapasVagas,
 } from '../../../../../interface/ComunidadeTerapeutica.interface';
 import {
   AllCommunityModule,
@@ -14,7 +13,7 @@ import {
   ModuleRegistry,
 } from 'ag-grid-community';
 import { AdicionarProfissionalDialogComponent } from '../../../../../components/dialogs/adicionar-profissional-dialog/adicionar-profissional-dialog.component';
-import { AdicionarVagaDialogComponent } from '../../../../../components/dialogs/adicionar-vaga-dialog/adicionar-vaga-dialog.component';
+import { AdicionarVagaDialogComponent } from '../../../../../components/dialogs/editar-vaga-dialog/editar-vaga-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-comunidade-terapeutica',
@@ -55,92 +54,8 @@ export class ComunidadeTerapeuticaComponent implements AfterViewInit {
     },
   };
 
-  mapaVagasColDefs: ColDef<MapasVagas, any>[] = [
-    {
-      field: 'vaga',
-      headerName: 'Vagas',
-      sortable: true,
-      filter: true,
-      width: 200,
-    },
 
-    {
-      field: 'disponibilidade',
-      headerName: 'Disponibilidade',
-      sortable: true,
-      filter: true,
-      width: 60,
-    },
-    {
-      field: 'acolhidoIdentificacao',
-      headerName: 'Identificação do acolhido',
-      sortable: true,
-      filter: true,
-      width: 100,
-    },
-    {
-      field: 'cpf',
-      headerName: 'cpf',
-      sortable: true,
-      filter: true,
-      width: 60,
-    },
-    {
-      field: 'dataNascimento',
-      headerName: 'Data de Nascimento',
-      sortable: true,
-      filter: true,
-      width: 100,
-    },
 
-    {
-      field: 'dataIngresso',
-      headerName: 'Data de Ingresso',
-      sortable: true,
-      filter: true,
-      width: 100,
-    },
-    {
-      field: 'dataSaida',
-      headerName: 'Data de Saida',
-      sortable: true,
-      filter: true,
-      width: 100,
-    },
-    {
-      field: 'qtdDiasAcolhimento',
-      headerName: 'Qtd. de dias no acolhimento',
-      sortable: true,
-      filter: true,
-      width: 100,
-    },
-    {
-      field: 'publico',
-      headerName: 'Público',
-      sortable: true,
-      filter: true,
-      width: 100,
-    },
-    {
-      field: 'gratuidade',
-      headerName: 'Gratuidade',
-      sortable: true,
-      filter: true,
-      width: 100,
-    },
-
-    {
-      field: 'financiamento',
-      headerName: 'Financiamento',
-      sortable: true,
-      filter: true,
-      width: 100,
-    },
-  ];
-  mapaVagasGridOptions: GridOptions = {
-    columnDefs: this.mapaVagasColDefs,
-    rowData: this.formModel.mapaVagas,
-  };
   constructor() {}
 
   ngAfterViewInit(): void {}

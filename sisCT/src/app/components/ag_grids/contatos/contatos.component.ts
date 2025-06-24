@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AllCommunityModule, ColDef, GridApi, GridReadyEvent, ModuleRegistry } from 'ag-grid-community';
 
-import { RlContato } from '../../interfaces_crud/contato.interface';
-import { ContatoService } from '../../services/contato.service';
-import { ContatoDialogComponent } from '../dialogs/contato-dialog/contato-dialog.component';
+import { RlContato } from '../../../interfaces_crud/contato.interface';
+import { ContatoService } from '../../../services/contato.service';
+import { ContatoDialogComponent } from '../../dialogs/contato-dialog/contato-dialog.component';
 
 interface Contato {
   tipo: string;

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridOptions } from 'ag-grid-community';
-import { MapaDeVagas } from '../../interfaces_crud/mapa_vagas.interface';
-import { MapaDeVagasService } from '../../services/mapa-de-vagas.service';
+import { MapaDeVagas } from '../../../interfaces_crud/mapa_vagas.interface';
+import { MapaDeVagasService } from '../../../services/mapa-de-vagas.service';
 
 
 @Component({
@@ -11,11 +11,12 @@ import { MapaDeVagasService } from '../../services/mapa-de-vagas.service';
 })
 export class MapaDeVagasComponent implements OnInit {
   rowData: MapaDeVagas[] = [];
-  columnDefs: ColDef[] = [];
+  columnDefs: ColDef<MapaDeVagas, any>[] = [];
   gridOptions: GridOptions = {
     rowHeight: 40,
     headerHeight: 80, // Altura maior para cabeçalhos com quebra de linha
     suppressHorizontalScroll: true,
+    onRowDoubleClicked: (params) => {},
     defaultColDef: {
       resizable: true,
       sortable: false,
@@ -39,7 +40,7 @@ export class MapaDeVagasComponent implements OnInit {
     this.columnDefs = [
       {
         headerName: 'Vaga',
-        field: 'vagaIndex',
+        //field: '',
         valueGetter: (params) => {
           const index = params.node!.rowIndex! + 1;
           const total = this.rowData.length;
@@ -84,10 +85,10 @@ export class MapaDeVagasComponent implements OnInit {
       {
         headerName: 'Qtd. de dias<br>no acolhimento',
         valueGetter: (params) => {
-          if (!params.data.dtIngresso) return 0;
+          if (!params.data!.dtIngresso) return 0;
 
-          const ingresso = new Date(params.data.dtIngresso);
-          const saida = params.data.dtSaida ? new Date(params.data.dtSaida) : new Date();
+          const ingresso = new Date(params.data!.dtIngresso);
+          const saida = params.data!.dtSaida ? new Date(params.data!.dtSaida) : new Date();
           const diff = saida.getTime() - ingresso.getTime();
           return Math.floor(diff / (1000 * 60 * 60 * 24));
         },
@@ -108,7 +109,7 @@ export class MapaDeVagasComponent implements OnInit {
         width: 120
       },
       {
-        headerName: 'Gratuidade<br>(caixa de seleção)',
+        headerName: 'Gratuidade ',
         field: 'stGratuidade',
         cellRenderer: (params: { value: number; }) => {
           return params.value === 1
@@ -118,7 +119,7 @@ export class MapaDeVagasComponent implements OnInit {
         width: 250
       },
       {
-        headerName: 'Financiamento<br>caixa de seleção –<br>se gratuito:',
+        headerName: 'Financiamento',
         field: 'stFinanciamento',
         cellRenderer: (params: { value: any; }) => {
           switch (params.value) {
