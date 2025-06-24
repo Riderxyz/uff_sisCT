@@ -3,7 +3,10 @@ import { QuestionService } from '../../../../../services/question.service';
 import { UtilService } from '../../../../../services/util.service';
 import { EntidadeDeCuidadoInterface } from '../../../../../interface/entidadeDeCuidado.interface';
 import { entidadeCuidadoFormOptions } from './options';
-
+import { AllCommunityModule, ColDef, GridApi, GridOptions, GridReadyEvent, ModuleRegistry } from 'ag-grid-community';
+import { MatDialog } from '@angular/material/dialog';
+import { ContatoDialogComponent } from '../../../../../components/contatos/contato-dialog.component';
+import { AdicionarProfissionalDialogComponent } from '../../../../../components/dialogs/adicionar-profissional-dialog/adicionar-profissional-dialog.component';
 @Component({
   selector: 'app-entidade-de-cuidado',
   templateUrl: './entidade-de-cuidado.component.html',
@@ -12,7 +15,7 @@ import { entidadeCuidadoFormOptions } from './options';
 export class EntidadeDeCuidadoComponent implements AfterViewInit {
   readonly questionSrv: QuestionService = inject(QuestionService);
   readonly utilSrv: UtilService = inject(UtilService);
-
+readonly dialog: MatDialog = inject(MatDialog);
    formModel: EntidadeDeCuidadoInterface = {
   publicoAlvo: {
     adultoFeminino: 0,
@@ -40,17 +43,7 @@ export class EntidadeDeCuidadoComponent implements AfterViewInit {
   possuiEspacoAtendimentoIndividualizado: false,
 
   possuiQuadroTecnico: false,
-  profissionaisAtuantes: {
-    nome: '',
-    cpf: '',
-    dataNascimento: '',
-    telefone: '',
-    email: '',
-    cargo: '',
-    formacaoAcademica: '',
-    cargaHoraria: '',
-    vinculo: 'voluntario',
-  },
+  profissionaisAtuantes: [],
   quantidadeProfissionaisAtuantes: '',
 
   possuiInscricaoConselhoMunicipal: false,
@@ -160,17 +153,37 @@ export class EntidadeDeCuidadoComponent implements AfterViewInit {
 };
 
   entidadeCuidadoFormOptionsObj = entidadeCuidadoFormOptions;
+
+
+  profissionaisTabelaGridOptions: GridOptions = {
+columnDefs: this.entidadeCuidadoFormOptionsObj.profissionaisColDefs,
+  defaultColDef: {
+        editable: false,
+        sortable: true,
+        resizable: true,
+        filter: true,
+      },
+      
+  }
+
   constructor() {}
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this.profissionaisTabelaGridOptions
+  }
 
     adicionarProfissional() {
-/*     this.formModel.profissionais.push({
-      nome: '',
-      profissao: '',
-      cargaHoraria: '',
-      tipoVinculo: 'voluntario'
-    }); */
+         const dialogRef = this.dialog.open(AdicionarProfissionalDialogComponent, {
+      width: '450px', // Ajuste a largura conforme necessário
+      data: {} // Pode passar dados iniciais aqui se for editar um contato
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.formModel.profissionaisAtuantes.push(result);
+        console.log('Profissional salvo:', result);
+      }
+    });
   }
 
   // Método para remover profissional

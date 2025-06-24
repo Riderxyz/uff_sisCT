@@ -2,7 +2,7 @@ import { AfterViewInit, Component, inject } from '@angular/core';
 import { QuestionService } from '../../../../../services/question.service';
 import { UtilService } from '../../../../../services/util.service';
 import { ComunidadeTerapeuticaInterface } from '../../../../../interface/ComunidadeTerapeutica.interface';
-
+import { AllCommunityModule, ColDef, GridApi, GridReadyEvent, ModuleRegistry } from 'ag-grid-community';
 @Component({
   selector: 'app-comunidade-terapeutica',
   templateUrl: './comunidade-terapeutica.component.html',

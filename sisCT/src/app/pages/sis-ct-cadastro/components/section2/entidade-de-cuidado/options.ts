@@ -1,3 +1,5 @@
+import { ProfissionalInterface } from './../../../../../interface/entidadeDeCuidado.interface';
+import { ColDef } from "ag-grid-community";
 import { RedesDeApoioChave } from "../../../../../interface/entidadeDeCuidado.interface";
 
 export const entidadeCuidadoFormOptions = {
@@ -76,7 +78,73 @@ export const entidadeCuidadoFormOptions = {
   ] as {
     value: RedesDeApoioChave;
     label: string;
-  }[]
+  }[],
+  profissionaisColDefs: [
+        {
+      field: 'nome',
+      headerName: 'nome',
+      sortable: true,
+      filter: true,
+      width: 200,
+    },{
+          field: 'cpf',
+          headerName: 'cpf',
+          sortable: true,
+          filter: true,
+          width: 60,
+
+    },
+    {
+      field: 'dataNascimento',
+      headerName: 'Data de Nascimento',
+      sortable: true,
+      filter: true,
+      width: 100,
+     },
+
+    {
+      field: 'telefone',
+      headerName: 'telefone',
+      sortable: true,
+      filter: true,
+      width: 60,
+    },
+    {
+      field: 'email',
+      headerName: 'email',
+      sortable: true,
+      filter: true,
+      width: 100,
+    },
+     {
+      field: 'cargo',
+      headerName: 'Função/Cargo',
+      sortable: true,
+      filter: true,
+      width: 100,
+     },
+     {
+      field: 'formacaoAcademica',
+      headerName: 'Formação Acadêmica',
+      sortable: true,
+      filter: true,
+      width: 100,
+     },
+     {
+      field: 'cargaHoraria',
+      headerName: 'Carga Horária',
+      sortable: true,
+      filter: true,
+      width: 100,
+     },
+     {
+      field: 'vinculo',
+      headerName: 'Vínculo',
+      sortable: true,
+      filter: true,
+      width: 100,
+     }
+  ] as ColDef<ProfissionalInterface, any>[]
 };
 
 /*

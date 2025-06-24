@@ -1,0 +1,58 @@
+<h2 mat-dialog-title>Adicionar Profissional</h2>
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" novalidate>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Nome</mat-label>
+    <input matInput name="nome" [(ngModel)]="profissional.nome" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>CPF</mat-label>
+    <input matInput name="cpf" [(ngModel)]="profissional.cpf" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Data de Nascimento</mat-label>
+    <input matInput name="dataNascimento" [(ngModel)]="profissional.dataNascimento" type="date" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Telefone</mat-label>
+    <input matInput name="telefone" [(ngModel)]="profissional.telefone" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput name="email" [(ngModel)]="profissional.email" required type="email" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Cargo</mat-label>
+    <input matInput name="cargo" [(ngModel)]="profissional.cargo" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Formação Acadêmica</mat-label>
+    <input matInput name="formacaoAcademica" [(ngModel)]="profissional.formacaoAcademica" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Carga Horária</mat-label>
+    <input matInput name="cargaHoraria" [(ngModel)]="profissional.cargaHoraria" required />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Vínculo</mat-label>
+    <select matNativeControl name="vinculo" [(ngModel)]="profissional.vinculo" required>
+      <option value="voluntario">Voluntário</option>
+      <option value="empregados">Empregado</option>
+      <option value="terceirizados">Terceirizado</option>
+      <option value="clt">CLT</option>
+    </select>
+  </mat-form-field>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+    <button mat-button color="primary" type="submit" [disabled]="!form.valid">Salvar</button>
+  </div>
+</form>

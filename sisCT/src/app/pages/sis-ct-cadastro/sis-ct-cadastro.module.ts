@@ -30,7 +30,7 @@ import { InfoGeraisComponent } from './components/section1/info-gerais/info-gera
 import { RepresentateLegalMatrizComponent } from './components/section1/representate-legal-matriz/representate-legal-matriz.component';
 import { ResponsavelTecnicoComponent } from './components/section1/responsavel-tecnico/responsavel-tecnico.component';
 
-
+import { AgGridModule } from 'ag-grid-angular';
 
 import { SisCtCadastroRoutingModule } from './sis-ct-cadastro-routing.module';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
@@ -67,9 +67,11 @@ const MaterialModules = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+
     ...MaterialModules,
     NgxMaskDirective, NgxMaskPipe,
     ComponentModule,
+    AgGridModule,
     ContatosModule,
     SisCtCadastroRoutingModule,
   ],
