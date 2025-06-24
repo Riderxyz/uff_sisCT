@@ -65,1332 +65,1154 @@
   </mat-card>
 </div> -->
 
+<form #entidadeForm="ngForm" class="grid p-mt-4" (ngSubmit)="onSubmit()">
+  <!-- Seção 7.1 - Caracterização do público-alvo -->
 
-    <form #entidadeForm="ngForm" class="grid p-mt-4" (ngSubmit)="onSubmit()">
-        <!-- Seção 7 - Entidades de cuidado -->
-          <div class="col-12">
-            <h3 class="section-title">Informações Gerais</h3>
-          </div>
+  <h2 class="col-12">7.1 Quanto à caracterização do público-alvo</h2>
+  <div class="col-12">
+    <p>Especifique o público-alvo da entidade:</p>
+  </div>
 
-          <div class="col-12">
-            <mat-checkbox
-              [(ngModel)]="formModel.entidadeRealizaAcolhimento"
-              name="entidadeRealizaAcolhimento"
-            >
-              A entidade realiza acolhimento provisório?
-            </mat-checkbox>
-            <p class="help-text">Se marcar "sim", abrir a seguinte campo</p>
-          </div>
+  <div class="col-3">
+    <mat-form-field appearance="outline">
+      <mat-label>Adulto Feminino</mat-label>
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="formModel.publicoAlvo.adultoFeminino"
+        name="adultoFeminino"
+      />
+    </mat-form-field>
+  </div>
+  <div class="col-3">
+    <mat-form-field appearance="outline">
+      <mat-label>Adulto Masculino</mat-label>
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="formModel.publicoAlvo.adultoMasculino"
+        name="adultoMasculino"
+      />
+    </mat-form-field>
+  </div>
+  <div class="col-3">
+    <mat-form-field appearance="outline">
+      <mat-label>Crianças e Adolescentes</mat-label>
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="formModel.publicoAlvo.criancasAdolescentes"
+        name="criancasAdolescentes"
+      />
+    </mat-form-field>
+  </div>
 
-          <div class="col-12" *ngIf="formModel.entidadeRealizaAcolhimento">
-            <mat-checkbox
-              [(ngModel)]="formModel.entidadeRealizaAcolhimentoProvisorio"
-              name="entidadeRealizaAcolhimentoProvisorio"
-            >
-              A entidade tem capacidade terapêutica?
-            </mat-checkbox>
-            <p class="help-text">
-              Se marcar "sim", há necessidade de verificar se a entidade não
-              está informando "sim" para todas as ações acima especificadas
-            </p>
-          </div>
+  <div class="col-3">
+    <mat-form-field appearance="outline">
+      <mat-label>Idoso</mat-label>
+      <input
+        matInput
+        type="number"
+        [(ngModel)]="formModel.publicoAlvo.idoso"
+        name="idoso"
+      />
+    </mat-form-field>
+  </div>
+  <div class="col-12 md:col-6">
+    <p>Informe a capacidade de atendimento da entidade</p>
+    <mat-radio-group
+      [(ngModel)]="formModel.capacidadeAtendimento"
+      name="capacidadeAtendimento"
+    >
+      @for (item of entidadeCuidadoFormOptionsObj.capacidadeAtendimento; track
+      $index) {
+      <mat-radio-button [value]="item.value">{{ item.label }}</mat-radio-button>
+      }
+    </mat-radio-group>
+  </div>
 
-          <div class="col-12">
-            <mat-checkbox
-              [(ngModel)]="formModel.entidadeTemCapacidadeTerapeutica"
-              name="entidadeTemCapacidadeTerapeutica"
-            >
-              A entidade tem capacidade terapêutica?
-            </mat-checkbox>
-          </div>
+  <div class="col-12 md:col-6">
+    <ng-container>
+      <label id="formaAcesso"
+        >Informe a forma de acesso do público-alvo à entidade?</label
+      >
+      <mat-radio-group
+        [(ngModel)]="formModel.formaAcesso"
+        name="formaAcesso"
+        aria-labelledby="formaAcesso"
+        class="flex"
+      >
+        @for (item of entidadeCuidadoFormOptionsObj.formaAcesso; track $index) {
+        <mat-radio-button [value]="item.value">{{
+          item.label
+        }}</mat-radio-button>
 
-        <!-- Seção 7.1 - Caracterização do público-alvo -->
+        }
+      </mat-radio-group>
+    </ng-container>
 
-<h2 class="col-12">7.1 Quanto à caracterização do público-alvo</h2>
-          <div class="col-12">
-            <h3 class="section-title">
-              7.1 Quanto à caracterização do público-alvo
-            </h3>
-            <p>Especifique o público-alvo da entidade:</p>
-          </div>
+    @if ( formModel.formaAcesso === 'encaminhamentoPoliticas' ) {
+    <ng-container>
+      <label for="">
+        Como se dá a articulação com outras políticas públicas e rede de apoio
+      </label>
 
-          <div class="col-12">
-            <table class="caracterizacao-table">
-              <thead>
-                <tr>
-                  <th>Público</th>
-                  <th>Quantidade</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Adulto Feminino</td>
-                  <td>
-                    <mat-form-field appearance="outline">
-                      <input
-                        matInput
-                        type="number"
-                        [(ngModel)]="formModel.publicoAlvo.adultoFeminino"
-                        name="adultoFeminino"
-                      />
-                    </mat-form-field>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Adulto Masculino</td>
-                  <td>
-                    <mat-form-field appearance="outline">
-                      <input
-                        matInput
-                        type="number"
-                        [(ngModel)]="formModel.publicoAlvo.adultoMasculino"
-                        name="adultoMasculino"
-                      />
-                    </mat-form-field>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Crianças e Adolescentes</td>
-                  <td>
-                    <mat-form-field appearance="outline">
-                      <input
-                        matInput
-                        type="number"
-                        [(ngModel)]="formModel.publicoAlvo.criancasAdolescentes"
-                        name="criancasAdolescentes"
-                      />
-                    </mat-form-field>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Idoso</td>
-                  <td>
-                    <mat-form-field appearance="outline">
-                      <input
-                        matInput
-                        type="number"
-                        [(ngModel)]="formModel.publicoAlvo.idoso"
-                        name="idoso"
-                      />
-                    </mat-form-field>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      @for (item of
+      entidadeCuidadoFormOptionsObj.formaAcesso_outrasPoliticasPublicas_RedesdeApoio;
+      track $index) { @if (item.value !== 'outrosDescricao' ) {
+      <mat-checkbox
+        [(ngModel)]="formModel.outrasPoliticasPublicas_RedesdeApoio[item.value]"
+      >
+        {{ item.label }}
+      </mat-checkbox>
+      } }
+    </ng-container>
 
-          <div class="col-12 p-mt-3">
-            <p>Informe a capacidade de atendimento da entidade</p>
-            <mat-radio-group
-              [(ngModel)]="formModel.capacidadeAtendimento"
-              name="capacidadeAtendimento"
-            >
-              <mat-radio-button value="grupos10"
-                >Grupos de 10 pessoas</mat-radio-button
-              >
-              <mat-radio-button value="grupos20"
-                >Grupos de 20 pessoas</mat-radio-button
-              >
-              <mat-radio-button value="grupos30"
-                >Grupos de 30 pessoas</mat-radio-button
-              >
-              <mat-radio-button value="grupos40"
-                >Grupos de 40 pessoas</mat-radio-button
-              >
-              <mat-radio-button value="gruposAcima41"
-                >Grupos acima de 41 pessoas</mat-radio-button
-              >
-            </mat-radio-group>
-          </div>
+    }
+  </div>
 
-          <div class="col-12 p-mt-3">
-            <p>Informe a forma de acesso do público-alvo à entidade?</p>
-            <mat-radio-group
-              [(ngModel)]="formModel.formaAcesso"
-              name="formaAcesso"
-            >
-              <mat-radio-button value="espontaneamente"
-                >Espontaneamente</mat-radio-button
-              >
-              <mat-radio-button value="encaminhamentoPoliticas"
-                >Encaminhados por outras políticas (saúde, assistência social,
-                educação, outros)</mat-radio-button
-              >
-              <mat-radio-button value="articulacaoPoliticas"
-                >Como se dá a articulação com outras políticas públicas e rede
-                de apoio</mat-radio-button
-              >
-              <mat-radio-button value="parceriasFormais"
-                >Parcerias formais</mat-radio-button
-              >
-              <mat-radio-button value="encaminhamentosInformais"
-                >Encaminhamentos informais (Exemplo: rede de contatos, troca de
-                informações entre profissionais)</mat-radio-button
-              >
-              <mat-radio-button value="participacaoComites"
-                >Participação em comitês ou fóruns intersetoriais (Exemplo:
-                Comitê Intersetorial de Políticas sobre Drogas, Fórum de
-                Assistência Social e de Saúde)</mat-radio-button
-              >
-            </mat-radio-group>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <p>Tipos de atendimento:</p>
-            <div class="grid">
-              <div class="col-12">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.tiposAtendimento.atendimentoDeterminacaoJudicial
-                  "
-                  name="atendimentoDeterminacaoJudicial"
-                >
-                  Atendimento de usuários a partir de determinação judicial ou
-                  Ministério Público
-                </mat-checkbox>
-                <p class="help-text">
-                  (Exemplo: medidas socioeducativas, alternativas penais.)
-                </p>
-              </div>
-              <div class="col-12">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.tiposAtendimento.projetosFinanciadosSetorPublico
-                  "
-                  name="projetosFinanciadosSetorPublico"
-                >
-                  Projetos ou programas específicos financiados pelo setor
-                  público
-                </mat-checkbox>
-                <p class="help-text">
-                  (Exemplo: Programas municipais ou federais de atenção à
-                  dependência química, acolhimento institucional)
-                </p>
-              </div>
-              <div class="col-12">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.tiposAtendimento
-                      .encaminhamentosOrganizacoesSociedadeCivil
-                  "
-                  name="encaminhamentosOrganizacoesSociedadeCivil"
-                >
-                  Encaminhamentos por organizações da sociedade civil
-                </mat-checkbox>
-                <p class="help-text">(Exemplo: outras entidades, igrejas)</p>
-              </div>
-              <div class="col-12">
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Outro Especificar:</mat-label>
-                  <input
-                    matInput
-                    [(ngModel)]="formModel.tiposAtendimento.outroEspecificar"
-                    name="outroEspecificar"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-
-<h2 class="col-12">7.2 Quanto à Estrutura física</h2>
-        <!-- Seção 7.2 - Estrutura física -->
-        <div class="grid p-mt-4">
-          <div class="col-12">
-            <h3 class="section-title">7.2 Quanto à Estrutura física</h3>
-          </div>
-
-          <div class="col-12">
-            <p>O espaço da entidade</p>
-            <mat-radio-group
-              [(ngModel)]="formModel.espacoEntidade"
-              name="espacoEntidade"
-            >
-              <mat-radio-button value="proprio">Próprio</mat-radio-button>
-              <mat-radio-button value="cedido">Cedido</mat-radio-button>
-              <mat-radio-button value="alugado">Alugado</mat-radio-button>
-              <mat-radio-button value="naoSabeInformar"
-                >Não sabe informar</mat-radio-button
-              >
-            </mat-radio-group>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <mat-checkbox
-              [(ngModel)]="formModel.possuiEspacoAtendimentoColetivo"
-              name="possuiEspacoAtendimentoColetivo"
-            >
-              A entidade possui espaço para atendimento coletivo ou de família?
-            </mat-checkbox>
-          </div>
-
-          <div class="col-12">
-            <mat-checkbox
-              [(ngModel)]="formModel.possuiEspacoAtendimentoIndividualizado"
-              name="possuiEspacoAtendimentoIndividualizado"
-            >
-              A entidade possui espaço para atendimento individualizado?
-            </mat-checkbox>
-          </div>
-        </div>
-
-        <h2 class="col-12">7.3 Quanto ao quadro de Recursos Humanos</h2>
-
-          <div class="col-12">
-            <h3 class="section-title">
-              7.3 Quanto ao quadro de Recursos Humanos
-            </h3>
-          </div>
-
-          <div class="col-12">
-            <mat-checkbox
-              [(ngModel)]="formModel.possuiQuadroTecnico"
-              name="possuiQuadroTecnico"
-            >
-              A entidade possui um quadro técnico para o desenvolvimento de suas
-              atividades?
-            </mat-checkbox>
-          </div>
-
-          <div class="col-12" *ngIf="formModel.possuiQuadroTecnico">
-            <div class="grid">
-              <div class="col-12">
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label
-                    >Informe quais profissionais atuam na entidade</mat-label
-                  >
-                  <textarea
-                    matInput
-                    [(ngModel)]="formModel.profissionaisAtuantes"
-                    name="profissionaisAtuantes"
-                    rows="3"
-                  ></textarea>
-                  <mat-hint
-                    >Lista de seleção - definir qual base será a
-                    referência</mat-hint
-                  >
-                </mat-form-field>
-              </div>
-              <div class="col-12">
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label
-                    >Informe a quantidade de profissionais que atuam na
-                    entidade</mat-label
-                  >
-                  <input
-                    matInput
-                    [(ngModel)]="formModel.quantidadeProfissionaisAtuantes"
-                    name="quantidadeProfissionaisAtuantes"
-                  />
-                </mat-form-field>
-              </div>
-              <div class="col-12">
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label
-                    >Informe o tipo de vínculo desses profissionais, conforme
-                    quadro a seguir:</mat-label
-                  >
-                  <input
-                    matInput
-                    [(ngModel)]="formModel.tipoProfissionaisVinculo"
-                    name="tipoProfissionaisVinculo"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
-
-            <!-- Tabela de Profissionais -->
-            <div class="col-12 p-mt-3">
-              <h4>Quadro de Profissionais</h4>
-              <table class="profissionais-table">
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Profissão</th>
-                    <th>Carga horária</th>
-                    <th>Tipo de vínculo</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    *ngFor="let prof of formModel.profissionais; let i = index"
-                  >
-                    <td>
-                      <mat-form-field appearance="outline">
-                        <input
-                          matInput
-                          [(ngModel)]="prof.nome"
-                          [name]="'profNome' + i"
-                        />
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <mat-form-field appearance="outline">
-                        <input
-                          matInput
-                          [(ngModel)]="prof.profissao"
-                          [name]="'profProfissao' + i"
-                        />
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <mat-form-field appearance="outline">
-                        <input
-                          matInput
-                          [(ngModel)]="prof.cargaHoraria"
-                          [name]="'profCargaHoraria' + i"
-                        />
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <mat-form-field appearance="outline">
-                        <mat-select
-                          [(ngModel)]="prof.tipoVinculo"
-                          [name]="'profTipoVinculo' + i"
-                        >
-                          <mat-option value="voluntario">Voluntário</mat-option>
-                          <mat-option value="empregados"
-                            >Empregados (MEI, RPA, terceirizados,
-                            CLT)</mat-option
-                          >
-                        </mat-select>
-                      </mat-form-field>
-                    </td>
-                    <td>
-                      <button
-                        mat-icon-button
-                        color="warn"
-                        type="button"
-                        (click)="removerProfissional(i)"
-                      >
-                        <mat-icon>delete</mat-icon>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <button
-                mat-raised-button
-                color="primary"
-                type="button"
-                (click)="adicionarProfissional()"
-              >
-                Adicionar Profissional
-              </button>
-            </div>
-          </div>
-        <h2 class="col-12">7.4 Quanto ao Reconhecimento da entidade no município</h2>
-          <div class="col-12">
-            <h3 class="section-title">
-              7.4 Quanto ao Reconhecimento da entidade no município
-            </h3>
-            <p class="help-text">Preenchimento obrigatório</p>
-          </div>
-
-          <div class="col-12">
-            <p>a. A entidade possui inscrição em algum conselho municipal?</p>
-            <mat-radio-group
-              [(ngModel)]="formModel.possuiInscricaoConselhoMunicipal"
-              name="possuiInscricaoConselhoMunicipal"
-            >
-              <mat-radio-button [value]="true">Sim</mat-radio-button>
-              <mat-radio-button [value]="false">Não</mat-radio-button>
-            </mat-radio-group>
-          </div>
-
-          <div
-            class="col-12"
-            *ngIf="formModel.possuiInscricaoConselhoMunicipal"
-          >
-            <mat-radio-group
-              [(ngModel)]="formModel.conselhoMunicipal"
-              name="conselhoMunicipal"
-            >
-              <mat-radio-button value="assistenciaSocial"
-                >Conselho Municipal de Assistência Social</mat-radio-button
-              >
-              <mat-radio-button value="alcoolDrogas"
-                >Conselho Municipal de Álcool e Drogas</mat-radio-button
-              >
-              <mat-radio-button value="saude"
-                >Conselho Municipal de Saúde</mat-radio-button
-              >
-              <mat-radio-button value="assistenciaSocial2"
-                >Conselho Municipal de Assistência Social</mat-radio-button
-              >
-              <mat-radio-button value="naoSabeInformar"
-                >Não sabe informar</mat-radio-button
-              >
-            </mat-radio-group>
-          </div>
-
-          <div
-            class="col-12"
-            *ngIf="!formModel.possuiInscricaoConselhoMunicipal"
-          >
-            <mat-checkbox
-              [(ngModel)]="formModel.naoTemConselhoEstadual"
-              name="naoTemConselho"
-            >
-              Não, uma vez que não há conselho municipal no meu território.
-            </mat-checkbox>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <p>b. A entidade possui inscrição em conselho estadual?</p>
-            <mat-radio-group
-              [(ngModel)]="formModel.possuiInscricaoConselhoEstadual"
-              name="possuiInscricaoConselhoEstadual"
-            >
-              <mat-radio-button [value]="true">Sim</mat-radio-button>
-              <mat-radio-button [value]="false">Não</mat-radio-button>
-            </mat-radio-group>
-          </div>
-
-          <div
-            class="col-12"
-            *ngIf="!formModel.possuiInscricaoConselhoEstadual"
-          >
-            <mat-checkbox
-              [(ngModel)]="formModel.naoTemConselhoEstadual"
-              name="naoTemConselhoEstadual"
-            >
-              Não, uma vez que não há Conselho Estadual
-            </mat-checkbox>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <p>
-              c. A entidade possui reconhecimento por autoridade pública na área
-              de redução de demanda de drogas?
-            </p>
-            <mat-radio-group
-              [(ngModel)]="formModel.possuiReconhecimentoAutoridadePublica"
-              name="possuiReconhecimentoAutoridadePublica"
-            >
-              <mat-radio-button [value]="true">Sim</mat-radio-button>
-              <mat-radio-button [value]="false">Não</mat-radio-button>
-            </mat-radio-group>
-          </div>
-
-          <div
-            class="col-12"
-            *ngIf="formModel.possuiReconhecimentoAutoridadePublica"
-          >
-            <mat-radio-group
-              [(ngModel)]="formModel.reconhecimentoTipo"
-              name="reconhecimentoTipo"
-            >
-              <mat-radio-button value="uniao">União</mat-radio-button>
-              <mat-radio-button value="estados">Estados</mat-radio-button>
-              <mat-radio-button value="municipios"
-                >DF e municípios (Ex: Prefeito, secretário municipal, dentre
-                outros)</mat-radio-button
-              >
-            </mat-radio-group>
-          </div>
-  <h2 class="col-12">7.5 Quanto às Atividades desenvolvidas</h2>
-          <div class="col-12">
-            <h3 class="section-title">
-              7.5 Quanto às Atividades desenvolvidas
-            </h3>
-            <p class="help-text">
-              Será preciso criar um campo para cada entidade marcar contra "ção
-              de ativação", relembrando múltiplas escolhas.
-            </p>
-          </div>
-
-          <div class="col-12">
-            <p>Tipos de atividades:</p>
-            <div class="grid">
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.tiposAtividades.prevencao"
-                  name="prevencao"
-                  >Prevenção</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.tiposAtividades.apoio"
-                  name="apoio"
-                  >Apoio</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.tiposAtividades.mutuaAjuda"
-                  name="mutuaAjuda"
-                  >Mútua Ajuda</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.tiposAtividades.atendimentoPsicossocial
-                  "
-                  name="atendimentoPsicossocial"
-                  >Atendimento psicossocial</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.tiposAtividades.ressocializacao"
-                  name="ressocializacao"
-                  >Ressocialização</mat-checkbox
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <p>Público-alvo:</p>
-            <div class="grid">
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.publicoAlvoAtividades.feminino"
-                  name="femininoAtiv"
-                  >Feminino</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.publicoAlvoAtividades.masculino"
-                  name="masculinoAtiv"
-                  >Masculino</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.publicoAlvoAtividades.criancaAdolescente
-                  "
-                  name="criancaAdolescenteAtiv"
-                  >Criança e Adolescente</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.publicoAlvoAtividades.idosos"
-                  name="idososAtiv"
-                  >Idosos</mat-checkbox
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Capacidade de atendimento</mat-label>
-              <input
-                matInput
-                [(ngModel)]="formModel.capacidadeAtendimentoAtividades"
-                name="capacidadeAtendimentoAtividades"
-              />
-            </mat-form-field>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <p>O serviço oferecido é gratuito?</p>
-            <mat-radio-group
-              [(ngModel)]="formModel.servicoGratuito"
-              name="servicoGratuito"
-            >
-              <mat-radio-button [value]="true">Sim</mat-radio-button>
-              <mat-radio-button [value]="false">Não</mat-radio-button>
-            </mat-radio-group>
-            <p class="help-text">Se marcar "não", abrir o seguinte campo:</p>
-          </div>
-
-          <div class="col-12" *ngIf="!formModel.servicoGratuito">
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label
-                >O valor cobrado custeia quais aspectos da entidade?</mat-label
-              >
-              <input
-                matInput
-                [(ngModel)]="formModel.valorCobrado"
-                name="valorCobrado"
-              />
-            </mat-form-field>
-
-            <div class="grid p-mt-2">
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.custosEspecificosEntidade.materialConsumo
-                  "
-                  name="materialConsumo"
-                  >Material de consumo</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.custosEspecificosEntidade.rh"
-                  name="rh"
-                  >RH</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.custosEspecificosEntidade.despesasAdministrativas
-                  "
-                  name="despesasAdministrativas"
-                  >Despesas administrativas</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.custosEspecificosEntidade.outros"
-                  name="outrosCustos"
-                  >Outros</mat-checkbox
-                >
-              </div>
-              <div
-                class="col-12"
-                *ngIf="formModel.custosEspecificosEntidade.outros"
-              >
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Especificar outros custos</mat-label>
-                  <input
-                    matInput
-                    [(ngModel)]="
-                      formModel.custosEspecificosEntidade.outrosEspecificar
-                    "
-                    name="outrosCustosEsp"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label
-                >Informe quais profissionais realizam as atividades</mat-label
-              >
-              <textarea
-                matInput
-                [(ngModel)]="formModel.profissionaisAtividades"
-                name="profissionaisAtividades"
-                rows="3"
-              ></textarea>
-              <mat-hint
-                >Lista de seleção - definir qual base será a
-                referência</mat-hint
-              >
-            </mat-form-field>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <p>Informe a escolaridade:</p>
-            <div class="grid">
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.escolaridadeProfissionais.apenasVoluntarios
-                  "
-                  name="apenasVoluntarios"
-                  >Apenas voluntários</mat-checkbox
-                >
-                <p class="help-text">
-                  Se marcar essa item, abrir o seguinte campo:
-                </p>
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.escolaridadeProfissionais.ensinoFundamental
-                  "
-                  name="ensinoFundamental"
-                  >Ensino Fundamental</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.escolaridadeProfissionais.ensinoMedio"
-                  name="ensinoMedio"
-                  >Ensino Médio</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.escolaridadeProfissionais.ensinoSuperior
-                  "
-                  name="ensinoSuperior"
-                  >Ensino Superior</mat-checkbox
-                >
-              </div>
-            </div>
-          </div>
-
-        <!-- Seção Prevenção -->
-        <div class="grid p-mt-4" *ngIf="formModel.tiposAtividades.prevencao">
-          <div class="col-12">
-            <h3 class="section-title">Quanto à Prevenção</h3>
-          </div>
-
-          <div class="col-12">
-            <p>Informe as principais ações realizadas:</p>
-            <div class="grid">
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.principaisAcoesRealizadas.palestras"
-                  name="palestras"
-                  >Palestras</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.principaisAcoesRealizadas.rodasConversas
-                  "
-                  name="rodasConversas"
-                  >Rodas de conversas</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.principaisAcoesRealizadas.oficinas"
-                  name="oficinas"
-                  >Oficinas</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.principaisAcoesRealizadas.atividadesLudicas
-                  "
-                  name="atividadesLudicas"
-                  >Atividades lúdicas</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.principaisAcoesRealizadas.atividadesTerapeuticas
-                  "
-                  name="atividadesTerapeuticas"
-                  >Atividades Terapêuticas</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.principaisAcoesRealizadas
-                      .atendimentosPsicossociais
-                  "
-                  name="atendimentosPsicossociais"
-                  >Atendimentos psicossociais</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.principaisAcoesRealizadas.eventosSociais
-                  "
-                  name="eventosSociais"
-                  >Eventos sociais</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.principaisAcoesRealizadas.outras"
-                  name="outrasAcoes"
-                  >Outras</mat-checkbox
-                >
-              </div>
-              <div
-                class="col-12"
-                *ngIf="formModel.principaisAcoesRealizadas.outras"
-              >
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Especificar outras ações</mat-label>
-                  <input
-                    matInput
-                    [(ngModel)]="
-                      formModel.principaisAcoesRealizadas.outrasEspecificar
-                    "
-                    name="outrasAcoesEsp"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <p>Informe os principais temas trabalhados pela entidade?</p>
-            <div class="grid">
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.principaisTemasTrabalhos.direitosSociais
-                  "
-                  name="direitosSociais"
-                  >Direitos sociais</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.principaisTemasTrabalhos.familia"
-                  name="familia"
-                  >Família</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.principaisTemasTrabalhos.saudeMental"
-                  name="saudeMental"
-                  >Saúde mental</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.principaisTemasTrabalhos.prevencaoUsoAlcoolDrogas
-                  "
-                  name="prevencaoUsoAlcoolDrogas"
-                  >Prevenção ao uso de álcool e drogas</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.principaisTemasTrabalhos.espiritualidade
-                  "
-                  name="espiritualidade"
-                  >Espiritualidade</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.principaisTemasTrabalhos.outros"
-                  name="outrosTemas"
-                  >Outros</mat-checkbox
-                >
-              </div>
-              <div
-                class="col-12"
-                *ngIf="formModel.principaisTemasTrabalhos.outros"
-              >
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Especificar outros temas</mat-label>
-                  <input
-                    matInput
-                    [(ngModel)]="
-                      formModel.principaisTemasTrabalhos.outrosEspecificar
-                    "
-                    name="outrosTemasEsp"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <p>Informe a periodicidade das atividades:</p>
-            <mat-radio-group
-              [(ngModel)]="formModel.periodicidadeAtividades"
-              name="periodicidadeAtividades"
-            >
-              <mat-radio-button value="1vezSemana"
-                >01 vez por semana</mat-radio-button
-              >
-              <mat-radio-button value="1vezQuinzeDias"
-                >01 vez a cada quinze dias</mat-radio-button
-              >
-              <mat-radio-button value="1vezMes"
-                >01 vez por mês</mat-radio-button
-              >
-              <mat-radio-button value="2vezesMes"
-                >02 vezes por mês</mat-radio-button
-              >
-              <mat-radio-button value="outro">Outro</mat-radio-button>
-            </mat-radio-group>
-          </div>
-
-          <div
-            class="col-12"
-            *ngIf="formModel.periodicidadeAtividades === 'outro'"
-          >
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>Especificar periodicidade</mat-label>
-              <input
-                matInput
-                [(ngModel)]="formModel.outroPeriodicidade"
-                name="outroPeriodicidade"
-              />
-            </mat-form-field>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <p>Há um controle de participação do público-alvo?</p>
-            <mat-radio-group
-              [(ngModel)]="formModel.controleParticipacaoPublicoAlvo"
-              name="controleParticipacaoPublicoAlvo"
-            >
-              <mat-radio-button [value]="true">Sim</mat-radio-button>
-              <mat-radio-button [value]="false">Não</mat-radio-button>
-            </mat-radio-group>
-          </div>
-        </div>
-
-        <!-- Seção Apoio e Mútua Ajuda -->
-        <div
-          class="grid p-mt-4"
-          *ngIf="
-            formModel.tiposAtividades.apoio ||
-            formModel.tiposAtividades.mutuaAjuda
+  <div class="col-12 p-mt-3">
+    <p>Tipos de atendimento:</p>
+    <div class="grid align-items-center">
+      <div class="col-4">
+        <mat-checkbox
+          [(ngModel)]="
+            formModel.tiposAtendimento.atendimentoDeterminacaoJudicial
           "
+          name="atendimentoDeterminacaoJudicial"
         >
-          <div class="col-12">
-            <h3 class="section-title">Quanto ao Apoio e Mútua Ajuda</h3>
-          </div>
+          Atendimento de usuários a partir de determinação judicial ou
+          Ministério Público
+        </mat-checkbox>
+        <p class="help-text">
+          (Exemplo: medidas socioeducativas, alternativas penais.)
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox
+          [(ngModel)]="
+            formModel.tiposAtendimento.projetosFinanciadosSetorPublico
+          "
+          name="projetosFinanciadosSetorPublico"
+        >
+          Projetos ou programas específicos financiados pelo setor público
+        </mat-checkbox>
+        <p class="help-text">
+          (Exemplo: Programas municipais ou federais de atenção à dependência
+          química, acolhimento institucional)
+        </p>
+      </div>
+      <div class="col-4">
+        <mat-checkbox
+          [(ngModel)]="
+            formModel.tiposAtendimento.encaminhamentosOrganizacoesSociedadeCivil
+          "
+          name="encaminhamentosOrganizacoesSociedadeCivil"
+        >
+          Encaminhamentos por organizações da sociedade civil
+        </mat-checkbox>
+        <p class="help-text">(Exemplo: outras entidades, igrejas)</p>
+      </div>
+      <div class="col-12">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Outro Especificar:</mat-label>
+          <input
+            matInput
+            [(ngModel)]="formModel.tiposAtendimento.outroEspecificar"
+            name="outroEspecificar"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
 
-          <div class="col-12">
-            <p>
-              A entidade adota os 12 Passos da Sobriedade em suas atividades?
-            </p>
-            <mat-radio-group
-              [(ngModel)]="formModel.entidadeAdota12Passos"
-              name="entidadeAdota12Passos"
-            >
-              <mat-radio-button [value]="true">Sim</mat-radio-button>
-              <mat-radio-button [value]="false">Não</mat-radio-button>
-            </mat-radio-group>
-            <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
-          </div>
+  <h2 class="col-12">7.2 Quanto à Estrutura física</h2>
+  <!-- Seção 7.2 - Estrutura física -->
+  <div class="grid p-mt-4">
+    <div class="col-12">
+      <h3 class="section-title">7.2 Quanto à Estrutura física</h3>
+    </div>
 
-          <div class="col-12" *ngIf="formModel.entidadeAdota12Passos">
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label
-                >Quais metodologias a entidade utiliza para apoiar a recuperação
-                de dependentes químicos? Caso siga os 12 Passos, como são
-                aplicados na prática?</mat-label
+    <div class="col-12">
+      <p>O espaço da entidade</p>
+      <mat-radio-group
+        [(ngModel)]="formModel.espacoEntidade"
+        name="espacoEntidade"
+      >
+        <mat-radio-button value="proprio">Próprio</mat-radio-button>
+        <mat-radio-button value="cedido">Cedido</mat-radio-button>
+        <mat-radio-button value="alugado">Alugado</mat-radio-button>
+        <mat-radio-button value="naoSabeInformar"
+          >Não sabe informar</mat-radio-button
+        >
+      </mat-radio-group>
+    </div>
+
+    <div class="col-12 p-mt-3">
+      <mat-checkbox
+        [(ngModel)]="formModel.possuiEspacoAtendimentoColetivo"
+        name="possuiEspacoAtendimentoColetivo"
+      >
+        A entidade possui espaço para atendimento coletivo ou de família?
+      </mat-checkbox>
+    </div>
+
+    <div class="col-12">
+      <mat-checkbox
+        [(ngModel)]="formModel.possuiEspacoAtendimentoIndividualizado"
+        name="possuiEspacoAtendimentoIndividualizado"
+      >
+        A entidade possui espaço para atendimento individualizado?
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <h2 class="col-12">7.3 Quanto ao quadro de Recursos Humanos</h2>
+
+  <div class="col-12">
+    <h3 class="section-title">7.3 Quanto ao quadro de Recursos Humanos</h3>
+  </div>
+
+  <div class="col-12">
+    <mat-checkbox
+      [(ngModel)]="formModel.possuiQuadroTecnico"
+      name="possuiQuadroTecnico"
+    >
+      A entidade possui um quadro técnico para o desenvolvimento de suas
+      atividades?
+    </mat-checkbox>
+  </div>
+
+  <div class="col-12" *ngIf="formModel.possuiQuadroTecnico">
+    <div class="grid">
+      <div class="col-12">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Informe quais profissionais atuam na entidade</mat-label>
+          <textarea
+            matInput
+            [(ngModel)]="formModel.profissionaisAtuantes"
+            name="profissionaisAtuantes"
+            rows="3"
+          ></textarea>
+          <mat-hint
+            >Lista de seleção - definir qual base será a referência</mat-hint
+          >
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label
+            >Informe a quantidade de profissionais que atuam na
+            entidade</mat-label
+          >
+          <input
+            matInput
+            [(ngModel)]="formModel.quantidadeProfissionaisAtuantes"
+            name="quantidadeProfissionaisAtuantes"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label
+            >Informe o tipo de vínculo desses profissionais, conforme quadro a
+            seguir:</mat-label
+          >
+          <input
+            matInput
+            [(ngModel)]="formModel.tipoProfissionaisVinculo"
+            name="tipoProfissionaisVinculo"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Tabela de Profissionais -->
+    <div class="col-12 p-mt-3">
+      <h4>Quadro de Profissionais</h4>
+      <table class="profissionais-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Profissão</th>
+            <th>Carga horária</th>
+            <th>Tipo de vínculo</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let prof of formModel.profissionais; let i = index">
+            <td>
+              <mat-form-field appearance="outline">
+                <input
+                  matInput
+                  [(ngModel)]="prof.nome"
+                  [name]="'profNome' + i"
+                />
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field appearance="outline">
+                <input
+                  matInput
+                  [(ngModel)]="prof.profissao"
+                  [name]="'profProfissao' + i"
+                />
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field appearance="outline">
+                <input
+                  matInput
+                  [(ngModel)]="prof.cargaHoraria"
+                  [name]="'profCargaHoraria' + i"
+                />
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field appearance="outline">
+                <mat-select
+                  [(ngModel)]="prof.tipoVinculo"
+                  [name]="'profTipoVinculo' + i"
+                >
+                  <mat-option value="voluntario">Voluntário</mat-option>
+                  <mat-option value="empregados"
+                    >Empregados (MEI, RPA, terceirizados, CLT)</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+            </td>
+            <td>
+              <button
+                mat-icon-button
+                color="warn"
+                type="button"
+                (click)="removerProfissional(i)"
               >
-              <textarea
-                matInput
-                [(ngModel)]="formModel.metodologiasApoioRecuperacao"
-                name="metodologiasApoioRecuperacao"
-                rows="4"
-              ></textarea>
-            </mat-form-field>
-          </div>
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="adicionarProfissional()"
+      >
+        Adicionar Profissional
+      </button>
+    </div>
+  </div>
+  <h2 class="col-12">7.4 Quanto ao Reconhecimento da entidade no município</h2>
+  <div class="col-12">
+    <h3 class="section-title">
+      7.4 Quanto ao Reconhecimento da entidade no município
+    </h3>
+    <p class="help-text">Preenchimento obrigatório</p>
+  </div>
 
-          <div class="col-12 p-mt-3">
-            <p>
-              A entidade oferece grupos de apoio baseados nos 12 Passos da
-              Sobriedade ou em outra abordagem?
-            </p>
-            <mat-radio-group
-              [(ngModel)]="formModel.oferecerGruposApoio12Passos"
-              name="oferecerGruposApoio12Passos"
-            >
-              <mat-radio-button [value]="true">Sim</mat-radio-button>
-              <mat-radio-button [value]="false">Não</mat-radio-button>
-            </mat-radio-group>
-            <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
-          </div>
+  <div class="col-12">
+    <p>a. A entidade possui inscrição em algum conselho municipal?</p>
+    <mat-radio-group
+      [(ngModel)]="formModel.possuiInscricaoConselhoMunicipal"
+      name="possuiInscricaoConselhoMunicipal"
+    >
+      <mat-radio-button [value]="true">Sim</mat-radio-button>
+      <mat-radio-button [value]="false">Não</mat-radio-button>
+    </mat-radio-group>
+  </div>
 
-          <div class="col-12" *ngIf="formModel.oferecerGruposApoio12Passos">
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label
-                >Descreva como funciona/definir a quantidade de
-                caracteres</mat-label
-              >
-              <textarea
-                matInput
-                [(ngModel)]="formModel.descricaoFuncionamentoGrupos"
-                name="descricaoFuncionamentoGrupos"
-                rows="4"
-              ></textarea>
-            </mat-form-field>
-          </div>
+  <div class="col-12" *ngIf="formModel.possuiInscricaoConselhoMunicipal">
+    <mat-radio-group
+      [(ngModel)]="formModel.conselhoMunicipal"
+      name="conselhoMunicipal"
+    >
+      <mat-radio-button value="assistenciaSocial"
+        >Conselho Municipal de Assistência Social</mat-radio-button
+      >
+      <mat-radio-button value="alcoolDrogas"
+        >Conselho Municipal de Álcool e Drogas</mat-radio-button
+      >
+      <mat-radio-button value="saude"
+        >Conselho Municipal de Saúde</mat-radio-button
+      >
+      <mat-radio-button value="assistenciaSocial2"
+        >Conselho Municipal de Assistência Social</mat-radio-button
+      >
+      <mat-radio-button value="naoSabeInformar"
+        >Não sabe informar</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <div class="col-12" *ngIf="!formModel.possuiInscricaoConselhoMunicipal">
+    <mat-checkbox
+      [(ngModel)]="formModel.naoTemConselhoEstadual"
+      name="naoTemConselho"
+    >
+      Não, uma vez que não há conselho municipal no meu território.
+    </mat-checkbox>
+  </div>
+
+  <div class="col-12 p-mt-3">
+    <p>b. A entidade possui inscrição em conselho estadual?</p>
+    <mat-radio-group
+      [(ngModel)]="formModel.possuiInscricaoConselhoEstadual"
+      name="possuiInscricaoConselhoEstadual"
+    >
+      <mat-radio-button [value]="true">Sim</mat-radio-button>
+      <mat-radio-button [value]="false">Não</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="col-12" *ngIf="!formModel.possuiInscricaoConselhoEstadual">
+    <mat-checkbox
+      [(ngModel)]="formModel.naoTemConselhoEstadual"
+      name="naoTemConselhoEstadual"
+    >
+      Não, uma vez que não há Conselho Estadual
+    </mat-checkbox>
+  </div>
+
+  <div class="col-12 p-mt-3">
+    <p>
+      c. A entidade possui reconhecimento por autoridade pública na área de
+      redução de demanda de drogas?
+    </p>
+    <mat-radio-group
+      [(ngModel)]="formModel.possuiReconhecimentoAutoridadePublica"
+      name="possuiReconhecimentoAutoridadePublica"
+    >
+      <mat-radio-button [value]="true">Sim</mat-radio-button>
+      <mat-radio-button [value]="false">Não</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <div class="col-12" *ngIf="formModel.possuiReconhecimentoAutoridadePublica">
+    <mat-radio-group
+      [(ngModel)]="formModel.reconhecimentoTipo"
+      name="reconhecimentoTipo"
+    >
+      <mat-radio-button value="uniao">União</mat-radio-button>
+      <mat-radio-button value="estados">Estados</mat-radio-button>
+      <mat-radio-button value="municipios"
+        >DF e municípios (Ex: Prefeito, secretário municipal, dentre
+        outros)</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+  <h2 class="col-12">7.5 Quanto às Atividades desenvolvidas</h2>
+  <div class="col-12">
+    <h3 class="section-title">7.5 Quanto às Atividades desenvolvidas</h3>
+    <p class="help-text">
+      Será preciso criar um campo para cada entidade marcar contra "ção de
+      ativação", relembrando múltiplas escolhas.
+    </p>
+  </div>
+
+  <div class="col-12">
+    <p>Tipos de atividades:</p>
+    <div class="grid">
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.tiposAtividades.prevencao"
+          name="prevencao"
+          >Prevenção</mat-checkbox
+        >
+      </div>
+      <div class="col-6">
+        <mat-checkbox [(ngModel)]="formModel.tiposAtividades.apoio" name="apoio"
+          >Apoio</mat-checkbox
+        >
+      </div>
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.tiposAtividades.mutuaAjuda"
+          name="mutuaAjuda"
+          >Mútua Ajuda</mat-checkbox
+        >
+      </div>
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.tiposAtividades.atendimentoPsicossocial"
+          name="atendimentoPsicossocial"
+          >Atendimento psicossocial</mat-checkbox
+        >
+      </div>
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.tiposAtividades.ressocializacao"
+          name="ressocializacao"
+          >Ressocialização</mat-checkbox
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 p-mt-3">
+    <p>Público-alvo:</p>
+    <div class="grid">
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.publicoAlvoAtividades.feminino"
+          name="femininoAtiv"
+          >Feminino</mat-checkbox
+        >
+      </div>
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.publicoAlvoAtividades.masculino"
+          name="masculinoAtiv"
+          >Masculino</mat-checkbox
+        >
+      </div>
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.publicoAlvoAtividades.criancaAdolescente"
+          name="criancaAdolescenteAtiv"
+          >Criança e Adolescente</mat-checkbox
+        >
+      </div>
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.publicoAlvoAtividades.idosos"
+          name="idososAtiv"
+          >Idosos</mat-checkbox
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 p-mt-3">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Capacidade de atendimento</mat-label>
+      <input
+        matInput
+        [(ngModel)]="formModel.capacidadeAtendimentoAtividades"
+        name="capacidadeAtendimentoAtividades"
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 p-mt-3">
+    <p>O serviço oferecido é gratuito?</p>
+    <mat-radio-group
+      [(ngModel)]="formModel.servicoGratuito"
+      name="servicoGratuito"
+    >
+      <mat-radio-button [value]="true">Sim</mat-radio-button>
+      <mat-radio-button [value]="false">Não</mat-radio-button>
+    </mat-radio-group>
+    <p class="help-text">Se marcar "não", abrir o seguinte campo:</p>
+  </div>
+
+  <div class="col-12" *ngIf="!formModel.servicoGratuito">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>O valor cobrado custeia quais aspectos da entidade?</mat-label>
+      <input
+        matInput
+        [(ngModel)]="formModel.valorCobrado"
+        name="valorCobrado"
+      />
+    </mat-form-field>
+
+    <div class="grid p-mt-2">
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.custosEspecificosEntidade.materialConsumo"
+          name="materialConsumo"
+          >Material de consumo</mat-checkbox
+        >
+      </div>
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.custosEspecificosEntidade.rh"
+          name="rh"
+          >RH</mat-checkbox
+        >
+      </div>
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="
+            formModel.custosEspecificosEntidade.despesasAdministrativas
+          "
+          name="despesasAdministrativas"
+          >Despesas administrativas</mat-checkbox
+        >
+      </div>
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.custosEspecificosEntidade.outros"
+          name="outrosCustos"
+          >Outros</mat-checkbox
+        >
+      </div>
+      <div class="col-12" *ngIf="formModel.custosEspecificosEntidade.outros">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Especificar outros custos</mat-label>
+          <input
+            matInput
+            [(ngModel)]="formModel.custosEspecificosEntidade.outrosEspecificar"
+            name="outrosCustosEsp"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 p-mt-3">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Informe quais profissionais realizam as atividades</mat-label>
+      <textarea
+        matInput
+        [(ngModel)]="formModel.profissionaisAtividades"
+        name="profissionaisAtividades"
+        rows="3"
+      ></textarea>
+      <mat-hint
+        >Lista de seleção - definir qual base será a referência</mat-hint
+      >
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 p-mt-3">
+    <p>Informe a escolaridade:</p>
+    <div class="grid">
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.escolaridadeProfissionais.apenasVoluntarios"
+          name="apenasVoluntarios"
+          >Apenas voluntários</mat-checkbox
+        >
+        <p class="help-text">Se marcar essa item, abrir o seguinte campo:</p>
+      </div>
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.escolaridadeProfissionais.ensinoFundamental"
+          name="ensinoFundamental"
+          >Ensino Fundamental</mat-checkbox
+        >
+      </div>
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.escolaridadeProfissionais.ensinoMedio"
+          name="ensinoMedio"
+          >Ensino Médio</mat-checkbox
+        >
+      </div>
+      <div class="col-6">
+        <mat-checkbox
+          [(ngModel)]="formModel.escolaridadeProfissionais.ensinoSuperior"
+          name="ensinoSuperior"
+          >Ensino Superior</mat-checkbox
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Seção Prevenção -->
+  <div class="grid p-mt-4" *ngIf="formModel.tiposAtividades.prevencao">
+    <div class="col-12">
+      <h3 class="section-title">Quanto à Prevenção</h3>
+    </div>
+
+    <div class="col-12">
+      <p>Informe as principais ações realizadas:</p>
+      <div class="grid">
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.principaisAcoesRealizadas.palestras"
+            name="palestras"
+            >Palestras</mat-checkbox
+          >
         </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.principaisAcoesRealizadas.rodasConversas"
+            name="rodasConversas"
+            >Rodas de conversas</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.principaisAcoesRealizadas.oficinas"
+            name="oficinas"
+            >Oficinas</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.principaisAcoesRealizadas.atividadesLudicas"
+            name="atividadesLudicas"
+            >Atividades lúdicas</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="
+              formModel.principaisAcoesRealizadas.atividadesTerapeuticas
+            "
+            name="atividadesTerapeuticas"
+            >Atividades Terapêuticas</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="
+              formModel.principaisAcoesRealizadas.atendimentosPsicossociais
+            "
+            name="atendimentosPsicossociais"
+            >Atendimentos psicossociais</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.principaisAcoesRealizadas.eventosSociais"
+            name="eventosSociais"
+            >Eventos sociais</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.principaisAcoesRealizadas.outras"
+            name="outrasAcoes"
+            >Outras</mat-checkbox
+          >
+        </div>
+        <div class="col-12" *ngIf="formModel.principaisAcoesRealizadas.outras">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Especificar outras ações</mat-label>
+            <input
+              matInput
+              [(ngModel)]="
+                formModel.principaisAcoesRealizadas.outrasEspecificar
+              "
+              name="outrasAcoesEsp"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
 
-        <!-- Seção Atendimento Psicossocial -->
+    <div class="col-12 p-mt-3">
+      <p>Informe os principais temas trabalhados pela entidade?</p>
+      <div class="grid">
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.principaisTemasTrabalhos.direitosSociais"
+            name="direitosSociais"
+            >Direitos sociais</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.principaisTemasTrabalhos.familia"
+            name="familia"
+            >Família</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.principaisTemasTrabalhos.saudeMental"
+            name="saudeMental"
+            >Saúde mental</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="
+              formModel.principaisTemasTrabalhos.prevencaoUsoAlcoolDrogas
+            "
+            name="prevencaoUsoAlcoolDrogas"
+            >Prevenção ao uso de álcool e drogas</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.principaisTemasTrabalhos.espiritualidade"
+            name="espiritualidade"
+            >Espiritualidade</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.principaisTemasTrabalhos.outros"
+            name="outrosTemas"
+            >Outros</mat-checkbox
+          >
+        </div>
+        <div class="col-12" *ngIf="formModel.principaisTemasTrabalhos.outros">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Especificar outros temas</mat-label>
+            <input
+              matInput
+              [(ngModel)]="formModel.principaisTemasTrabalhos.outrosEspecificar"
+              name="outrosTemasEsp"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 p-mt-3">
+      <p>Informe a periodicidade das atividades:</p>
+      <mat-radio-group
+        [(ngModel)]="formModel.periodicidadeAtividades"
+        name="periodicidadeAtividades"
+      >
+        <mat-radio-button value="1vezSemana"
+          >01 vez por semana</mat-radio-button
+        >
+        <mat-radio-button value="1vezQuinzeDias"
+          >01 vez a cada quinze dias</mat-radio-button
+        >
+        <mat-radio-button value="1vezMes">01 vez por mês</mat-radio-button>
+        <mat-radio-button value="2vezesMes">02 vezes por mês</mat-radio-button>
+        <mat-radio-button value="outro">Outro</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div class="col-12" *ngIf="formModel.periodicidadeAtividades === 'outro'">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Especificar periodicidade</mat-label>
+        <input
+          matInput
+          [(ngModel)]="formModel.outroPeriodicidade"
+          name="outroPeriodicidade"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 p-mt-3">
+      <p>Há um controle de participação do público-alvo?</p>
+      <mat-radio-group
+        [(ngModel)]="formModel.controleParticipacaoPublicoAlvo"
+        name="controleParticipacaoPublicoAlvo"
+      >
+        <mat-radio-button [value]="true">Sim</mat-radio-button>
+        <mat-radio-button [value]="false">Não</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+
+  <!-- Seção Apoio e Mútua Ajuda -->
+  <div
+    class="grid p-mt-4"
+    *ngIf="
+      formModel.tiposAtividades.apoio || formModel.tiposAtividades.mutuaAjuda
+    "
+  >
+    <div class="col-12">
+      <h3 class="section-title">Quanto ao Apoio e Mútua Ajuda</h3>
+    </div>
+
+    <div class="col-12">
+      <p>A entidade adota os 12 Passos da Sobriedade em suas atividades?</p>
+      <mat-radio-group
+        [(ngModel)]="formModel.entidadeAdota12Passos"
+        name="entidadeAdota12Passos"
+      >
+        <mat-radio-button [value]="true">Sim</mat-radio-button>
+        <mat-radio-button [value]="false">Não</mat-radio-button>
+      </mat-radio-group>
+      <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
+    </div>
+
+    <div class="col-12" *ngIf="formModel.entidadeAdota12Passos">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label
+          >Quais metodologias a entidade utiliza para apoiar a recuperação de
+          dependentes químicos? Caso siga os 12 Passos, como são aplicados na
+          prática?</mat-label
+        >
+        <textarea
+          matInput
+          [(ngModel)]="formModel.metodologiasApoioRecuperacao"
+          name="metodologiasApoioRecuperacao"
+          rows="4"
+        ></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 p-mt-3">
+      <p>
+        A entidade oferece grupos de apoio baseados nos 12 Passos da Sobriedade
+        ou em outra abordagem?
+      </p>
+      <mat-radio-group
+        [(ngModel)]="formModel.oferecerGruposApoio12Passos"
+        name="oferecerGruposApoio12Passos"
+      >
+        <mat-radio-button [value]="true">Sim</mat-radio-button>
+        <mat-radio-button [value]="false">Não</mat-radio-button>
+      </mat-radio-group>
+      <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
+    </div>
+
+    <div class="col-12" *ngIf="formModel.oferecerGruposApoio12Passos">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label
+          >Descreva como funciona/definir a quantidade de caracteres</mat-label
+        >
+        <textarea
+          matInput
+          [(ngModel)]="formModel.descricaoFuncionamentoGrupos"
+          name="descricaoFuncionamentoGrupos"
+          rows="4"
+        ></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Seção Atendimento Psicossocial -->
+  <div
+    class="grid p-mt-4"
+    *ngIf="formModel.tiposAtividades.atendimentoPsicossocial"
+  >
+    <div class="col-12">
+      <h3 class="section-title">Quanto ao Atendimento Psicossocial</h3>
+    </div>
+
+    <div class="col-12">
+      <p>A entidade oferece atendimento psicossocial para os beneficiários?</p>
+      <mat-radio-group
+        [(ngModel)]="formModel.oferecerAtendimentoPsicossocial"
+        name="oferecerAtendimentoPsicossocial"
+      >
+        <mat-radio-button [value]="true">Sim</mat-radio-button>
+        <mat-radio-button [value]="false">Não</mat-radio-button>
+      </mat-radio-group>
+      <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
+    </div>
+
+    <div class="col-12" *ngIf="formModel.oferecerAtendimentoPsicossocial">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label
+          >Informe qual profissional realiza esse atendimento</mat-label
+        >
+        <input
+          matInput
+          [(ngModel)]="formModel.profissionalAtendimentoPsicossocial"
+          name="profissionalAtendimentoPsicossocial"
+        />
+        <mat-hint
+          >Lista de seleção - definir qual base será a referência</mat-hint
+        >
+      </mat-form-field>
+    </div>
+
+    <div
+      class="col-12 p-mt-3"
+      *ngIf="formModel.oferecerAtendimentoPsicossocial"
+    >
+      <p>
+        Informe quais serviços de atendimento psicossocial sua entidade oferece
+      </p>
+      <div class="grid">
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.servicosAtendimentoPsicossocial.acolhimento"
+            name="acolhimento"
+            >Acolhimento</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="
+              formModel.servicosAtendimentoPsicossocial.acompanhamentoIndividual
+            "
+            name="acompanhamentoIndividual"
+            >Acompanhamento individual</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="
+              formModel.servicosAtendimentoPsicossocial
+                .encaminhamentosRedePublica
+            "
+            name="encaminhamentosRedePublica"
+            >Encaminhamentos para a rede pública</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.servicosAtendimentoPsicossocial.outros"
+            name="outrosServicos"
+            >Outros</mat-checkbox
+          >
+        </div>
         <div
-          class="grid p-mt-4"
-          *ngIf="formModel.tiposAtividades.atendimentoPsicossocial"
+          class="col-12"
+          *ngIf="formModel.servicosAtendimentoPsicossocial.outros"
         >
-          <div class="col-12">
-            <h3 class="section-title">Quanto ao Atendimento Psicossocial</h3>
-          </div>
-
-          <div class="col-12">
-            <p>
-              A entidade oferece atendimento psicossocial para os beneficiários?
-            </p>
-            <mat-radio-group
-              [(ngModel)]="formModel.oferecerAtendimentoPsicossocial"
-              name="oferecerAtendimentoPsicossocial"
-            >
-              <mat-radio-button [value]="true">Sim</mat-radio-button>
-              <mat-radio-button [value]="false">Não</mat-radio-button>
-            </mat-radio-group>
-            <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
-          </div>
-
-          <div
-            class="col-12"
-            *ngIf="formModel.oferecerAtendimentoPsicossocial"
-          >
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label
-                >Informe qual profissional realiza esse atendimento</mat-label
-              >
-              <input
-                matInput
-                [(ngModel)]="formModel.profissionalAtendimentoPsicossocial"
-                name="profissionalAtendimentoPsicossocial"
-              />
-              <mat-hint
-                >Lista de seleção - definir qual base será a
-                referência</mat-hint
-              >
-            </mat-form-field>
-          </div>
-
-          <div
-            class="col-12 p-mt-3"
-            *ngIf="formModel.oferecerAtendimentoPsicossocial"
-          >
-            <p>
-              Informe quais serviços de atendimento psicossocial sua entidade
-              oferece
-            </p>
-            <div class="grid">
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.servicosAtendimentoPsicossocial.acolhimento
-                  "
-                  name="acolhimento"
-                  >Acolhimento</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.servicosAtendimentoPsicossocial
-                      .acompanhamentoIndividual
-                  "
-                  name="acompanhamentoIndividual"
-                  >Acompanhamento individual</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.servicosAtendimentoPsicossocial
-                      .encaminhamentosRedePublica
-                  "
-                  name="encaminhamentosRedePublica"
-                  >Encaminhamentos para a rede pública</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.servicosAtendimentoPsicossocial.outros"
-                  name="outrosServicos"
-                  >Outros</mat-checkbox
-                >
-              </div>
-              <div
-                class="col-12"
-                *ngIf="formModel.servicosAtendimentoPsicossocial.outros"
-              >
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Especificar outros serviços</mat-label>
-                  <input
-                    matInput
-                    [(ngModel)]="
-                      formModel.servicosAtendimentoPsicossocial
-                        .outrosEspecificar
-                    "
-                    name="outrosServicosEsp"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <p>
-              Se a entidade oferece atendimento psicossocial, ele é realizado
-              por profissionais contratados, voluntários ou por meio de
-              parcerias?
-            </p>
-            <mat-radio-group
-              [(ngModel)]="formModel.atendimentoPorProfissionaisContratados"
-              name="atendimentoPorProfissionaisContratados"
-            >
-              <mat-radio-button [value]="true">Sim</mat-radio-button>
-              <mat-radio-button [value]="false">Não</mat-radio-button>
-            </mat-radio-group>
-          </div>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Especificar outros serviços</mat-label>
+            <input
+              matInput
+              [(ngModel)]="
+                formModel.servicosAtendimentoPsicossocial.outrosEspecificar
+              "
+              name="outrosServicosEsp"
+            />
+          </mat-form-field>
         </div>
+      </div>
+    </div>
 
-        <!-- Seção Ressocialização -->
-        <div
-          class="grid p-mt-4"
-          *ngIf="formModel.tiposAtividades.ressocializacao"
-        >
-          <div class="col-12">
-            <h3 class="section-title">Quanto à Ressocialização</h3>
-          </div>
+    <div class="col-12 p-mt-3">
+      <p>
+        Se a entidade oferece atendimento psicossocial, ele é realizado por
+        profissionais contratados, voluntários ou por meio de parcerias?
+      </p>
+      <mat-radio-group
+        [(ngModel)]="formModel.atendimentoPorProfissionaisContratados"
+        name="atendimentoPorProfissionaisContratados"
+      >
+        <mat-radio-button [value]="true">Sim</mat-radio-button>
+        <mat-radio-button [value]="false">Não</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
 
-          <div class="col-12">
-            <p>A entidade desenvolve ações voltadas para a ressocialização?</p>
-            <mat-radio-group
-              [(ngModel)]="formModel.desenvolveAcoesRessocializacao"
-              name="desenvolveAcoesRessocializacao"
-            >
-              <mat-radio-button [value]="true">Sim</mat-radio-button>
-              <mat-radio-button [value]="false">Não</mat-radio-button>
-            </mat-radio-group>
-            <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
-          </div>
+  <!-- Seção Ressocialização -->
+  <div class="grid p-mt-4" *ngIf="formModel.tiposAtividades.ressocializacao">
+    <div class="col-12">
+      <h3 class="section-title">Quanto à Ressocialização</h3>
+    </div>
 
-          <div
-            class="col-12"
-            *ngIf="formModel.desenvolveAcoesRessocializacao"
+    <div class="col-12">
+      <p>A entidade desenvolve ações voltadas para a ressocialização?</p>
+      <mat-radio-group
+        [(ngModel)]="formModel.desenvolveAcoesRessocializacao"
+        name="desenvolveAcoesRessocializacao"
+      >
+        <mat-radio-button [value]="true">Sim</mat-radio-button>
+        <mat-radio-button [value]="false">Não</mat-radio-button>
+      </mat-radio-group>
+      <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
+    </div>
+
+    <div class="col-12" *ngIf="formModel.desenvolveAcoesRessocializacao">
+      <p>Cite quais ações:</p>
+      <div class="grid">
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.acoesRessocializacao.capacitacaoProfissional"
+            name="capacitacaoProfissional"
+            >Capacitação profissional</mat-checkbox
           >
-            <p>Cite quais ações:</p>
-            <div class="grid">
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.acoesRessocializacao.capacitacaoProfissional
-                  "
-                  name="capacitacaoProfissional"
-                  >Capacitação profissional</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.acoesRessocializacao.encaminhamentoEmprego
-                  "
-                  name="encaminhamentoEmprego"
-                  >Encaminhamento para emprego</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.acoesRessocializacao
-                      .fortalecimentoVinculosFamiliares
-                  "
-                  name="fortalecimentoVinculosFamiliares"
-                  >Fortalecimento de vínculos familiares</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.acoesRessocializacao.outros"
-                  name="outrasAcoesRessoc"
-                  >Outros</mat-checkbox
-                >
-              </div>
-              <div
-                class="col-12"
-                *ngIf="formModel.acoesRessocializacao.outros"
-              >
-                <mat-form-field appearance="outline" class="full-width">
-                  <mat-label>Especificar outras ações</mat-label>
-                  <input
-                    matInput
-                    [(ngModel)]="
-                      formModel.acoesRessocializacao.outrosEspecificar
-                    "
-                    name="outrasAcoesRessocEsp"
-                  />
-                </mat-form-field>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 p-mt-3">
-            <p>
-              A entidade possui parcerias com empresas, instituições de ensino
-              ou órgãos públicos para apoiar a ressocialização dos
-              beneficiários?
-            </p>
-            <mat-radio-group
-              [(ngModel)]="formModel.possuiParceriasEmpresasInstituicoes"
-              name="possuiParceriasEmpresasInstituicoes"
-            >
-              <mat-radio-button [value]="true">Sim</mat-radio-button>
-              <mat-radio-button [value]="false">Não</mat-radio-button>
-            </mat-radio-group>
-            <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
-          </div>
-
-          <div
-            class="col-12"
-            *ngIf="formModel.possuiParceriasEmpresasInstituicoes"
-          >
-            <div class="grid">
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.tiposParceriaRessocializacao
-                      .parceriasInstituicoesEnsino
-                  "
-                  name="parceriasInstituicoesEnsino"
-                  >Parcerias com Instituições de Ensino</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.tiposParceriaRessocializacao
-                      .parceriasEmpresasMercadoTrabalho
-                  "
-                  name="parceriasEmpresasMercadoTrabalho"
-                  >Parcerias com Empresas e Mercado de Trabalho</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.tiposParceriaRessocializacao
-                      .parceriasOrgaosPublicos
-                  "
-                  name="parceriasOrgaosPublicos"
-                  >Parcerias com Órgãos Públicos</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.tiposParceriaRessocializacao.naoPossuiParcerias
-                  "
-                  name="naoPossuiParcerias"
-                  >Não possui parcerias</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="
-                    formModel.tiposParceriaRessocializacao
-                      .apenasFortalecimentoVinculos
-                  "
-                  name="apenasFortalecimentoVinculos"
-                  >Apenas fortalecimento dos vínculos familiares</mat-checkbox
-                >
-              </div>
-              <div class="col-6">
-                <mat-checkbox
-                  [(ngModel)]="formModel.tiposParceriaRessocializacao.outros"
-                  name="outrosParceria"
-                  >Outros</mat-checkbox
-                >
-              </div>
-            </div>
-          </div>
         </div>
-      </form>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.acoesRessocializacao.encaminhamentoEmprego"
+            name="encaminhamentoEmprego"
+            >Encaminhamento para emprego</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="
+              formModel.acoesRessocializacao.fortalecimentoVinculosFamiliares
+            "
+            name="fortalecimentoVinculosFamiliares"
+            >Fortalecimento de vínculos familiares</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.acoesRessocializacao.outros"
+            name="outrasAcoesRessoc"
+            >Outros</mat-checkbox
+          >
+        </div>
+        <div class="col-12" *ngIf="formModel.acoesRessocializacao.outros">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Especificar outras ações</mat-label>
+            <input
+              matInput
+              [(ngModel)]="formModel.acoesRessocializacao.outrosEspecificar"
+              name="outrasAcoesRessocEsp"
+            />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 p-mt-3">
+      <p>
+        A entidade possui parcerias com empresas, instituições de ensino ou
+        órgãos públicos para apoiar a ressocialização dos beneficiários?
+      </p>
+      <mat-radio-group
+        [(ngModel)]="formModel.possuiParceriasEmpresasInstituicoes"
+        name="possuiParceriasEmpresasInstituicoes"
+      >
+        <mat-radio-button [value]="true">Sim</mat-radio-button>
+        <mat-radio-button [value]="false">Não</mat-radio-button>
+      </mat-radio-group>
+      <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
+    </div>
+
+    <div class="col-12" *ngIf="formModel.possuiParceriasEmpresasInstituicoes">
+      <div class="grid">
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="
+              formModel.tiposParceriaRessocializacao.parceriasInstituicoesEnsino
+            "
+            name="parceriasInstituicoesEnsino"
+            >Parcerias com Instituições de Ensino</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="
+              formModel.tiposParceriaRessocializacao
+                .parceriasEmpresasMercadoTrabalho
+            "
+            name="parceriasEmpresasMercadoTrabalho"
+            >Parcerias com Empresas e Mercado de Trabalho</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="
+              formModel.tiposParceriaRessocializacao.parceriasOrgaosPublicos
+            "
+            name="parceriasOrgaosPublicos"
+            >Parcerias com Órgãos Públicos</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="
+              formModel.tiposParceriaRessocializacao.naoPossuiParcerias
+            "
+            name="naoPossuiParcerias"
+            >Não possui parcerias</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="
+              formModel.tiposParceriaRessocializacao
+                .apenasFortalecimentoVinculos
+            "
+            name="apenasFortalecimentoVinculos"
+            >Apenas fortalecimento dos vínculos familiares</mat-checkbox
+          >
+        </div>
+        <div class="col-6">
+          <mat-checkbox
+            [(ngModel)]="formModel.tiposParceriaRessocializacao.outros"
+            name="outrosParceria"
+            >Outros</mat-checkbox
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, inject } from '@angular/core';
 import { QuestionService } from '../../../../../services/question.service';
 import { UtilService } from '../../../../../services/util.service';
 import { EntidadeDeCuidadoInterface } from '../../../../../interface/entidadeDeCuidado.interface';
+import { entidadeCuidadoFormOptions } from './options';
 
 @Component({
   selector: 'app-entidade-de-cuidado',
@@ -13,169 +14,168 @@ export class EntidadeDeCuidadoComponent implements AfterViewInit {
   readonly utilSrv: UtilService = inject(UtilService);
 
    formModel: EntidadeDeCuidadoInterface = {
-    // 7. Entidades de cuidado
-    entidadeRealizaAcolhimento: false,
-    entidadeRealizaAcolhimentoProvisorio: false,
-    entidadeTemCapacidadeTerapeutica: false,
+  publicoAlvo: {
+    adultoFeminino: 0,
+    adultoMasculino: 0,
+    criancasAdolescentes: 0,
+    idoso: 0,
+  },
 
-    // 7.1 Caracterização do público-alvo
-    publicoAlvo: {
-      adultoFeminino: 0,
-      adultoMasculino: 0,
-      criancasAdolescentes: 0,
-      idoso: 0
-    },
+  capacidadeAtendimento: 'grupos10',
 
-    capacidadeAtendimento: 'grupos10',
-    formaAcesso: 'espontaneamente',
+  formaAcesso: 'espontaneamente',
+  outrasPoliticasPublicas_RedesdeApoio: {
+    parceriasNormais: false,
+    encaminhamentosInformais: false,
+    participacaoComites: false,
+    atendimentoDeterminacaoJudicial: false,
+    projetosFinanciadosSetorPublico: false,
+    encaminhamentosOrganizacoesSociedadeCivil: false,
+    outros: false,
+    outrosDescricao: '',
+  },
 
-    tiposAtendimento: {
-      atendimentoDeterminacaoJudicial: false,
-      projetosFinanciadosSetorPublico: false,
-      encaminhamentosOrganizacoesSociedadeCivil: false,
-      outroEspecificar: ''
-    },
+  espacoEntidade: 'naoSabeInformar',
+  possuiEspacoAtendimentoColetivo: false,
+  possuiEspacoAtendimentoIndividualizado: false,
 
-    // 7.2 Estrutura física
-    espacoEntidade: 'proprio',
-    possuiEspacoAtendimentoColetivo: false,
-    possuiEspacoAtendimentoIndividualizado: false,
+  possuiQuadroTecnico: false,
+  profissionaisAtuantes: {
+    nome: '',
+    cpf: '',
+    dataNascimento: '',
+    telefone: '',
+    email: '',
+    cargo: '',
+    formacaoAcademica: '',
+    cargaHoraria: '',
+    vinculo: 'voluntario',
+  },
+  quantidadeProfissionaisAtuantes: '',
 
-    // 7.3 Recursos Humanos
-    possuiQuadroTecnico: false,
-    profissionaisAtuantes: '',
-    quantidadeProfissionaisAtuantes: '',
-    tipoProfissionaisVinculo: '',
+  possuiInscricaoConselhoMunicipal: false,
+  conselhoMunicipal: 'naoSabeInformar',
+  possuiInscricaoConselhoEstadual: false,
+  naoTemConselhoEstadual: false,
+  possuiReconhecimentoAutoridadePublica: false,
+  reconhecimentoTipo: 'municipios',
 
-    profissionais: [],
+  tiposAtividades: {
+    prevencao: false,
+    apoio: false,
+    mutuaAjuda: false,
+    atendimentoPsicossocial: false,
+    ressocializacao: false,
+  },
 
-    // 7.4 Reconhecimento da entidade
-    possuiInscricaoConselhoMunicipal: false,
-    conselhoMunicipal: 'assistenciaSocial',
-    possuiInscricaoConselhoEstadual: false,
-    naoTemConselhoEstadual: false,
-    possuiReconhecimentoAutoridadePublica: false,
-    reconhecimentoTipo: 'uniao',
+  publicoAlvoAtividades: {
+    feminino: false,
+    masculino: false,
+    criancaAdolescente: false,
+    idosos: false,
+  },
 
-    // 7.5 Atividades desenvolvidas
-    tiposAtividades: {
-      prevencao: false,
-      apoio: false,
-      mutuaAjuda: false,
-      atendimentoPsicossocial: false,
-      ressocializacao: false
-    },
+  capacidadeAtendimentoAtividades: '',
+  servicoGratuito: false,
+  valorCobrado: '',
+  custosEspecificosEntidade: {
+    materialConsumo: false,
+    rh: false,
+    despesasAdministrativas: false,
+    outros: false,
+    outrosEspecificar: '',
+  },
 
-    publicoAlvoAtividades: {
-      feminino: false,
-      masculino: false,
-      criancaAdolescente: false,
-      idosos: false
-    },
+  profissionaisAtividades: '',
+  escolaridadeProfissionais: {
+    apenasVoluntarios: false,
+    ensinoFundamental: false,
+    ensinoMedio: false,
+    ensinoSuperior: false,
+  },
 
-    capacidadeAtendimentoAtividades: '',
-    servicoGratuito: false,
-    valorCobrado: '',
+  principaisAcoesRealizadas: {
+    palestras: false,
+    rodasConversas: false,
+    oficinas: false,
+    atividadesLudicas: false,
+    atividadesTerapeuticas: false,
+    atendimentosPsicossociais: false,
+    eventosSociais: false,
+    outras: false,
+    outrasEspecificar: '',
+  },
 
-    custosEspecificosEntidade: {
-      materialConsumo: false,
-      rh: false,
-      despesasAdministrativas: false,
-      outros: false,
-      outrosEspecificar: ''
-    },
+  principaisTemasTrabalhos: {
+    direitosSociais: false,
+    familia: false,
+    saudeMental: false,
+    prevencaoUsoAlcoolDrogas: false,
+    espiritualidade: false,
+    outros: false,
+    outrosEspecificar: '',
+  },
 
-    profissionaisAtividades: '',
-    escolaridadeProfissionais: {
-      apenasVoluntarios: false,
-      ensinoFundamental: false,
-      ensinoMedio: false,
-      ensinoSuperior: false
-    },
+  periodicidadeAtividades: '1vezSemana',
+  outroPeriodicidade: '',
 
-    // Prevenção
-    principaisAcoesRealizadas: {
-      palestras: false,
-      rodasConversas: false,
-      oficinas: false,
-      atividadesLudicas: false,
-      atividadesTerapeuticas: false,
-      atendimentosPsicossociais: false,
-      eventosSociais: false,
-      outras: false,
-      outrasEspecificar: ''
-    },
+  controleParticipacaoPublicoAlvo: false,
 
-    principaisTemasTrabalhos: {
-      direitosSociais: false,
-      familia: false,
-      saudeMental: false,
-      prevencaoUsoAlcoolDrogas: false,
-      espiritualidade: false,
-      outros: false,
-      outrosEspecificar: ''
-    },
+  entidadeAdota12Passos: false,
+  metodologiasApoioRecuperacao: '',
+  oferecerGruposApoio12Passos: false,
+  descricaoFuncionamentoGrupos: '',
 
-    periodicidadeAtividades: '1vezSemana',
-    outroPeriodicidade: '',
-    controleParticipacaoPublicoAlvo: false,
+  oferecerAtendimentoPsicossocial: false,
+  profissionalAtendimentoPsicossocial: '',
+  servicosAtendimentoPsicossocial: {
+    acolhimento: false,
+    acompanhamentoIndividual: false,
+    encaminhamentosRedePublica: false,
+    outros: false,
+    outrosEspecificar: '',
+  },
 
-    // Apoio e Mútua Ajuda
-    entidadeAdota12Passos: false,
-    metodologiasApoioRecuperacao: '',
-    oferecerGruposApoio12Passos: false,
-    descricaoFuncionamentoGrupos: '',
+  atendimentoPorProfissionaisContratados: false,
 
-    // Atendimento Psicossocial
-    oferecerAtendimentoPsicossocial: false,
-    profissionalAtendimentoPsicossocial: '',
-    servicosAtendimentoPsicossocial: {
-      acolhimento: false,
-      acompanhamentoIndividual: false,
-      encaminhamentosRedePublica: false,
-      outros: false,
-      outrosEspecificar: ''
-    },
+  desenvolveAcoesRessocializacao: false,
+  acoesRessocializacao: {
+    capacitacaoProfissional: false,
+    encaminhamentoEmprego: false,
+    fortalecimentoVinculosFamiliares: false,
+    outros: false,
+    outrosEspecificar: '',
+  },
 
-    atendimentoPorProfissionaisContratados: false,
+  possuiParceriasEmpresasInstituicoes: false,
+  tiposParceriaRessocializacao: {
+    parceriasInstituicoesEnsino: false,
+    parceriasEmpresasMercadoTrabalho: false,
+    parceriasOrgaosPublicos: false,
+    naoPossuiParcerias: false,
+    apenasFortalecimentoVinculos: false,
+    outros: false,
+    outrosEspecificar: '',
+  },
+};
 
-    // Ressocialização
-    desenvolveAcoesRessocializacao: false,
-    acoesRessocializacao: {
-      capacitacaoProfissional: false,
-      encaminhamentoEmprego: false,
-      fortalecimentoVinculosFamiliares: false,
-      outros: false,
-      outrosEspecificar: ''
-    },
-
-    possuiParceriasEmpresasInstituicoes: false,
-    tiposParceriaRessocializacao: {
-      parceriasInstituicoesEnsino: false,
-      parceriasEmpresasMercadoTrabalho: false,
-      parceriasOrgaosPublicos: false,
-      naoPossuiParcerias: false,
-      apenasFortalecimentoVinculos: false,
-      outros: false,
-      outrosEspecificar: ''
-    }
-  };
+  entidadeCuidadoFormOptionsObj = entidadeCuidadoFormOptions;
   constructor() {}
 
   ngAfterViewInit(): void {}
 
     adicionarProfissional() {
-    this.formModel.profissionais.push({
+/*     this.formModel.profissionais.push({
       nome: '',
       profissao: '',
       cargaHoraria: '',
       tipoVinculo: 'voluntario'
-    });
+    }); */
   }
 
   // Método para remover profissional
   removerProfissional(index: number) {
-    this.formModel.profissionais.splice(index, 1);
+    //this.formModel.profissionais.splice(index, 1);
   }
 
   // Método para submeter o formulário
