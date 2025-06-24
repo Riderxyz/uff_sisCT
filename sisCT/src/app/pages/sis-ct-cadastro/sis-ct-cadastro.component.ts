@@ -10,6 +10,7 @@ import {
   CadastroStep2Id,
   SubSection,
 } from '../../interface/subSection.interface';
+import { CadastroNacionalService } from '../../services/cadastro-nacional.service';
 import { CentralRxJsService } from '../../services/centralRXJS.service';
 import { config } from '../../services/config';
 import { StatusService } from '../../services/status.service';
@@ -96,7 +97,7 @@ export class SisCtCadastroComponent implements OnInit, OnDestroy {
   private readonly centralRxjs = inject(CentralRxJsService);
   private statusSubscription?: Subscription;
 
-  constructor(public statusService: StatusService) {
+  constructor(public statusService: StatusService, public cadastroNacionalService: CadastroNacionalService) {
     this.centralRxjs.dataToReceive.subscribe(({ key, data }) => {
       console.log('Recebido evento:', key, data);
 
@@ -147,5 +148,14 @@ export class SisCtCadastroComponent implements OnInit, OnDestroy {
   }) {
     console.log('Resposta selecionada:', event);
     // Atualize seu estado aqui conforme necessário
+  }
+
+  shouldShowPanel(id: CadastroStep1Id | CadastroStep2Id): boolean {
+    const obj = this.cadastroNacionalService.getCurrentCadastro();
+    if (obj.ST_AREA_ATUACAO === 0) {
+      return id === CadastroStep2Id.ComunidadeTerap;
+    } else if (obj.ST_AREA_ATUACAO === 1) {
+      return id === CadastroStep2Id.EntidadesCuidado
+    } else return false;
   }
 }

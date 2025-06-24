@@ -50,3 +50,32 @@
 .mat-panel-title {
   gap: 8px;
 }
+
+
+
+
+:host {
+  display: block;
+  position: relative;
+}
+
+
+.flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-end {
+  justify-content: flex-end;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.p-1 {
+  padding: 0.25rem;
+}

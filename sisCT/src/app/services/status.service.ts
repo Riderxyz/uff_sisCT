@@ -12,6 +12,7 @@ export class StatusService {
 
   // BehaviorSubject to make the array observable
   private statusSubject = new BehaviorSubject<Status[]>(this.statusArray);
+  private ST_AREA_ATUACAO = 'ST_AREA_ATUACAO';
 
   // Public observable for components to subscribe to
   public status$ = this.statusSubject.asObservable();
