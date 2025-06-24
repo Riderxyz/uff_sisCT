@@ -23,7 +23,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { MatInputModule } from '@angular/material/input';
 import { AgGridModule } from 'ag-grid-angular';
@@ -62,14 +62,15 @@ const materialModules = [
   MatSlideToggleModule,
   MatSelectModule,
   MatProgressSpinnerModule,
-  MatCheckboxModule, AgGridModule,
+  MatCheckboxModule,
+  AgGridModule,
 ];
 
-
 const agGridComponents = [
-MapaDeVagasComponent,
-ContatosComponent
-]
+  MapaDeVagasComponent,
+  ContatosComponent,
+  RecursosHumanosComponent,
+];
 
 const dialogsComponents = [
   LoaderComponent,
@@ -79,7 +80,7 @@ const dialogsComponents = [
   CnpjDialogComponent,
   TermosDeUsoDialogComponent,
   AdicionarProfissionalDialogComponent,
-  AdicionarVagaDialogComponent
+  AdicionarVagaDialogComponent,
 ];
 
 const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
@@ -87,19 +88,24 @@ const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
   declarations: [
     HeaderComponent,
     SidebarComponent,
-...agGridComponents,
+    ...agGridComponents,
     FooterComponent,
     ...dialogsComponents,
-    RecursosHumanosComponent,
   ],
-  imports: [CommonModule, FormsModule, RouterModule, ...materialModules, ...ngxMasks],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    ...materialModules,
+    ...ngxMasks,
+  ],
   exports: [
     ToastComponent,
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
-    ...agGridComponents
+    ...agGridComponents,
   ],
   providers: [provideEnvironmentNgxMask()],
 })
-export class ComponentModule { }
+export class ComponentModule {}

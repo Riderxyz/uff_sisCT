@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MapaDeVagas } from '../../../interfaces_crud/mapa_vagas.interface';
 @Component({
-  selector: 'app-adicionar-vaga-dialog',
+  selector: 'app-editar-vaga-dialog',
   templateUrl: './editar-vaga-dialog.component.html',
   styleUrl: './editar-vaga-dialog.component.scss'
 })
