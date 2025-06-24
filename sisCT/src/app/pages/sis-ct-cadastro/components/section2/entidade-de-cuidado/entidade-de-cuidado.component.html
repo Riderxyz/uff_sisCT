@@ -297,8 +297,11 @@
   </div>
 
   <div class="col-12" *ngIf="formModel.possuiQuadroTecnico">
-<div style="height: 21vh; width: 100%;" class="ag-theme-material">
-      <ag-grid-angular style="width: 100%; height: 20vh;" class="ag-theme-material"
+<div style="height: 21vh; width: 100%;" class="">
+      <button mat-stroked-button color="primary" (click)="adicionarProfissional()">
+      <mat-icon>add</mat-icon> Cadastrar Profissional
+    </button>
+      <ag-grid-angular style="width: 100%; height: 20vh;"
         [gridOptions]="profissionaisTabelaGridOptions"></ag-grid-angular>
     </div>
   </div>

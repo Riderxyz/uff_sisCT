@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ProfissionalInterface } from '../../../interface/entidadeDeCuidado.interface';
 import { MatDialogRef } from '@angular/material/dialog';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -10,6 +11,7 @@ import { NgForm } from '@angular/forms';
 })
 export class AdicionarProfissionalDialogComponent {
   profissional: ProfissionalInterface = {
+    id: '',
     nome: '',
     cpf: '',
     dataNascimento: '',
@@ -21,7 +23,9 @@ export class AdicionarProfissionalDialogComponent {
     vinculo: 'voluntario',
   };
   private dialogRef: MatDialogRef<AdicionarProfissionalDialogComponent> = inject(MatDialogRef);
-constructor() {}
+constructor() {
+  this.dialogRef
+}
 
   /**
    * Submits the form and closes the dialog with the profissional object

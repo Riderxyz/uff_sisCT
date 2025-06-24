@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
 import { QuestionService } from '../../../../../services/question.service';
 import { UtilService } from '../../../../../services/util.service';
-import { EntidadeDeCuidadoInterface } from '../../../../../interface/entidadeDeCuidado.interface';
+import { EntidadeDeCuidadoInterface, ProfissionalInterface } from '../../../../../interface/entidadeDeCuidado.interface';
 import { entidadeCuidadoFormOptions } from './options';
 import { AllCommunityModule, ColDef, GridApi, GridOptions, GridReadyEvent, ModuleRegistry } from 'ag-grid-community';
 import { MatDialog } from '@angular/material/dialog';
@@ -163,7 +163,7 @@ columnDefs: this.entidadeCuidadoFormOptionsObj.profissionaisColDefs,
         resizable: true,
         filter: true,
       },
-      
+
   }
 
   constructor() {}
@@ -173,8 +173,22 @@ columnDefs: this.entidadeCuidadoFormOptionsObj.profissionaisColDefs,
   }
 
     adicionarProfissional() {
-         const dialogRef = this.dialog.open(AdicionarProfissionalDialogComponent, {
-      width: '450px', // Ajuste a largura conforme necessário
+const dialogRef = this.dialog.open(AdicionarProfissionalDialogComponent, {
+      width: '60rem', // Ajuste a largura conforme necessário
+      data: {} // Pode passar dados iniciais aqui se for editar um contato
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.formModel.profissionaisAtuantes.push(result);
+        console.log('Profissional salvo:', result);
+      }
+    });
+  }
+
+  editarProfisional(profissional: ProfissionalInterface) {
+    const dialogRef = this.dialog.open(AdicionarProfissionalDialogComponent, {
+      width: '60rem', // Ajuste a largura conforme necessário
       data: {} // Pode passar dados iniciais aqui se for editar um contato
     });
 

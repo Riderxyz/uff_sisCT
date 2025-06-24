@@ -43,6 +43,7 @@ export interface PublicoAlvo {
 }
 
 export interface ProfissionalInterface {
+  id: string;
   nome: string;
   cpf: string;
   dataNascimento: string;
