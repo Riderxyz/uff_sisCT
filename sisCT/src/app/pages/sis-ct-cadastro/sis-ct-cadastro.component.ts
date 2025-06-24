@@ -1,16 +1,18 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import {
   fadeInOnEnterAnimation,
   fadeOutOnLeaveAnimation,
 } from 'angular-animations';
-import { CentralRxJsService } from '../../services/centralRXJS.service';
-import { config } from '../../services/config';
+import { Subscription } from 'rxjs';
 import {
-  SubSection,
   CadastroStep1Id,
   CadastroStep2Id,
+  SubSection,
 } from '../../interface/subSection.interface';
+import { CentralRxJsService } from '../../services/centralRXJS.service';
+import { config } from '../../services/config';
+import { StatusService } from '../../services/status.service';
 import { AreaDeAtuacaoComponent } from './components/section1/area-de-atuacao/area-de-atuacao.component';
 import { FonteRecursosComponent } from './components/section1/fonte-recursos/fonte-recursos.component';
 import { InfoGeraisComponent } from './components/section1/info-gerais/info-gerais.component';
@@ -18,7 +20,6 @@ import { RepresentateLegalMatrizComponent } from './components/section1/represen
 import { ResponsavelTecnicoComponent } from './components/section1/responsavel-tecnico/responsavel-tecnico.component';
 import { ComunidadeTerapeuticaComponent } from './components/section2/comunidade-terapeutica/comunidade-terapeutica.component';
 import { EntidadeDeCuidadoComponent } from './components/section2/entidade-de-cuidado/entidade-de-cuidado.component';
-import { StatusService } from '../../services/status.service';
 
 @Component({
   selector: 'app-sis-ct-cadastro',
@@ -27,7 +28,9 @@ import { StatusService } from '../../services/status.service';
   styleUrl: './sis-ct-cadastro.component.scss',
   animations: [fadeInOnEnterAnimation(), fadeOutOnLeaveAnimation()],
 })
-export class SisCtCadastroComponent {
+
+
+export class SisCtCadastroComponent implements OnInit, OnDestroy {
   perguntaSelecionadaId: string = 'PERGUNTA_2';
   secaoILabel: string = 'Seção I: Dados da Matriz';
   isFilial: boolean = false;
@@ -41,35 +44,35 @@ export class SisCtCadastroComponent {
       header: '1. Áreas de Atuação',
       component: AreaDeAtuacaoComponent,
       showSavingIcon: false,
-      secao:1,
+      secao: 1,
     },
     {
       id: CadastroStep1Id.InfoGerais,
       header: '2. Informações Gerais',
       component: InfoGeraisComponent,
       showSavingIcon: false,
-      secao:2
+      secao: 2
     },
     {
       id: CadastroStep1Id.RepresentanteLegal,
       header: '3. Representante Legal',
       component: RepresentateLegalMatrizComponent,
       showSavingIcon: false,
-      secao:3
+      secao: 3
     },
     {
       id: CadastroStep1Id.ResponsavelTecnico,
       header: '4. Responsável Técnico',
       component: ResponsavelTecnicoComponent,
       showSavingIcon: false,
-      secao:4
+      secao: 4
     },
     {
       id: CadastroStep1Id.FonteRecursos,
       header: '5. Fonte de Recursos',
       component: FonteRecursosComponent,
       showSavingIcon: false,
-      secao:5
+      secao: 5
     },
   ];
 
@@ -79,18 +82,20 @@ export class SisCtCadastroComponent {
       header: '6. Comunidade Terapêutica',
       component: ComunidadeTerapeuticaComponent,
       showSavingIcon: false,
-      secao:1,
+      secao: 1,
     },
     {
       id: CadastroStep2Id.EntidadesCuidado,
       header: '7. Entidades de Cuidado',
       component: EntidadeDeCuidadoComponent,
       showSavingIcon: false,
-      secao:2
+      secao: 2
     },
   ];
 
   private readonly centralRxjs = inject(CentralRxJsService);
+  private statusSubscription?: Subscription;
+
   constructor(public statusService: StatusService) {
     this.centralRxjs.dataToReceive.subscribe(({ key, data }) => {
       console.log('Recebido evento:', key, data);
@@ -116,6 +121,18 @@ this.stepper.selectedIndex = 1;
       }
     });
   }
+
+  ngOnInit() {
+    this.statusSubscription = this.statusService.status$.subscribe(() => {
+      // Force change detection when status changes
+      console.log('Status changed');
+    });
+  }
+
+  ngOnDestroy() {
+    this.statusSubscription?.unsubscribe();
+  }
+
 
   atualizarLabelSecaoI() {
     if (this.isFilial && this.cnpjMatriz) {

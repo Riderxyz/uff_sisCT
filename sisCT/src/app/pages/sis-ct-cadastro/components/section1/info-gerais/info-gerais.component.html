@@ -3,10 +3,24 @@
     <h3>Quanto ao Registro</h3>
   </div>
 
+
+
   <div class="col-12" *ngIf="formModel.registro.cnpj && cnpjInvalido">
     <div class="p-2 mb-2 border-round bg-red-100">
       <span class="font-bold text-red-700">CNPJ inválido</span>
     </div>
+  </div>
+
+  <!-- Razão Social -->
+  <div class="col p-12 pl-1">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Razão social</mat-label>
+      <input matInput name="razaoSocial" [(ngModel)]="formModel.registro.razaoSocial" #razaoSocialCtrl="ngModel"
+        required (blur)="onFieldChange()" />
+      <mat-error *ngIf="razaoSocialCtrl.invalid && razaoSocialCtrl.touched">
+        Razão Social Obrigatória
+      </mat-error>
+    </mat-form-field>
   </div>
 
   <div class="grid col-12 p-0 m-0">
@@ -85,16 +99,10 @@
         <!-- Atividade Econômica Secundária -->
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Atividade Econômica Secundária (CNAE)</mat-label>
-          <input type="text" 
-                 matInput 
-                 name="atividadeSecundaria" 
-                 #atividadeSecundariaInput
-                 [formControl]="cnaeFilterSecundario" 
-                 [matAutocomplete]="autoSecundario"
-                 (blur)="onCnaeSecundarioBlur()">
-          <mat-autocomplete #autoSecundario="matAutocomplete" 
-                           [displayWith]="displayCnae.bind(this)"
-                           (optionSelected)="onCnaeSecundarioSelected($event)">
+          <input type="text" matInput name="atividadeSecundaria" #atividadeSecundariaInput
+            [formControl]="cnaeFilterSecundario" [matAutocomplete]="autoSecundario" (blur)="onCnaeSecundarioBlur()">
+          <mat-autocomplete #autoSecundario="matAutocomplete" [displayWith]="displayCnae.bind(this)"
+            (optionSelected)="onCnaeSecundarioSelected($event)">
             <mat-option *ngFor="let cnae of filteredCnaesSecundario | async" [value]="cnae.id">
               {{ cnae.id }} - {{ cnae.descricao }}
             </mat-option>

@@ -85,14 +85,18 @@ export class StatusService {
 
   // Check if all items in a section are approved (status 0)
   isSecaoApproved(secao: number): boolean {
+
     const secaoItems = this.getBySecao(secao);
 
     // If no items found for this section, return false
     if (secaoItems.length === 0) {
       return false;
     }
-
     // Check if all items have situacao === 0 (approved)
+    if (secao == 3) {
+      console.log('SecaoItems:', secao, secaoItems.every(item => item.situacao));
+    }
+
     return secaoItems.every(item => item.situacao);
   }
 
