@@ -28,9 +28,9 @@ body {
 }
 
 /* Estilos globais para garantir que os componentes ocupem toda a largura */
-.mat-sidenav-content {
-  width: 100%;
-}
+// .mat-sidenav-content {
+//   width: 100%;
+// }
 
 router-outlet + * {
   display: block;
@@ -119,4 +119,31 @@ mat-form-field {
   .px-1, .pr-1, .pl-1 {
     padding: 0 !important;
   }
+}
+
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-wrapper {
+  flex: 1 0 auto; /* Cresce, encolhe e baseia-se no conteúdo */
+}
+
+.sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.content {
+  flex: 1;
+  padding: 16px;
 }
