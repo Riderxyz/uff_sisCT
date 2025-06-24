@@ -36,6 +36,7 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ToastComponent } from './toast/toast.component';
 import { MapaDeVagasComponent } from './mapa-de-vagas/mapa-de-vagas.component';
+import { RecursoHumanosComponent } from './recurso-humanos/recurso-humanos.component';
 
 const materialModules = [
   MatCheckboxModule,
@@ -71,6 +72,7 @@ const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
     HeaderComponent,
     SidebarComponent,
     MapaDeVagasComponent,
+    RecursoHumanosComponent,
     FooterComponent,
     ...dialogsComponents,
   ],
