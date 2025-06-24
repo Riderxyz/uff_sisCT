@@ -33,7 +33,7 @@ import { EntidadeDeCuidadoComponent } from './components/section2/entidade-de-cu
 
 
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { MapaDeVagasComponent } from './components/section2/mapa-de-vagas/mapa-de-vagas.component';
+import { MapaDeVagasComponent } from '../../components/mapa-de-vagas/mapa-de-vagas.component';
 import { SisCtCadastroRoutingModule } from './sis-ct-cadastro-routing.module';
 
 const MaterialModules = [

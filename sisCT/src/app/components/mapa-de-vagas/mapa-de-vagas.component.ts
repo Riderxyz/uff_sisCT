@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridOptions } from 'ag-grid-community';
-import { MapaDeVagas } from '../../../../../interfaces_crud/mapa_vagas.interface';
-import { MapaDeVagasService } from '../../../../../services/mapa-de-vagas.service';
+import { MapaDeVagas } from '../../interfaces_crud/mapa_vagas.interface';
+import { MapaDeVagasService } from '../../services/mapa-de-vagas.service';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class MapaDeVagasComponent implements OnInit {
     }
   };
 
-  constructor(private vagasService: MapaDeVagasService) {}
+  constructor(private vagasService: MapaDeVagasService) { }
 
   ngOnInit(): void {
     this.vagasService.vagas$.subscribe(vagas => {
@@ -85,7 +85,7 @@ export class MapaDeVagasComponent implements OnInit {
         headerName: 'Qtd. de dias<br>no acolhimento',
         valueGetter: (params) => {
           if (!params.data.dtIngresso) return 0;
-          
+
           const ingresso = new Date(params.data.dtIngresso);
           const saida = params.data.dtSaida ? new Date(params.data.dtSaida) : new Date();
           const diff = saida.getTime() - ingresso.getTime();
@@ -111,8 +111,8 @@ export class MapaDeVagasComponent implements OnInit {
         headerName: 'Gratuidade<br>(caixa de seleção)',
         field: 'stGratuidade',
         cellRenderer: (params: { value: number; }) => {
-          return params.value === 1 
-            ? 'Acolhimento gratuito SEM contraprestação pecuniária do acolhido' 
+          return params.value === 1
+            ? 'Acolhimento gratuito SEM contraprestação pecuniária do acolhido'
             : 'Acolhimento COM contraprestação pecuniária do acolhido';
         },
         width: 250
