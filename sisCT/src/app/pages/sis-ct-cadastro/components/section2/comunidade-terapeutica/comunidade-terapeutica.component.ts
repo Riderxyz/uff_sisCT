@@ -1,20 +1,12 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
-import { QuestionService } from '../../../../../services/question.service';
-import { UtilService } from '../../../../../services/util.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AdicionarVagaDialogComponent } from '../../../../../components/dialogs/editar-vaga-dialog/editar-vaga-dialog.component';
 import {
   ComunidadeTerapeuticaInterface,
 } from '../../../../../interface/ComunidadeTerapeutica.interface';
-import {
-  AllCommunityModule,
-  ColDef,
-  GridApi,
-  GridOptions,
-  GridReadyEvent,
-  ModuleRegistry,
-} from 'ag-grid-community';
-import { AdicionarProfissionalDialogComponent } from '../../../../../components/dialogs/adicionar-profissional-dialog/adicionar-profissional-dialog.component';
-import { AdicionarVagaDialogComponent } from '../../../../../components/dialogs/editar-vaga-dialog/editar-vaga-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MapaDeVagasService } from '../../../../../services/mapa-de-vagas.service';
+import { QuestionService } from '../../../../../services/question.service';
+import { UtilService } from '../../../../../services/util.service';
 @Component({
   selector: 'app-comunidade-terapeutica',
   templateUrl: './comunidade-terapeutica.component.html',
@@ -23,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class ComunidadeTerapeuticaComponent implements AfterViewInit {
   readonly questionSrv: QuestionService = inject(QuestionService);
   readonly utilSrv: UtilService = inject(UtilService);
+  readonly mapadevagasSrv: MapaDeVagasService = inject(MapaDeVagasService);
 
   readonly dialog: MatDialog = inject(MatDialog);
   formModel: ComunidadeTerapeuticaInterface = {
@@ -56,9 +49,9 @@ export class ComunidadeTerapeuticaComponent implements AfterViewInit {
 
 
 
-  constructor() {}
+  constructor() { }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void { }
 
   onSanitaryChange() {
     console.log(
@@ -78,8 +71,9 @@ export class ComunidadeTerapeuticaComponent implements AfterViewInit {
     }
   }
 
-  onFieldBlur(fieldName: string) {
+  onFieldBlur(fieldName: number) {
     console.log(`Blurred field: ${fieldName}`);
+    this.mapadevagasSrv.ajustarQuantidadeVagas(fieldName)
   }
 
   onFieldChange(fieldName: string) {

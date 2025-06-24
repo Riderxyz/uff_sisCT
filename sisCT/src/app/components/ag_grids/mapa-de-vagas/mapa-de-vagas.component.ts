@@ -16,7 +16,7 @@ export class MapaDeVagasComponent implements OnInit {
     rowHeight: 40,
     headerHeight: 80, // Altura maior para cabeçalhos com quebra de linha
     suppressHorizontalScroll: true,
-    onRowDoubleClicked: (params) => {},
+    onRowDoubleClicked: (params) => { },
     defaultColDef: {
       resizable: true,
       sortable: false,
@@ -27,12 +27,13 @@ export class MapaDeVagasComponent implements OnInit {
   };
 
   constructor(private vagasService: MapaDeVagasService) { }
-
-  ngOnInit(): void {
+  loadData(): void {
     this.vagasService.vagas$.subscribe(vagas => {
-      this.rowData = vagas;
+      this.rowData = vagas.filter(v => v.stAtivo === 1);
     });
-
+  }
+  ngOnInit(): void {
+    this.loadData();
     this.initializeColumns();
   }
 
@@ -131,6 +132,22 @@ export class MapaDeVagasComponent implements OnInit {
           }
         },
         width: 180
+      },
+      {
+        headerName: 'Ações',
+        cellRenderer: (params: any) => {
+          const button = document.createElement('button');
+          button.innerHTML = '<i class="material-icons">delete</i>';
+          button.style.cursor = 'pointer';
+          button.style.border = 'none';
+          button.style.background = 'none';
+          button.addEventListener('click', () => {
+            this.removerVaga(params.data);
+          });
+          return button;
+        },
+        width: 100,
+        cellStyle: { textAlign: 'center' }
       }
     ];
   }
@@ -138,5 +155,15 @@ export class MapaDeVagasComponent implements OnInit {
   private formatCPF(cpf: number): string {
     const cpfStr = cpf.toString().padStart(11, '0');
     return cpfStr.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  }
+
+  private removerVaga(vaga: MapaDeVagas): void {
+    const index = this.rowData.findIndex(v => v.pkMapaDeVagas === vaga.pkMapaDeVagas);
+    if (index > -1) {
+      const vaga = this.rowData[index];
+      // this.rowData.splice(index, 1);
+      this.vagasService.desativarVaga(vaga.pkMapaDeVagas!)
+      this.loadData();
+    }
   }
 }

@@ -39,18 +39,18 @@ export class MapaDeVagasService {
   private criarVagaPadrao(): MapaDeVagas {
     return {
       stDisponibilidade: 1,
-      dsIdentificacaoAcolhido: 'Nova Vaga',
+      dsIdentificacaoAcolhido: '',
       nuCpf: null,
-      dtNascimento: new Date().toISOString().split('T')[0],
-      dtIngresso: new Date().toISOString().split('T')[0],
+      dtNascimento: '',
+      dtIngresso: '',
       dtSaida: null,
       stPublico: 0,
-      stGratuidade: 1,
-      stFinanciamento: 0,
+      stGratuidade: -1,
+      stFinanciamento: -1,
       stAtivo: 1,
       pkCadastroNacional: 0,
       pkMapaDeVagas: this.gerarIdUnico(),
-      dtUltimaAtualizacao: new Date().toISOString()
+      dtUltimaAtualizacao: ''
     };
   }
 
@@ -116,5 +116,15 @@ export class MapaDeVagasService {
     return idsExistentes.length > 0
       ? Math.max(...idsExistentes) + 1
       : 1;
+  }
+
+  desativarVaga(id: number): boolean {
+    const vaga = this.obterVagaPorId(id);
+    if (!vaga) return false;
+    this.adicionarVaga(this.criarVagaPadrao());
+    return this.atualizarVaga(id, {
+      stAtivo: 0,
+      dtUltimaAtualizacao: new Date().toISOString()
+    });
   }
 }
