@@ -1,39 +1,38 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatListModule } from '@angular/material/list';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { ComponentModule } from '../../components/components.module';
-import { ContatosModule } from '../../components/contatos/contatos.module';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { SisCtCadastroComponent } from './sis-ct-cadastro.component';
 
 
 import { AreaDeAtuacaoComponent } from './components/section1/area-de-atuacao/area-de-atuacao.component';
-import { ComunidadeTerapeuticaComponent } from './components/section2/comunidade-terapeutica/comunidade-terapeutica.component';
-import { EntidadeDeCuidadoComponent } from './components/section2/entidade-de-cuidado/entidade-de-cuidado.component';
 import { FonteRecursosComponent } from './components/section1/fonte-recursos/fonte-recursos.component';
 import { InfoGeraisComponent } from './components/section1/info-gerais/info-gerais.component';
 import { RepresentateLegalMatrizComponent } from './components/section1/representate-legal-matriz/representate-legal-matriz.component';
 import { ResponsavelTecnicoComponent } from './components/section1/responsavel-tecnico/responsavel-tecnico.component';
+import { ComunidadeTerapeuticaComponent } from './components/section2/comunidade-terapeutica/comunidade-terapeutica.component';
+import { EntidadeDeCuidadoComponent } from './components/section2/entidade-de-cuidado/entidade-de-cuidado.component';
 
 import { AgGridModule } from 'ag-grid-angular';
 
-import { SisCtCadastroRoutingModule } from './sis-ct-cadastro-routing.module';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
+import { SisCtCadastroRoutingModule } from './sis-ct-cadastro-routing.module';
+import { ComponentModule } from '../../components/components.module';
 
 const MaterialModules = [
   MatTabsModule,
@@ -67,15 +66,13 @@ const MaterialModules = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
+ComponentModule,
     ...MaterialModules,
     NgxMaskDirective, NgxMaskPipe,
-    ComponentModule,
     AgGridModule,
-    ContatosModule,
     SisCtCadastroRoutingModule,
   ],
-  providers:[
+  providers: [
   ]
 })
-export class SisCtCadastroModule {}
+export class SisCtCadastroModule { }

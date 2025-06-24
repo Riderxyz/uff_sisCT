@@ -100,9 +100,6 @@ export class SisCtCadastroComponent implements OnInit, OnDestroy {
     this.centralRxjs.dataToReceive.subscribe(({ key, data }) => {
       console.log('Recebido evento:', key, data);
 
-    setTimeout(() => {
-this.stepper.selectedIndex = 1;
-    }, 100);
 
       if (key === config.senderKeys.matrizChange) {
         const section =

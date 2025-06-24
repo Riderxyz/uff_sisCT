@@ -5,7 +5,7 @@ import { AllCommunityModule, ColDef, GridApi, GridReadyEvent, ModuleRegistry } f
 
 import { RlContato } from '../../interfaces_crud/contato.interface';
 import { ContatoService } from '../../services/contato.service';
-import { ContatoDialogComponent } from './contato-dialog.component';
+import { ContatoDialogComponent } from '../dialogs/contato-dialog/contato-dialog.component';
 
 interface Contato {
   tipo: string;
