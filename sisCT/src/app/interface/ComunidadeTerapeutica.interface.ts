@@ -46,7 +46,6 @@ export interface MapasVagas {
   dataSaida: string;
   qtdDiasAcolhimento: number;
   publico: 'adultoFeminino' | 'maesNutrizesadulto' | 'adultoMasculino'
-  Gratuidade: 'Acolhimentogratuito SEM contraprestaçãopecuniária do acolhido' | 'Acolhimento Gratuito COM contraprestaçãopecuniária do acolhido';
-  financiamento: boolean;
-
+  gratuidade: 'Acolhimentogratuito SEM contraprestaçãopecuniária do acolhido' | 'Acolhimento Gratuito COM contraprestaçãopecuniária do acolhido';
+  financiamento: 'União' | 'Estados' | 'Municipios' | 'Entidade';
 }

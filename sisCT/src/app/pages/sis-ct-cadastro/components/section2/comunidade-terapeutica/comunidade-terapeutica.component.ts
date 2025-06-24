@@ -1,8 +1,21 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
 import { QuestionService } from '../../../../../services/question.service';
 import { UtilService } from '../../../../../services/util.service';
-import { ComunidadeTerapeuticaInterface } from '../../../../../interface/ComunidadeTerapeutica.interface';
-import { AllCommunityModule, ColDef, GridApi, GridReadyEvent, ModuleRegistry } from 'ag-grid-community';
+import {
+  ComunidadeTerapeuticaInterface,
+  MapasVagas,
+} from '../../../../../interface/ComunidadeTerapeutica.interface';
+import {
+  AllCommunityModule,
+  ColDef,
+  GridApi,
+  GridOptions,
+  GridReadyEvent,
+  ModuleRegistry,
+} from 'ag-grid-community';
+import { AdicionarProfissionalDialogComponent } from '../../../../../components/dialogs/adicionar-profissional-dialog/adicionar-profissional-dialog.component';
+import { AdicionarVagaDialogComponent } from '../../../../../components/dialogs/adicionar-vaga-dialog/adicionar-vaga-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-comunidade-terapeutica',
   templateUrl: './comunidade-terapeutica.component.html',
@@ -11,6 +24,8 @@ import { AllCommunityModule, ColDef, GridApi, GridReadyEvent, ModuleRegistry } f
 export class ComunidadeTerapeuticaComponent implements AfterViewInit {
   readonly questionSrv: QuestionService = inject(QuestionService);
   readonly utilSrv: UtilService = inject(UtilService);
+
+  readonly dialog: MatDialog = inject(MatDialog);
   formModel: ComunidadeTerapeuticaInterface = {
     comunidadeTerapeutica: {
       possuiLicencaSanitaria: false,
@@ -38,6 +53,93 @@ export class ComunidadeTerapeuticaComponent implements AfterViewInit {
       conselhoMunicipal: '',
       reconhecimentoPublico: null,
     },
+  };
+
+  mapaVagasColDefs: ColDef<MapasVagas, any>[] = [
+    {
+      field: 'vaga',
+      headerName: 'Vagas',
+      sortable: true,
+      filter: true,
+      width: 200,
+    },
+
+    {
+      field: 'disponibilidade',
+      headerName: 'Disponibilidade',
+      sortable: true,
+      filter: true,
+      width: 60,
+    },
+    {
+      field: 'acolhidoIdentificacao',
+      headerName: 'Identificação do acolhido',
+      sortable: true,
+      filter: true,
+      width: 100,
+    },
+    {
+      field: 'cpf',
+      headerName: 'cpf',
+      sortable: true,
+      filter: true,
+      width: 60,
+    },
+    {
+      field: 'dataNascimento',
+      headerName: 'Data de Nascimento',
+      sortable: true,
+      filter: true,
+      width: 100,
+    },
+
+    {
+      field: 'dataIngresso',
+      headerName: 'Data de Ingresso',
+      sortable: true,
+      filter: true,
+      width: 100,
+    },
+    {
+      field: 'dataSaida',
+      headerName: 'Data de Saida',
+      sortable: true,
+      filter: true,
+      width: 100,
+    },
+    {
+      field: 'qtdDiasAcolhimento',
+      headerName: 'Qtd. de dias no acolhimento',
+      sortable: true,
+      filter: true,
+      width: 100,
+    },
+    {
+      field: 'publico',
+      headerName: 'Público',
+      sortable: true,
+      filter: true,
+      width: 100,
+    },
+    {
+      field: 'gratuidade',
+      headerName: 'Gratuidade',
+      sortable: true,
+      filter: true,
+      width: 100,
+    },
+
+    {
+      field: 'financiamento',
+      headerName: 'Financiamento',
+      sortable: true,
+      filter: true,
+      width: 100,
+    },
+  ];
+  mapaVagasGridOptions: GridOptions = {
+    columnDefs: this.mapaVagasColDefs,
+    rowData: this.formModel.mapaVagas,
   };
   constructor() {}
 
@@ -70,6 +172,16 @@ export class ComunidadeTerapeuticaComponent implements AfterViewInit {
   }
 
   adicionarVagaAoMapa() {
-    
+    const dialogRef = this.dialog.open(AdicionarVagaDialogComponent, {
+      width: '60rem', // Ajuste a largura conforme necessário
+      data: {}, // Pode passar dados iniciais aqui se for editar um contato
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.formModel.mapaVagas.push(result);
+        console.log('Profissional salvo:', result);
+      }
+    });
   }
 }
