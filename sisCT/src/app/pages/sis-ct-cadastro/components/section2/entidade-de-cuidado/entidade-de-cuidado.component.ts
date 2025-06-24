@@ -5,7 +5,7 @@ import { EntidadeDeCuidadoInterface, ProfissionalInterface } from '../../../../.
 import { entidadeCuidadoFormOptions } from './options';
 import { AllCommunityModule, ColDef, GridApi, GridOptions, GridReadyEvent, ModuleRegistry } from 'ag-grid-community';
 import { MatDialog } from '@angular/material/dialog';
-import { ContatoDialogComponent } from '../../../../../components/contatos/contato-dialog.component';
+import { ContatoDialogComponent } from '../../../../../components/dialogs/contato-dialog/contato-dialog.component';
 import { AdicionarProfissionalDialogComponent } from '../../../../../components/dialogs/adicionar-profissional-dialog/adicionar-profissional-dialog.component';
 @Component({
   selector: 'app-entidade-de-cuidado',

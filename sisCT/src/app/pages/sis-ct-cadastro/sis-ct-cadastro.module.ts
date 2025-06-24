@@ -16,8 +16,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatTabsModule } from '@angular/material/tabs';
-import { ComponentModule } from '../../components/components.module';
-import { ContatosModule } from '../../components/contatos/contatos.module';
 
 import { SisCtCadastroComponent } from './sis-ct-cadastro.component';
 
@@ -33,8 +31,8 @@ import { EntidadeDeCuidadoComponent } from './components/section2/entidade-de-cu
 import { AgGridModule } from 'ag-grid-angular';
 
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { MapaDeVagasComponent } from '../../components/mapa-de-vagas/mapa-de-vagas.component';
 import { SisCtCadastroRoutingModule } from './sis-ct-cadastro-routing.module';
+import { ComponentModule } from '../../components/components.module';
 
 const MaterialModules = [
   MatTabsModule,
@@ -63,18 +61,15 @@ const MaterialModules = [
     FonteRecursosComponent,
     ComunidadeTerapeuticaComponent,
     EntidadeDeCuidadoComponent,
-    MapaDeVagasComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
+ComponentModule,
     ...MaterialModules,
     NgxMaskDirective, NgxMaskPipe,
-    ComponentModule,
     AgGridModule,
-    ContatosModule,
     SisCtCadastroRoutingModule,
   ],
   providers: [

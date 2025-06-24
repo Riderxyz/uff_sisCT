@@ -31,7 +31,6 @@ import { ConfirmDialogComponent } from './dialogs/ConfirmDialog/ConfirmDialog.co
 import { CnpjDialogComponent } from './dialogs/cnpj-dialog/cnpj-dialog.component';
 import { LoaderComponent } from './dialogs/loader/loader.component';
 import { TermosDeUsoDialogComponent } from './dialogs/termos-de-uso-dialog/termos-de-uso-dialog.component';
-import { ContatosModule } from './contatos/contatos.module';
 import { AdicionarProfissionalDialogComponent } from './dialogs/adicionar-profissional-dialog/adicionar-profissional-dialog.component';
 import { AdicionarVagaDialogComponent } from './dialogs/adicionar-vaga-dialog/adicionar-vaga-dialog.component';
 import { MatSelectModule } from '@angular/material/select';
@@ -40,6 +39,8 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ToastComponent } from './toast/toast.component';
 import { MapaDeVagasComponent } from './mapa-de-vagas/mapa-de-vagas.component';
+import { ContatosComponent } from './contatos/contatos.component';
+import { ContatoDialogComponent } from './dialogs/contato-dialog/contato-dialog.component';
 
 const materialModules = [
   MatCheckboxModule,
@@ -63,9 +64,16 @@ const materialModules = [
   MatCheckboxModule, AgGridModule,
 ];
 
+
+const agGridComponents = [
+MapaDeVagasComponent,
+ContatosComponent
+]
+
 const dialogsComponents = [
   LoaderComponent,
   ConfirmDialogComponent,
+  ContatoDialogComponent,
   ToastComponent,
   CnpjDialogComponent,
   TermosDeUsoDialogComponent,
@@ -78,17 +86,17 @@ const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
   declarations: [
     HeaderComponent,
     SidebarComponent,
-    MapaDeVagasComponent,
+...agGridComponents,
     FooterComponent,
     ...dialogsComponents,
   ],
-  imports: [CommonModule, FormsModule, RouterModule, ...materialModules, ...ngxMasks, ContatosModule],
+  imports: [CommonModule, FormsModule, RouterModule, ...materialModules, ...ngxMasks],
   exports: [
     ToastComponent,
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
-    ContatosModule,
+    ...agGridComponents
   ],
   providers: [provideEnvironmentNgxMask()],
 })
