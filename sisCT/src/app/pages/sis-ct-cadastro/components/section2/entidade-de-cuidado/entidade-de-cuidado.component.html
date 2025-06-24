@@ -119,10 +119,15 @@
     </mat-form-field>
   </div>
   <div class="col-12 md:col-6">
-    <p>Informe a capacidade de atendimento da entidade</p>
+    <label for="capacidadeAtendimento"
+      >Informe a capacidade de atendimento da entidade</label
+    >
     <mat-radio-group
+      id="capacidadeAtendimento"
+      aria-labelledby="capacidadeAtendimento"
       [(ngModel)]="formModel.capacidadeAtendimento"
       name="capacidadeAtendimento"
+      class="flex flex-column"
     >
       @for (item of entidadeCuidadoFormOptionsObj.capacidadeAtendimento; track
       $index) {
@@ -140,7 +145,7 @@
         [(ngModel)]="formModel.formaAcesso"
         name="formaAcesso"
         aria-labelledby="formaAcesso"
-        class="flex"
+        class="flex flex-column"
       >
         @for (item of entidadeCuidadoFormOptionsObj.formaAcesso; track $index) {
         <mat-radio-button [value]="item.value">{{
@@ -156,74 +161,36 @@
       <label for="">
         Como se dá a articulação com outras políticas públicas e rede de apoio
       </label>
-
-      @for (item of
-      entidadeCuidadoFormOptionsObj.formaAcesso_outrasPoliticasPublicas_RedesdeApoio;
-      track $index) { @if (item.value !== 'outrosDescricao' ) {
-      <mat-checkbox
-        [(ngModel)]="formModel.outrasPoliticasPublicas_RedesdeApoio[item.value]"
-      >
-        {{ item.label }}
-      </mat-checkbox>
-      } }
+      <div class="flex flex-column">
+        @for (item of
+        entidadeCuidadoFormOptionsObj.formaAcesso_outrasPoliticasPublicas_RedesdeApoio;
+        track $index) {
+          {{$index}}
+        <mat-checkbox
+          [name]="'outrasPoliticasPublicas_RedesdeApoio' + item.value"
+          [(ngModel)]="
+            formModel.outrasPoliticasPublicas_RedesdeApoio[item.value]
+          "
+        >
+          {{ item.label }}
+        </mat-checkbox>
+        } @if (formModel.outrasPoliticasPublicas_RedesdeApoio.outros) {
+        <mat-form-field appearance="outline">
+          <mat-label>Descreva a outra opção</mat-label>
+          <input
+            matInput
+            type="text"
+            [(ngModel)]="
+              formModel.outrasPoliticasPublicas_RedesdeApoio.outrosDescricao
+            "
+            name="criancasAdolescentes"
+          />
+        </mat-form-field>
+        }
+      </div>
     </ng-container>
 
     }
-  </div>
-
-  <div class="col-12 p-mt-3">
-    <p>Tipos de atendimento:</p>
-    <div class="grid align-items-center">
-      <div class="col-4">
-        <mat-checkbox
-          [(ngModel)]="
-            formModel.tiposAtendimento.atendimentoDeterminacaoJudicial
-          "
-          name="atendimentoDeterminacaoJudicial"
-        >
-          Atendimento de usuários a partir de determinação judicial ou
-          Ministério Público
-        </mat-checkbox>
-        <p class="help-text">
-          (Exemplo: medidas socioeducativas, alternativas penais.)
-        </p>
-      </div>
-      <div class="col-4">
-        <mat-checkbox
-          [(ngModel)]="
-            formModel.tiposAtendimento.projetosFinanciadosSetorPublico
-          "
-          name="projetosFinanciadosSetorPublico"
-        >
-          Projetos ou programas específicos financiados pelo setor público
-        </mat-checkbox>
-        <p class="help-text">
-          (Exemplo: Programas municipais ou federais de atenção à dependência
-          química, acolhimento institucional)
-        </p>
-      </div>
-      <div class="col-4">
-        <mat-checkbox
-          [(ngModel)]="
-            formModel.tiposAtendimento.encaminhamentosOrganizacoesSociedadeCivil
-          "
-          name="encaminhamentosOrganizacoesSociedadeCivil"
-        >
-          Encaminhamentos por organizações da sociedade civil
-        </mat-checkbox>
-        <p class="help-text">(Exemplo: outras entidades, igrejas)</p>
-      </div>
-      <div class="col-12">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Outro Especificar:</mat-label>
-          <input
-            matInput
-            [(ngModel)]="formModel.tiposAtendimento.outroEspecificar"
-            name="outroEspecificar"
-          />
-        </mat-form-field>
-      </div>
-    </div>
   </div>
 
   <h2 class="col-12">7.2 Quanto à Estrutura física</h2>
@@ -284,7 +251,7 @@
   </div>
 
   <div class="col-12" *ngIf="formModel.possuiQuadroTecnico">
-    <div class="grid">
+    <!--    <div class="grid">
       <div class="col-12">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Informe quais profissionais atuam na entidade</mat-label>
@@ -325,10 +292,10 @@
           />
         </mat-form-field>
       </div>
-    </div>
+    </div> -->
 
     <!-- Tabela de Profissionais -->
-    <div class="col-12 p-mt-3">
+    <!--     <div class="col-12 p-mt-3">
       <h4>Quadro de Profissionais</h4>
       <table class="profissionais-table">
         <thead>
@@ -403,8 +370,9 @@
       >
         Adicionar Profissional
       </button>
-    </div>
+    </div> -->
   </div>
+
   <h2 class="col-12">7.4 Quanto ao Reconhecimento da entidade no município</h2>
   <div class="col-12">
     <h3 class="section-title">

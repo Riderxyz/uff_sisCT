@@ -67,6 +67,12 @@ export const entidadeCuidadoFormOptions = {
       label:
         'Encaminhamentos por organizações da sociedade civil (Exemplo: outras entidades, igrejas)'
     },
+    {
+      value: 'outros',
+      label:
+        'Outro Especificar'
+    },
+
   ] as {
     value: RedesDeApoioChave;
     label: string;
