@@ -35,6 +35,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TermosDeUsoDialogComponent } from './dialogs/termos-de-uso-dialog/termos-de-uso-dialog.component';
 import { ContatosModule } from './contatos/contatos.module';
 import { AdicionarProfissionalDialogComponent } from './dialogs/adicionar-profissional-dialog/adicionar-profissional-dialog.component';
+import { AdicionarVagaDialogComponent } from './dialogs/adicionar-vaga-dialog/adicionar-vaga-dialog.component';
 
 const materialModules = [
   MatCheckboxModule,
@@ -62,7 +63,8 @@ const dialogsComponents = [
   ToastComponent,
   CnpjDialogComponent,
   TermosDeUsoDialogComponent,
-  AdicionarProfissionalDialogComponent
+  AdicionarProfissionalDialogComponent,
+  AdicionarVagaDialogComponent
 ];
 
 const ngxMasks = [NgxMaskDirective, NgxMaskPipe];

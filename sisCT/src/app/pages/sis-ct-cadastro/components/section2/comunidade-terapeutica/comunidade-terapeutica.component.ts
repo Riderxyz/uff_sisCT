@@ -33,6 +33,7 @@ export class ComunidadeTerapeuticaComponent implements AfterViewInit {
         adultoMasculino: 0,
       },
     },
+    mapaVagas: [],
     reconhecimentoMunicipio: {
       conselhoMunicipal: '',
       reconhecimentoPublico: null,
@@ -66,5 +67,9 @@ export class ComunidadeTerapeuticaComponent implements AfterViewInit {
 
   onFieldChange(fieldName: string) {
     console.log(`Changed value of: ${fieldName}`);
+  }
+
+  adicionarVagaAoMapa() {
+    
   }
 }

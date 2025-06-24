@@ -1,6 +1,7 @@
 export interface ComunidadeTerapeuticaInterface {
   comunidadeTerapeutica: ComunidadeTerapeuticaInt;
   capacidadeAtendimento: CapacidadeAtendimento;
+  mapaVagas: MapasVagas[];
   reconhecimentoMunicipio: ReconhecimentoMunicipio;
 }
 
@@ -33,4 +34,19 @@ export interface ReconhecimentoMunicipio {
   outroConselhoMunicipal?: string;
   conselhoEstadual?: string;
   reconhecimentoPublico: 'Uniao' | 'Estados' | 'DF e municipios' | null;
+}
+
+export interface MapasVagas {
+  vaga: string;
+  disponibilidade: boolean;
+  acolhidoIdentificacao: string;
+  cpf: string;
+  dataNascimento: string;
+  dataIngresso: string;
+  dataSaida: string;
+  qtdDiasAcolhimento: number;
+  publico: 'adultoFeminino' | 'maesNutrizesadulto' | 'adultoMasculino'
+  Gratuidade: 'Acolhimentogratuito SEM contraprestaçãopecuniária do acolhido' | 'Acolhimento Gratuito COM contraprestaçãopecuniária do acolhido';
+  financiamento: boolean;
+
 }
