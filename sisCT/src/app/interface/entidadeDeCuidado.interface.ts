@@ -1,4 +1,28 @@
-// Interface para tipagem do formulário
+// enums e tipos auxiliares
+export type VinculoEmprego = 'voluntario' | 'empregados' | 'terceirizados' | 'clt';
+
+export type FormaAcesso = 'espontaneamente' | 'encaminhamentoPoliticas';
+export type CapacidadeAtendimentoGrupo = 'grupos10' | 'grupos20' | 'grupos30' | 'grupos40' | 'gruposAcima41';
+
+export type EspacoEntidade = 'proprio' | 'cedido' | 'alugado' | 'naoSabeInformar';
+
+export type ConselhoMunicipal =
+  | 'assistenciaSocial'
+  | 'alcoolDrogas'
+  | 'saude'
+  | 'assistenciaSocial2'
+  | 'naoSabeInformar'
+  | 'naoTemConselho';
+
+export type ReconhecimentoTipo = 'uniao' | 'estados' | 'municipios';
+
+export type PeriodicidadeAtividades =
+  | '1vezSemana'
+  | '1vezQuinzeDias'
+  | '1vezMes'
+  | '2vezesMes'
+  | 'outro';
+
 export type RedesDeApoioChave =
   | 'parceriasNormais'
   | 'encaminhamentosInformais'
@@ -9,181 +33,159 @@ export type RedesDeApoioChave =
   | 'outros'
   | 'outrosDescricao';
 
+// Subinterfaces
+
+export interface PublicoAlvo {
+  adultoFeminino: number;
+  adultoMasculino: number;
+  criancasAdolescentes: number;
+  idoso: number;
+}
+
+export interface ProfissionalInterface {
+  id: string;
+  nome: string;
+  cpf: string;
+  dataNascimento: string;
+  telefone: string;
+  email: string;
+  cargo: string;
+  formacaoAcademica: string;
+  cargaHoraria: string;
+  vinculo: VinculoEmprego;
+}
+
+export interface AtividadesDesenvolvidas {
+  prevencao: boolean;
+  apoio: boolean;
+  mutuaAjuda: boolean;
+  atendimentoPsicossocial: boolean;
+  ressocializacao: boolean;
+}
+
+export interface PublicoAlvoAtividades {
+  feminino: boolean;
+  masculino: boolean;
+  criancaAdolescente: boolean;
+  idosos: boolean;
+}
+
+export interface CustosEspecificos {
+  materialConsumo: boolean;
+  rh: boolean;
+  despesasAdministrativas: boolean;
+  outros: boolean;
+  outrosEspecificar: string;
+}
+
+export interface EscolaridadeProfissionais {
+  apenasVoluntarios: boolean;
+  ensinoFundamental: boolean;
+  ensinoMedio: boolean;
+  ensinoSuperior: boolean;
+}
+
+export interface AcoesPrevencao {
+  palestras: boolean;
+  rodasConversas: boolean;
+  oficinas: boolean;
+  atividadesLudicas: boolean;
+  atividadesTerapeuticas: boolean;
+  atendimentosPsicossociais: boolean;
+  eventosSociais: boolean;
+  outras: boolean;
+  outrasEspecificar: string;
+}
+
+export interface TemasTrabalhados {
+  direitosSociais: boolean;
+  familia: boolean;
+  saudeMental: boolean;
+  prevencaoUsoAlcoolDrogas: boolean;
+  espiritualidade: boolean;
+  outros: boolean;
+  outrosEspecificar: string;
+}
+
+export interface ServicosPsicossociais {
+  acolhimento: boolean;
+  acompanhamentoIndividual: boolean;
+  encaminhamentosRedePublica: boolean;
+  outros: boolean;
+  outrosEspecificar: string;
+}
+
+export interface AcoesRessocializacao {
+  capacitacaoProfissional: boolean;
+  encaminhamentoEmprego: boolean;
+  fortalecimentoVinculosFamiliares: boolean;
+  outros: boolean;
+  outrosEspecificar: string;
+}
+
+export interface TiposParcerias {
+  parceriasInstituicoesEnsino: boolean;
+  parceriasEmpresasMercadoTrabalho: boolean;
+  parceriasOrgaosPublicos: boolean;
+  naoPossuiParcerias: boolean;
+  apenasFortalecimentoVinculos: boolean;
+  outros: boolean;
+  outrosEspecificar: string;
+}
+
+// Interface principal
+
 export interface EntidadeDeCuidadoInterface {
-  // 7. Entidades de cuidado
-  // 7.1 Caracterização do público-alvo
-  publicoAlvo: {
-    adultoFeminino: number;
-    adultoMasculino: number;
-    criancasAdolescentes: number;
-    idoso: number;
-  };
+  publicoAlvo: PublicoAlvo;
+  capacidadeAtendimento: CapacidadeAtendimentoGrupo;
+  formaAcesso: FormaAcesso;
+  outrasPoliticasPublicas_RedesdeApoio: Record<RedesDeApoioChave, boolean | string>;
 
-  // Capacidade de atendimento
-  capacidadeAtendimento:
-    | 'grupos10'
-    | 'grupos20'
-    | 'grupos30'
-    | 'grupos40'
-    | 'gruposAcima41';
-
-  // Forma de acesso
-  formaAcesso: 'espontaneamente' | 'encaminhamentoPoliticas';
-  outrasPoliticasPublicas_RedesdeApoio: Record<RedesDeApoioChave, boolean|string>;
-
-  /* {
-    parceriasNormais: boolean;
-    encaminhamentosInformais: boolean;
-    participacaoComites: boolean;
-    atendimentoDeterminacaoJudicial: boolean;
-    projetosFinanciadosSetorPublico: boolean;
-    encaminhamentosOrganizacoesSociedadeCivil: boolean;
-    outros: boolean;
-    outrosDescricao: string;
-  }; */
-
-  // 7.2 Estrutura física
-  espacoEntidade: 'proprio' | 'cedido' | 'alugado' | 'naoSabeInformar';
+  espacoEntidade: EspacoEntidade;
   possuiEspacoAtendimentoColetivo: boolean;
   possuiEspacoAtendimentoIndividualizado: boolean;
 
-  // 7.3 Recursos Humanos
   possuiQuadroTecnico: boolean;
-  // Tabela de profissionais
-  profissionaisAtuantes: {
-    nome: string;
-    cpf: string;
-    dataNascimento: string;
-    telefone: string;
-    email: string;
-    cargo: string;
-    formacaoAcademica: string;
-    cargaHoraria: string;
-    vinculo: 'voluntario' | 'empregados' | 'terceirizados' | 'clt';
-  };
+  profissionaisAtuantes: ProfissionalInterface[];
   quantidadeProfissionaisAtuantes: string;
 
-
-
-  // 7.4 Reconhecimento da entidade
   possuiInscricaoConselhoMunicipal: boolean;
-  conselhoMunicipal:
-    | 'assistenciaSocial'
-    | 'alcoolDrogas'
-    | 'saude'
-    | 'assistenciaSocial2'
-    | 'naoSabeInformar'
-    | 'naoTemConselho';
+  conselhoMunicipal: ConselhoMunicipal;
   possuiInscricaoConselhoEstadual: boolean;
   naoTemConselhoEstadual: boolean;
   possuiReconhecimentoAutoridadePublica: boolean;
-  reconhecimentoTipo: 'uniao' | 'estados' | 'municipios';
+  reconhecimentoTipo: ReconhecimentoTipo;
 
-  // 7.5 Atividades desenvolvidas
-  tiposAtividades: {
-    prevencao: boolean;
-    apoio: boolean;
-    mutuaAjuda: boolean;
-    atendimentoPsicossocial: boolean;
-    ressocializacao: boolean;
-  };
-
-  publicoAlvoAtividades: {
-    feminino: boolean;
-    masculino: boolean;
-    criancaAdolescente: boolean;
-    idosos: boolean;
-  };
-
+  tiposAtividades: AtividadesDesenvolvidas;
+  publicoAlvoAtividades: PublicoAlvoAtividades;
   capacidadeAtendimentoAtividades: string;
   servicoGratuito: boolean;
   valorCobrado: string;
-  custosEspecificosEntidade: {
-    materialConsumo: boolean;
-    rh: boolean;
-    despesasAdministrativas: boolean;
-    outros: boolean;
-    outrosEspecificar: string;
-  };
+  custosEspecificosEntidade: CustosEspecificos;
 
   profissionaisAtividades: string;
-  escolaridadeProfissionais: {
-    apenasVoluntarios: boolean;
-    ensinoFundamental: boolean;
-    ensinoMedio: boolean;
-    ensinoSuperior: boolean;
-  };
+  escolaridadeProfissionais: EscolaridadeProfissionais;
 
-  // Prevenção
-  principaisAcoesRealizadas: {
-    palestras: boolean;
-    rodasConversas: boolean;
-    oficinas: boolean;
-    atividadesLudicas: boolean;
-    atividadesTerapeuticas: boolean;
-    atendimentosPsicossociais: boolean;
-    eventosSociais: boolean;
-    outras: boolean;
-    outrasEspecificar: string;
-  };
+  principaisAcoesRealizadas: AcoesPrevencao;
+  principaisTemasTrabalhos: TemasTrabalhados;
 
-  principaisTemasTrabalhos: {
-    direitosSociais: boolean;
-    familia: boolean;
-    saudeMental: boolean;
-    prevencaoUsoAlcoolDrogas: boolean;
-    espiritualidade: boolean;
-    outros: boolean;
-    outrosEspecificar: string;
-  };
-
-  periodicidadeAtividades:
-    | '1vezSemana'
-    | '1vezQuinzeDias'
-    | '1vezMes'
-    | '2vezesMes'
-    | 'outro';
+  periodicidadeAtividades: PeriodicidadeAtividades;
   outroPeriodicidade: string;
-
   controleParticipacaoPublicoAlvo: boolean;
 
-  // Apoio e Mútua Ajuda
   entidadeAdota12Passos: boolean;
   metodologiasApoioRecuperacao: string;
   oferecerGruposApoio12Passos: boolean;
   descricaoFuncionamentoGrupos: string;
 
-  // Atendimento Psicossocial
   oferecerAtendimentoPsicossocial: boolean;
   profissionalAtendimentoPsicossocial: string;
-  servicosAtendimentoPsicossocial: {
-    acolhimento: boolean;
-    acompanhamentoIndividual: boolean;
-    encaminhamentosRedePublica: boolean;
-    outros: boolean;
-    outrosEspecificar: string;
-  };
-
+  servicosAtendimentoPsicossocial: ServicosPsicossociais;
   atendimentoPorProfissionaisContratados: boolean;
 
-  // Ressocialização
   desenvolveAcoesRessocializacao: boolean;
-  acoesRessocializacao: {
-    capacitacaoProfissional: boolean;
-    encaminhamentoEmprego: boolean;
-    fortalecimentoVinculosFamiliares: boolean;
-    outros: boolean;
-    outrosEspecificar: string;
-  };
+  acoesRessocializacao: AcoesRessocializacao;
 
   possuiParceriasEmpresasInstituicoes: boolean;
-  tiposParceriaRessocializacao: {
-    parceriasInstituicoesEnsino: boolean;
-    parceriasEmpresasMercadoTrabalho: boolean;
-    parceriasOrgaosPublicos: boolean;
-    naoPossuiParcerias: boolean;
-    apenasFortalecimentoVinculos: boolean;
-    outros: boolean;
-    outrosEspecificar: string;
-  };
+  tiposParceriaRessocializacao: TiposParcerias;
 }

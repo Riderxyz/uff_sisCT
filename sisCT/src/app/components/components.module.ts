@@ -34,6 +34,7 @@ import { CnpjDialogComponent } from './dialogs/cnpj-dialog/cnpj-dialog.component
 import { MatInputModule } from '@angular/material/input';
 import { TermosDeUsoDialogComponent } from './dialogs/termos-de-uso-dialog/termos-de-uso-dialog.component';
 import { ContatosModule } from './contatos/contatos.module';
+import { AdicionarProfissionalDialogComponent } from './dialogs/adicionar-profissional-dialog/adicionar-profissional-dialog.component';
 
 const materialModules = [
   MatCheckboxModule,
@@ -61,6 +62,7 @@ const dialogsComponents = [
   ToastComponent,
   CnpjDialogComponent,
   TermosDeUsoDialogComponent,
+  AdicionarProfissionalDialogComponent
 ];
 
 const ngxMasks = [NgxMaskDirective, NgxMaskPipe];

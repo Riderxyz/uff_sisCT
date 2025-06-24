@@ -15,8 +15,8 @@ body {
 }
 
 /* AG Grid Styles */
-@import "ag-grid-community/styles/ag-grid.css";
-@import "ag-grid-community/styles/ag-theme-alpine.css";
+/* @import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-alpine.css"; */
 
 .ag-theme-alpine {
   --ag-header-height: 40px;
@@ -35,6 +35,27 @@ body {
 router-outlet + * {
   display: block;
   width: 100%;
+}
+
+
+.col-12,
+.col-6,
+.col-7,
+.col-3,
+.col-2 {
+  transition: all 0.3s ease-in-out;
+  //width: 100%;
+}
+
+.container-padrao {
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  background-color: #fafafa;
+  height: 100%;
 }
 
 /* /* Estilos para formulários e grids */
