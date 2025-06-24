@@ -37,6 +37,7 @@ import { TermosDeUsoDialogComponent } from './dialogs/termos-de-uso-dialog/termo
 import { ContatosModule } from './contatos/contatos.module';
 import { AdicionarProfissionalDialogComponent } from './dialogs/adicionar-profissional-dialog/adicionar-profissional-dialog.component';
 import { AdicionarVagaDialogComponent } from './dialogs/adicionar-vaga-dialog/adicionar-vaga-dialog.component';
+import { MatSelectModule } from '@angular/material/select';
 
 const materialModules = [
   MatCheckboxModule,
@@ -55,6 +56,7 @@ const materialModules = [
   MatAutocompleteModule,
   MatChipsModule,
   MatSlideToggleModule,
+  MatSelectModule,
   MatProgressSpinnerModule,
   MatCheckboxModule,
 ];
