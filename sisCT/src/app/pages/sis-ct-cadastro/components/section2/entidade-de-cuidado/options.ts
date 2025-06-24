@@ -1,3 +1,5 @@
+import { RedesDeApoioChave } from "../../../../../interface/entidadeDeCuidado.interface";
+
 export const entidadeCuidadoFormOptions = {
   capacidadeAtendimento: [
     {
@@ -34,25 +36,48 @@ export const entidadeCuidadoFormOptions = {
         'Encaminhados por outras políticas (saúde, assistência social, educação, outros)',
     },
   ],
-  formaAcessoEmCasoDeEmcaminhamento: [
+  formaAcesso_outrasPoliticasPublicas_RedesdeApoio: [
      {
-      value: 'articulacaoPoliticas',
-      label:
-        'Como se dá a articulação com outras políticas públicas e rede de apoio',
-    },
-    {
-      value: 'parceriasFormais',
-      label: 'Parcerias formais',
+      value: 'parceriasNormais',
+      label: 'Parcerias formais'
     },
     {
       value: 'encaminhamentosInformais',
-      label:
-        'Encaminhamentos informais (Exemplo: rede de contatos, troca de informações entre profissionais)',
+      label: 'Encaminhamentos informais (Exemplo: rede de contatos, troca de informações entre profissionais)'
     },
     {
       value: 'participacaoComites',
       label:
-        'Participação em comitês ou fóruns intersetoriais (Exemplo: Comitê Intersetorial de Políticas sobre Drogas, Fórum de Assistência Social e de Saúde)',
+        'Participação em comitês ou fóruns intersetoriais (Exemplo: Comitê Intersetorial de Políticas sobre Drogas, Fórum de Assistência Social e de Saúde)'
     },
-  ]
+    {
+      value: 'atendimentoDeterminacaoJudicial',
+      label:
+        'Atendimento de usuários a partir de determinação judicial ou Ministério Público (Exemplo: medidas socioeducativas, alternativas penais.)'
+    },
+    ,
+    {
+      value: 'projetosFinanciadosSetorPublico',
+      label:
+        'Projetos ou programas específicos financiados pelo setor público (Exemplo: Programas municipais ou federais de atenção à dependência química, acolhimento institucional)'
+    },
+    ,
+    {
+      value: 'encaminhamentosOrganizacoesSociedadeCivil',
+      label:
+        'Encaminhamentos por organizações da sociedade civil (Exemplo: outras entidades, igrejas)'
+    },
+  ] as {
+    value: RedesDeApoioChave;
+    label: string;
+  }[]
 };
+
+/*
+parceriasNormais
+encaminhamentosInformais
+participacaoComites
+atendimentoDeterminacaoJudicial
+projetosFinanciadosSetorPublico
+encaminhamentosOrganizacoesSociedadeCivil
+ */

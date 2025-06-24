@@ -1,4 +1,14 @@
 // Interface para tipagem do formulário
+export type RedesDeApoioChave =
+  | 'parceriasNormais'
+  | 'encaminhamentosInformais'
+  | 'participacaoComites'
+  | 'atendimentoDeterminacaoJudicial'
+  | 'projetosFinanciadosSetorPublico'
+  | 'encaminhamentosOrganizacoesSociedadeCivil'
+  | 'outros'
+  | 'outrosDescricao';
+
 export interface EntidadeDeCuidadoInterface {
   // 7. Entidades de cuidado
   // 7.1 Caracterização do público-alvo
@@ -19,7 +29,9 @@ export interface EntidadeDeCuidadoInterface {
 
   // Forma de acesso
   formaAcesso: 'espontaneamente' | 'encaminhamentoPoliticas';
-  outrasPoliticasPublicas_RedesdeApoio: {
+  outrasPoliticasPublicas_RedesdeApoio: Record<RedesDeApoioChave, boolean|string>;
+
+  /* {
     parceriasNormais: boolean;
     encaminhamentosInformais: boolean;
     participacaoComites: boolean;
@@ -28,7 +40,7 @@ export interface EntidadeDeCuidadoInterface {
     encaminhamentosOrganizacoesSociedadeCivil: boolean;
     outros: boolean;
     outrosDescricao: string;
-  };
+  }; */
 
   // 7.2 Estrutura física
   espacoEntidade: 'proprio' | 'cedido' | 'alugado' | 'naoSabeInformar';

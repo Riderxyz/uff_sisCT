@@ -133,25 +133,42 @@
 
   <div class="col-12 md:col-6">
     <ng-container>
-      <label
-      id="formaAcesso"
-      >Informe a forma de acesso do público-alvo à entidade?</label>
-      <mat-radio-group [(ngModel)]="formModel.formaAcesso" name="formaAcesso"
-      aria-labelledby="formaAcesso" class="flex">
+      <label id="formaAcesso"
+        >Informe a forma de acesso do público-alvo à entidade?</label
+      >
+      <mat-radio-group
+        [(ngModel)]="formModel.formaAcesso"
+        name="formaAcesso"
+        aria-labelledby="formaAcesso"
+        class="flex"
+      >
         @for (item of entidadeCuidadoFormOptionsObj.formaAcesso; track $index) {
-        <mat-radio-button [value]="item.value">{{ item.label }}</mat-radio-button>
+        <mat-radio-button [value]="item.value">{{
+          item.label
+        }}</mat-radio-button>
 
         }
       </mat-radio-group>
     </ng-container>
 
-    @if (
-      formModel.formaAcesso === 'encaminhamentoPoliticas'
-    ) {
-      
+    @if ( formModel.formaAcesso === 'encaminhamentoPoliticas' ) {
+    <ng-container>
+      <label for="">
+        Como se dá a articulação com outras políticas públicas e rede de apoio
+      </label>
+
+      @for (item of
+      entidadeCuidadoFormOptionsObj.formaAcesso_outrasPoliticasPublicas_RedesdeApoio;
+      track $index) { @if (item.value !== 'outrosDescricao' ) {
+      <mat-checkbox
+        [(ngModel)]="formModel.outrasPoliticasPublicas_RedesdeApoio[item.value]"
+      >
+        {{ item.label }}
+      </mat-checkbox>
+      } }
+    </ng-container>
+
     }
-
-
   </div>
 
   <div class="col-12 p-mt-3">

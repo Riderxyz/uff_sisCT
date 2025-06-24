@@ -14,138 +14,151 @@ export class EntidadeDeCuidadoComponent implements AfterViewInit {
   readonly utilSrv: UtilService = inject(UtilService);
 
    formModel: EntidadeDeCuidadoInterface = {
-    // 7.1 Caracterização do público-alvo
-    publicoAlvo: {
-      adultoFeminino: 0,
-      adultoMasculino: 0,
-      criancasAdolescentes: 0,
-      idoso: 0
-    },
+  publicoAlvo: {
+    adultoFeminino: 0,
+    adultoMasculino: 0,
+    criancasAdolescentes: 0,
+    idoso: 0,
+  },
 
-    capacidadeAtendimento: 'grupos10',
-    formaAcesso: 'espontaneamente',
+  capacidadeAtendimento: 'grupos10',
 
-    // 7.2 Estrutura física
-    espacoEntidade: 'proprio',
-    possuiEspacoAtendimentoColetivo: false,
-    possuiEspacoAtendimentoIndividualizado: false,
+  formaAcesso: 'espontaneamente',
+  outrasPoliticasPublicas_RedesdeApoio: {
+    parceriasNormais: false,
+    encaminhamentosInformais: false,
+    participacaoComites: false,
+    atendimentoDeterminacaoJudicial: false,
+    projetosFinanciadosSetorPublico: false,
+    encaminhamentosOrganizacoesSociedadeCivil: false,
+    outros: false,
+    outrosDescricao: '',
+  },
 
-    // 7.3 Recursos Humanos
-    possuiQuadroTecnico: false,
-    quantidadeProfissionaisAtuantes: '',
+  espacoEntidade: 'naoSabeInformar',
+  possuiEspacoAtendimentoColetivo: false,
+  possuiEspacoAtendimentoIndividualizado: false,
 
+  possuiQuadroTecnico: false,
+  profissionaisAtuantes: {
+    nome: '',
+    cpf: '',
+    dataNascimento: '',
+    telefone: '',
+    email: '',
+    cargo: '',
+    formacaoAcademica: '',
+    cargaHoraria: '',
+    vinculo: 'voluntario',
+  },
+  quantidadeProfissionaisAtuantes: '',
 
-    // 7.4 Reconhecimento da entidade
-    possuiInscricaoConselhoMunicipal: false,
-    conselhoMunicipal: 'assistenciaSocial',
-    possuiInscricaoConselhoEstadual: false,
-    naoTemConselhoEstadual: false,
-    possuiReconhecimentoAutoridadePublica: false,
-    reconhecimentoTipo: 'uniao',
+  possuiInscricaoConselhoMunicipal: false,
+  conselhoMunicipal: 'naoSabeInformar',
+  possuiInscricaoConselhoEstadual: false,
+  naoTemConselhoEstadual: false,
+  possuiReconhecimentoAutoridadePublica: false,
+  reconhecimentoTipo: 'municipios',
 
-    // 7.5 Atividades desenvolvidas
-    tiposAtividades: {
-      prevencao: false,
-      apoio: false,
-      mutuaAjuda: false,
-      atendimentoPsicossocial: false,
-      ressocializacao: false
-    },
+  tiposAtividades: {
+    prevencao: false,
+    apoio: false,
+    mutuaAjuda: false,
+    atendimentoPsicossocial: false,
+    ressocializacao: false,
+  },
 
-    publicoAlvoAtividades: {
-      feminino: false,
-      masculino: false,
-      criancaAdolescente: false,
-      idosos: false
-    },
+  publicoAlvoAtividades: {
+    feminino: false,
+    masculino: false,
+    criancaAdolescente: false,
+    idosos: false,
+  },
 
-    capacidadeAtendimentoAtividades: '',
-    servicoGratuito: false,
-    valorCobrado: '',
+  capacidadeAtendimentoAtividades: '',
+  servicoGratuito: false,
+  valorCobrado: '',
+  custosEspecificosEntidade: {
+    materialConsumo: false,
+    rh: false,
+    despesasAdministrativas: false,
+    outros: false,
+    outrosEspecificar: '',
+  },
 
-    custosEspecificosEntidade: {
-      materialConsumo: false,
-      rh: false,
-      despesasAdministrativas: false,
-      outros: false,
-      outrosEspecificar: ''
-    },
+  profissionaisAtividades: '',
+  escolaridadeProfissionais: {
+    apenasVoluntarios: false,
+    ensinoFundamental: false,
+    ensinoMedio: false,
+    ensinoSuperior: false,
+  },
 
-    profissionaisAtividades: '',
-    escolaridadeProfissionais: {
-      apenasVoluntarios: false,
-      ensinoFundamental: false,
-      ensinoMedio: false,
-      ensinoSuperior: false
-    },
+  principaisAcoesRealizadas: {
+    palestras: false,
+    rodasConversas: false,
+    oficinas: false,
+    atividadesLudicas: false,
+    atividadesTerapeuticas: false,
+    atendimentosPsicossociais: false,
+    eventosSociais: false,
+    outras: false,
+    outrasEspecificar: '',
+  },
 
-    // Prevenção
-    principaisAcoesRealizadas: {
-      palestras: false,
-      rodasConversas: false,
-      oficinas: false,
-      atividadesLudicas: false,
-      atividadesTerapeuticas: false,
-      atendimentosPsicossociais: false,
-      eventosSociais: false,
-      outras: false,
-      outrasEspecificar: ''
-    },
+  principaisTemasTrabalhos: {
+    direitosSociais: false,
+    familia: false,
+    saudeMental: false,
+    prevencaoUsoAlcoolDrogas: false,
+    espiritualidade: false,
+    outros: false,
+    outrosEspecificar: '',
+  },
 
-    principaisTemasTrabalhos: {
-      direitosSociais: false,
-      familia: false,
-      saudeMental: false,
-      prevencaoUsoAlcoolDrogas: false,
-      espiritualidade: false,
-      outros: false,
-      outrosEspecificar: ''
-    },
+  periodicidadeAtividades: '1vezSemana',
+  outroPeriodicidade: '',
 
-    periodicidadeAtividades: '1vezSemana',
-    outroPeriodicidade: '',
-    controleParticipacaoPublicoAlvo: false,
+  controleParticipacaoPublicoAlvo: false,
 
-    // Apoio e Mútua Ajuda
-    entidadeAdota12Passos: false,
-    metodologiasApoioRecuperacao: '',
-    oferecerGruposApoio12Passos: false,
-    descricaoFuncionamentoGrupos: '',
+  entidadeAdota12Passos: false,
+  metodologiasApoioRecuperacao: '',
+  oferecerGruposApoio12Passos: false,
+  descricaoFuncionamentoGrupos: '',
 
-    // Atendimento Psicossocial
-    oferecerAtendimentoPsicossocial: false,
-    profissionalAtendimentoPsicossocial: '',
-    servicosAtendimentoPsicossocial: {
-      acolhimento: false,
-      acompanhamentoIndividual: false,
-      encaminhamentosRedePublica: false,
-      outros: false,
-      outrosEspecificar: ''
-    },
+  oferecerAtendimentoPsicossocial: false,
+  profissionalAtendimentoPsicossocial: '',
+  servicosAtendimentoPsicossocial: {
+    acolhimento: false,
+    acompanhamentoIndividual: false,
+    encaminhamentosRedePublica: false,
+    outros: false,
+    outrosEspecificar: '',
+  },
 
-    atendimentoPorProfissionaisContratados: false,
+  atendimentoPorProfissionaisContratados: false,
 
-    // Ressocialização
-    desenvolveAcoesRessocializacao: false,
-    acoesRessocializacao: {
-      capacitacaoProfissional: false,
-      encaminhamentoEmprego: false,
-      fortalecimentoVinculosFamiliares: false,
-      outros: false,
-      outrosEspecificar: ''
-    },
+  desenvolveAcoesRessocializacao: false,
+  acoesRessocializacao: {
+    capacitacaoProfissional: false,
+    encaminhamentoEmprego: false,
+    fortalecimentoVinculosFamiliares: false,
+    outros: false,
+    outrosEspecificar: '',
+  },
 
-    possuiParceriasEmpresasInstituicoes: false,
-    tiposParceriaRessocializacao: {
-      parceriasInstituicoesEnsino: false,
-      parceriasEmpresasMercadoTrabalho: false,
-      parceriasOrgaosPublicos: false,
-      naoPossuiParcerias: false,
-      apenasFortalecimentoVinculos: false,
-      outros: false,
-      outrosEspecificar: ''
-    }
-  };
+  possuiParceriasEmpresasInstituicoes: false,
+  tiposParceriaRessocializacao: {
+    parceriasInstituicoesEnsino: false,
+    parceriasEmpresasMercadoTrabalho: false,
+    parceriasOrgaosPublicos: false,
+    naoPossuiParcerias: false,
+    apenasFortalecimentoVinculos: false,
+    outros: false,
+    outrosEspecificar: '',
+  },
+};
+
   entidadeCuidadoFormOptionsObj = entidadeCuidadoFormOptions;
   constructor() {}
 
