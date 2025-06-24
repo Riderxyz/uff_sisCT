@@ -89,6 +89,7 @@ const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
     HeaderComponent,
     SidebarComponent,
     ...agGridComponents,
+    MapaDeVagasComponent,
     FooterComponent,
     ...dialogsComponents,
   ],

@@ -24,7 +24,7 @@ provideGlobalGridOptions({ theme: themeMaterial });
 @NgModule({
   declarations: [
     AppComponent,
-    TesteMultiplaEscolhaComponent
+    TesteMultiplaEscolhaComponent,
   ],
   imports: [
     BrowserModule,
