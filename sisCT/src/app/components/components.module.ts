@@ -23,6 +23,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -53,6 +54,7 @@ const materialModules = [
   MatDialogModule,
   MatAutocompleteModule,
   MatChipsModule,
+  MatSlideToggleModule,
   MatProgressSpinnerModule,
   MatCheckboxModule,
 ];
