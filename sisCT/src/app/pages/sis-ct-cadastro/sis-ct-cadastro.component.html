@@ -8,8 +8,8 @@
         <mat-expansion-panel-header>
           <mat-panel-title class="flex align-items-center">
             {{ subSection.header }}
-            <button class="status-indicator ml-2" [class.approved]="statusService.isSecaoApproved(subSection.secao)"
-              [class.not-approved]="!statusService.isSecaoApproved(subSection.secao)">
+            <button class="status-indicator ml-2" [class.approved]="(statusService.status$ | async) && statusService.isSecaoApproved(subSection.secao)"
+              [class.not-approved]="(statusService.status$ | async) && !statusService.isSecaoApproved(subSection.secao)">
             </button>
           </mat-panel-title>
           <mat-panel-description class="flex justify-content-end align-items-center">
@@ -36,8 +36,8 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title class="flex align-items-center">{{ subSection.header }}
-            <button class="status-indicator ml-2" [class.approved]="statusService.isSecaoApproved(subSection.secao)"
-              [class.not-approved]="!statusService.isSecaoApproved(subSection.secao)">
+            <button class="status-indicator ml-2" [class.approved]="(statusService.status$ | async) && statusService.isSecaoApproved(subSection.secao)"
+              [class.not-approved]="(statusService.status$ | async) && !statusService.isSecaoApproved(subSection.secao)">
             </button>
           </mat-panel-title>
           <mat-panel-description class="flex justify-content-end align-items-center">

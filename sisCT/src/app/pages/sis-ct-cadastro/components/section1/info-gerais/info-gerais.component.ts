@@ -151,7 +151,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
     this.statusService.update({ secao: 2, campo: 'NO_FANTASIA', situacao: this.formModel.registro.nomeFantasia != '' ? true : false, nome: 'Nome Fantasia' });
     this.statusService.update({ secao: 2, campo: 'CO_CNAE_PRINCIPAL', situacao: this.formModel.registro.codigoDeAtividadesEconomicasPrimarias != '' ? true : false, nome: 'CNAE Principal' });
     this.statusService.update({ secao: 2, campo: 'CO_CNAE_SECUNDARIO', situacao: this.formModel.registro.codigoDeAtividadesEconomicasSecundarias != '' ? true : false, nome: 'CNAE Secundário' });
-    this.statusService.update({ secao: 2, campo: 'NO_RAZAO_SOCIAL', situacao: this.formModel.registro.razaoSocial != '' ? true : false, nome: 'Razão Social' });
+     this.statusService.update({ secao: 2, campo: 'NO_RAZAO_SOCIAL', situacao: this.formModel.registro.razaoSocial != '' ? true : false, nome: 'Razão Social' });
 
     this.statusService.update({ secao: 2, campo: 'DS_LOGRADOURO', situacao: this.formModel.localizacao.logradouro != '' ? true : false, nome: 'Logradouro' });
     this.statusService.update({ secao: 2, campo: 'NU_NUMERO', situacao: this.formModel.localizacao.numero != '' ? true : false, nome: 'Logradouro' });
