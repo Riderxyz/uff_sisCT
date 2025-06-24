@@ -1,6 +1,6 @@
 import { ProfissionalInterface } from './../../../../../interface/entidadeDeCuidado.interface';
-import { ColDef } from "ag-grid-community";
-import { RedesDeApoioChave } from "../../../../../interface/entidadeDeCuidado.interface";
+import { ColDef } from 'ag-grid-community';
+import { RedesDeApoioChave } from '../../../../../interface/entidadeDeCuidado.interface';
 
 export const entidadeCuidadoFormOptions = {
   capacidadeAtendimento: [
@@ -26,7 +26,6 @@ export const entidadeCuidadoFormOptions = {
     },
   ],
 
-
   formaAcesso: [
     {
       value: 'espontaneamente',
@@ -39,60 +38,59 @@ export const entidadeCuidadoFormOptions = {
     },
   ],
   formaAcesso_outrasPoliticasPublicas_RedesdeApoio: [
-     {
+    {
       value: 'parceriasNormais',
-      label: 'Parcerias formais'
+      label: 'Parcerias formais',
     },
     {
       value: 'encaminhamentosInformais',
-      label: 'Encaminhamentos informais (Exemplo: rede de contatos, troca de informações entre profissionais)'
+      label:
+        'Encaminhamentos informais (Exemplo: rede de contatos, troca de informações entre profissionais)',
     },
     {
       value: 'participacaoComites',
       label:
-        'Participação em comitês ou fóruns intersetoriais (Exemplo: Comitê Intersetorial de Políticas sobre Drogas, Fórum de Assistência Social e de Saúde)'
+        'Participação em comitês ou fóruns intersetoriais (Exemplo: Comitê Intersetorial de Políticas sobre Drogas, Fórum de Assistência Social e de Saúde)',
     },
     {
       value: 'atendimentoDeterminacaoJudicial',
       label:
-        'Atendimento de usuários a partir de determinação judicial ou Ministério Público (Exemplo: medidas socioeducativas, alternativas penais.)'
+        'Atendimento de usuários a partir de determinação judicial ou Ministério Público (Exemplo: medidas socioeducativas, alternativas penais.)',
     },
     ,
     {
       value: 'projetosFinanciadosSetorPublico',
       label:
-        'Projetos ou programas específicos financiados pelo setor público (Exemplo: Programas municipais ou federais de atenção à dependência química, acolhimento institucional)'
+        'Projetos ou programas específicos financiados pelo setor público (Exemplo: Programas municipais ou federais de atenção à dependência química, acolhimento institucional)',
     },
     ,
     {
       value: 'encaminhamentosOrganizacoesSociedadeCivil',
       label:
-        'Encaminhamentos por organizações da sociedade civil (Exemplo: outras entidades, igrejas)'
+        'Encaminhamentos por organizações da sociedade civil (Exemplo: outras entidades, igrejas)',
     },
     {
       value: 'outros',
-      label:
-        'Outro Especificar'
+      label: 'Outro Especificar',
     },
-
   ] as {
     value: RedesDeApoioChave;
     label: string;
   }[],
   profissionaisColDefs: [
-        {
+    {
       field: 'nome',
       headerName: 'nome',
       sortable: true,
       filter: true,
       width: 200,
-    },{
-          field: 'cpf',
-          headerName: 'cpf',
-          sortable: true,
-          filter: true,
-          width: 60,
-
+    },
+    {
+      field: 'cpf',
+      headerName: 'cpf',
+      sortable: true,
+      filter: true,
+      width: 60,
     },
     {
       field: 'dataNascimento',
@@ -100,7 +98,7 @@ export const entidadeCuidadoFormOptions = {
       sortable: true,
       filter: true,
       width: 100,
-     },
+    },
 
     {
       field: 'telefone',
@@ -116,35 +114,35 @@ export const entidadeCuidadoFormOptions = {
       filter: true,
       width: 100,
     },
-     {
+    {
       field: 'cargo',
       headerName: 'Função/Cargo',
       sortable: true,
       filter: true,
       width: 100,
-     },
-     {
+    },
+    {
       field: 'formacaoAcademica',
       headerName: 'Formação Acadêmica',
       sortable: true,
       filter: true,
       width: 100,
-     },
-     {
+    },
+    {
       field: 'cargaHoraria',
       headerName: 'Carga Horária',
       sortable: true,
       filter: true,
       width: 100,
-     },
-     {
+    },
+    {
       field: 'vinculo',
       headerName: 'Vínculo',
       sortable: true,
       filter: true,
       width: 100,
-     }
-  ] as ColDef<ProfissionalInterface, any>[]
+    },
+  ] as ColDef<ProfissionalInterface, any>[],
 };
 
 /*

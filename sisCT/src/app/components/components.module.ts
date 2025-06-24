@@ -23,6 +23,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
@@ -35,6 +36,7 @@ import { MatInputModule } from '@angular/material/input';
 import { TermosDeUsoDialogComponent } from './dialogs/termos-de-uso-dialog/termos-de-uso-dialog.component';
 import { ContatosModule } from './contatos/contatos.module';
 import { AdicionarProfissionalDialogComponent } from './dialogs/adicionar-profissional-dialog/adicionar-profissional-dialog.component';
+import { AdicionarVagaDialogComponent } from './dialogs/adicionar-vaga-dialog/adicionar-vaga-dialog.component';
 
 const materialModules = [
   MatCheckboxModule,
@@ -52,6 +54,7 @@ const materialModules = [
   MatDialogModule,
   MatAutocompleteModule,
   MatChipsModule,
+  MatSlideToggleModule,
   MatProgressSpinnerModule,
   MatCheckboxModule,
 ];
@@ -62,7 +65,8 @@ const dialogsComponents = [
   ToastComponent,
   CnpjDialogComponent,
   TermosDeUsoDialogComponent,
-  AdicionarProfissionalDialogComponent
+  AdicionarProfissionalDialogComponent,
+  AdicionarVagaDialogComponent
 ];
 
 const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
