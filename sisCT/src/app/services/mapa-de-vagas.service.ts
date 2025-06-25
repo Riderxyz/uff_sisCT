@@ -25,26 +25,27 @@ export class MapaDeVagasService {
 
   // Adiciona múltiplas vagas de uma vez (com notificação única)
   private adicionarVagasEmLote(quantidade: number): void {
-    const novasVagas: MapaDeVagas[] = [];
+    // const novasVagas: MapaDeVagas[] = [];
 
     for (let i = 0; i < quantidade; i++) {
-      novasVagas.push(this.criarVagaPadrao());
+      // novasVagas.push(this.criarVagaPadrao());
+      this.vagas.push(this.criarVagaPadrao());
     }
 
-    this.vagas.push(...novasVagas);
+    // this.vagas.push(...novasVagas);
     this.atualizarObservable();
   }
 
   // Cria uma vaga com valores padrão
   private criarVagaPadrao(): MapaDeVagas {
-    return {
-      stDisponibilidade: 1,
-      dsIdentificacaoAcolhido: '',
+    let result = {
+      stDisponibilidade: -1,
+      dsIdentificacaoAcolhido: 'cadastrei um novo acolhido',
       nuCpf: null,
       dtNascimento: '',
       dtIngresso: '',
       dtSaida: null,
-      stPublico: 0,
+      stPublico: -1,
       stGratuidade: -1,
       stFinanciamento: -1,
       stAtivo: 1,
@@ -52,6 +53,7 @@ export class MapaDeVagasService {
       pkMapaDeVagas: this.gerarIdUnico(),
       dtUltimaAtualizacao: ''
     };
+    return result;
   }
 
   // CREATE
@@ -109,14 +111,22 @@ export class MapaDeVagasService {
   }
 
   private gerarIdUnico(): number {
-    const idsExistentes = this.vagas
-      .map(v => v.pkMapaDeVagas)
-      .filter(id => id !== undefined) as number[];
+    if (!this.vagas || this.vagas.length === 0) {
+      console.log('Retornando 1 porque a lista está vazia');
+      return 1;
+    }
 
-    return idsExistentes.length > 0
-      ? Math.max(...idsExistentes) + 1
-      : 1;
+    const maxId = this.vagas.reduce((max, vaga) => {
+      const id = vaga.pkMapaDeVagas ?? 0;
+      return id > max ? id : max;
+    }, 0);
+
+    console.log('IDs encontrados:', this.vagas.map(v => v.pkMapaDeVagas));
+    console.log('Max ID encontrado:', maxId);
+
+    return maxId + 1;
   }
+
 
   desativarVaga(id: number): boolean {
     const vaga = this.obterVagaPorId(id);

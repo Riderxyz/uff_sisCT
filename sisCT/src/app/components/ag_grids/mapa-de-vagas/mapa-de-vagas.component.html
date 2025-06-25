@@ -1,5 +1,12 @@
 <div class="container-padrao">
-  <h2 class="col-12">6.2 Mapa de vagas</h2>
+  <div class="d-flex align-items-center justify-content-between mb-3"> <!-- Modificado para justify-content-between -->
+    <h2 class="m-0">6.2 Mapa de vagas</h2>
+
+    <button mat-raised-button color="primary" (click)="toggleVisualizacao()"> <!-- Classes adicionadas -->
+      {{ mostrarHistorico ? 'Vagas' : 'Histórico' }}
+    </button>
+  </div>
+
   <ag-grid-angular style="width: 100%; height: 500px;" [rowData]="rowData" [columnDefs]="columnDefs"
     [gridOptions]="gridOptions">
   </ag-grid-angular>

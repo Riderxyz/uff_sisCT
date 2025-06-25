@@ -10,31 +10,52 @@ import { MapaDeVagasService } from '../../../services/mapa-de-vagas.service';
   styleUrl: './mapa-de-vagas.component.scss'
 })
 export class MapaDeVagasComponent implements OnInit {
+  // ngOnInit(): void {
+  //   throw new Error('Method not implemented.');
+  // }
   rowData: MapaDeVagas[] = [];
   columnDefs: ColDef<MapaDeVagas, any>[] = [];
+  mostrarHistorico = false;
   gridOptions: GridOptions = {
     rowHeight: 40,
     headerHeight: 80, // Altura maior para cabeçalhos com quebra de linha
     suppressHorizontalScroll: true,
     onRowDoubleClicked: (params) => { },
+    getRowStyle: (params) => {
+      if (params.data.stAtivo === 0) {
+        return { background: 'rgba(255, 0, 0, 0.3)' }; // Vermelho com 30% de opacidade
+      } else {
+        return { background: 'white' };
+      }
+    },
     defaultColDef: {
       resizable: true,
       sortable: false,
       filter: false,
       wrapHeaderText: true,
       autoHeaderHeight: true,
+      cellStyle: {
+        display: 'flex',
+        alignItems: 'center',
+        height: '100%' // Garante que o contêiner ocupe toda a altura da célula
+      }
     }
   };
 
   constructor(private vagasService: MapaDeVagasService) { }
-  loadData(): void {
+  loadData(hist: boolean = false): void {
     this.vagasService.vagas$.subscribe(vagas => {
-      this.rowData = vagas.filter(v => v.stAtivo === 1);
+      this.rowData = vagas.filter(v => v.stAtivo === 1 || hist);
     });
   }
   ngOnInit(): void {
     this.loadData();
     this.initializeColumns();
+  }
+
+  toggleVisualizacao() {
+    this.mostrarHistorico = !this.mostrarHistorico;
+    this.loadData(this.mostrarHistorico);
   }
 
   private initializeColumns(): void {
@@ -43,9 +64,9 @@ export class MapaDeVagasComponent implements OnInit {
         headerName: 'Vaga',
         //field: '',
         valueGetter: (params) => {
-          const index = params.node!.rowIndex! + 1;
+          const index = params.data?.pkMapaDeVagas!;
           const total = this.rowData.length;
-          return `${index.toString().padStart(2, '0')}/${total}`;
+          return `${index.toString().padStart(2, '0')}`;
         },
         width: 80,
         cellStyle: { textAlign: 'center' }
@@ -53,7 +74,7 @@ export class MapaDeVagasComponent implements OnInit {
       {
         headerName: 'Disponibilidade',
         field: 'stDisponibilidade',
-        cellRenderer: (params: { value: number; }) => params.value === 1 ? 'Ocupado' : 'Vago',
+        cellRenderer: (params: { value: number; }) => params.value === 1 ? 'Ocupado' : params.value === -1 ? '' : 'Vago',
         width: 120,
         cellStyle: { textAlign: 'center' }
       },
@@ -84,7 +105,7 @@ export class MapaDeVagasComponent implements OnInit {
         width: 150
       },
       {
-        headerName: 'Qtd. de dias<br>no acolhimento',
+        headerName: 'Qtd. de dias/n no acolhimento',
         valueGetter: (params) => {
           if (!params.data!.dtIngresso) return 0;
 
@@ -101,6 +122,7 @@ export class MapaDeVagasComponent implements OnInit {
         field: 'stPublico',
         cellRenderer: (params: { value: any; }) => {
           switch (params.value) {
+            case -1: return '';
             case 0: return 'adulto fem';
             case 1: return 'adulto masc';
             case 2: return 'mãe nutriz';
@@ -113,9 +135,11 @@ export class MapaDeVagasComponent implements OnInit {
         headerName: 'Gratuidade ',
         field: 'stGratuidade',
         cellRenderer: (params: { value: number; }) => {
-          return params.value === 1
-            ? 'Acolhimento gratuito SEM contraprestação pecuniária do acolhido'
-            : 'Acolhimento COM contraprestação pecuniária do acolhido';
+          switch (params.value) {
+            case 0: return 'adulto Acolhimento gratuito SEM contraprestação pecuniária do acolhido';
+            case 1: return 'Acolhimento COM contraprestação pecuniária do acolhido';
+            default: return '';
+          }
         },
         width: 250
       },
