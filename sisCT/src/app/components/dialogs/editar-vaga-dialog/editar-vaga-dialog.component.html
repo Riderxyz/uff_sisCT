@@ -1,9 +1,16 @@
-<h2 mat-dialog-title>Adicionar Mapa de Vaga</h2>
+<h2 mat-dialog-title>Detalhes da Vaga</h2>
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="grid px-3">
   <div class="col-12 md:col-12 flex flex-column">
-    <label>Disponível?</label>
-    <mat-slide-toggle name="disponibilidade" [(ngModel)]="mapa.stDisponibilidade"></mat-slide-toggle>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Disponível?</mat-label>
+      <mat-select [(ngModel)]="mapa.stPublico" [(ngModel)]="mapa.stDisponibilidade" name="stDisponibilidade" required>
+        <mat-option value="1">Sim</mat-option>
+        <mat-option value="2">Não</mat-option>
+      </mat-select>
+    </mat-form-field>
+
   </div>
+
   <div class="col-12 md:col-6">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Identificação acolhido</mat-label>
@@ -85,7 +92,7 @@
 
   <div class="col-12 flex justify-content-end gap-2">
     <button mat-button type="button" (click)="onCancel()">Cancelar</button>
-    <button mat-flat-button color="primary" type="submit" >
+    <button mat-flat-button color="primary" type="submit">
       Salvar
     </button>
   </div>

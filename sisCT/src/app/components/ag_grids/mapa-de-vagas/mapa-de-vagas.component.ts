@@ -49,7 +49,7 @@ export class MapaDeVagasComponent implements OnInit {
   abrirDialogoVaga(data?: any): void {
     this.vagasService.idVagaAtual = data ? data.pkMapaDeVagas : -1; // Define o ID da vaga atual
     this.dialog.open(AdicionarVagaDialogComponent, {
-      width: '600px', // Ajuste conforme necessário
+      width: '70vw', // Ajuste conforme necessário
       data: data // Passa os dados da linha para o diálogo
     });
   }
@@ -86,7 +86,7 @@ export class MapaDeVagasComponent implements OnInit {
       {
         headerName: 'Disponibilidade',
         field: 'stDisponibilidade',
-        cellRenderer: (params: { value: number; }) => params.value === 1 ? 'Ocupado' : params.value === -1 ? '' : 'Vago',
+        cellRenderer: (params: { value: number; }) => params.value === 2 ? 'Ocupado' : params.value === -1 ? '' : 'Vago',
         width: 120,
         cellStyle: { textAlign: 'center' }
       },
