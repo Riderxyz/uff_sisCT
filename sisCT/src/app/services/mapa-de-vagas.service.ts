@@ -10,8 +10,11 @@ export class MapaDeVagasService {
   private vagas: MapaDeVagas[] = [];
   private vagasSubject = new BehaviorSubject<MapaDeVagas[]>([]);
   public vagas$ = this.vagasSubject.asObservable();
+  public idVagaAtual = -1;
 
   constructor() { }
+
+
 
   // Novo método para ajustar quantidade de vagas
   ajustarQuantidadeVagas(quantidadeDesejada: number): void {
@@ -40,7 +43,7 @@ export class MapaDeVagasService {
   private criarVagaPadrao(): MapaDeVagas {
     let result = {
       stDisponibilidade: -1,
-      dsIdentificacaoAcolhido: 'cadastrei um novo acolhido',
+      dsIdentificacaoAcolhido: '',
       nuCpf: null,
       dtNascimento: '',
       dtIngresso: '',
@@ -78,20 +81,29 @@ export class MapaDeVagasService {
   }
 
   // UPDATE
-  atualizarVaga(id: number, dadosAtualizados: Partial<MapaDeVagas>): boolean {
-    const index = this.vagas.findIndex(v => v.pkMapaDeVagas === id);
+  atualizarVaga(id: number, dadosAtualizados: Partial<MapaDeVagas>): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      try {
+        const index = this.vagas.findIndex(v => v.pkMapaDeVagas === id);
 
-    if (index === -1) return false;
+        if (index === -1) {
+          resolve(false);
+          return;
+        }
 
-    this.vagas[index] = {
-      ...this.vagas[index],
-      ...dadosAtualizados,
-      dtUltimaAtualizacao: new Date().toISOString(),
-      pkMapaDeVagas: id
-    };
+        this.vagas[index] = {
+          ...this.vagas[index],
+          ...dadosAtualizados,
+          dtUltimaAtualizacao: new Date().toISOString(),
+          pkMapaDeVagas: id
+        };
 
-    this.atualizarObservable();
-    return true;
+        this.atualizarObservable();
+        resolve(true);
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
   // DELETE
@@ -132,9 +144,10 @@ export class MapaDeVagasService {
     const vaga = this.obterVagaPorId(id);
     if (!vaga) return false;
     this.adicionarVaga(this.criarVagaPadrao());
-    return this.atualizarVaga(id, {
+     this.atualizarVaga(id, {
       stAtivo: 0,
       dtUltimaAtualizacao: new Date().toISOString()
     });
+    return true;
   }
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { MapaDeVagas } from '../../../interfaces_crud/mapa_vagas.interface';
 import { MapaDeVagasService } from '../../../services/mapa-de-vagas.service';
+import { AdicionarVagaDialogComponent } from '../../dialogs/editar-vaga-dialog/editar-vaga-dialog.component';
 
 
 @Component({
@@ -20,7 +22,7 @@ export class MapaDeVagasComponent implements OnInit {
     rowHeight: 40,
     headerHeight: 80, // Altura maior para cabeçalhos com quebra de linha
     suppressHorizontalScroll: true,
-    onRowDoubleClicked: (params) => { },
+    onRowDoubleClicked: (params) => { this.abrirDialogoVaga(params.data); },
     getRowStyle: (params) => {
       if (params.data.stAtivo === 0) {
         return { background: 'rgba(255, 0, 0, 0.3)' }; // Vermelho com 30% de opacidade
@@ -42,7 +44,17 @@ export class MapaDeVagasComponent implements OnInit {
     }
   };
 
-  constructor(private vagasService: MapaDeVagasService) { }
+
+
+  abrirDialogoVaga(data?: any): void {
+    this.vagasService.idVagaAtual = data ? data.pkMapaDeVagas : -1; // Define o ID da vaga atual
+    this.dialog.open(AdicionarVagaDialogComponent, {
+      width: '600px', // Ajuste conforme necessário
+      data: data // Passa os dados da linha para o diálogo
+    });
+  }
+
+  constructor(private vagasService: MapaDeVagasService, private dialog: MatDialog) { }
   loadData(hist: boolean = false): void {
     this.vagasService.vagas$.subscribe(vagas => {
       this.rowData = vagas.filter(v => v.stAtivo === 1 || hist);

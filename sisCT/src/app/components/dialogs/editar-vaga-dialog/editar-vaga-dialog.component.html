@@ -2,87 +2,54 @@
 <form #form="ngForm" (ngSubmit)="onSubmit(form)" class="grid px-3">
   <div class="col-12 md:col-12 flex flex-column">
     <label>Disponível?</label>
-    <mat-slide-toggle
-      name="disponibilidade"
-      [(ngModel)]="mapa.disponibilidade"
-    ></mat-slide-toggle>
+    <mat-slide-toggle name="disponibilidade" [(ngModel)]="mapa.stDisponibilidade"></mat-slide-toggle>
   </div>
   <div class="col-12 md:col-6">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Identificação acolhido</mat-label>
-      <input
-        matInput
-        name="acolhidoIdentificacao"
-        [(ngModel)]="mapa.acolhidoIdentificacao"
-        required
-      />
+      <input matInput name="acolhidoIdentificacao" [(ngModel)]="mapa.dsIdentificacaoAcolhido" required />
     </mat-form-field>
   </div>
 
   <div class="col-12 md:col-6">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>CPF</mat-label>
-      <input matInput name="cpf" [(ngModel)]="mapa.cpf" required />
+      <input matInput name="cpf" [(ngModel)]="mapa.nuCpf" required />
     </mat-form-field>
   </div>
 
   <div class="col-12 md:col-4">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Data Nascimento</mat-label>
-      <input
-        matInput
-        name="dataNascimento"
-        type="date"
-        [(ngModel)]="mapa.dataNascimento"
-        required
-      />
+      <input matInput name="dataNascimento" type="date" [(ngModel)]="mapa.dtNascimento" required />
     </mat-form-field>
   </div>
 
   <div class="col-12 md:col-4">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Data Ingresso</mat-label>
-      <input
-        matInput
-        name="dataIngresso"
-        type="date"
-        [(ngModel)]="mapa.dataIngresso"
-        required
-      />
+      <input matInput name="dataIngresso" type="date" [(ngModel)]="mapa.dtIngresso" required />
     </mat-form-field>
   </div>
 
   <div class="col-12 md:col-4">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Data Saída</mat-label>
-      <input
-        matInput
-        name="dataSaida"
-        type="date"
-        [(ngModel)]="mapa.dataSaida"
-        required
-      />
+      <input matInput name="dataSaida" type="date" [(ngModel)]="mapa.dtSaida" required />
     </mat-form-field>
   </div>
 
   <div class="col-12 md:col-6">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Qtd Dias Acolhimento</mat-label>
-      <input
-        matInput
-        name="qtdDiasAcolhimento"
-        type="number"
-        min="0"
-        [(ngModel)]="mapa.qtdDiasAcolhimento"
-        required
-      />
+      <input matInput readonly [value]="getDiasAcolhimento()" placeholder="Calculando..." />
     </mat-form-field>
   </div>
 
   <div class="col-12 md:col-6">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Público</mat-label>
-      <mat-select>
+      <mat-select [(ngModel)]="mapa.stPublico">
         <mat-option value="adultoFeminino">Adulto Feminino</mat-option>
         <mat-option value="maesNutrizesadulto">Mães Nutriz(es)</mat-option>
         <mat-option value="adultoMasculino">Adulto Masculino</mat-option>
@@ -93,15 +60,11 @@
   <div class="col-12 md:col-6">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Gratuidade</mat-label>
-      <mat-select name="gratuidade" [(ngModel)]="mapa.gratuidade" required>
-        <mat-option
-          value="Acolhimentogratuito SEM contraprestaçãopecuniária do acolhido"
-        >
+      <mat-select name="gratuidade" [(ngModel)]="mapa.stGratuidade" required>
+        <mat-option value="Acolhimentogratuito SEM contraprestaçãopecuniária do acolhido">
           Gratuito SEM contraprestação
         </mat-option>
-        <mat-option
-          value="Acolhimento Gratuito COM contraprestaçãopecuniária do acolhido"
-        >
+        <mat-option value="Acolhimento Gratuito COM contraprestaçãopecuniária do acolhido">
           Gratuito COM contraprestação
         </mat-option>
       </mat-select>
@@ -111,11 +74,7 @@
   <div class="col-12 md:col-6 flex align-items-center">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Financiamento</mat-label>
-      <mat-select
-        name="financiamento"
-        [(ngModel)]="mapa.financiamento"
-        required
-      >
+      <mat-select name="financiamento" [(ngModel)]="mapa.stFinanciamento" required>
         <mat-option value="União">União</mat-option>
         <mat-option value="Estados">Estados</mat-option>
         <mat-option value="Municipios">Municípios</mat-option>
@@ -126,12 +85,7 @@
 
   <div class="col-12 flex justify-content-end gap-2">
     <button mat-button type="button" (click)="onCancel()">Cancelar</button>
-    <button
-      mat-flat-button
-      color="primary"
-      type="submit"
-      [disabled]="!form.valid"
-    >
+    <button mat-flat-button color="primary" type="submit" >
       Salvar
     </button>
   </div>
