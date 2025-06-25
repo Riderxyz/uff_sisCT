@@ -114,7 +114,7 @@
   </div>
 
   <!-- Seção 6.2 -->
-  
+
   <div class="col-12">
     <app-mapa-de-vagas></app-mapa-de-vagas>
   </div>
@@ -130,11 +130,11 @@
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>Inscrição em Conselho Municipal</mat-label>
       <mat-select [(ngModel)]="formModel.reconhecimentoMunicipio.conselhoMunicipal" name="conselhoMunicipal">
-        <mat-option value="assistenciaSocial">Assistência Social</mat-option>
-        <mat-option value="politicasDrogas">Políticas sobre Drogas</mat-option>
-        <mat-option value="saude">Saúde</mat-option>
-        <mat-option value="outro">Outro</mat-option>
-        <mat-option value="naoPossui">Não Possui</mat-option>
+        <mat-option value=0>Assistência Social</mat-option>
+        <mat-option value=1>Políticas sobre Drogas</mat-option>
+        <mat-option value=2>Saúde</mat-option>
+        <mat-option value=3>Outro</mat-option>
+        <mat-option value=4>Não Possui</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -162,14 +162,27 @@
     <mat-label>Reconhecimento por autoridade pública</mat-label>
     <mat-radio-group class="ml-2" [(ngModel)]="formModel.reconhecimentoMunicipio.reconhecimentoPublico"
       name="reconhecimentoPublico">
-      <mat-radio-button value="Uniao">União</mat-radio-button>
-      <mat-radio-button value="Estados">Estados</mat-radio-button>
-      <mat-radio-button value="DF e municipios">DF e municípios</mat-radio-button>
-      <mat-radio-button value="">Não</mat-radio-button>
+      <mat-radio-button value=0>União</mat-radio-button>
+      <mat-radio-button value=1>Estados</mat-radio-button>
+      <mat-radio-button value=2>DF e municípios</mat-radio-button>
+      <mat-radio-button value=3>Não</mat-radio-button>
     </mat-radio-group>
   </div>
-  <h2 class="col-12">6.4 Quanto ao quadro de Recursos Humano</h2>
-  <div class="col-12">
-    <app-recursos-humanos></app-recursos-humanos>
+
+  <div class="container-padrao">
+    <div class="col-12">
+      <app-recursos-humanos></app-recursos-humanos>
+    </div>
+    <div class="col-12">
+      <mat-label>Com qual periodicidade é promovida capacitação da equipe técnica na pauta de drogas? </mat-label>
+      <mat-radio-group class="ml-2" [(ngModel)]="formModel.reconhecimentoMunicipio.reconhecimentoPublico"
+        name="reconhecimentoPublico">
+        <mat-radio-button value=0>Mensal</mat-radio-button>
+        <mat-radio-button value=1>Trimestral</mat-radio-button>
+        <mat-radio-button value=2>Anual</mat-radio-button>
+        <mat-radio-button value=3>Não realiza</mat-radio-button>
+      </mat-radio-group>
+    </div>
   </div>
+  <!-- </div> -->
 </form>

@@ -123,7 +123,7 @@ export class SisCtCadastroComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.statusSubscription = this.statusService.status$.subscribe(() => {
       // Force change detection when status changes
-      console.log('Status changed');
+      // console.log('Status changed');
     });
   }
 

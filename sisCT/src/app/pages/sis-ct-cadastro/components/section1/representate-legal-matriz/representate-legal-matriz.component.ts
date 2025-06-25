@@ -40,7 +40,7 @@ export class RepresentateLegalMatrizComponent implements AfterViewInit, OnInit {
 
     this.statusSubscription = this.statusService.status$.subscribe(() => {
       // Force change detection when status changes
-      console.log('Status changed');
+      // console.log('Status changed');
     });
     this.statusUpdate();
   }
@@ -67,7 +67,7 @@ export class RepresentateLegalMatrizComponent implements AfterViewInit, OnInit {
       // No need to update the service as the two-way binding in the template
       // will automatically update the service when the form changes
     }
-    
+
     this.statusUpdate();
   }
 

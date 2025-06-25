@@ -1,6 +1,9 @@
-<div class="container-padrao">
+<div>
     <div class="header">
-        <h2>Recursos Humanos</h2>
+        <h2>6.4 Quanto ao quadro de Recursos Humano</h2>
+        <button mat-raised-button color="primary" (click)="abrirDialogoRH()" [disabled]="loading">
+            'Novo Recursos Humano'
+        </button>
         <button mat-raised-button color="primary" (click)="toggleMostrarInativos()" [disabled]="loading">
             {{ mostrarInativos ? 'Mostrar Apenas Ativos' : 'Mostrar Todos' }}
         </button>
@@ -11,9 +14,8 @@
             <mat-spinner diameter="50"></mat-spinner>
         </div>
 
-        <ag-grid-angular class="ag-theme-alpine" [rowData]="rowData" [columnDefs]="columnDefs"
-            [defaultColDef]="defaultColDef" (gridReady)="onGridReady($event)" domLayout="autoHeight" [rowHeight]="45"
-            [headerHeight]="50">
+        <ag-grid-angular style="width: 100%; height: 300px;" [rowData]="rowData" [columnDefs]="columnDefs"
+            [gridOptions]="gridOptions">
         </ag-grid-angular>
     </div>
 </div>

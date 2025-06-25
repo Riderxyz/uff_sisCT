@@ -30,6 +30,12 @@ export class AdicionarVagaDialogComponent {
 
   onSubmit(form: NgForm) {
     this.dialogRef.close(this.mapa);
+    try {
+      this.mapa.stDisponibilidade = Number(this.mapa.stDisponibilidade);
+    } catch (error) {
+      this.mapa.stDisponibilidade = -1;
+    }
+
 
     this.vagasService.atualizarVaga(this.mapa.pkMapaDeVagas, this.mapa)
       .then((success) => {

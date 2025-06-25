@@ -93,11 +93,6 @@ export class StatusService {
     if (secaoItems.length === 0) {
       return false;
     }
-    // Check if all items have situacao === 0 (approved)
-    if (secao == 3) {
-      console.log('SecaoItems:', secao, secaoItems.every(item => item.situacao));
-    }
-
     return secaoItems.every(item => item.situacao);
   }
 

@@ -22,26 +22,27 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { AgGridModule } from 'ag-grid-angular';
+import { ContatosComponent } from './ag_grids/contatos/contatos.component';
+import { MapaDeVagasComponent } from './ag_grids/mapa-de-vagas/mapa-de-vagas.component';
+import { RecursosHumanosComponent } from './ag_grids/recursos-humanos/recursos-humanos.component';
 import { ConfirmDialogComponent } from './dialogs/ConfirmDialog/ConfirmDialog.component';
+import { AdicionarProfissionalDialogComponent } from './dialogs/adicionar-profissional-dialog/adicionar-profissional-dialog.component';
 import { CnpjDialogComponent } from './dialogs/cnpj-dialog/cnpj-dialog.component';
+import { ContatoDialogComponent } from './dialogs/contato-dialog/contato-dialog.component';
+import { EditRHComponent } from './dialogs/edit-rh/edit-rh.component';
+import { AdicionarVagaDialogComponent } from './dialogs/editar-vaga-dialog/editar-vaga-dialog.component';
 import { LoaderComponent } from './dialogs/loader/loader.component';
 import { TermosDeUsoDialogComponent } from './dialogs/termos-de-uso-dialog/termos-de-uso-dialog.component';
-import { AdicionarProfissionalDialogComponent } from './dialogs/adicionar-profissional-dialog/adicionar-profissional-dialog.component';
-import { AdicionarVagaDialogComponent } from './dialogs/editar-vaga-dialog/editar-vaga-dialog.component';
-import { MatSelectModule } from '@angular/material/select';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ToastComponent } from './toast/toast.component';
-import { MapaDeVagasComponent } from './ag_grids/mapa-de-vagas/mapa-de-vagas.component';
-import { ContatosComponent } from './ag_grids/contatos/contatos.component';
-import { ContatoDialogComponent } from './dialogs/contato-dialog/contato-dialog.component';
-import { RecursosHumanosComponent } from './ag_grids/recursos-humanos/recursos-humanos.component';
 
 const materialModules = [
   MatCheckboxModule,
@@ -81,6 +82,7 @@ const dialogsComponents = [
   TermosDeUsoDialogComponent,
   AdicionarProfissionalDialogComponent,
   AdicionarVagaDialogComponent,
+  EditRHComponent,
 ];
 
 const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
@@ -109,4 +111,4 @@ const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
   ],
   providers: [provideEnvironmentNgxMask()],
 })
-export class ComponentModule {}
+export class ComponentModule { }

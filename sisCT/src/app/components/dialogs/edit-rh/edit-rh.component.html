@@ -1,0 +1,88 @@
+<h2 mat-dialog-title>Recurso Humano</h2>
+<form #form="ngForm" (ngSubmit)="onSubmit()" class="grid px-3">
+  <!-- Linha 1 -->
+  <div class="col-12 md:col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Nome</mat-label>
+      <input matInput name="dsNome" [(ngModel)]="rh.dsNome" required>
+    </mat-form-field>
+  </div>
+  
+  <div class="col-12 md:col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>CPF</mat-label>
+      <input matInput name="nuCpf" [(ngModel)]="rh.nuCpf" required type="number">
+    </mat-form-field>
+  </div>
+
+  <!-- Linha 2 -->
+  <div class="col-12 md:col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Nascimento</mat-label>
+      <input matInput name="dtNascimento" [(ngModel)]="rh.dtNascimento" type="date" required>
+    </mat-form-field>
+  </div>
+  
+  <div class="col-12 md:col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Telefone</mat-label>
+      <input matInput name="dsTelefone" [(ngModel)]="rh.dsTelefone" required>
+    </mat-form-field>
+  </div>
+
+  <!-- Linha 3 -->
+  <div class="col-12 md:col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>E-mail</mat-label>
+      <input matInput name="dsEmail" [(ngModel)]="rh.dsEmail" type="email" required>
+    </mat-form-field>
+  </div>
+  
+  <div class="col-12 md:col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Cargo</mat-label>
+      <input matInput name="dsCargo" [(ngModel)]="rh.dsCargo" required>
+    </mat-form-field>
+  </div>
+
+  <!-- Linha 4 -->
+  <div class="col-12 md:col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Formação</mat-label>
+      <mat-select name="tpFormacaoAcademica" [(ngModel)]="rh.tpFormacaoAcademica" required>
+        <mat-option value="0">Graduação</mat-option>
+        <mat-option value="1">Pós-graduação</mat-option>
+        <mat-option value="2">Mestrado</mat-option>
+        <mat-option value="3">Doutorado</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  
+  <div class="col-12 md:col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Carga Horária</mat-label>
+      <input matInput name="nuCargaHoraria" [(ngModel)]="rh.nuCargaHoraria" type="number" required>
+    </mat-form-field>
+  </div>
+
+  <!-- Linha 5 -->
+  <div class="col-12 md:col-6">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Vínculo</mat-label>
+      <mat-select name="tpVinculo" [(ngModel)]="rh.tpVinculo" required>
+        <mat-option value="0">Voluntário</mat-option>
+        <mat-option value="1">Empregado</mat-option>
+        <mat-option value="2">CLT</mat-option>
+        <mat-option value="3">Terceirizado</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Botões -->
+  <div class="col-12 flex justify-content-end gap-2 mt-3">
+    <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+      Salvar
+    </button>
+  </div>
+</form>

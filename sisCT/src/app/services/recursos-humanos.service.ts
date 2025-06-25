@@ -1,6 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { RecursoHumano } from '../interfaces_crud/recursos-humanos.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { EditRHComponent } from '../components/dialogs/edit-rh/edit-rh.component';
 
 
 @Injectable({
@@ -9,8 +11,8 @@ import { RecursoHumano } from '../interfaces_crud/recursos-humanos.interface';
 export class RecursosHumanosService {
     private recursosSubject = new BehaviorSubject<RecursoHumano[]>([]);
     recursos$ = this.recursosSubject.asObservable();
-
-    constructor() { }
+    idAtual = 0;
+    constructor(public rhService: RecursosHumanosService, public dialog: MatDialog) { }
 
     // Cria um novo recurso
     criar(recurso: Omit<RecursoHumano, 'pkRecursosHumanos'>): void {
@@ -69,4 +71,6 @@ export class RecursosHumanosService {
             map(recursos => recursos.find(r => r.pkRecursosHumanos === id))
         );
     }
+
+
 }
