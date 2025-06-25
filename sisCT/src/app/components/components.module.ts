@@ -43,6 +43,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ToastComponent } from './toast/toast.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 const materialModules = [
   MatCheckboxModule,
@@ -64,6 +65,7 @@ const materialModules = [
   MatSelectModule,
   MatProgressSpinnerModule,
   MatCheckboxModule,
+  MatDatepickerModule,
   AgGridModule,
 ];
 

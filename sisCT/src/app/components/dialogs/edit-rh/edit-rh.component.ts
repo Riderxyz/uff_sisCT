@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecursoHumano } from '../../../interfaces_crud/recursos-humanos.interface';
-import { UtilService } from '../../../services/util.service';
 import { RecursosHumanosService } from '../../../services/recursos-humanos.service';
+import { UtilService } from '../../../services/util.service';
 
 
 
@@ -42,6 +43,7 @@ export class EditRHComponent implements OnInit {
     private router: Router,
     private utilService: UtilService,
     private rhService: RecursosHumanosService, // Assuming you have a service for RecursoHumano 
+    private dialogRef: MatDialogRef<EditRHComponent> = inject(MatDialogRef)
 
   ) { }
 
@@ -91,27 +93,22 @@ export class EditRHComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.form.invalid) {
-      this.utilService.showError('Por favor, preencha todos os campos obrigatórios.');
-      return;
-    }
-
     const formValue = this.form.value;
-
-    // const recursoHumano RecursoHumano = {
-
-    // };
-
     if (this.isEditMode) {
 
     } else {
-
+      this.rhService.criar(this.rh);
     }
   }
 
   onCancel(): void {
-    this.router.navigate(['/recursos-humanos']);
+    this.dialogRef.close(null);
   }
 
+  onFieldChange(): void {
+    // if (this.form.dirty) {
+    this.utilService.showSnackbar('Você tem alterações não salvas. Deseja continuar?');
+    //  }
+  }
 
 }
