@@ -13,6 +13,8 @@ import { EnvironmentService } from './environment.service';
 export class CadastroNacionalService {
   private apiUrl: string;
 
+  public areasAtuacoes: any[] = []; // Array para armazenar itens selecionados
+
   // BehaviorSubject to store and share the current cadastro nacional
   public cadastroSubject = new BehaviorSubject<CadastroNacional>({
     PK_CADASTRO_NACIONAL: undefined,

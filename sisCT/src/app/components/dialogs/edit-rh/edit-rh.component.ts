@@ -50,10 +50,32 @@ export class EditRHComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
 
-    const id = this.route.snapshot.params['id'];
-    if (id) {
+    const id = this.rhService.idAtual;
+    if (id != -1) {
       this.isEditMode = true;
-      this.loadRecursoHumano(id);
+      this.rhService.obterPorId(id).subscribe(
+        (recurso: RecursoHumano | undefined) => {
+          this.rh = recurso as RecursoHumano;
+          // this.form.patchValue({
+          //   dsNome: recurso!.dsNome,
+          //   nuCpf: recurso!.nuCpf,
+          //   dtNascimento: recurso!.dtNascimento,
+          //   dsTelefone: recurso!.dsTelefone,
+          //   dsEmail: recurso!.dsEmail,    
+          //   dsCargo: recurso!.dsCargo,
+          //   tpFormacaoAcademica: recurso!.tpFormacaoAcademica,
+          //   nuCargaHoraria: recurso!.nuCargaHoraria,
+          //   tpVinculo: recurso!.tpVinculo
+          // });
+        },
+        (error) => {
+          console.error('Erro ao carregar recurso humano:', error);
+          this.utilService.showError('Erro ao carregar recurso humano. Tente novamente mais tarde.');
+        }
+      );
+    } else {
+      this.rhService.sairModoEdicao();
+      this.rh = {} as RecursoHumano;
     }
   }
 

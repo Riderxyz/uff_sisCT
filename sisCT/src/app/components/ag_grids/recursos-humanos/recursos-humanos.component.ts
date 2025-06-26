@@ -223,6 +223,7 @@ export class RecursosHumanosComponent {
 
   editarRegistro(data: RecursoHumano): void {
     this.recursosService.idAtual = data ? data.pkRecursosHumanos : -1; // Define o ID da vaga atual
+    this.recursosService.entrarModoEdicao(); // Ativa o modo de edição
     this.dialog.open(EditRHComponent, {
       width: '70vw', // Ajuste conforme necessário
       data: data // Passa os dados da linha para o diálogo

@@ -10,7 +10,22 @@ export class RecursosHumanosService {
     private recursosSubject = new BehaviorSubject<RecursoHumano[]>([]);
     recursos$ = this.recursosSubject.asObservable();
     idAtual = 0;
+    private editModeSubject = new BehaviorSubject<boolean>(false);
+    editMode$: Observable<boolean> = this.editModeSubject.asObservable();
     constructor() { }
+    entrarModoEdicao(): void {
+        this.editModeSubject.next(true);
+    }
+
+    // Método para desativar o modo de edição
+    sairModoEdicao(): void {
+        this.editModeSubject.next(false);
+    }
+
+    // (Opcional) Método para alternar o estado atual
+    toggleModoEdicao(): void {
+        this.editModeSubject.next(!this.editModeSubject.value);
+    }
 
     // Cria um novo recurso
     criar(recurso: Omit<RecursoHumano, 'pkRecursosHumanos'>): void {
@@ -35,7 +50,7 @@ export class RecursosHumanosService {
             map(recursos =>
                 mostrarInativos
                     ? recursos
-                    : recursos.filter(r => r.stAtivo === 1)
+                    : recursos.filter(r => r.stAtivo === 1 || mostrarInativos)
             )
         );
     }

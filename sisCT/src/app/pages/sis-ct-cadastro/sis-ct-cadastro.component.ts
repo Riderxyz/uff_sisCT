@@ -151,11 +151,27 @@ export class SisCtCadastroComponent implements OnInit, OnDestroy {
   }
 
   shouldShowPanel(id: CadastroStep1Id | CadastroStep2Id): boolean {
-    const obj = this.cadastroNacionalService.getCurrentCadastro();
-    if (obj.ST_AREA_ATUACAO === 0) {
-      return id === CadastroStep2Id.ComunidadeTerap;
-    } else if (obj.ST_AREA_ATUACAO === 1) {
-      return id === CadastroStep2Id.EntidadesCuidado
-    } else return false;
+    try {
+      const p = (id == 'comunidade-terapeutica' ? 1 : 2);
+      const index = this.cadastroNacionalService.areasAtuacoes.indexOf(p.toString());
+      const outras = this.cadastroNacionalService.areasAtuacoes.indexOf('3');
+      return (index > -1) || (outras > -1);
+    } catch (error) {
+      return false;
+    }
+
+    //   if (index > -1) {
+    //     this.cadastroService.areasAtuacoes.splice(index, 1);
+    //   }
+
+
+
+
+    // const obj = this.cadastroNacionalService.getCurrentCadastro();
+    // if (obj.ST_AREA_ATUACAO === 0) {
+    //   return id === CadastroStep2Id.ComunidadeTerap;
+    // } else if (obj.ST_AREA_ATUACAO === 1) {
+    //   return id === CadastroStep2Id.EntidadesCuidado
+    // } else return false;
   }
 }
