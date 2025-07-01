@@ -1,26 +1,81 @@
-
-.subsection-container{
+.subsection-container {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   padding: 0 1rem;
-  mat-expansion-panel{
+
+  mat-expansion-panel {
     min-height: 5rem;
-    mat-panel-title{
+
+    mat-panel-title {
       margin-top: 1.5rem;
     }
-    .section-header{
+
+    .section-header {
       display: flex;
       flex-direction: column;
       gap: 0.1rem;
-      .title{
+
+      .title {
         font-size: 1.2rem;
         font-weight: 600;
       }
-      .subtitle{
+
+      .subtitle {
         font-size: 0.8rem;
         font-weight: 400;
       }
     }
   }
+}
+
+.status-indicator {
+  width: 54px;
+  height: 18px;
+  border-radius: 2px;
+  border: none;
+  padding: 0;
+  min-width: unset;
+  cursor: default;
+
+  &.approved {
+    background-color: #4caf50; // green
+  }
+
+  &.not-approved {
+    background-color: #f44336; // red
+  }
+}
+
+.mat-panel-title {
+  gap: 8px;
+}
+
+
+
+
+:host {
+  display: block;
+  position: relative;
+}
+
+
+.flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-end {
+  justify-content: flex-end;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.p-1 {
+  padding: 0.25rem;
 }

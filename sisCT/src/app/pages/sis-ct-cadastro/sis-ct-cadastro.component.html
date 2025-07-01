@@ -1,12 +1,17 @@
 <mat-horizontal-stepper #stepper>
-
   <!-- SEÇÃO I -->
   <mat-step [label]="secaoILabel">
     <mat-accordion>
       @for (subSection of paginasSection1; track $index) {
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <mat-panel-title>{{ subSection.header }}</mat-panel-title>
+          <mat-panel-title class="flex align-items-center">
+            {{ subSection.header }}
+            <button class="status-indicator ml-2"
+              [class.approved]="(statusService.status$ | async) && statusService.isSecaoApproved(subSection.secao)"
+              [class.not-approved]="(statusService.status$ | async) && !statusService.isSecaoApproved(subSection.secao)">
+            </button>
+          </mat-panel-title>
           <mat-panel-description class="flex justify-content-end align-items-center">
             @if (subSection.showSavingIcon) {
             <i [@fadeInOnEnter] [@fadeOutOnLeave] class="fa-solid fa-floppy-disk fa-lg fa-bounce p-1"></i>
@@ -16,6 +21,7 @@
 
         <ng-container *ngComponentOutlet="subSection.component" />
       </mat-expansion-panel>
+
       }
     </mat-accordion>
     <div class="stepper-actions">
@@ -27,9 +33,17 @@
   <mat-step label="Seção II: Dados Específicos">
     <mat-accordion>
       @for (subSection of paginaSection2; track $index) {
-      <mat-expansion-panel>
+      <!-- Aplica ngIf diretamente no mat-expansion-panel -->
+      <mat-expansion-panel *ngIf="shouldShowPanel(subSection.id)">
         <mat-expansion-panel-header>
-          <mat-panel-title>{{ subSection.header }}</mat-panel-title>
+          <mat-panel-title class="flex align-items-center">
+            {{ subSection.header }}
+            <button class="status-indicator ml-2"
+              [class.approved]="(statusService.status$ | async) && statusService.isSecaoApproved(subSection.secao)"
+              [class.not-approved]="(statusService.status$ | async) && !statusService.isSecaoApproved(subSection.secao)">
+            </button>
+          </mat-panel-title>
+
           <mat-panel-description class="flex justify-content-end align-items-center">
             @if (subSection.showSavingIcon) {
             <i [@fadeInOnEnter] [@fadeOutOnLeave] class="fa-solid fa-spin fa-2x fa-spinner p-1"></i>

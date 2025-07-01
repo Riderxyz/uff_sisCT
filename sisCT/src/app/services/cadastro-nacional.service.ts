@@ -13,15 +13,17 @@ import { EnvironmentService } from './environment.service';
 export class CadastroNacionalService {
   private apiUrl: string;
 
+  public areasAtuacoes: any[] = []; // Array para armazenar itens selecionados
+
   // BehaviorSubject to store and share the current cadastro nacional
   public cadastroSubject = new BehaviorSubject<CadastroNacional>({
     PK_CADASTRO_NACIONAL: undefined,
     DS_OUTRO_CONSELHO_MUNICIPAL: '',
     DS_INSCRICAO_CONSELHO_ESTADUAL: '',
     DT_VALIDADE_LICENSA: undefined,
-    NO_FANTASIA: 'teste de apontamento',
+    NO_FANTASIA: '',
     NO_RAZAO_SOCIAL: '',
-    NU_CNPJ: '45555555',
+    NU_CNPJ: '',
     DS_ATIVIDADE_FILIAL: '',
     CO_CNAE_PRINCIPAL: '',
     CO_CNAE_SECUNDARIO: '',
@@ -53,7 +55,7 @@ export class CadastroNacionalService {
     DS_PARCERIAS_RESSOCIALIZACAO: '',
     DT_ACORDO: undefined,
     ST_ACEITE: 0,
-    ST_AREA_ATUACAO: 1,
+    ST_AREA_ATUACAO: 0,
     ST_AREA_CERTIFICAVEL: 0,
     ST_POSSUI_FINANCIAMENTO_ESTADUAL: 0,
     ST_POSSUI_FINANCIAMENTO_ESTADO: 0,

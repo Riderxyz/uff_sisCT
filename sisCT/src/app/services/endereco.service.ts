@@ -19,7 +19,7 @@ export class EnderecoService {
     DS_COMPLEMENTO: '',
     NO_BAIRRO: '',
     NU_NUMERO: '',
-    NU_CEP: '',
+    NU_CEP: '2155050',
     DT_ATUALIZACAO: new Date(),
     ST_ATIVO: '1',
     PK_CADASTRO_NACIONAL: 0,

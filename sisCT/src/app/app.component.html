@@ -1,19 +1,24 @@
 <app-toast></app-toast>
-<div [@expandOnEnter] *ngIf="showHeader">
-  <app-header></app-header>
+<div class="page-container">
+  <div [@expandOnEnter] *ngIf="showHeader">
+    <app-header></app-header>
+  </div>
+
+  <div class="content-wrapper">
+    <mat-sidenav-container class="sidenav-container">
+      <!-- Menu lateral -->
+      <mat-sidenav #sidenav mode="side" [opened]="showMenu">
+        <app-sidebar></app-sidebar>
+      </mat-sidenav>
+
+      <!-- Conteúdo principal -->
+      <mat-sidenav-content>
+        <div class="content">
+          <router-outlet />
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+
+  <app-footer></app-footer>
 </div>
-
-<mat-sidenav-container class="sidenav-container">
-  <!-- Menu lateral -->
-  <mat-sidenav #sidenav mode="side" [opened]="showMenu">
-    <app-sidebar></app-sidebar>
-  </mat-sidenav>
-
-  <!-- Conteúdo principal -->
-  <mat-sidenav-content>
-    <div class="content">
-      <router-outlet />
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
-<app-footer></app-footer>
