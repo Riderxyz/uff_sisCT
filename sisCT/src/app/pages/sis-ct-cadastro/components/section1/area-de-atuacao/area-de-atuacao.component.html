@@ -1,13 +1,14 @@
-<mat-radio-group aria-labelledby="example-radio-group-label" class="radio-group" [(ngModel)]="selectedOptionValue"
-  name="{{sectionName}}" #areaDeAtuacaoCtrl="ngModel" (ngModelChange)="onSelectChange()">
-  @for (item of opcoes; track $index) {
-  <!-- <mat-radio-button class="example-radio-button" [value]="item.value">
+@for (item of opcoes; track $index) {
+<!-- <mat-radio-button class="example-radio-button" [value]="item.value">
     {{ item.label }}
   </mat-radio-button> -->
 
-  <mat-checkbox class="example-checkbox" [value]="item.value" (change)="onCheckboxChange(item, $event)">
-    {{ item.label }}
-  </mat-checkbox>
+<mat-checkbox
+  class="example-checkbox"
+  [value]="item.value"
+  (change)="onCheckboxChange(item, $event)"
+>
+  {{ item.label }}
+</mat-checkbox>
 
-  }
-</mat-radio-group>
+}

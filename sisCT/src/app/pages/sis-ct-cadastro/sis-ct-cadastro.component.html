@@ -1,4 +1,4 @@
-<mat-horizontal-stepper #stepper>
+<mat-horizontal-stepper #stepper [linear]="isItLinear">
   <!-- SEÇÃO I -->
   <mat-step [label]="secaoILabel">
     <mat-accordion>
@@ -30,7 +30,7 @@
   </mat-step>
 
   <!-- SEÇÃO II -->
-  <mat-step label="Seção II: Dados Específicos">
+  <mat-step label="Seção II: Dados Específicos" >
     <mat-accordion>
       @for (subSection of paginaSection2; track $index) {
       <!-- Aplica ngIf diretamente no mat-expansion-panel -->

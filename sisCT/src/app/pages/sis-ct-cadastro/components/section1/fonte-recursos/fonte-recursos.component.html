@@ -20,11 +20,11 @@
               Possui financiamento com {{ nivel }}?
             </mat-checkbox>
           </div>
-          <div class="col-10" *ngIf="formModel.recursosPublicos[nivel].possui">
+          <div class="col-10">
             <mat-form-field appearance="outline" class="w-full">
               <mat-label>Modalidades</mat-label>
               <mat-select [(ngModel)]="formModel.recursosPublicos[nivel].modalidades" [name]="nivel + '_modalidades'"
-                multiple (blur)="onFieldChange()">
+                multiple (blur)="onFieldChange()" [disabled]="!formModel.recursosPublicos[nivel].possui">
                 <mat-option *ngFor="let m of modalidades" [value]="m">{{ m }}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -70,14 +70,18 @@
       <mat-label>Receitas próprias</mat-label>
       <mat-selection-list class="label-position-before" [(ngModel)]="formModel.outrasFontes.receitasProprias"
         name="receitasProprias" (blur)="onFieldChange()">
-        <mat-list-option [togglePosition]="'before'" *ngFor="let receita of receitasProprias" [value]="receita.value">
+        <mat-list-option [togglePosition]="'before'" *ngFor="let receita of receitasProprias" [value]="receita.value"
+        >
           {{ receita.label }}
         </mat-list-option>
       </mat-selection-list>
+      {{formModel.outrasFontes.receitasProprias}}
       <div class="col">
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Outros</mat-label>
-          <input matInput name="outros" [(ngModel)]="formModel.outrasFontes.outros" (blur)="onFieldChange()" />
+          <input matInput name="outros" [(ngModel)]="formModel.outrasFontes.outros" (blur)="onFieldChange()"
+          [disabled]="!formModel.outrasFontes.receitasProprias.includes('Outros')"
+          />
         </mat-form-field>
       </div>
     </div>

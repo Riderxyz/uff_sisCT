@@ -58,8 +58,8 @@
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Escolaridade</mat-label>
       <mat-select name="mesaDirectoraFilial" [(ngModel)]="formModel.escolaridade" #escolaridadeCtrl="ngModel" required>
-        <mat-option value="nível fundamental">Nível Fundamental</mat-option>
-        <mat-option value="nível médio">Nível Médio</mat-option>
+       <!--  <mat-option value="nível fundamental">Nível Fundamental</mat-option>
+        <mat-option value="nível médio">Nível Médio</mat-option> -->
         <mat-option value="Graduação">Graduação</mat-option>
         <mat-option value="pós-graduação">Pós-Graduação</mat-option>
         <mat-option value="mestrado">Mestrado</mat-option>
@@ -72,7 +72,7 @@
   </div>
   <div class="col-3">
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Profissãoooou</mat-label>
+      <mat-label>Profissão</mat-label>
       <input matInput name="cursoProfissao" [(ngModel)]="formModel.cursoProfissao" #cursoProfissaoCtrl="ngModel" />
     </mat-form-field>
   </div>

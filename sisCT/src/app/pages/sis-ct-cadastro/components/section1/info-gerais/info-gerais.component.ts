@@ -442,6 +442,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
         this.formModel.localizacao.logradouro = res.logradouro;
         this.formModel.localizacao.bairro = res.bairro;
         this.formModel.localizacao.cidade = res.localidade;
+        this.formModel.localizacao.pais = 'Brasil';
         this.formModel.localizacao.estado = res.uf;
 
         // Update the endereco in the service
@@ -450,6 +451,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
           DS_LOGRADOURO: res.logradouro,
           NO_BAIRRO: res.bairro,
           DS_CIDADE: res.localidade,
+          DS_PAIS: 'Brasil',
           CO_ESTADO: res.uf
         });
 

@@ -94,6 +94,7 @@ export class SisCtCadastroComponent implements OnInit, OnDestroy {
     },
   ];
 
+  isItLinear: boolean = true;
   private readonly centralRxjs = inject(CentralRxJsService);
   private statusSubscription?: Subscription;
 
@@ -155,6 +156,9 @@ export class SisCtCadastroComponent implements OnInit, OnDestroy {
       const p = (id == 'comunidade-terapeutica' ? 1 : 2);
       const index = this.cadastroNacionalService.areasAtuacoes.indexOf(p.toString());
       const outras = this.cadastroNacionalService.areasAtuacoes.indexOf('3');
+      this.isItLinear = (index > -1) || (outras > -1);
+      this.stepper.linear = this.isItLinear;
+      console.log('isItLinear:', this.isItLinear, 'index:', index, 'outras:', outras);
       return (index > -1) || (outras > -1);
     } catch (error) {
       return false;
