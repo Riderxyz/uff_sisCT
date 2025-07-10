@@ -1,8 +1,14 @@
-<form #representanteLegalForm="ngForm" class="grid">
+<form #representanteLegalForm="ngForm" class="grid nested-grid">
   <div class="col-10">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Nome do responsavel tecnico</mat-label>
-      <input matInput name="nome" [(ngModel)]="formModel.nome" #nomeCtrl="ngModel" required />
+      <input
+        matInput
+        name="nome"
+        [(ngModel)]="formModel.nome"
+        #nomeCtrl="ngModel"
+        required
+      />
       <mat-error *ngIf="nomeCtrl.invalid && nomeCtrl.touched">
         Nome do responsavel tecnico é obrigatório
       </mat-error>
@@ -11,8 +17,16 @@
   <div class="col-2">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>CPF do Representante Legal</mat-label>
-      <input matInput name="cpf" [(ngModel)]="formModel.cpf" #cpfCtrl="ngModel" required mask="000.000.000-00"
-        placeholder="000.000.000-00" (blur)="onFieldChange()" />
+      <input
+        matInput
+        name="cpf"
+        [(ngModel)]="formModel.cpf"
+        #cpfCtrl="ngModel"
+        required
+        mask="000.000.000-00"
+        placeholder="000.000.000-00"
+        (blur)="onFieldChange()"
+      />
       <mat-error *ngIf="cpfCtrl.invalid && cpfCtrl.touched">
         CPF do Responsavel tecnico é obrigatório
       </mat-error>
@@ -22,8 +36,16 @@
   <div class="col-2">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Telefone</mat-label>
-      <input matInput name="telefone" [(ngModel)]="formModel.telefone" #telefoneCtrl="ngModel" required
-        mask="(00) 00000-0000" placeholder="(00) 00000-0000" (blur)="onFieldChange()" />
+      <input
+        matInput
+        name="telefone"
+        [(ngModel)]="formModel.telefone"
+        #telefoneCtrl="ngModel"
+        required
+        mask="(00) 00000-0000"
+        placeholder="(00) 00000-0000"
+        (blur)="onFieldChange()"
+      />
       <mat-error *ngIf="telefoneCtrl.invalid && telefoneCtrl.touched">
         Telefone do Responsavel tecnico é obrigatório
       </mat-error>
@@ -32,8 +54,16 @@
   <div class="col-3">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Email</mat-label>
-      <input matInput name="email" [(ngModel)]="formModel.email" #emailCtrl="ngModel" required email
-        placeholder="email@exemplo.com" (blur)="onFieldChange()" />
+      <input
+        matInput
+        name="email"
+        [(ngModel)]="formModel.email"
+        #emailCtrl="ngModel"
+        required
+        email
+        placeholder="email@exemplo.com"
+        (blur)="onFieldChange()"
+      />
       <mat-error *ngIf="emailCtrl.invalid && emailCtrl.touched">
         Email do Responsavel tecnico é obrigatório
       </mat-error>
@@ -42,13 +72,25 @@
   <div class="col-2">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Data de Nascimento</mat-label>
-      <input matInput name="dataDeNascimento" [(ngModel)]="formModel.dataDeNascimento" #dataDeNascimentoCtrl="ngModel"
-        (blur)="onFieldChange()" required [matDatepicker]="picker" />
+      <input
+        matInput
+        name="dataDeNascimento"
+        [(ngModel)]="formModel.dataDeNascimento"
+        #dataDeNascimentoCtrl="ngModel"
+        (blur)="onFieldChange()"
+        required
+        [matDatepicker]="picker"
+      />
       <mat-hint>DD/MM/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
 
-      <mat-error *ngIf="dataDeNascimentoCtrl.invalid && dataDeNascimentoCtrl.touched">
+      <mat-error
+        *ngIf="dataDeNascimentoCtrl.invalid && dataDeNascimentoCtrl.touched"
+      >
         Data de nascimento do Responsavel tecnico é obrigatóriooo
       </mat-error>
     </mat-form-field>
@@ -57,7 +99,12 @@
   <div class="col-2">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Escolaridade</mat-label>
-      <mat-select name="mesaDirectoraFilial" [(ngModel)]="formModel.escolaridade" #escolaridadeCtrl="ngModel" required>
+      <mat-select
+        name="mesaDirectoraFilial"
+        [(ngModel)]="formModel.escolaridade"
+        #escolaridadeCtrl="ngModel"
+        required
+      >
         <mat-option value="nível fundamental">Nível Fundamental</mat-option>
         <mat-option value="nível médio">Nível Médio</mat-option>
         <mat-option value="Graduação">Graduação</mat-option>
@@ -72,21 +119,179 @@
   </div>
   <div class="col-3">
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Profissãoooou</mat-label>
-      <input matInput name="cursoProfissao" [(ngModel)]="formModel.cursoProfissao" #cursoProfissaoCtrl="ngModel" />
+      <mat-label>Profissão</mat-label>
+      <input
+        matInput
+        name="cursoProfissao"
+        [(ngModel)]="formModel.cursoProfissao"
+        #cursoProfissaoCtrl="ngModel"
+      />
     </mat-form-field>
   </div>
   <div class="col-12">
-    <label id="possuiExperienciaComprovada">O Responsável Técnico possui experiência comprovada na gestão de
+    <label id="possuiExperienciaComprovada"
+      >O Responsável Técnico possui experiência comprovada na gestão de
       comunidades terapêuticas e instituições afins, desempenhando funções como
       conselheiro, monitor ou equivalente na área de dependência química e
       participação em cursos de capacitação sobre o tema?
     </label>
-    <mat-radio-group aria-labelledby="possuiExperienciaComprovada" class="radio-group"
-      name="possuiExperienciaComprovada" #possuiExperienciaComprovadaCtrl="ngModel"
-      [(ngModel)]="formModel.possuiExperienciaComprovada" (ngModelChange)="onFieldChange()">
-      <mat-radio-button class="example-radio-button" [value]="true">Sim</mat-radio-button>
-      <mat-radio-button class="example-radio-button" [value]="false">Não</mat-radio-button>
+    <mat-radio-group
+      aria-labelledby="possuiExperienciaComprovada"
+      class="radio-group"
+      name="possuiExperienciaComprovada"
+      #possuiExperienciaComprovadaCtrl="ngModel"
+      [(ngModel)]="formModel.possuiExperienciaComprovada"
+      (ngModelChange)="onFieldChange()"
+    >
+      <mat-radio-button class="example-radio-button" [value]="true"
+        >Sim</mat-radio-button
+      >
+      <mat-radio-button class="example-radio-button" [value]="false"
+        >Não</mat-radio-button
+      >
     </mat-radio-group>
+  </div>
+  <div class="col-12">
+    <label id="possuiResponsavelTecnicoAuxiliar">
+      A entidae possui um responsável técnico auxiliar, que atua em conjunto com
+      o responsável técnico principal?
+    </label>
+    <mat-radio-group
+      aria-labelledby="possuiResponsavelTecnicoAuxiliar"
+      class="radio-group"
+      name="possuiResponsavelTecnicoAuxiliar"
+      #possuiResponsavelTecnicoAuxiliarCtrl="ngModel"
+      [(ngModel)]="formModel.possuiResponsavelTecnicoSubstituto"
+      (ngModelChange)="onFieldChange()"
+    >
+      <mat-radio-button class="example-radio-button" [value]="true"
+        >Sim</mat-radio-button
+      >
+      <mat-radio-button class="example-radio-button" [value]="false"
+        >Não</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+
+  <div class="col-12" *ngIf="formModel.possuiResponsavelTecnicoSubstituto">
+    <div class="grid">
+      <div class="col-10">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Nome do responsavel tecnico</mat-label>
+          <input
+            matInput
+            name="nome"
+            [(ngModel)]="formModel.representanteTecnicoSubstituto!.nome"
+            #representanteTecnicoSubstitutoNomeCtrl="ngModel"
+            required
+          />
+          <mat-error
+            *ngIf="
+              representanteTecnicoSubstitutoNomeCtrl.invalid &&
+              representanteTecnicoSubstitutoNomeCtrl.touched
+            "
+          >
+            Nome do responsavel tecnico substituto é obrigatório
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-2">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>CPF do Representante Legal</mat-label>
+          <input
+            matInput
+            name="cpf"
+            [(ngModel)]="formModel.representanteTecnicoSubstituto!.cpf"
+            #representanteTecnicoSubstitutoCpfCtrl="ngModel"
+            required
+            mask="000.000.000-00"
+            placeholder="000.000.000-00"
+            (blur)="onFieldChange()"
+          />
+          <mat-error
+            *ngIf="
+              representanteTecnicoSubstitutoCpfCtrl.invalid &&
+              representanteTecnicoSubstitutoCpfCtrl.touched
+            "
+          >
+            CPF do Responsavel tecnico substituto é obrigatório
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-4">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Telefone</mat-label>
+          <input
+            matInput
+            name="telefone"
+            [(ngModel)]="formModel.representanteTecnicoSubstituto!.telefone"
+            #representanteTecnicoSubstitutoTelefoneCtrl="ngModel"
+            required
+            mask="(00) 00000-0000"
+            placeholder="(00) 00000-0000"
+            (blur)="onFieldChange()"
+          />
+          <mat-error
+            *ngIf="
+              representanteTecnicoSubstitutoTelefoneCtrl.invalid &&
+              representanteTecnicoSubstitutoTelefoneCtrl.touched
+            "
+          >
+            Telefone do Responsavel tecnico é obrigatório
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-4">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            name="email"
+            [(ngModel)]="formModel.representanteTecnicoSubstituto!.email"
+            #representanteTecnicoSubstitutoEmailCtrl="ngModel"
+            required
+            email
+            placeholder="email@exemplo.com"
+            (blur)="onFieldChange()"
+          />
+          <mat-error
+            *ngIf="
+              representanteTecnicoSubstitutoEmailCtrl.invalid &&
+              representanteTecnicoSubstitutoEmailCtrl.touched
+            "
+          >
+            Email do Responsavel tecnico é obrigatório
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-4">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Escolaridade</mat-label>
+          <mat-select
+            name="mesaDirectoraFilial"
+            [(ngModel)]="formModel.representanteTecnicoSubstituto!.escolaridade"
+            #representanteTecnicoSubstitutoEscolaridadeCtrl="ngModel"
+            required
+          >
+            <mat-option value="nível fundamental">Nível Fundamental</mat-option>
+            <mat-option value="nível médio">Nível Médio</mat-option>
+            <mat-option value="Graduação">Graduação</mat-option>
+            <mat-option value="pós-graduação">Pós-Graduação</mat-option>
+            <mat-option value="mestrado">Mestrado</mat-option>
+            <mat-option value="doutorado">Doutorado</mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              representanteTecnicoSubstitutoEscolaridadeCtrl.invalid &&
+              representanteTecnicoSubstitutoEscolaridadeCtrl.touched
+            "
+          >
+            Escolaridade é obrigatório
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
   </div>
 </form>

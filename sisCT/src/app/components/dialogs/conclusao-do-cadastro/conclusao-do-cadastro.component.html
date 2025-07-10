@@ -1,0 +1,33 @@
+<h2 mat-dialog-title>Janela de informações após conclusão do Cadastro</h2>
+
+<mat-dialog-content class="p-fluid p-3">
+  <p>
+    Eu,
+    <input matInput [(ngModel)]="nome" placeholder="Nome completo" class="p-inputtext p-mb-2" />
+    , CPF n°
+    <input matInput [(ngModel)]="cpf" placeholder="000.000.000-00" class="p-inputtext" />
+    , DECLARO, sob as penas da lei, <strong>serem verdadeiras</strong> as informações prestadas neste
+    requerimento para obtenção do Cadastro de Gestão de Entidades Atuantes na Redução das Demandas de Drogas bem como
+    que todos os documentos apresentados conferem com seus respectivos originais.
+  </p>
+
+  <p class="p-mt-3 p-text-justify">
+    Fico ciente por meio deste documento que a falsidade dessa declaração configura crime previsto no Código Penal Brasileiro,
+    passível de apuração na forma da Lei bem como pode ser enquadrada como litigância de Má-Fé.
+  </p>
+
+  <p class="p-text-justify">Nada mais a declarar, e ciente das responsabilidades das declarações prestadas, firmo a presente.</p>
+
+  <mat-label class="p-mt-2">Status do cadastro</mat-label>
+  <mat-radio-group [(ngModel)]="status" class="p-mt-2 p-d-flex p-flex-column">
+    <mat-radio-button value="preenchimento">Em preenchimento</mat-radio-button>
+    <mat-radio-button value="concluido">Concluído</mat-radio-button>
+    <mat-radio-button value="retificacao">Em retificação</mat-radio-button>
+  </mat-radio-group>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="p-mt-3">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-flat-button color="primary" (click)="concluir()" [disabled]="!formValido()">Concluir</button>
+</mat-dialog-actions>

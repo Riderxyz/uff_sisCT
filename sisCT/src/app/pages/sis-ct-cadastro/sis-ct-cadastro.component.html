@@ -55,9 +55,11 @@
       </mat-expansion-panel>
       }
     </mat-accordion>
-    <div class="stepper-actions">
+    <div class="stepper-actions flex justify-content-between">
       <button mat-button matStepperPrevious>Voltar</button>
+      <button mat-button (click)="concluir()">Concluir</button>
     </div>
   </mat-step>
 
 </mat-horizontal-stepper>
+

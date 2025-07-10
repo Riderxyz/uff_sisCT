@@ -58,6 +58,7 @@ export class QuestionService {
           telefone: '',
           email: '',
           possuiExperienciaComprovada: false,
+          possuiResponsavelTecnicoSubstituto: false,
           representanteTecnicoSubstituto: {
             nome: '',
             cpf: '',

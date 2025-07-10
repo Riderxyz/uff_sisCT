@@ -44,6 +44,7 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ToastComponent } from './toast/toast.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { ConclusaoDoCadastroDialogComponent } from './dialogs/conclusao-do-cadastro/conclusao-do-cadastro.component';
 
 const materialModules = [
   MatCheckboxModule,
@@ -85,6 +86,7 @@ const dialogsComponents = [
   AdicionarProfissionalDialogComponent,
   AdicionarVagaDialogComponent,
   EditRHComponent,
+  ConclusaoDoCadastroDialogComponent,
 ];
 
 const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
@@ -96,6 +98,7 @@ const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
     MapaDeVagasComponent,
     FooterComponent,
     ...dialogsComponents,
+
   ],
   imports: [
     CommonModule,

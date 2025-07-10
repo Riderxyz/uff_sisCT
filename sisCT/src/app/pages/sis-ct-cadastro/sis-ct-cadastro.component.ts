@@ -21,6 +21,8 @@ import { RepresentateLegalMatrizComponent } from './components/section1/represen
 import { ResponsavelTecnicoComponent } from './components/section1/responsavel-tecnico/responsavel-tecnico.component';
 import { ComunidadeTerapeuticaComponent } from './components/section2/comunidade-terapeutica/comunidade-terapeutica.component';
 import { EntidadeDeCuidadoComponent } from './components/section2/entidade-de-cuidado/entidade-de-cuidado.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConclusaoDoCadastroDialogComponent } from '../../components/dialogs/conclusao-do-cadastro/conclusao-do-cadastro.component';
 
 @Component({
   selector: 'app-sis-ct-cadastro',
@@ -95,6 +97,7 @@ export class SisCtCadastroComponent implements OnInit, OnDestroy {
   ];
 
   private readonly centralRxjs = inject(CentralRxJsService);
+  private dialogCtrl: MatDialog = inject(MatDialog);
   private statusSubscription?: Subscription;
 
   constructor(public statusService: StatusService, public cadastroNacionalService: CadastroNacionalService) {
@@ -173,5 +176,19 @@ export class SisCtCadastroComponent implements OnInit, OnDestroy {
     // } else if (obj.ST_AREA_ATUACAO === 1) {
     //   return id === CadastroStep2Id.EntidadesCuidado
     // } else return false;
+  }
+
+  concluir() {
+    // Aqui você pode enviar os dados para o backend ou emitir para o componente pai
+    console.log('Concluir cadastro');
+  const ref = this.dialogCtrl.open(ConclusaoDoCadastroDialogComponent, {
+    width: '700px',
+  });
+
+  ref.afterClosed().subscribe(result => {
+    if (result) {
+      console.log('Dados recebidos do dialog:', result);
+    }
+  });
   }
 }
