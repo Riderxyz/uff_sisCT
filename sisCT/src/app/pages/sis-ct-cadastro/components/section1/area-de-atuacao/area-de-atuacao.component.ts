@@ -1,5 +1,3 @@
-// src/app/pages/sis-ct-cadastro/components/section1/area-de-atuacao/area-de-atuacao.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { CadastroNacionalService } from '../../../../../services/cadastro-nacional.service';
@@ -17,18 +15,6 @@ interface AreaDeAtuacaoOption {
 })
 export class AreaDeAtuacaoComponent implements OnInit {
   // Options for the radio buttons
-
-  onCheckboxChange(item: any, event: MatCheckboxChange) {
-    if (event.checked) {
-      this.cadastroService.areasAtuacoes.push(item.value);
-    } else {
-      const index = this.cadastroService.areasAtuacoes.indexOf(item.value);
-      if (index > -1) {
-        this.cadastroService.areasAtuacoes.splice(index, 1);
-      }
-    }
-  }
-
   opcoes: AreaDeAtuacaoOption[] = [
     { value: '1', label: 'Comunidade Terapêutica' },
     { value: '2', label: 'Entidade de Cuidado' },
@@ -42,47 +28,60 @@ export class AreaDeAtuacaoComponent implements OnInit {
   // Current section name
   sectionName = 'area_atuacao';
 
-  constructor(public cadastroService: CadastroNacionalService, private statusService: StatusService) {
-    //debugger
-  }
+  constructor(
+    public cadastroService: CadastroNacionalService,
+    private statusService: StatusService
+  ) { }
 
   ngOnInit(): void {
-    // Get current value from service if available
+    // Get current value from service
     const currentCadastro = this.cadastroService.getCurrentCadastro();
-    this.selectedOption = this.opcoes[this.cadastroService.cadastroSubject.getValue().ST_AREA_ATUACAO!];
-    if (currentCadastro && currentCadastro.ST_AREA_ATUACAO) {
-      this.selectedOption = this.opcoes.find(opt => Number(opt.value) === currentCadastro.ST_AREA_ATUACAO) || null;
+    const currentAreaAtuacao = currentCadastro?.stAreaAtuacao;
+
+    if (currentAreaAtuacao) {
+      this.selectedOption = this.opcoes.find(opt => opt.value === currentAreaAtuacao) || null;
     }
+
     // Subscribe to changes in the cadastro
     this.cadastroService.cadastro$.subscribe(cadastro => {
-      if (cadastro && cadastro.ST_AREA_ATUACAO) {
-        this.selectedOption = this.opcoes.find(opt => Number(opt.value) == cadastro.ST_AREA_ATUACAO) || null;
+      if (cadastro?.stAreaAtuacao) {
+        this.selectedOption = this.opcoes.find(opt => opt.value === cadastro.stAreaAtuacao) || null;
       }
     });
-    this.statusService.update({
-      secao: 1,
-      campo: 'ST_AREA_ATUACAO',
-      situacao: this.selectedOption ? true : false,
-      nome: 'Informe a Área de Atuação',
-      descricao: ''
-    })
+
+    this.updateStatusService();
+  }
+
+  onCheckboxChange(item: any, event: MatCheckboxChange) {
+    if (event.checked) {
+      this.cadastroService.areasAtuacoes.push(item.value);
+      this.selectedOption = item;
+      this.onSelectChange();
+    } else {
+      const index = this.cadastroService.areasAtuacoes.indexOf(item.value);
+      if (index > -1) {
+        this.cadastroService.areasAtuacoes.splice(index, 1);
+      }
+    }
   }
 
   onSelectChange(): void {
     if (this.selectedOption) {
       // Update the cadastro nacional with the selected area de atuacao
-
-      console.log(this.selectedOption.value, 'selected option value', this.selectedOptionValue);
       this.cadastroService.updateCadastro({
-        ST_AREA_ATUACAO: this.selectedOptionValue - 1
+        stAreaAtuacao: this.selectedOption.value
       });
     }
+    this.updateStatusService();
+  }
+
+  private updateStatusService(): void {
     this.statusService.update({
       secao: 1,
-      campo: 'ST_AREA_ATUACAO',
-      situacao: this.selectedOption ? true : false,
+      campo: 'stAreaAtuacao',
+      situacao: !!this.selectedOption,
       nome: 'Informe a Área de Atuação',
       descricao: ''
-    })
+    });
   }
 }
