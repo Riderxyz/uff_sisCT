@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { config } from '../services/config';
 import { MatrizInterface } from '../interface/matriz.interface';
-import { UtilService } from './util.service';
+import { config } from '../services/config';
 import { CentralRxJsService } from './centralRXJS.service';
+import { UtilService } from './util.service';
 
 @Injectable({ providedIn: 'root' })
 export class QuestionService {
@@ -41,13 +41,18 @@ export class QuestionService {
         representanteLegal: {
           nome: '',
           seuPapelnaMatriz: '',
-          anoDeTerminoDeMandato: '',
+          terminoMandato: '',
           cpf: '',
-          dataDeNascimento: '',
+          dataNascimento: '',
           escolaridade: '',
           cursoProfissao: '',
           telefone: '',
           email: '',
+          papelDiretoria: '',
+          outrosPapeis: '',
+          profissao: '',
+          ativo: '',
+          cadastroNacionalId: 0
         },
         representanteTecnico: {
           nome: '',
@@ -96,7 +101,7 @@ export class QuestionService {
   };
   private readonly utilSrv = inject(UtilService);
   private readonly centralRxjsSrv = inject(CentralRxJsService);
-  constructor() {}
+  constructor() { }
 
   get selectedCnpj(): string {
     if (!this._selectedCnpj) {

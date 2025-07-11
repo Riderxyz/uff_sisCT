@@ -3,7 +3,7 @@
     <div class="col p-0 pr-1">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Nome do Representante Legal</mat-label>
-        <input matInput name="nome" [(ngModel)]="representanteService.getCurrentRepresentante().nome"
+        <input matInput name="nome" [(ngModel)]="representanteService.representanteAtual.nome"
           #nomeCtrl="ngModel" required (blur)="onFieldChange()" />
         <mat-error *ngIf="nomeCtrl.invalid && nomeCtrl.touched">
           Nome do Representante Legal é obrigatório
@@ -15,8 +15,8 @@
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Ano Término mandato da mesa diretora:</mat-label>
         <input matInput name="anoDeTerminoDeMandato"
-          [(ngModel)]="representanteService.getCurrentRepresentante().anoDeTerminoDeMandato"
-          #anoDeTerminoDeMandatoCtrl="ngModel" required mask="0000" placeholder="0000" (focusout)="onFieldChange()" />
+          [(ngModel)]="representanteService.representanteAtual.terminoMandato" #anoDeTerminoDeMandatoCtrl="ngModel"
+          required mask="0000" placeholder="0000" (focusout)="onFieldChange()" />
         <mat-error *ngIf="anoDeTerminoDeMandatoCtrl.invalid && anoDeTerminoDeMandatoCtrl.touched">
           Informe o ano de término do mandato
         </mat-error>
@@ -26,8 +26,8 @@
     <div class="col-2 p-0 pl-1">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>CPF do Representante Legal</mat-label>
-        <input matInput name="cpf" [(ngModel)]="representanteService.getCurrentRepresentante().cpf" #cpfCtrl="ngModel"
-          required mask="000.000.000-00" placeholder="000.000.000-00" (focusout)="onFieldChange()" />
+        <input matInput name="cpf" [(ngModel)]="representanteService.representanteAtual.cpf" #cpfCtrl="ngModel" required
+          mask="000.000.000-00" placeholder="000.000.000-00" (focusout)="onFieldChange()" />
         <mat-error *ngIf="cpfCtrl.invalid && cpfCtrl.touched">
           CPF do Representante Legal é obrigatório
         </mat-error>
@@ -40,9 +40,9 @@
     <div class="col p-0 pl-0">
       <mat-form-field appearance="outline" class="flex-field">
         <mat-label>Data de Nascimento</mat-label>
-        <input matInput name="dataDeNascimento"
-          [(ngModel)]="representanteService.getCurrentRepresentante().dataDeNascimento" #dataDeNascimentoCtrl="ngModel"
-          required mask="00/00/0000" placeholder="dd/mm/aaaa" (focusout)="onFieldChange()" />
+        <input matInput name="dataDeNascimento" [(ngModel)]="representanteService.representanteAtual.dataNascimento"
+          #dataDeNascimentoCtrl="ngModel" required mask="00/00/0000" placeholder="dd/mm/aaaa"
+          (focusout)="onFieldChange()" />
         <mat-error *ngIf="dataDeNascimentoCtrl.invalid && dataDeNascimentoCtrl.touched">
           Data de Nascimento é obrigatória
         </mat-error>
@@ -53,7 +53,7 @@
     <div class="col p-0 pl-0">
       <mat-form-field appearance="outline" class="flex-field">
         <mat-label>Telefone</mat-label>
-        <input matInput name="telefone" [(ngModel)]="representanteService.getCurrentRepresentante().telefone"
+        <input matInput name="telefone" [(ngModel)]="representanteService.representanteAtual.telefone"
           #telefoneCtrl="ngModel" required mask="(00) 00000-0000" placeholder="(00) 00000-0000"
           (focusout)="onFieldChange()" />
         <mat-error *ngIf="telefoneCtrl.invalid && telefoneCtrl.touched">
@@ -65,8 +65,8 @@
     <div class="col p-0 pl-1">
       <mat-form-field appearance="outline" class="flex-field">
         <mat-label>Email</mat-label>
-        <input matInput name="email" [(ngModel)]="representanteService.getCurrentRepresentante().email"
-          #emailCtrl="ngModel" required email placeholder="email@exemplo.com" (blur)="onFieldChange()" />
+        <input matInput name="email" [(ngModel)]="representanteService.representanteAtual.email" #emailCtrl="ngModel"
+          required email placeholder="email@exemplo.com" (blur)="onFieldChange()" />
         <mat-error *ngIf="emailCtrl.invalid && emailCtrl.touched">
           Email é obrigatório
         </mat-error>
@@ -78,8 +78,7 @@
     <div class="col p-0 pl-1">
       <mat-form-field appearance="outline" class="flex-field">
         <mat-label>Qual o seu papel na composição da mesa diretora da Matriz?</mat-label>
-        <mat-select name="mesaDirectoraMatriz"
-          [(ngModel)]="representanteService.getCurrentRepresentante().seuPapelnaMatriz"
+        <mat-select name="mesaDirectoraMatriz" [(ngModel)]="representanteService.representanteAtual.seuPapelnaMatriz"
           #mesaDirectoraMatrizCtrl="ngModel" required>
           <mat-option value="presidente">Presidente</mat-option>
           <mat-option value="vice-presidente">Vice-presidente</mat-option>
@@ -99,7 +98,7 @@
     <div class="col p-0 pl-1">
       <mat-form-field appearance="outline" class="flex-field">
         <mat-label>Escolaridade</mat-label>
-        <mat-select name="escolaridade" [(ngModel)]="representanteService.getCurrentRepresentante().escolaridade"
+        <mat-select name="escolaridade" [(ngModel)]="representanteService.representanteAtual.escolaridade"
           #escolaridadeCtrl="ngModel" required>
           <mat-option value="nível fundamental">Nível Fundamental</mat-option>
           <mat-option value="nível médio">Nível Médio</mat-option>
@@ -116,7 +115,7 @@
     <div class="col p-0 pl-1">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Curso / Profissão</mat-label>
-        <input matInput name="nome" [(ngModel)]="representanteService.getCurrentRepresentante().cursoProfissao"
+        <input matInput name="nome" [(ngModel)]="representanteService.representanteAtual.cursoProfissao"
           #cursoProfissaoCtrl="ngModel" required (blur)="onFieldChange()" />
         <mat-error *ngIf="cursoProfissaoCtrl.invalid && cursoProfissaoCtrl.touched">
           Curso / Profissão obrigatórios

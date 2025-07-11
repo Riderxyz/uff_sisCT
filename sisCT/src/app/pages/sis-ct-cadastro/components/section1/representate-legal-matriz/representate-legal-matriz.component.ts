@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { RepresentanteLegalInterface } from '../../../../../interface/representanteLegal.interface';
-import { CadastroStep1Id } from '../../../../../interface/subSection.interface';
 import { CadastroNacionalService } from '../../../../../services/cadastro-nacional.service';
 import { CentralRxJsService } from '../../../../../services/centralRXJS.service';
 import { QuestionService } from '../../../../../services/question.service';
@@ -33,7 +32,7 @@ export class RepresentateLegalMatrizComponent implements AfterViewInit, OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    // Subscribe to representante legal changes to update the question service
+    this.representanteService.representanteAtual.nome = 'NIlton Local';
     this.representanteService.representante$.subscribe(representante => {
       // Update the question service model
       this.questionSrv.matriz.seccao1.dados.representanteLegal = representante;
@@ -43,6 +42,7 @@ export class RepresentateLegalMatrizComponent implements AfterViewInit, OnInit {
       // Force change detection when status changes
       // console.log('Status changed');
     });
+    // this.representanteService.getCurrentRepresentante();
     this.statusUpdate();
   }
 
@@ -58,7 +58,7 @@ export class RepresentateLegalMatrizComponent implements AfterViewInit, OnInit {
   }
 
   onFieldChange(isItCep?: boolean) {
-this.representanteService.updateRepresentante();
+    this.representanteService.updateRepresentante();
 
     this.statusUpdate();
   }

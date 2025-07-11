@@ -10,9 +10,9 @@ import { EnvironmentService } from './environment.service';
 })
 export class RepresentanteLegalService {
   private apiUrl: string;
-
+  representanteAtual!: RepresentanteLegalInterface;
   // Updated BehaviorSubject with new interface structure
-  private representanteSubject = new BehaviorSubject<RepresentanteLegalInterface>({
+  representanteSubject = new BehaviorSubject<RepresentanteLegalInterface>({
     id: undefined,
     nome: 'Nilton',
     terminoMandato: '',
@@ -25,7 +25,6 @@ export class RepresentanteLegalService {
     ativo: 'S',
     dataAtualizacao: new Date().toISOString(),
     cadastroNacionalId: 0,
-    // Optional fields from old interface
     telefone: '',
     email: '',
     cursoProfissao: '',
@@ -39,14 +38,25 @@ export class RepresentanteLegalService {
     private environmentService: EnvironmentService
   ) {
     this.apiUrl = `${this.environmentService.apiUrl}/representante-legal`;
+
+    // Initialize representanteAtual with the initial value
+    this.representanteAtual = this.representanteSubject.getValue();
+
+    // Keep representanteAtual synchronized with BehaviorSubject
+    this.representanteSubject.subscribe(representante => {
+      // this.representanteAtual = representante;
+    });
   }
 
   getCurrentRepresentante(): RepresentanteLegalInterface {
-    return this.representanteSubject.getValue();
+    this.representanteAtual = this.representanteSubject.getValue();
+    this.representanteAtual.nome = 'mmmmm';
+    return this.representanteAtual;// this.representanteSubject.getValue();
   }
 
   updateRepresentante(): void {
     const current = this.representanteSubject.getValue();
+    this.representanteAtual = current;
     //this.representanteSubject.next({ ...current, ...representante });
     // AQUI VOU CHAMAR O METODO DE UPDATE NO BACKEND
   }
@@ -55,7 +65,7 @@ export class RepresentanteLegalService {
     this.representanteSubject.next({
       id: undefined,
       nome: 'NILTON',
-      terminoMandato: '',
+      terminoMandato: '2015',
       papelDiretoria: '',
       outrosPapeis: '',
       dataNascimento: '',
