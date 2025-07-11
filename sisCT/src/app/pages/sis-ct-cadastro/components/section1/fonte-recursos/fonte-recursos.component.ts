@@ -1,7 +1,9 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
 import { FonteRecursosInterface, NivelFonte } from '../../../../../interface/fonteRecursos.interfaces';
 import { CadastroStep1Id } from '../../../../../interface/subSection.interface';
+import { CadastroNacionalService } from '../../../../../services/cadastro-nacional.service';
 import { QuestionService } from '../../../../../services/question.service';
+import { StatusService } from '../../../../../services/status.service';
 import { UtilService } from '../../../../../services/util.service';
 
 
@@ -13,7 +15,7 @@ import { UtilService } from '../../../../../services/util.service';
 export class FonteRecursosComponent implements AfterViewInit {
   readonly questionSrv: QuestionService = inject(QuestionService);
   readonly utilSrv: UtilService = inject(UtilService);
-  formModel:  FonteRecursosInterface = {
+  formModel: FonteRecursosInterface = {
     receitaBruta: null,
     recursosPublicos: {
       uniao: { possui: false, modalidades: [] },
@@ -28,17 +30,10 @@ export class FonteRecursosComponent implements AfterViewInit {
     },
   };
 
+  selectedModalidades = 2;
+  selectReceitasProprias = 2;
 
-niveisFonte: NivelFonte[] = ['uniao', 'estadual', 'municipal'];
-
-
-
-
-
-
-
-
-
+  niveisFonte: NivelFonte[] = ['uniao', 'estadual', 'municipal'];
   modalidades = [
     'Contrato',
     'Termo de Fomento',
@@ -56,9 +51,32 @@ niveisFonte: NivelFonte[] = ['uniao', 'estadual', 'municipal'];
     { label: 'Venda de produtos', value: 'VendaProdutos' },
     { label: 'Outros', value: 'Outros' },
   ];
-  constructor() {}
+  constructor(
+    public cadastroService: CadastroNacionalService,
+    private statusService: StatusService
+  ) { }
 
-  ngAfterViewInit(): void {}
+
+  ngOnInit(): void {
+    // Get current value from service
+    const currentCadastro = this.cadastroService.getCurrentCadastro();
+    const currentAreaAtuacao = currentCadastro?.stAreaAtuacao;
+
+    // if (currentAreaAtuacao) {
+    //   this.selectedOption = this.opcoes.find(opt => opt.value === currentAreaAtuacao) || null;
+    // }
+
+    // // Subscribe to changes in the cadastro
+    // this.cadastroService.cadastro$.subscribe(cadastro => {
+    //   if (cadastro?.stAreaAtuacao) {
+    //     this.selectedOption = this.opcoes.find(opt => opt.value === cadastro.stAreaAtuacao) || null;
+    //   }
+    // });
+
+    // this.updateStatusService();
+  }
+
+  ngAfterViewInit(): void { }
 
   onFieldChange() {
     this.questionSrv.matriz.seccao1.dados.fonteRecursos = this.formModel;
