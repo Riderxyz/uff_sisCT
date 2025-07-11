@@ -11,20 +11,27 @@ import { EnvironmentService } from './environment.service';
 export class RepresentanteLegalService {
   private apiUrl: string;
 
-  // BehaviorSubject to store and share the current representante legal
+  // Updated BehaviorSubject with new interface structure
   private representanteSubject = new BehaviorSubject<RepresentanteLegalInterface>({
+    id: undefined,
     nome: 'Nilton',
-    anoDeTerminoDeMandato: '',
+    terminoMandato: '',
+    papelDiretoria: '',
+    outrosPapeis: '',
+    dataNascimento: '',
     cpf: '',
-    dataDeNascimento: '',
     escolaridade: '',
-    cursoProfissao: '',
+    profissao: '',
+    ativo: 'S',
+    dataAtualizacao: new Date().toISOString(),
+    cadastroNacionalId: 0,
+    // Optional fields from old interface
     telefone: '',
-    seuPapelnaMatriz: '',
-    email: ''
+    email: '',
+    cursoProfissao: '',
+    seuPapelnaMatriz: ''
   });
 
-  // Observable to expose the representante legal instance
   public representante$ = this.representanteSubject.asObservable();
 
   constructor(
@@ -34,29 +41,34 @@ export class RepresentanteLegalService {
     this.apiUrl = `${this.environmentService.apiUrl}/representante-legal`;
   }
 
-  // Get the current representante legal instance
   getCurrentRepresentante(): RepresentanteLegalInterface {
     return this.representanteSubject.getValue();
   }
 
-  // Update the current representante legal instance
-  updateRepresentante(representante: Partial<RepresentanteLegalInterface>): void {
+  updateRepresentante(): void {
     const current = this.representanteSubject.getValue();
-    this.representanteSubject.next({ ...current, ...representante });
+    //this.representanteSubject.next({ ...current, ...representante });
+    // AQUI VOU CHAMAR O METODO DE UPDATE NO BACKEND
   }
 
-  // Reset the representante legal instance to default values
   resetRepresentante(): void {
     this.representanteSubject.next({
+      id: undefined,
       nome: 'NILTON',
-      anoDeTerminoDeMandato: '',
+      terminoMandato: '',
+      papelDiretoria: '',
+      outrosPapeis: '',
+      dataNascimento: '',
       cpf: '',
-      dataDeNascimento: '',
       escolaridade: '',
-      cursoProfissao: '',
+      profissao: '',
+      ativo: 'S',
+      dataAtualizacao: new Date().toISOString(),
+      cadastroNacionalId: 0,
       telefone: '',
-      seuPapelnaMatriz: '',
-      email: ''
+      email: '',
+      cursoProfissao: '',
+      seuPapelnaMatriz: ''
     });
   }
 
@@ -73,6 +85,14 @@ export class RepresentanteLegalService {
     return this.http.get<RepresentanteLegalInterface>(url)
       .pipe(
         catchError(this.handleError<RepresentanteLegalInterface>(`getById id=${id}`))
+      );
+  }
+
+  getByCadastroNacional(cadastroNacionalId: number): Observable<RepresentanteLegalInterface[]> {
+    const url = `${this.apiUrl}/cadastro/${cadastroNacionalId}`;
+    return this.http.get<RepresentanteLegalInterface[]>(url)
+      .pipe(
+        catchError(this.handleError<RepresentanteLegalInterface[]>(`getByCadastroNacional id=${cadastroNacionalId}`, []))
       );
   }
 
