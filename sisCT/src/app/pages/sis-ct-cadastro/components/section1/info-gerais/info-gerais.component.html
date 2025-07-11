@@ -3,16 +3,16 @@
     <h3>Quanto ao Registro</h3>
   </div>
 
-
+<!--
 
   <div class="col-12" *ngIf="formModel.registro.cnpj && cnpjInvalido">
     <div class="p-2 mb-2 border-round bg-red-100">
       <span class="font-bold text-red-700">CNPJ inválido</span>
     </div>
-  </div>
+  </div> -->
 
   <!-- Razão Social -->
-  <div class="col p-12 pl-1">
+  <div class="col p-12">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Razão social</mat-label>
       <input matInput name="razaoSocial" [(ngModel)]="formModel.registro.razaoSocial" #razaoSocialCtrl="ngModel"
@@ -23,7 +23,7 @@
     </mat-form-field>
   </div>
 
-  <div class="grid col-12 p-0 m-0">
+  <div class="grid col-12">
     <!-- CNPJ, Email e Nome Fantasia na mesma linha -->
     <div class="col-fixed p-0 pr-1" style="width: 200px;">
       <mat-form-field appearance="outline" class="w-full">
