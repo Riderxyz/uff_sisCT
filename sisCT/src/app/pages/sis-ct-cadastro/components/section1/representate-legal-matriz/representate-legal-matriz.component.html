@@ -1,10 +1,11 @@
 <form #representanteLegalForm="ngForm" class="grid">
+  <p>Teste: {{merda}}</p>
   <div class="grid col-12 p-0 m-0">
     <div class="col p-0 pr-1">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Nome do Representante Legal</mat-label>
-        <input matInput name="nome" [(ngModel)]="representanteService.representanteAtual.nome"
-          #nomeCtrl="ngModel" required (blur)="onFieldChange()" />
+        <input matInput name="nome" [(ngModel)]="representanteService.representanteAtual.nome" #nomeCtrl="ngModel"
+          required (blur)="onFieldChange()" />
         <mat-error *ngIf="nomeCtrl.invalid && nomeCtrl.touched">
           Nome do Representante Legal é obrigatório
         </mat-error>
@@ -115,7 +116,7 @@
     <div class="col p-0 pl-1">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Curso / Profissão</mat-label>
-        <input matInput name="nome" [(ngModel)]="representanteService.representanteAtual.cursoProfissao"
+        <input matInput name="profissao" [(ngModel)]="representanteService.representanteAtual.cursoProfissao"
           #cursoProfissaoCtrl="ngModel" required (blur)="onFieldChange()" />
         <mat-error *ngIf="cursoProfissaoCtrl.invalid && cursoProfissaoCtrl.touched">
           Curso / Profissão obrigatórios

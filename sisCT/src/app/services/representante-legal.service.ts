@@ -44,7 +44,7 @@ export class RepresentanteLegalService {
 
     // Keep representanteAtual synchronized with BehaviorSubject
     this.representanteSubject.subscribe(representante => {
-      // this.representanteAtual = representante;
+       this.representanteAtual = representante;
     });
   }
 

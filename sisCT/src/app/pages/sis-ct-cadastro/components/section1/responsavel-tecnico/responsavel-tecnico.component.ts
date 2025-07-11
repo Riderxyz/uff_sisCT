@@ -1,9 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { RepresentanteTecnicoInterface } from '../../../../../interface/representanteTecnico.interface';
-import { CadastroStep1Id } from '../../../../../interface/subSection.interface';
 import { QuestionService } from '../../../../../services/question.service';
-import { RepresentanteTecnicoCrudService } from '../../../../../services/representante-tecnico.service';
+import { RepresentanteTecnicoService } from '../../../../../services/representante-tecnico.service';
 import { UtilService } from '../../../../../services/util.service';
 
 
@@ -15,30 +13,30 @@ import { UtilService } from '../../../../../services/util.service';
 export class ResponsavelTecnicoComponent implements AfterViewInit, OnDestroy {
   readonly questionSrv: QuestionService = inject(QuestionService);
   readonly utilSrv: UtilService = inject(UtilService);
-  readonly representanteTecnicoSrv: RepresentanteTecnicoCrudService = inject(RepresentanteTecnicoCrudService);
+  readonly representanteService: RepresentanteTecnicoService = inject(RepresentanteTecnicoService);
 
   // Use the default instance from the service's BehaviorSubject
-  formModel: RepresentanteTecnicoInterface;
+  // formModel: RepresentanteTecnicoInterface;
 
   private subscription: Subscription = new Subscription();
 
   constructor() {
     // Initialize formModel with the service instance
-    this.formModel = this.representanteTecnicoSrv.getCurrentRepresentanteTecnico();
+    // this.formModel = this.representanteService.getCurrentRepresentanteTecnico();
   }
-  
+
   ngAfterViewInit(): void {
     // Check if questionSrv has data and update the service if needed
     const questionData = this.questionSrv.matriz.seccao1.dados.representanteTecnico;
-    if (questionData && Object.keys(questionData).length > 0) {
-      this.representanteTecnicoSrv.updateRepresentanteTecnico(questionData);
-    }
+    // if (questionData && Object.keys(questionData).length > 0) {
+    //   this.representanteService.updateRepresentanteTecnico(questionData);
+    // }
 
     // Subscribe to changes from the service
-    this.subscription = this.representanteTecnicoSrv.representanteTecnico$.subscribe(data => {
-      this.formModel = data;
+    this.subscription = this.representanteService.representanteTecnico$.subscribe(data => {
+      // this.formModel = data;
       // Update the question service data as well
-      this.questionSrv.matriz.seccao1.dados.representanteTecnico = data;
+      // this.questionSrv.matriz.seccao1.dados.representanteTecnico = data;
     });
   }
 
@@ -49,8 +47,6 @@ export class ResponsavelTecnicoComponent implements AfterViewInit, OnDestroy {
 
   onFieldChange() {
     // Update both the question service and the representante tecnico service
-    this.questionSrv.matriz.seccao1.dados.representanteTecnico = this.formModel;
-    this.representanteTecnicoSrv.updateRepresentanteTecnico(this.formModel);
-    this.questionSrv.onMatrizDatachange(CadastroStep1Id.ResponsavelTecnico);
+    this.representanteService.updateRepresentanteTecnico();
   }
 }

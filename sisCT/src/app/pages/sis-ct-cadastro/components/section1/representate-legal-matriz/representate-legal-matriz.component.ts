@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { RepresentanteLegalInterface } from '../../../../../interface/representanteLegal.interface';
 import { CadastroNacionalService } from '../../../../../services/cadastro-nacional.service';
@@ -23,16 +23,20 @@ export class RepresentateLegalMatrizComponent implements AfterViewInit, OnInit {
   get representante(): RepresentanteLegalInterface {
     return this.representanteService.getCurrentRepresentante();
   }
-
+  merda: string = 'teste';
   isLoadingAdress = false;
   minimumYear = new Date().getFullYear();
   private readonly centralRxjs = inject(CentralRxJsService);
   private statusSubscription?: Subscription;
+  private cdr = inject(ChangeDetectorRef);
 
   constructor() { }
 
   ngOnInit(): void {
     this.representanteService.representanteAtual.nome = 'NIlton Local';
+    this.merda = 'Valor atualizado';
+    this.cdr.detectChanges();
+    
     this.representanteService.representante$.subscribe(representante => {
       // Update the question service model
       this.questionSrv.matriz.seccao1.dados.representanteLegal = representante;
