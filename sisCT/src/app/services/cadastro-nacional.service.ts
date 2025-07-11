@@ -17,69 +17,75 @@ export class CadastroNacionalService {
 
   // BehaviorSubject to store and share the current cadastro nacional
   public cadastroSubject = new BehaviorSubject<CadastroNacional>({
-    PK_CADASTRO_NACIONAL: undefined,
-    DS_OUTRO_CONSELHO_MUNICIPAL: '',
-    DS_INSCRICAO_CONSELHO_ESTADUAL: '',
-    DT_VALIDADE_LICENSA: undefined,
-    NO_FANTASIA: '',
-    NO_RAZAO_SOCIAL: '',
-    NU_CNPJ: '',
-    DS_ATIVIDADE_FILIAL: '',
-    CO_CNAE_PRINCIPAL: '',
-    CO_CNAE_SECUNDARIO: '',
-    VL_RECEITA_BRUTA: 0,
-    CO_OUTRAS_FONTES: 0,
-    DS_OUTRAS_RECEITAS: '',
-    DS_OUTROS: '',
-    NU_PRAZO_PROJETO: 0,
-    DT_INICIO_CEBAS: undefined,
-    DT_TERMINO_CEBAS: undefined,
-    NU_ANO_PROTOCOLO_CEBAS: 0,
-    NU_PROTOCOLO_CEBAS: '',
-    NU_CAPACIDADE_TOTAL: 0,
-    NU_CAPACIDADE_FEMININO: 0,
-    NU_CAPACIDADE_MAES: 0,
-    NU_CAPACIDADE_MASCULINO: 0,
-    NU_CAPACIDADE_IDOSOS: 0,
-    DS_ARTICULACAO_POLITICA: '',
-    DS_ACOES_REALIZADAS: '',
-    DS_TEMAS_TRABALHADOS: '',
-    DS_PERIDIOCIDADE_ATIVIDADE: '',
-    DS_12_PASSOS: '',
-    DS_DEPENDENTES_QUIMICOS: '',
-    DS_GRUPOS_APOIO: '',
-    DS_OUTRA_METODOLOGIA: '',
-    DS_SERVICOS_PSICOSSOCIAL: '',
-    DS_PROFISSIONAIS_PSICOSSOCIAL: '',
-    DS_ACOES_RESSOCIALIZACAO: '',
-    DS_PARCERIAS_RESSOCIALIZACAO: '',
-    DT_ACORDO: undefined,
-    ST_ACEITE: 0,
-    ST_AREA_ATUACAO: 0,
-    ST_AREA_CERTIFICAVEL: 0,
-    ST_POSSUI_FINANCIAMENTO_ESTADUAL: 0,
-    ST_POSSUI_FINANCIAMENTO_ESTADO: 0,
-    ST_POSSUI_FINANCIAMENTO_MUNICIPIO: 0,
-    ST_POSSUI_LICENCA_SANITARIA: 0,
-    ST_POSSUI_CEBAS: 0,
-    ST_POSSUI_REQ_CEBAS_DEPAD: 0,
-    ST_CUMPRE_CONAD: 0,
-    ST_POSSUI_INSCR_MUNICIPAL: 0,
-    ST_POSSUI_INSCR_ESTADUAL: 0,
-    ST_POSSUI_RECONHECIMENTO_PUBLICO: 0,
-    ST_FORMA_ACESSO: 0,
-    ST_ESPACO_COLETIVO: 0,
-    ST_ESPACO_INDIVIDUAL: 0,
-    ST_PARTICIPACAO_PREVENCAO: 0,
-    ST_DOZE_PASSOS: 0,
-    ST_APOIO_DOZE_PASSOS: 0,
-    ST_ATENDIMENTO_PSICOSSOCIAL: 0,
-    ST_RESSOCIALIZACAO: 0,
-    ST_PARCERIA_RESSOCIALIZACAO: 0,
-    ST_ATIVO: 1,
-    DT_ULTIMA_ATUALIZACAO: undefined
+    id: 0,
+    dsOutroConselhoMunicipal: '',
+    dsInscricaoConselhoEstadual: '',
+    dsEmailInstitucional: 'Email',
+    dtValidadeLicensa: '',
+    noFantasia: 'Nome Fantasia',
+    noRazaoSocial: 'Teste',
+    nuCnpj: '324234',
+    nuCpfOwner: '',
+    dsAtividadeFilial: '',
+    coCnaePrincipal: '111',
+    coCnaeSecundario: '2222',
+    vlReceitaBruta: 0,
+    coOutrasFontes: 0,
+    dsOutrasReceitas: '',
+    dsOutros: '',
+    nuPrazoProjeto: 0,
+    dtInicioCebas: '',
+    dtTerminoCebas: '',
+    nuAnoProtocoloCebas: 0,
+    nuProtocoloCebas: '',
+    nuCapacidadeTotal: 0,
+    nuCapacidadeFeminino: 0,
+    nuCapacidadeMaes: 0,
+    nuCapacidadeMasculino: 0,
+    nuCapacidadeIdosos: 0,
+    dsArticulacaoPolitica: '',
+    dsAcoesRealizadas: '',
+    dsTemasTrabalhados: '',
+    dsPeridiocidadeAtividade: '',
+    ds12Passos: '',
+    dsDependentesQuimicos: '',
+    dsGruposApoio: '',
+    dsOutraMetodologia: '',
+    dsServicosPsicossocial: '',
+    dsProfissionaisPsicossocial: '',
+    dsAcoesRessocializacao: '',
+    dsParceriasRessocializacao: '',
+    dtAcordo: '',
+    stAceite: '0',
+    stAreaAtuacao: '0',
+    stAreaCertificavel: '0',
+    stPossuiFinanciamentoEstadual: '0',
+    stPossuiFinanciamentoEstado: '0',
+    stPossuiFinanciamentoMunicipio: '0',
+    stPossuiLicencaSanitaria: '0',
+    stPossuiCebas: '0',
+    stPossuiReqCebasDepad: '0',
+    stCumpreConad: '0',
+    stPossuiInscrMunicipal: '0',
+    stPossuiInscrEstadual: '0',
+    stPossuiReconhecimentoPublico: '0',
+    stPeriodicidadeCapacitacao: '0',
+    stCapacidadeAtendimento: '0',
+    stFormaAcesso: '0',
+    stEstruturaFisica: '0',
+    stEspacoColetivo: '0',
+    stEspacoIndividual: '0',
+    stPeriodicidadePrevencao: '0',
+    stParticipacaoPrevencao: '0',
+    stDozePassos: '0',
+    stApoioDozePassos: '0',
+    stAtendimentoPsicossocial: '0',
+    stRessocializacao: '0',
+    stParceriaRessocializacao: '0',
+    stStatusCadastro: '0',
+    stAtivo: '1',
+    dtUltimaAtualizacao: new Date().toISOString()
   });
-
 
   // Observable to expose the cadastro instance
   public cadastro$ = this.cadastroSubject.asObservable();
@@ -105,12 +111,14 @@ export class CadastroNacionalService {
 
   // Reset the cadastro instance to default values
   resetCadastro(): void {
-    this.cadastroSubject.next({
-      ST_AREA_ATUACAO: 0,
-      NO_FANTASIA: '',
-      NU_CNPJ: '',
-      ST_ATIVO: 1
-    });
+    const resetValues: Partial<CadastroNacional> = {
+      stAreaAtuacao: '0',
+      noFantasia: '',
+      nuCnpj: '',
+      stAtivo: '1',
+      dtUltimaAtualizacao: new Date().toISOString()
+    };
+    this.cadastroSubject.next({ ...this.cadastroSubject.getValue(), ...resetValues });
   }
 
   getAll(): Observable<CadastroNacional[]> {
@@ -136,7 +144,7 @@ export class CadastroNacionalService {
   }
 
   update(cadastroNacional: CadastroNacional): Observable<CadastroNacional> {
-    const url = `${this.apiUrl}/${cadastroNacional.PK_CADASTRO_NACIONAL}`;
+    const url = `${this.apiUrl}/${cadastroNacional.id}`;
     return this.http.put<CadastroNacional>(url, cadastroNacional)
       .pipe(
         catchError(this.handleError<CadastroNacional>('update'))

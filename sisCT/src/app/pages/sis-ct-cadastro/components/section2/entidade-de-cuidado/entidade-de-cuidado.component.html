@@ -162,70 +162,77 @@
         Como se dá a articulação com outras políticas públicas e rede de apoio
       </label>
       <div class="flex flex-column">
-      <mat-checkbox
+        <mat-checkbox
           name="outrasPoliticasPublicas_RedesdeApoioParceriasNormais"
           [(ngModel)]="
             formModel.outrasPoliticasPublicas_RedesdeApoio.parceriasNormais
           "
         >
-           Parcerias formais
+          Parcerias formais
         </mat-checkbox>
-          <mat-checkbox
+        <mat-checkbox
           name="outrasPoliticasPublicas_RedesdeApoioEncaminhamentosInformais"
           [(ngModel)]="
-            formModel.outrasPoliticasPublicas_RedesdeApoio.encaminhamentosInformais
+            formModel.outrasPoliticasPublicas_RedesdeApoio
+              .encaminhamentosInformais
           "
         >
-           Encaminhamentos informais (Exemplo: rede de contatos, troca de informações entre profissionais)
+          Encaminhamentos informais (Exemplo: rede de contatos, troca de
+          informações entre profissionais)
         </mat-checkbox>
 
-          <mat-checkbox
+        <mat-checkbox
           name="outrasPoliticasPublicas_RedesdeApoioParticipacaoComites"
           [(ngModel)]="
             formModel.outrasPoliticasPublicas_RedesdeApoio.participacaoComites
           "
         >
-           Participação em comitês ou fóruns intersetoriais (Exemplo: Comitê Intersetorial de Políticas sobre Drogas, Fórum de Assistência Social e de Saúde)
+          Participação em comitês ou fóruns intersetoriais (Exemplo: Comitê
+          Intersetorial de Políticas sobre Drogas, Fórum de Assistência Social e
+          de Saúde)
         </mat-checkbox>
 
-          <mat-checkbox
+        <mat-checkbox
           name="outrasPoliticasPublicas_RedesdeApoioAtendimentoDeterminacaoJudicial"
           [(ngModel)]="
-            formModel.outrasPoliticasPublicas_RedesdeApoio.atendimentoDeterminacaoJudicial
+            formModel.outrasPoliticasPublicas_RedesdeApoio
+              .atendimentoDeterminacaoJudicial
           "
         >
-           Atendimento de usuários a partir de determinação judicial ou Ministério Público (Exemplo: medidas socioeducativas, alternativas penais.)
+          Atendimento de usuários a partir de determinação judicial ou
+          Ministério Público (Exemplo: medidas socioeducativas, alternativas
+          penais.)
         </mat-checkbox>
 
-          <mat-checkbox
+        <mat-checkbox
           name="outrasPoliticasPublicas_RedesdeApoioProjetosFinanciadosSetorPublico"
           [(ngModel)]="
-            formModel.outrasPoliticasPublicas_RedesdeApoio.projetosFinanciadosSetorPublico
+            formModel.outrasPoliticasPublicas_RedesdeApoio
+              .projetosFinanciadosSetorPublico
           "
         >
-           Projetos ou programas específicos financiados pelo setor público (Exemplo: Programas municipais ou federais de atenção à dependência química, acolhimento institucional)
+          Projetos ou programas específicos financiados pelo setor público
+          (Exemplo: Programas municipais ou federais de atenção à dependência
+          química, acolhimento institucional)
         </mat-checkbox>
 
-          <mat-checkbox
+        <mat-checkbox
           name="outrasPoliticasPublicas_RedesdeApoioEncaminhamentosOrganizacoesSociedadeCivil"
           [(ngModel)]="
-            formModel.outrasPoliticasPublicas_RedesdeApoio.encaminhamentosOrganizacoesSociedadeCivil
+            formModel.outrasPoliticasPublicas_RedesdeApoio
+              .encaminhamentosOrganizacoesSociedadeCivil
           "
         >
-           Encaminhamentos por organizações da sociedade civil (Exemplo: outras entidades, igrejas)
+          Encaminhamentos por organizações da sociedade civil (Exemplo: outras
+          entidades, igrejas)
         </mat-checkbox>
 
-                 <mat-checkbox
+        <mat-checkbox
           name="outrasPoliticasPublicas_RedesdeApoioEncaminhamentosOutros"
-          [(ngModel)]="
-            formModel.outrasPoliticasPublicas_RedesdeApoio.outros
-          "
+          [(ngModel)]="formModel.outrasPoliticasPublicas_RedesdeApoio.outros"
         >
-           Outro Especificar
+          Outro Especificar
         </mat-checkbox>
-
-
-
 
         @if (formModel.outrasPoliticasPublicas_RedesdeApoio.outros) {
         <mat-form-field appearance="outline">
@@ -249,41 +256,39 @@
   <h2 class="col-12">7.2 Quanto à Estrutura física</h2>
   <!-- Seção 7.2 - Estrutura física -->
 
-
-    <div class="col-12 md:col-2">
-      <p>O espaço da entidade: </p>
-      <mat-radio-group
-        [(ngModel)]="formModel.espacoEntidade"
-        name="espacoEntidade"
-        class="flex flex-column"
+  <div class="col-12 md:col-2">
+    <p>O espaço da entidade:</p>
+    <mat-radio-group
+      [(ngModel)]="formModel.espacoEntidade"
+      name="espacoEntidade"
+      class="flex flex-column"
+    >
+      <mat-radio-button value="proprio">Próprio</mat-radio-button>
+      <mat-radio-button value="cedido">Cedido</mat-radio-button>
+      <mat-radio-button value="alugado">Alugado</mat-radio-button>
+      <mat-radio-button value="naoSabeInformar"
+        >Não sabe informar</mat-radio-button
       >
-        <mat-radio-button value="proprio">Próprio</mat-radio-button>
-        <mat-radio-button value="cedido">Cedido</mat-radio-button>
-        <mat-radio-button value="alugado">Alugado</mat-radio-button>
-        <mat-radio-button value="naoSabeInformar"
-          >Não sabe informar</mat-radio-button
-        >
-      </mat-radio-group>
-    </div>
+    </mat-radio-group>
+  </div>
 
-    <div class="col-12 md:col-5">
-      <mat-checkbox
-        [(ngModel)]="formModel.possuiEspacoAtendimentoColetivo"
-        name="possuiEspacoAtendimentoColetivo"
-      >
-        A entidade possui espaço para atendimento coletivo ou de família?
-      </mat-checkbox>
-    </div>
+  <div class="col-12 md:col-5">
+    <mat-checkbox
+      [(ngModel)]="formModel.possuiEspacoAtendimentoColetivo"
+      name="possuiEspacoAtendimentoColetivo"
+    >
+      A entidade possui espaço para atendimento coletivo ou de família?
+    </mat-checkbox>
+  </div>
 
-    <div class="col-12 md:col-5">
-      <mat-checkbox
-        [(ngModel)]="formModel.possuiEspacoAtendimentoIndividualizado"
-        name="possuiEspacoAtendimentoIndividualizado"
-      >
-        A entidade possui espaço para atendimento individualizado?
-      </mat-checkbox>
-    </div>
-
+  <div class="col-12 md:col-5">
+    <mat-checkbox
+      [(ngModel)]="formModel.possuiEspacoAtendimentoIndividualizado"
+      name="possuiEspacoAtendimentoIndividualizado"
+    >
+      A entidade possui espaço para atendimento individualizado?
+    </mat-checkbox>
+  </div>
 
   <h2 class="col-12">7.3 Quanto ao quadro de Recursos Humanos</h2>
   <div class="col-12">
@@ -297,16 +302,20 @@
   </div>
 
   <div class="col-12" *ngIf="formModel.possuiQuadroTecnico">
-<div style=" width: 100%;" class="">
-      <button mat-stroked-button color="primary" (click)="adicionarProfissional()">
-      <mat-icon>add</mat-icon> Cadastrar Profissional
-    </button>
-    <div class="p-1">
-      <ag-grid-angular style="width: 100%; height: 20vh;"
-        [gridOptions]="profissionaisTabelaGridOptions"></ag-grid-angular>
+    <div style="width: 100%" class="">
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="adicionarProfissional()"
+      >
+        <mat-icon>add</mat-icon> Cadastrar Profissional
+      </button>
+      <ag-grid-angular
+        style="width: 100%; height: 20vh"
+        [gridOptions]="profissionaisTabelaGridOptions"
+      ></ag-grid-angular>
     </div>
     </div>
-  </div>
 
   <h2 class="col-12">7.4 Quanto ao Reconhecimento da entidade no município</h2>
   <div class="col-4">
@@ -401,11 +410,10 @@
   </div>
   <h2 class="col-12">7.5 Quanto às Atividades desenvolvidas</h2>
   <div class="col-12">
-    <h3 class="section-title">7.5 Quanto às Atividades desenvolvidas</h3>
-    <p class="help-text">
+    <!--     <p class="help-text">
       Será preciso criar um campo para cada entidade marcar contra "ção de
       ativação", relembrando múltiplas escolhas.
-    </p>
+    </p> -->
   </div>
 
   <div class="col-12">
@@ -447,41 +455,39 @@
     </div>
   </div>
 
-  <div class="col-12 p-mt-3">
+  <div class="col-2">
     <p>Público-alvo:</p>
-    <div class="grid">
-      <div class="col-6">
-        <mat-checkbox
-          [(ngModel)]="formModel.publicoAlvoAtividades.feminino"
-          name="femininoAtiv"
-          >Feminino</mat-checkbox
-        >
-      </div>
-      <div class="col-6">
-        <mat-checkbox
-          [(ngModel)]="formModel.publicoAlvoAtividades.masculino"
-          name="masculinoAtiv"
-          >Masculino</mat-checkbox
-        >
-      </div>
-      <div class="col-6">
-        <mat-checkbox
-          [(ngModel)]="formModel.publicoAlvoAtividades.criancaAdolescente"
-          name="criancaAdolescenteAtiv"
-          >Criança e Adolescente</mat-checkbox
-        >
-      </div>
-      <div class="col-6">
-        <mat-checkbox
-          [(ngModel)]="formModel.publicoAlvoAtividades.idosos"
-          name="idososAtiv"
-          >Idosos</mat-checkbox
-        >
-      </div>
-    </div>
+  </div>
+  <div class="col-1">
+    <mat-checkbox
+      [(ngModel)]="formModel.publicoAlvoAtividades.feminino"
+      name="femininoAtiv"
+      >Feminino</mat-checkbox
+    >
+  </div>
+  <div class="col-1">
+    <mat-checkbox
+      [(ngModel)]="formModel.publicoAlvoAtividades.masculino"
+      name="masculinoAtiv"
+      >Masculino</mat-checkbox
+    >
+  </div>
+  <div class="col-1">
+    <mat-checkbox
+      [(ngModel)]="formModel.publicoAlvoAtividades.criancaAdolescente"
+      name="criancaAdolescenteAtiv"
+      >Criança e Adolescente</mat-checkbox
+    >
+  </div>
+  <div class="col-1">
+    <mat-checkbox
+      [(ngModel)]="formModel.publicoAlvoAtividades.idosos"
+      name="idososAtiv"
+      >Idosos</mat-checkbox
+    >
   </div>
 
-  <div class="col-12 p-mt-3">
+  <div class="col-6 p-mt-3">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Capacidade de atendimento</mat-label>
       <input
@@ -501,7 +507,6 @@
       <mat-radio-button [value]="true">Sim</mat-radio-button>
       <mat-radio-button [value]="false">Não</mat-radio-button>
     </mat-radio-group>
-    <p class="help-text">Se marcar "não", abrir o seguinte campo:</p>
   </div>
 
   <div class="col-12" *ngIf="!formModel.servicoGratuito">
@@ -515,21 +520,24 @@
     </mat-form-field>
 
     <div class="grid p-mt-2">
-      <div class="col-6">
+      <div class="col-12">
+        O valor cobrado custeia quais aspectos da entidade?
+      </div>
+      <div class="col-3">
         <mat-checkbox
           [(ngModel)]="formModel.custosEspecificosEntidade.materialConsumo"
           name="materialConsumo"
           >Material de consumo</mat-checkbox
         >
       </div>
-      <div class="col-6">
+      <div class="col-3">
         <mat-checkbox
           [(ngModel)]="formModel.custosEspecificosEntidade.rh"
           name="rh"
           >RH</mat-checkbox
         >
       </div>
-      <div class="col-6">
+      <div class="col-3">
         <mat-checkbox
           [(ngModel)]="
             formModel.custosEspecificosEntidade.despesasAdministrativas
@@ -538,7 +546,7 @@
           >Despesas administrativas</mat-checkbox
         >
       </div>
-      <div class="col-6">
+      <div class="col-3">
         <mat-checkbox
           [(ngModel)]="formModel.custosEspecificosEntidade.outros"
           name="outrosCustos"
@@ -582,7 +590,6 @@
           name="apenasVoluntarios"
           >Apenas voluntários</mat-checkbox
         >
-        <p class="help-text">Se marcar essa item, abrir o seguinte campo:</p>
       </div>
       <div class="col-6">
         <mat-checkbox
@@ -813,7 +820,7 @@
         <mat-radio-button [value]="true">Sim</mat-radio-button>
         <mat-radio-button [value]="false">Não</mat-radio-button>
       </mat-radio-group>
-      <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
+
     </div>
 
     <div class="col-12" *ngIf="formModel.entidadeAdota12Passos">
@@ -844,7 +851,7 @@
         <mat-radio-button [value]="true">Sim</mat-radio-button>
         <mat-radio-button [value]="false">Não</mat-radio-button>
       </mat-radio-group>
-      <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
+
     </div>
 
     <div class="col-12" *ngIf="formModel.oferecerGruposApoio12Passos">
@@ -880,7 +887,6 @@
         <mat-radio-button [value]="true">Sim</mat-radio-button>
         <mat-radio-button [value]="false">Não</mat-radio-button>
       </mat-radio-group>
-      <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
     </div>
 
     <div class="col-12" *ngIf="formModel.oferecerAtendimentoPsicossocial">
@@ -988,7 +994,6 @@
         <mat-radio-button [value]="true">Sim</mat-radio-button>
         <mat-radio-button [value]="false">Não</mat-radio-button>
       </mat-radio-group>
-      <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
     </div>
 
     <div class="col-12" *ngIf="formModel.desenvolveAcoesRessocializacao">
@@ -1049,7 +1054,6 @@
         <mat-radio-button [value]="true">Sim</mat-radio-button>
         <mat-radio-button [value]="false">Não</mat-radio-button>
       </mat-radio-group>
-      <p class="help-text">Se marcar "sim", abrir o seguinte campo</p>
     </div>
 
     <div class="col-12" *ngIf="formModel.possuiParceriasEmpresasInstituicoes">
@@ -1107,6 +1111,17 @@
             name="outrosParceria"
             >Outros</mat-checkbox
           >
+        </div>
+
+          <div class="col-12" *ngIf="formModel.tiposParceriaRessocializacao.outros">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Especificar outras parcerias</mat-label>
+            <input
+              matInput
+              [(ngModel)]="formModel.tiposParceriaRessocializacao.outrosEspecificar"
+              name="outrasAcoesRessocEsp"
+            />
+          </mat-form-field>
         </div>
       </div>
     </div>

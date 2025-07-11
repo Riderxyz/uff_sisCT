@@ -7,6 +7,7 @@ export interface RepresentanteTecnicoInterface {
   telefone: string;
   email: string;
   possuiExperienciaComprovada: boolean;
+  possuiResponsavelTecnicoSubstituto: boolean;
   representanteTecnicoSubstituto?: RepresentanteTecnicoSubstitutoInterface;
 }
 

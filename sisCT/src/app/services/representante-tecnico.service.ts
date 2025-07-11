@@ -21,6 +21,7 @@ export class RepresentanteTecnicoCrudService {
     cursoProfissao: '',
     telefone: '',
     email: '',
+    possuiResponsavelTecnicoSubstituto: false,
     possuiExperienciaComprovada: false
   });
 
@@ -93,7 +94,11 @@ export class RepresentanteTecnicoCrudService {
     this.representanteTecnicoSubject.next({ ...current, ...representante });
   }
 
-  // Reset the representante tecnico instance to default values
+  /**
+   *
+   *
+   * @memberof RepresentanteTecnicoCrudService
+   */
   resetRepresentanteTecnico(): void {
     this.representanteTecnicoSubject.next({
       nome: '',
@@ -103,6 +108,7 @@ export class RepresentanteTecnicoCrudService {
       cursoProfissao: '',
       telefone: '',
       email: '',
+      possuiResponsavelTecnicoSubstituto: false,
       possuiExperienciaComprovada: false
     });
   }
