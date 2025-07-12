@@ -46,6 +46,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
   readonly http: HttpClient = inject(HttpClient);
   readonly dialog: MatDialog = inject(MatDialog);
   readonly centralRxjs: CentralRxJsService = inject(CentralRxJsService);
+  readonly cadastroService: CadastroNacionalService = inject(CadastroNacionalService);
 
   // CNAE filter controls
   cnaeFilterPrincipal: FormControl = new FormControl('');
@@ -96,7 +97,6 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
 
   constructor(
     private cnaeService: CnaeService,
-    public cadastroService: CadastroNacionalService,
     private enderecoService: EnderecoService,
     private statusService: StatusService
   ) {
@@ -269,9 +269,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
       }
       this.verificarFilial(this.formModel.registro.cnpj);
 
-      this.cadastroService.updateCadastro({
-        nuCnpj: this.formModel.registro.cnpj
-      });
+      this.cadastroService.updateCadastro();
     }
 
     this.questionSrv.matriz.seccao1.dados.informacaoGerais = this.formModel;
@@ -394,13 +392,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
   }
 
   updateCadastroNacional() {
-    this.cadastroService.updateCadastro({
-      nuCnpj: this.formModel.registro.cnpj,
-      noFantasia: this.formModel.registro.nomeFantasia,
-      noRazaoSocial: this.formModel.registro.razaoSocial,
-      coCnaePrincipal: this.formModel.registro.codigoDeAtividadesEconomicasPrimarias,
-      coCnaeSecundario: this.formModel.registro.codigoDeAtividadesEconomicasSecundarias as string
-    });
+    this.cadastroService.updateCadastro();
 
     this.updateEnderecoFromForm();
     this.statusUpdate();
@@ -444,9 +436,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
     if (!value) return;
 
     this.formModel.registro.codigoDeAtividadesEconomicasPrimarias = value;
-    this.cadastroService.updateCadastro({
-      coCnaePrincipal: value
-    });
+    this.cadastroService.updateCadastro();
     this.onFieldChange();
   }
 
@@ -455,9 +445,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
     const cnae = this.cnaes.find(c => c.id === value);
     if (cnae) {
       this.formModel.registro.codigoDeAtividadesEconomicasPrimarias = cnae.id;
-      this.cadastroService.updateCadastro({
-        coCnaePrincipal: cnae.id
-      });
+      this.cadastroService.updateCadastro();
       this.onFieldChange();
     }
   }
@@ -472,9 +460,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
     if (!value) return;
 
     this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = value;
-    this.cadastroService.updateCadastro({
-      coCnaeSecundario: value
-    });
+    this.cadastroService.updateCadastro();
     this.onFieldChange();
   }
 
@@ -483,10 +469,8 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
     const cnae = this.cnaes.find(c => c.id === value);
     if (cnae) {
       this.formModel.registro.codigoDeAtividadesEconomicasSecundarias = cnae.id;
-      this.cadastroService.updateCadastro({
-        coCnaeSecundario: cnae.id
-      });
-      this.onFieldChange();
+      this.cadastroService.updateCadastro();
+      this.onFieldChange(); //d
     } else {
       this.cnaeFilterSecundario.setValue(this.formModel.registro.codigoDeAtividadesEconomicasSecundarias);
     }

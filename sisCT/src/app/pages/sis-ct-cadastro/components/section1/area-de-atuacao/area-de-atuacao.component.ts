@@ -68,9 +68,7 @@ export class AreaDeAtuacaoComponent implements OnInit {
   onSelectChange(): void {
     if (this.selectedOption) {
       // Update the cadastro nacional with the selected area de atuacao
-      this.cadastroService.updateCadastro({
-        stAreaAtuacao: this.selectedOption.value
-      });
+      this.cadastroService.updateCadastro();
     }
     this.updateStatusService();
   }

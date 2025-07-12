@@ -15,8 +15,8 @@
   <div class="col p-12 pl-1">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Razão social</mat-label>
-      <input matInput name="razaoSocial" [(ngModel)]="formModel.registro.razaoSocial" #razaoSocialCtrl="ngModel"
-        required (blur)="onFieldChange()" />
+      <input matInput name="razaoSocial" [(ngModel)]="cadastroService.cadastroAtual.noRazaoSocial"
+        #razaoSocialCtrl="ngModel" required (blur)="onFieldChange()" />
       <mat-error *ngIf="razaoSocialCtrl.invalid && razaoSocialCtrl.touched">
         Razão Social Obrigatória
       </mat-error>
@@ -28,7 +28,7 @@
     <div class="col-fixed p-0 pr-1" style="width: 200px;">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>CNPJ</mat-label>
-        <input matInput name="cnpj" [(ngModel)]="formModel.registro.cnpj" #cnpjFieldCtrl="ngModel" required
+        <input matInput name="cnpj" [(ngModel)]="cadastroService.cadastroAtual.nuCnpj" #cnpjFieldCtrl="ngModel" required
           mask="00.000.000/0000-00" placeholder="00.000.000/0000-00" (blur)="validateCnpj(cnpjFieldCtrl)" />
         <!-- <mat-hint>O CNPJ é a primeira regra de identificação da entidade</mat-hint> -->
         <mat-error *ngIf="cnpjFieldCtrl.invalid && cnpjFieldCtrl.touched">
@@ -41,7 +41,7 @@
     <div class="col-fixed p-0 px-1" style="width: 250px;">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Email Institucional</mat-label>
-        <input matInput name="email" [(ngModel)]="formModel.registro.emailInstitucional"
+        <input matInput name="email" [(ngModel)]="cadastroService.cadastroAtual.dsEmailInstitucional"
           #emailInstitucionalCtrl="ngModel" email required (blur)="onFieldChange()" />
         <mat-error *ngIf="emailInstitucionalCtrl.invalid && emailInstitucionalCtrl.touched">
           {{
@@ -57,8 +57,8 @@
     <div class="col p-0 pl-1">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Nome Fantasia</mat-label>
-        <input matInput name="nomeFantasia" [(ngModel)]="formModel.registro.nomeFantasia" #nomeFantasiaCtrl="ngModel"
-          required (blur)="onFieldChange()" />
+        <input matInput name="nomeFantasia" [(ngModel)]="cadastroService.cadastroAtual.noFantasia"
+          #nomeFantasiaCtrl="ngModel" required (blur)="onFieldChange()" />
         <mat-error *ngIf="nomeFantasiaCtrl.invalid && nomeFantasiaCtrl.touched">
           Nome fantasia é obrigatório
         </mat-error>
@@ -83,7 +83,8 @@
         <mat-form-field appearance="outline" class="w-full mb-3">
           <mat-label>Atividade Econômica Principal (CNAE)</mat-label>
           <input type="text" matInput name="atividadePrincipal" [formControl]="cnaeFilterPrincipal"
-            [matAutocomplete]="autoPrincipal" (blur)="onCnaePrincipalBlur()">
+            [matAutocomplete]="autoPrincipal" (blur)="onCnaePrincipalBlur()"
+            [(ngModel)]="cadastroService.cadastroAtual.coCnaePrincipal">
           <mat-autocomplete #autoPrincipal="matAutocomplete" [displayWith]="displayCnae.bind(this)"
             (optionSelected)="onCnaePrincipalSelected($event)">
             <mat-option *ngFor="let cnae of filteredCnaesPrincipal | async" [value]="cnae.id">
@@ -100,7 +101,8 @@
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Atividade Econômica Secundária (CNAE)</mat-label>
           <input type="text" matInput name="atividadeSecundaria" #atividadeSecundariaInput
-            [formControl]="cnaeFilterSecundario" [matAutocomplete]="autoSecundario" (blur)="onCnaeSecundarioBlur()">
+            [formControl]="cnaeFilterSecundario" [matAutocomplete]="autoSecundario" (blur)="onCnaeSecundarioBlur()"
+            [(ngModel)]="cadastroService.cadastroAtual.coCnaeSecundario">
           <mat-autocomplete #autoSecundario="matAutocomplete" [displayWith]="displayCnae.bind(this)"
             (optionSelected)="onCnaeSecundarioSelected($event)">
             <mat-option *ngFor="let cnae of filteredCnaesSecundario | async" [value]="cnae.id">
@@ -124,9 +126,9 @@
         <!-- CEP -->
         <div class="col-1 form-field">
           <mat-form-field appearance="outline" class="w-full">
-            <mat-label>CEP</mat-label>
-            <input matInput name="cep" [(ngModel)]="formModel.localizacao.cep" #cepCtrl="ngModel" required
-              mask="00000-000" placeholder="00000-000" (ngModelChange)="onFieldChange(true)" />
+            <mat-label>CEP AJUSTAR</mat-label>
+            <input matInput name="cep" [(ngModel)]="cadastroService.cadastroAtual.ds12Passos" #cepCtrl="ngModel"
+              required mask="00000-000" placeholder="00000-000" (ngModelChange)="onFieldChange(true)" />
             @if ( isLoadingAdress ) {
             <i matSuffix class="fa-solid fa-spin fa-arrows-spin p-3"></i>
             }

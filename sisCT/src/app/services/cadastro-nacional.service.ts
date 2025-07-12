@@ -1,92 +1,97 @@
 // src/app/services/cadastro-nacional.service.ts
 
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { CadastroNacional } from '../interfaces_crud/cadastro-nacional.interface';
 import { EnvironmentService } from './environment.service';
+import { UtilService } from './util.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CadastroNacionalService {
+  readonly utilSrv: UtilService = inject(UtilService);
   private apiUrl: string;
 
   public areasAtuacoes: any[] = []; // Array para armazenar itens selecionados
 
   // BehaviorSubject to store and share the current cadastro nacional
   public cadastroSubject = new BehaviorSubject<CadastroNacional>({
-    id: 0,
-    dsOutroConselhoMunicipal: '',
-    dsInscricaoConselhoEstadual: '',
-    dsEmailInstitucional: 'Email',
-    dtValidadeLicensa: '2025-01-01',
-    noFantasia: 'Nome Fantasia teste',
-    noRazaoSocial: 'Teste',
-    nuCnpj: '324234',
-    nuCpfOwner: '',
-    dsAtividadeFilial: '',
-    coCnaePrincipal: '111',
-    coCnaeSecundario: '2222',
-    vlReceitaBruta: 0,
-    coOutrasFontes: 0,
-    dsOutrasReceitas: '',
-    dsOutros: '',
-    nuPrazoProjeto: 0,
-    dtInicioCebas: '',
-    dtTerminoCebas: '',
-    nuAnoProtocoloCebas: 0,
-    nuProtocoloCebas: '',
-    nuCapacidadeTotal: 0,
-    nuCapacidadeFeminino: 0,
-    nuCapacidadeMaes: 0,
-    nuCapacidadeMasculino: 0,
-    nuCapacidadeIdosos: 0,
-    dsArticulacaoPolitica: '',
-    dsAcoesRealizadas: '',
-    dsTemasTrabalhados: '',
-    dsPeridiocidadeAtividade: '',
-    ds12Passos: '',
-    dsDependentesQuimicos: '',
-    dsGruposApoio: '',
-    dsOutraMetodologia: '',
-    dsServicosPsicossocial: '',
-    dsProfissionaisPsicossocial: '',
-    dsAcoesRessocializacao: '',
-    dsParceriasRessocializacao: '',
-    dtAcordo: '',
-    stAceite: '0',
-    stAreaAtuacao: '0',
-    stAreaCertificavel: '0',
-    stPossuiFinanciamentoEstadual: '0',
-    stPossuiFinanciamentoEstado: '0',
-    stPossuiFinanciamentoMunicipio: '0',
-    stPossuiLicencaSanitaria: '',
-    stPossuiCebas: '0',
-    stPossuiReqCebasDepad: '0',
-    stCumpreConad: '0',
-    stPossuiInscrMunicipal: '0',
-    stPossuiInscrEstadual: '0',
-    stPossuiReconhecimentoPublico: '0',
-    stPeriodicidadeCapacitacao: '0',
-    stCapacidadeAtendimento: '0',
-    stFormaAcesso: '0',
-    stEstruturaFisica: '0',
-    stEspacoColetivo: '0',
-    stEspacoIndividual: '0',
-    stPeriodicidadePrevencao: '0',
-    stParticipacaoPrevencao: '0',
-    stDozePassos: '0',
-    stApoioDozePassos: '0',
-    stAtendimentoPsicossocial: '0',
-    stRessocializacao: '0',
-    stParceriaRessocializacao: '0',
-    stStatusCadastro: '0',
-    stAtivo: '1',
-    dtUltimaAtualizacao: new Date().toISOString()
+    "id": 0,
+    "dsOutroConselhoMunicipal": "",
+    "dsInscricaoConselhoEstadual": "",
+    "dsEmailInstitucional": "",
+    "dtValidadeLicensa": "",
+    "noFantasia": "",
+    "noRazaoSocial": "",
+    "nuCnpj": "",
+    "nuCpfOwner": "",
+    "dsAtividadeFilial": "",
+    "coCnaePrincipal": "",
+    "coCnaeSecundario": "",
+    "vlReceitaBruta": 0,
+    "coOutrasFontes": 0,
+    "dsOutrasReceitas": "",
+    "dsOutros": "",
+    "nuPrazoProjeto": 0,
+    "dtInicioCebas": "",
+    "dtTerminoCebas": "",
+    "nuAnoProtocoloCebas": 0,
+    "nuProtocoloCebas": "",
+    "nuCapacidadeTotal": 0,
+    "nuCapacidadeFeminino": 0,
+    "nuCapacidadeMaes": 0,
+    "nuCapacidadeMasculino": 0,
+    "nuCapacidadeIdosos": 0,
+    "dsArticulacaoPolitica": "",
+    "dsAcoesRealizadas": "",
+    "dsTemasTrabalhados": "",
+    "dsPeridiocidadeAtividade": "",
+    "ds12Passos": "",
+    "dsDependentesQuimicos": "",
+    "dsGruposApoio": "",
+    "dsOutraMetodologia": "",
+    "dsServicosPsicossocial": "",
+    "dsProfissionaisPsicossocial": "",
+    "dsAcoesRessocializacao": "",
+    "dsParceriasRessocializacao": "",
+    "dtAcordo": "",
+    "stAceite": "",
+    "stAreaAtuacao": "",
+    "stAreaCertificavel": "",
+    "stPossuiFinanciamentoEstadual": "",
+    "stPossuiFinanciamentoEstado": "",
+    "stPossuiFinanciamentoMunicipio": "",
+    "stPossuiLicencaSanitaria": "",
+    "stPossuiCebas": "",
+    "stPossuiReqCebasDepad": "",
+    "stCumpreConad": "",
+    "stPossuiInscrMunicipal": "",
+    "stPossuiInscrEstadual": "",
+    "stPossuiReconhecimentoPublico": "",
+    // "stArticulacaoPublica": "",
+    "stPeriodicidadeCapacitacao": "",
+    "stCapacidadeAtendimento": "",
+    // "stEcCapacidadeAtendimento": "",
+    "stFormaAcesso": "",
+    "stEstruturaFisica": "",
+    "stEspacoColetivo": "",
+    // "stPossuiQuadroTecnico": "",
+    "stEspacoIndividual": "",
+    // "stEspacoEntidade": "",
+    "stPeriodicidadePrevencao": "",
+    "stParticipacaoPrevencao": "",
+    "stDozePassos": "",
+    "stApoioDozePassos": "",
+    "stAtendimentoPsicossocial": "",
+    "stRessocializacao": "",
+    "stParceriaRessocializacao": "",
+    "stStatusCadastro": "",
+    "stAtivo": "",
+    "dtUltimaAtualizacao": ""
   });
-
   cadastroAtual: CadastroNacional = this.cadastroSubject.getValue();
 
   // Observable to expose the cadastro instance
@@ -97,6 +102,11 @@ export class CadastroNacionalService {
     private environmentService: EnvironmentService
   ) {
     this.apiUrl = `${this.environmentService.apiUrl}/cadastro-nacional`;
+
+    // Keep cadastroAtual synchronized with cadastroSubject
+    this.cadastroSubject.subscribe(cadastro => {
+      this.cadastroAtual = cadastro;
+    });
   }
 
   // Get the current cadastro instance
@@ -105,10 +115,32 @@ export class CadastroNacionalService {
   }
 
   // Update the current cadastro instance
-  updateCadastro(cadastro: Partial<CadastroNacional>): void {
-    const current = this.cadastroSubject.getValue();
-    this.cadastroSubject.next({ ...current, ...cadastro });
-    console.log('Cadastro atualizado:', this.cadastroSubject.getValue());
+  updateCadastro(): void {
+    const { id, ...cadastroSemId } = this.cadastroAtual;
+    try {
+      if (this.cadastroAtual.id === 0 || undefined) {
+        this.http.post<CadastroNacional>(this.utilSrv.getApiBaseUrl('cadastro-nacional'), cadastroSemId)
+          .subscribe(cadastro => {
+            this.cadastroSubject.next(cadastro);
+            console.log('Cadastro atualizado:', cadastro);
+          })
+      } else {
+        const url = `${this.utilSrv.getApiBaseUrl('cadastro-nacional')}/${this.cadastroAtual.id}`;
+        this.http.put<CadastroNacional>(url, this.cadastroAtual)
+          .subscribe(cadastro => {
+            this.cadastroSubject.next(cadastro);
+            console.log('Cadastro atualizado:', cadastro);
+          })
+      }
+    } catch (error) {
+      this.utilSrv.showError('Erro ao atualizar cadastro', 'Por favor, tente novamente mais tarde.');
+      console.error('Erro ao atualizar cadastro:', error);
+    }
+
+
+    // const current = this.cadastroSubject.getValue();
+    // this.cadastroSubject.next({ ...current, ...cadastro });
+    // console.log('Cadastro atualizado:', this.cadastroSubject.getValue());
   }
 
   // Reset the cadastro instance to default values

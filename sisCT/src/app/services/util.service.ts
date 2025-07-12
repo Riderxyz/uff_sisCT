@@ -1,23 +1,18 @@
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import {
-  MatDialog,
-  MatDialogRef,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogTitle,
-  MatDialogContent,
+  MatDialog
 } from '@angular/material/dialog';
 import {
   MatSnackBar,
   MatSnackBarRef,
   SimpleSnackBar,
 } from '@angular/material/snack-bar';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { ToastService, ToastSeverity } from './toast.service';
-import { HttpClient } from '@angular/common/http';
-import { EnderecoResponseInterface } from '../interface/enderecoResponse.interface';
 import { Observable } from 'rxjs';
+import { EnderecoResponseInterface } from '../interface/enderecoResponse.interface';
 import { config } from './config';
+import { ToastService, ToastSeverity } from './toast.service';
 @Injectable({ providedIn: 'root' })
 export class UtilService {
   public dialog: MatDialog = inject(MatDialog);
@@ -26,7 +21,7 @@ export class UtilService {
   private bottomSheet: MatBottomSheet = inject(MatBottomSheet);
   private toastSrv: ToastService = inject(ToastService);
   private http = inject(HttpClient);
-  constructor() {}
+  constructor() { }
 
   userHasAceptedTerms() {
     localStorage.setItem(
@@ -40,7 +35,7 @@ export class UtilService {
     title: string,
     accept: () => void,
     reject: () => void
-  ) {}
+  ) { }
 
   /**
    * Exibe um toast de sucesso
@@ -191,5 +186,10 @@ export class UtilService {
     return this.http.get<EnderecoResponseInterface>(
       `https://viacep.com.br/ws/${cep}/json/`
     );
+  }
+
+  getApiBaseUrl(endpoint?: string): string {
+    const baseUrl = (window as any)?.env?.API_BASE_URL || 'http://localhost:8088/api';
+    return endpoint ? `${baseUrl}/${endpoint}` : baseUrl;
   }
 }
