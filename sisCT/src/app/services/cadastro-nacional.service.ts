@@ -21,8 +21,8 @@ export class CadastroNacionalService {
     dsOutroConselhoMunicipal: '',
     dsInscricaoConselhoEstadual: '',
     dsEmailInstitucional: 'Email',
-    dtValidadeLicensa: '',
-    noFantasia: 'Nome Fantasia',
+    dtValidadeLicensa: '2025-01-01',
+    noFantasia: 'Nome Fantasia teste',
     noRazaoSocial: 'Teste',
     nuCnpj: '324234',
     nuCpfOwner: '',
@@ -62,7 +62,7 @@ export class CadastroNacionalService {
     stPossuiFinanciamentoEstadual: '0',
     stPossuiFinanciamentoEstado: '0',
     stPossuiFinanciamentoMunicipio: '0',
-    stPossuiLicencaSanitaria: '0',
+    stPossuiLicencaSanitaria: '',
     stPossuiCebas: '0',
     stPossuiReqCebasDepad: '0',
     stCumpreConad: '0',
@@ -86,6 +86,8 @@ export class CadastroNacionalService {
     stAtivo: '1',
     dtUltimaAtualizacao: new Date().toISOString()
   });
+
+  cadastroAtual: CadastroNacional = this.cadastroSubject.getValue();
 
   // Observable to expose the cadastro instance
   public cadastro$ = this.cadastroSubject.asObservable();

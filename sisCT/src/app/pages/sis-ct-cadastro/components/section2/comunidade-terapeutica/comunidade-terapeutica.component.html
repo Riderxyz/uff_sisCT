@@ -3,7 +3,8 @@
   <h2 class="col-12">6. Comunidade Terapêutica</h2>
 
   <mat-checkbox class="col-12 md:col-4" name="possuiLicencaSanitaria"
-    [(ngModel)]="formModel.comunidadeTerapeutica.possuiLicencaSanitaria" (change)="onSanitaryChange()">Possui licença
+    [(ngModel)]="this.cadastroService.cadastroAtual.stPossuiLicencaSanitaria" (change)="onSanitaryChange()">Possui
+    licença
     sanitária atualizada</mat-checkbox>
 
   <div class="col-12 md:col-4">
@@ -11,7 +12,7 @@
       <mat-label>Validade da Licença</mat-label>
 
       <input name="validadeLicenca" matInput [matDatepicker]="dp"
-        [(ngModel)]="formModel.comunidadeTerapeutica.validadeLicenca" />
+        [(ngModel)]="this.cadastroService.cadastroAtual.dtValidadeLicensa" />
       <mat-hint>Dia/Mes/Ano</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
       <mat-datepicker #dp></mat-datepicker>
@@ -21,72 +22,75 @@
   <div class="col-12 md:col-4">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Prazo do Projeto Terapêutico (meses)</mat-label>
-      <input matInput type="number" name="prazoProjeto" [(ngModel)]="formModel.comunidadeTerapeutica.prazoProjeto"
+      <input matInput type="number" name="prazoProjeto" [(ngModel)]="this.cadastroService.cadastroAtual.nuPrazoProjeto"
         (ngModelChange)="onFieldChange('prazoProjeto')" />
     </mat-form-field>
   </div>
-
-  <mat-checkbox [class.md:col-6]="!formModel.comunidadeTerapeutica.matrizPossuiCEBAS"
-    [class.md:col-3]="formModel.comunidadeTerapeutica.matrizPossuiCEBAS" name="matrizPossuiCEBAS"
-    [(ngModel)]="formModel.comunidadeTerapeutica.matrizPossuiCEBAS" (change)="onCEBASChange()">A matriz da entidade
-    possui CEBAS?</mat-checkbox>
-  @if (formModel.comunidadeTerapeutica.matrizPossuiCEBAS) {
-  <div class="col-3">
+  <div class="col-4">
+    <mat-checkbox [class.md:col-6]="this.cadastroService.cadastroAtual.stPossuiCebas"
+      [class.md:col-3]="this.cadastroService.cadastroAtual.stPossuiCebas" name="matrizPossuiCEBAS"
+      [(ngModel)]="this.cadastroService.cadastroAtual.stPossuiCebas">A matriz da entidade
+      possui CEBAS?</mat-checkbox>
+  </div>
+  <div class="col-2">
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>Início da validade CEBAS</mat-label>
-
       <input name="inicioCEBAS" matInput [matDatepicker]="periodoCEBASInicio"
-        [(ngModel)]="formModel.comunidadeTerapeutica.periodoCEBAS!.inicio" />
-      <mat-hint>Dia/Mes/Ano</mat-hint>
+        [(ngModel)]="this.cadastroService.cadastroAtual.dtInicioCebas"
+        [disabled]="!this.cadastroService.cadastroAtual.stPossuiCebas" />
+      <mat-hint>Dia/Mês/Ano</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="periodoCEBASInicio"></mat-datepicker-toggle>
       <mat-datepicker #periodoCEBASInicio></mat-datepicker>
     </mat-form-field>
   </div>
-  <div class="col-3">
+  <div class="col-2">
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>Término da validade CEBAS</mat-label>
-
       <input name="terminoCEBAS" matInput [matDatepicker]="periodoCEBASTermino"
-        [(ngModel)]="formModel.comunidadeTerapeutica.periodoCEBAS!.termino" />
-      <mat-hint>Dia/Mes/Ano</mat-hint>
+        [(ngModel)]="this.cadastroService.cadastroAtual.dtTerminoCebas"
+        [disabled]="!this.cadastroService.cadastroAtual.stPossuiCebas" />
+      <mat-hint>Dia/Mês/Ano</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="periodoCEBASTermino"></mat-datepicker-toggle>
       <mat-datepicker #periodoCEBASTermino></mat-datepicker>
     </mat-form-field>
   </div>
-  }
 
-  <div [class.col-6]="!formModel.comunidadeTerapeutica.matrizPossuiCEBAS"
-    [class.col-3]="formModel.comunidadeTerapeutica.matrizPossuiCEBAS">
-    <mat-checkbox name="requerimentoDEPAD" [(ngModel)]="formModel.comunidadeTerapeutica.requerimentoDEPAD">A entidade
+  <div [class.col-4]="!this.cadastroService.cadastroAtual.stPossuiCebas"
+    [class.col-3]="this.cadastroService.cadastroAtual.stPossuiCebas">
+    <mat-checkbox name="requerimentoDEPAD" [(ngModel)]="this.cadastroService.cadastroAtual.stPossuiReqCebasDepad">A
+      entidade
       possui requerimento CEBAS no DEPAD?</mat-checkbox>
   </div>
 
-  <div class="col-6">
+  <div class="col-2">
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>Ano do protocolo</mat-label>
-      <input matInput type="number" name="anoProtocolo" [(ngModel)]="formModel.comunidadeTerapeutica.anoProtocolo" />
+      <input matInput type="number" name="anoProtocolo"
+        [(ngModel)]="this.cadastroService.cadastroAtual.nuAnoProtocoloCebas" />
     </mat-form-field>
   </div>
-  <div class="col-6">
+  <div class="col-2">
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>Número do protocolo</mat-label>
-      <input matInput name="numeroProtocolo" [(ngModel)]="formModel.comunidadeTerapeutica.numeroProtocolo" />
+      <input matInput name="numeroProtocolo" [(ngModel)]="this.cadastroService.cadastroAtual.nuProtocoloCebas" />
     </mat-form-field>
   </div>
-
-  <mat-checkbox class="col-12" name="atendeLegislacao" [(ngModel)]="formModel.comunidadeTerapeutica.atendeLegislacao">A
-    entidade cumpre todos os dispositivos da Lei nº 11.343/2006, Lei nº
-    13.840, de 5 de junho de 2019, Decreto nº 9.761, de 11 de abril de 2019,
-    Decreto nº 9.761, de 11 de abril de 2019, Resolução da Diretoria Colegiada -
-    RDC nº 29/2011 – ANVISA, Resolução nº 01, de 19 de agosto de 2015 – CONAD -
-    Conselho Nacional de Políticas sobre Drogas?</mat-checkbox>
+  <div class="col-8">
+    <mat-checkbox class="col-12" name="atendeLegislacao"
+      [(ngModel)]="this.cadastroService.cadastroAtual.stCapacidadeAtendimento">A
+      entidade cumpre todos os dispositivos da Lei nº 11.343/2006, Lei nº
+      13.840, de 5 de junho de 2019, Decreto nº 9.761, de 11 de abril de 2019, DUVIDA
+      Decreto nº 9.761, de 11 de abril de 2019, Resolução da Diretoria Colegiada -
+      RDC nº 29/2011 – ANVISA, Resolução nº 01, de 19 de agosto de 2015 – CONAD -
+      Conselho Nacional de Políticas sobre Drogas?</mat-checkbox>
+  </div>
 
   <!-- Seção 6.1 -->
   <h2 class="col-12">6.1 Capacidade de Atendimento</h2>
   <div class="col-3">
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>Capacidade total de vagas</mat-label>
-      <input matInput type="number" name="totalVagas" [(ngModel)]="formModel.capacidadeAtendimento.totalVagas"
+      <input matInput type="number" name="totalVagas" [(ngModel)]="this.cadastroService.cadastroAtual.nuCapacidadeTotal"
         (blur)="onFieldBlur($any($event.target)?.valueAsNumber)" />
     </mat-form-field>
   </div>
@@ -95,21 +99,21 @@
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>{{ "adulto Feminino" | titlecase }}</mat-label>
       <input matInput type="number" name="adultoFeminino"
-        [(ngModel)]="formModel.capacidadeAtendimento.publico.adultoFeminino" />
+        [(ngModel)]="this.cadastroService.cadastroAtual.nuCapacidadeFeminino" />
     </mat-form-field>
   </div>
   <div class="col-3">
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>{{ "adulto Masculino" | titlecase }}</mat-label>
       <input matInput type="number" name="adultoMasculino"
-        [(ngModel)]="formModel.capacidadeAtendimento.publico.adultoMasculino" />
+        [(ngModel)]="this.cadastroService.cadastroAtual.nuCapacidadeMasculino" />
     </mat-form-field>
   </div>
   <div class="col-3">
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>{{ "maes Nutrizes" | titlecase }}</mat-label>
       <input matInput type="number" name="maesNutrizes"
-        [(ngModel)]="formModel.capacidadeAtendimento.publico.maesNutrizes" />
+        [(ngModel)]="this.cadastroService.cadastroAtual.nuCapacidadeMaes" />
     </mat-form-field>
   </div>
 
@@ -123,13 +127,13 @@
   <h2 class="col-12">6.3 Reconhecimento da Entidade</h2>
 
   <div class="col-6" [class.col-6]="
-      formModel.reconhecimentoMunicipio.conselhoMunicipal !== 'outro'
+      this.cadastroService.cadastroAtual.dsOutroConselhoMunicipal !== 'outro'
     " [class.col-4]="
-      formModel.reconhecimentoMunicipio.conselhoMunicipal === 'outro'
+      this.cadastroService.cadastroAtual.dsOutroConselhoMunicipal === 'outro'
     ">
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>Inscrição em Conselho Municipal</mat-label>
-      <mat-select [(ngModel)]="formModel.reconhecimentoMunicipio.conselhoMunicipal" name="conselhoMunicipal">
+      <mat-select [(ngModel)]="this.cadastroService.cadastroAtual.dsOutroConselhoMunicipal" name="conselhoMunicipal">
         <mat-option value=0>Assistência Social</mat-option>
         <mat-option value=1>Políticas sobre Drogas</mat-option>
         <mat-option value=2>Saúde</mat-option>
@@ -139,28 +143,29 @@
     </mat-form-field>
   </div>
 
-  <div class="col-4" *ngIf="formModel.reconhecimentoMunicipio.conselhoMunicipal === 'outro'">
+  <div class="col-4" *ngIf="this.cadastroService.cadastroAtual.dsOutroConselhoMunicipal === 'outro'">
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>Outro conselho municipal</mat-label>
       <input matInput name="outroConselhoMunicipal"
-        [(ngModel)]="formModel.reconhecimentoMunicipio.outroConselhoMunicipal" />
+        [(ngModel)]="this.cadastroService.cadastroAtual.dsOutroConselhoMunicipal" />
     </mat-form-field>
   </div>
 
   <div [class.col-6]="
-      formModel.reconhecimentoMunicipio.conselhoMunicipal !== 'outro'
+      this.cadastroService.cadastroAtual.dsOutroConselhoMunicipal !== 'outro'
     " [class.col-4]="
-      formModel.reconhecimentoMunicipio.conselhoMunicipal === 'outro'
+      this.cadastroService.cadastroAtual.dsOutroConselhoMunicipal === 'outro'
     ">
     <mat-form-field class="w-full" appearance="outline">
       <mat-label>Conselho Estadual</mat-label>
-      <input matInput name="conselhoEstadual" [(ngModel)]="formModel.reconhecimentoMunicipio.conselhoEstadual" />
+      <input matInput name="conselhoEstadual"
+        [(ngModel)]="this.cadastroService.cadastroAtual.dsInscricaoConselhoEstadual" />
     </mat-form-field>
   </div>
 
   <div class="col-12">
     <mat-label>Reconhecimento por autoridade pública</mat-label>
-    <mat-radio-group class="ml-2" [(ngModel)]="formModel.reconhecimentoMunicipio.reconhecimentoPublico"
+    <mat-radio-group class="ml-2" [(ngModel)]="this.cadastroService.cadastroAtual.stPossuiReconhecimentoPublico"
       name="reconhecimentoPublico">
       <mat-radio-button value=0>União</mat-radio-button>
       <mat-radio-button value=1>Estados</mat-radio-button>
@@ -175,8 +180,8 @@
     </div>
     <div class="col-12">
       <mat-label>Com qual periodicidade é promovida capacitação da equipe técnica na pauta de drogas? </mat-label>
-      <mat-radio-group class="ml-2" [(ngModel)]="formModel.reconhecimentoMunicipio.reconhecimentoPublico"
-        name="reconhecimentoPublico">
+      <mat-radio-group class="ml-2" [(ngModel)]="this.cadastroService.cadastroAtual.stPossuiReconhecimentoPublico"
+        name="reconhecimentoPublicoDrogas">
         <mat-radio-button value=0>Mensal</mat-radio-button>
         <mat-radio-button value=1>Trimestral</mat-radio-button>
         <mat-radio-button value=2>Anual</mat-radio-button>
