@@ -62,6 +62,7 @@ export class RepresentateLegalMatrizComponent implements AfterViewInit, OnInit {
   }
 
   onFieldChange(isItCep?: boolean) {
+    this.representanteService.representanteAtual.cadastroNacionalId = this.cadastroService.cadastroAtual.id;
     this.representanteService.updateRepresentante();
 
     this.statusUpdate();

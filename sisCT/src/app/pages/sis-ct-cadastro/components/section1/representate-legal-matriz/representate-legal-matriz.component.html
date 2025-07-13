@@ -116,7 +116,7 @@
     <div class="col p-0 pl-1">
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Curso / Profissão</mat-label>
-        <input matInput name="profissao" [(ngModel)]="representanteService.representanteAtual.cursoProfissao"
+        <input matInput name="profissao" [(ngModel)]="representanteService.representanteAtual.profissao"
           #cursoProfissaoCtrl="ngModel" required (blur)="onFieldChange()" />
         <mat-error *ngIf="cursoProfissaoCtrl.invalid && cursoProfissaoCtrl.touched">
           Curso / Profissão obrigatórios

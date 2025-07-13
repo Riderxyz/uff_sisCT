@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { RepresentanteLegalInterface } from '../interface/representanteLegal.interface';
 import { EnvironmentService } from './environment.service';
+import { UtilService } from './util.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RepresentanteLegalService {
+  readonly utilSrv: UtilService = inject(UtilService);
   private apiUrl: string;
   representanteAtual!: RepresentanteLegalInterface;
   // Updated BehaviorSubject with new interface structure
@@ -44,7 +46,7 @@ export class RepresentanteLegalService {
 
     // Keep representanteAtual synchronized with BehaviorSubject
     this.representanteSubject.subscribe(representante => {
-       this.representanteAtual = representante;
+      this.representanteAtual = representante;
     });
   }
 
@@ -55,10 +57,40 @@ export class RepresentanteLegalService {
   }
 
   updateRepresentante(): void {
-    const current = this.representanteSubject.getValue();
-    this.representanteAtual = current;
-    //this.representanteSubject.next({ ...current, ...representante });
-    // AQUI VOU CHAMAR O METODO DE UPDATE NO BACKEND
+    this.representanteAtual.ativo = this.representanteAtual.ativo === 'S' ? 'S' : 'N';
+    this.representanteAtual.dataAtualizacao = new Date().toISOString();
+    this.representanteAtual.terminoMandato = this.representanteAtual.terminoMandato ? this.representanteAtual.terminoMandato + '-01-01' : '';
+    this.representanteAtual.cadastroNacionalId = this.representanteAtual.cadastroNacionalId || 0;
+    if (this.representanteAtual.cadastroNacionalId != 0) {
+      const { id, ...representanteSemId } = this.representanteAtual;
+      try {
+        if (this.representanteAtual.id === undefined || this.representanteAtual.id === 0) {
+          this.http.post<RepresentanteLegalInterface>(this.utilSrv.getApiBaseUrl('representantes-legais'), representanteSemId)
+            .subscribe(representante => {
+              this.representanteSubject.next(representante);
+              console.log('Representante criado:', representante);
+            })
+        } else {
+          const url = `${this.utilSrv.getApiBaseUrl('representantes-legais')}`;
+          this.http.put<RepresentanteLegalInterface>(url, this.representanteAtual)
+            .subscribe({
+              next: (representante) => {
+                this.representanteSubject.next(representante);
+                console.log('Representante atualizado:', representante);
+              },
+              error: (err) => {
+                console.error('Erro ao atualizar representante:', err);
+                // Você pode adicionar mais tratamento de erro aqui, como exibir uma mensagem para o usuário
+                // Exemplo:
+                // this.snackBar.open('Erro ao atualizar representante', 'Fechar', { duration: 5000 });
+              }
+            });
+        }
+      } catch (error) {
+        this.utilSrv.showError('Erro ao atualizar representante', 'Por favor, tente novamente mais tarde.');
+        console.error('Erro ao atualizar representante:', error);
+      }
+    }
   }
 
   resetRepresentante(): void {
