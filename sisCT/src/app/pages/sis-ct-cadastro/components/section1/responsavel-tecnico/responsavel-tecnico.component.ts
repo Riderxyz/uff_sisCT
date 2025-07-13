@@ -45,8 +45,8 @@ export class ResponsavelTecnicoComponent implements AfterViewInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  onFieldChange() {
+  onFieldChange(index: number): void {
     // Update both the question service and the representante tecnico service
-    this.representanteService.updateRepresentanteTecnico();
+    this.representanteService.updateRepresentanteTecnico(index);
   }
 }

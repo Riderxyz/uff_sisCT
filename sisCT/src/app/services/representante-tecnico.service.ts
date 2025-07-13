@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { RepresentanteTecnico } from '../interfaces_crud/representante-tecnico.interface';
 import { EnvironmentService } from './environment.service';
+import { UtilService } from './util.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RepresentanteTecnicoService {
+  readonly utilSrv: UtilService = inject(UtilService);
   private apiUrl = `${this.environmentService.apiUrl}/representante-tecnico`;
   representanteTecnicoAtual: RepresentanteTecnico[] = [];
   // BehaviorSubject to store and share the current representante tecnico
@@ -33,6 +35,11 @@ export class RepresentanteTecnicoService {
     this.representanteTecnicoAtual[0] = this.representanteTecnicoSubject.getValue();
     this.representanteTecnicoAtual[0].nome = 'Nilton';
     this.representanteTecnicoAtual[1] = this.representanteTecnicoSubject.getValue();
+
+    // Keep representanteTecnicoAtual synchronized with BehaviorSubject
+    this.representanteTecnicoSubject.subscribe(representante => {
+      this.representanteTecnicoAtual[0] = representante;
+    });
   }
 
   getAll(): Observable<RepresentanteTecnico[]> {
@@ -103,12 +110,33 @@ export class RepresentanteTecnicoService {
   }
 
   // Update the current representante tecnico instance
-  updateRepresentanteTecnico(): void {
-    const current = this.representanteTecnicoSubject.getValue();
-    this.representanteTecnicoSubject.next({ ...current, ...this.representanteTecnicoAtual[0] });
-    if (this.representanteTecnicoAtual[1].id !== 0) {
-      this.representanteTecnicoSubject.next({ ...current, ...this.representanteTecnicoAtual[1] });
+  updateRepresentanteTecnico(index: number): void {
+    this.representanteTecnicoAtual[index].ativo = this.representanteTecnicoAtual[0].ativo === 'S' ? 'S' : 'N';
+    this.representanteTecnicoAtual[index].dataAtualizacao = new Date().toISOString();
+    this.representanteTecnicoAtual[index].cadastroNacionalId = this.representanteTecnicoAtual[index].cadastroNacionalId || 0;
+
+
+    const { id, ...representanteSemId } = this.representanteTecnicoAtual[index];
+    try {
+      if (this.representanteTecnicoAtual[index].id === undefined || this.representanteTecnicoAtual[index].id === 0) {
+        this.http.post<RepresentanteTecnico>(this.utilSrv.getApiBaseUrl('representantes-tecnicos'), representanteSemId)
+          .subscribe(representante => {
+            this.representanteTecnicoSubject.next(representante);
+            console.log('Representante técnico criado:', representante);
+          })
+      } else {
+        const url = `${this.utilSrv.getApiBaseUrl('representantes-tecnicos')}/${this.representanteTecnicoAtual[index].id}`;
+        this.http.put<RepresentanteTecnico>(url, this.representanteTecnicoAtual[index])
+          .subscribe(representante => {
+            this.representanteTecnicoSubject.next(representante);
+            console.log('Representante técnico atualizado:', representante);
+          })
+      }
+    } catch (error) {
+      this.utilSrv.showError('Erro ao atualizar representante técnico', 'Por favor, tente novamente mais tarde.');
+      console.error('Erro ao atualizar representante técnico:', error);
     }
+
   }
 
   resetRepresentanteTecnico(): void {
