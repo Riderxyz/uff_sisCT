@@ -115,34 +115,31 @@ export class CadastroNacionalService {
   }
 
   // Update the current cadastro instance
-  updateCadastro(): void {
+  updateCadastro(): Promise<boolean> {
     const { id, ...cadastroSemId } = this.cadastroAtual;
-    try {
-      if (this.cadastroAtual.id === 0 || undefined) {
-        this.http.post<CadastroNacional>(this.utilSrv.getApiBaseUrl('cadastro-nacional'), cadastroSemId)
-          .subscribe(cadastro => {
-            this.cadastroSubject.next(cadastro);
-            console.log('Cadastro atualizado:', cadastro);
-          })
-      } else {
-        const url = `${this.utilSrv.getApiBaseUrl('cadastro-nacional')}/${this.cadastroAtual.id}`;
-        this.http.put<CadastroNacional>(url, this.cadastroAtual)
-          .subscribe(cadastro => {
-            this.cadastroSubject.next(cadastro);
-            console.log('Cadastro atualizado:', cadastro);
-          })
-      }
-    } catch (error) {
-      this.utilSrv.showError('Erro ao atualizar cadastro', 'Por favor, tente novamente mais tarde.');
-      console.error('Erro ao atualizar cadastro:', error);
-    }
+    const url = this.cadastroAtual.id !== 0
+      ? `${this.utilSrv.getApiBaseUrl('cadastro-nacional')}/${this.cadastroAtual.id}`
+      : this.utilSrv.getApiBaseUrl('cadastro-nacional');
 
+    return new Promise<boolean>((resolve) => {
+      const request = this.cadastroAtual.id !== 0
+        ? this.http.put<CadastroNacional>(url, this.cadastroAtual)
+        : this.http.post<CadastroNacional>(url, cadastroSemId);
 
-    // const current = this.cadastroSubject.getValue();
-    // this.cadastroSubject.next({ ...current, ...cadastro });
-    // console.log('Cadastro atualizado:', this.cadastroSubject.getValue());
+      request.subscribe({
+        next: (cadastro) => {
+          this.cadastroSubject.next(cadastro);
+          console.log('Cadastro atualizado:', cadastro);
+          resolve(true);
+        },
+        error: (error) => {
+          this.utilSrv.showError('Erro ao atualizar cadastro', 'Por favor, tente novamente mais tarde.');
+          console.error('Erro ao atualizar cadastro:', error);
+          resolve(false);
+        }
+      });
+    });
   }
-
   // Reset the cadastro instance to default values
   resetCadastro(): void {
     const resetValues: Partial<CadastroNacional> = {

@@ -1,31 +1,35 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Endereco } from '../interfaces_crud/endereco.interface';
 import { EnvironmentService } from './environment.service';
+import { UtilService } from './util.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnderecoService {
+  readonly utilSrv: UtilService = inject(UtilService);
   private apiUrl: string;
 
   // BehaviorSubject with the new interface
   private enderecoSubject = new BehaviorSubject<Endereco>({
     id: undefined,
     coEstado: '',
-    dsLogradouro: 'teste',
+    dsLogradouro: '',
     dsComplemento: '',
     noBairro: '',
-    nuNumero: '',
-    nuCep: '2155050',
+    nuNumero: '0',
+    nuCep: '0',
     dtAtualizacao: new Date(),
     stAtivo: '1',
     cadastroNacionalId: 0,
     dsMunicipio: '',
-    dsPais: '',
+    dsPais: ''
   });
+
+  enderecoAtual: Endereco = this.enderecoSubject.getValue();
 
   public endereco$ = this.enderecoSubject.asObservable();
 
@@ -34,42 +38,55 @@ export class EnderecoService {
     private environmentService: EnvironmentService
   ) {
     this.apiUrl = `${this.environmentService.apiUrl}/endereco`;
+
+    // Keep enderecoAtual synchronized with enderecoSubject
+    this.enderecoSubject.subscribe(endereco => {
+      this.enderecoAtual = endereco;
+    });
   }
 
   getCurrentEndereco(): Endereco {
     return this.enderecoSubject.getValue();
   }
 
-  updateEndereco(endereco: Partial<Endereco>): void {
-    const current = this.enderecoSubject.getValue();
-    this.enderecoSubject.next({ ...current, ...endereco });
+  updateEndereco(): void {
+    this.enderecoAtual.nuCep = this.enderecoAtual.nuCep || '0';
+    this.enderecoAtual.nuNumero = this.enderecoAtual.nuNumero || '0';
+    this.enderecoAtual.dtAtualizacao = new Date();
+    this.enderecoAtual.stAtivo = 'S';
+    const { id, ...enderecoSemId } = this.enderecoAtual;
+    try {
+      if (this.enderecoAtual.id === undefined || this.enderecoAtual.id === 0) {
 
-    const updatedEndereco = this.enderecoSubject.getValue();
-    if (updatedEndereco.cadastroNacionalId) {
-      if (updatedEndereco.id) {
-        this.update(updatedEndereco).subscribe();
+        this.http.post<Endereco>(this.utilSrv.getApiBaseUrl('enderecos'), enderecoSemId)
+          .subscribe(endereco => {
+            this.enderecoSubject.next(endereco);
+            console.log('Endereco criado:', endereco);
+          })
       } else {
-        this.create(updatedEndereco).subscribe(
-          (result) => {
-            if (result && result.id) {
-              this.updateEndereco({ id: result.id });
-            }
-          }
-        );
+        const url = `${this.utilSrv.getApiBaseUrl('enderecos')}/${this.enderecoAtual.id}`;
+        this.http.put<Endereco>(url, this.enderecoAtual)
+          .subscribe(endereco => {
+            this.enderecoSubject.next(endereco);
+            console.log('Endereco atualizado:', endereco);
+          })
       }
+    } catch (error) {
+      this.utilSrv.showError('Erro ao atualizar endereco', 'Por favor, tente novamente mais tarde.');
+      console.error('Erro ao atualizar endereco:', error);
     }
   }
 
   loadEnderecoByCadastroNacional(cadastroNacionalId: number): void {
     if (!cadastroNacionalId) return;
 
-    this.updateEndereco({ cadastroNacionalId });
+    this.updateEndereco();
 
     this.getByCadastroNacional(cadastroNacionalId)
       .subscribe(enderecos => {
         if (enderecos && enderecos.length > 0) {
           const existingEndereco = enderecos[0];
-          this.updateEndereco(existingEndereco);
+          this.updateEndereco();
         }
       });
   }

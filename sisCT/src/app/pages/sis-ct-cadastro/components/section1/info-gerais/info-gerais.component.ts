@@ -47,6 +47,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
   readonly dialog: MatDialog = inject(MatDialog);
   readonly centralRxjs: CentralRxJsService = inject(CentralRxJsService);
   readonly cadastroService: CadastroNacionalService = inject(CadastroNacionalService);
+  readonly enderecoService: EnderecoService = inject(EnderecoService);
 
   // CNAE filter controls
   cnaeFilterPrincipal: FormControl = new FormControl('');
@@ -97,7 +98,6 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
 
   constructor(
     private cnaeService: CnaeService,
-    private enderecoService: EnderecoService,
     private statusService: StatusService
   ) {
     // Initialize filtered CNAEs
@@ -202,7 +202,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
       }
 
       if (Object.keys(enderecoUpdates).length > 0) {
-        this.enderecoService.updateEndereco(enderecoUpdates);
+        this.enderecoService.updateEndereco();
       }
     }
   }
@@ -369,13 +369,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
         this.formModel.localizacao.cidade = res.localidade;
         this.formModel.localizacao.estado = res.uf;
 
-        this.enderecoService.updateEndereco({
-          nuCep: res.cep,
-          dsLogradouro: res.logradouro,
-          noBairro: res.bairro,
-          dsMunicipio: res.localidade,
-          coEstado: res.uf
-        });
+        this.enderecoService.updateEndereco();
 
         this.isLoadingAdress = false;
       });
@@ -392,26 +386,19 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
   }
 
   updateCadastroNacional() {
-    this.cadastroService.updateCadastro();
+    this.cadastroService.updateCadastro().then(() => {
+      this.enderecoService.enderecoAtual.cadastroNacionalId = this.cadastroService.cadastroAtual.id;
+      this.enderecoService.updateEndereco();
+    })
 
-    this.updateEnderecoFromForm();
+    // this.updateEnderecoFromForm();
     this.statusUpdate();
   }
 
-  updateEnderecoFromForm() {
-    this.enderecoService.updateEndereco({
-      dsLogradouro: this.formModel.localizacao.logradouro,
-      nuNumero: this.formModel.localizacao.numero,
-      dsComplemento: this.formModel.localizacao.complemento,
-      noBairro: this.formModel.localizacao.bairro,
-      dsMunicipio: this.formModel.localizacao.cidade,
-      coEstado: this.formModel.localizacao.estado,
-      dsPais: this.formModel.localizacao.pais,
-      nuCep: this.formModel.localizacao.cep,
-      dtAtualizacao: new Date()
-    });
-    this.statusUpdate();
-  }
+  // updateEnderecoFromForm() {
+  //   this.enderecoService.updateEndereco();
+  //   this.statusUpdate();
+  // }
 
   displayCnae(cnaeId: string): string {
     if (!cnaeId) return '';
