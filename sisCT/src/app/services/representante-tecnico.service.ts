@@ -38,7 +38,8 @@ export class RepresentanteTecnicoService {
 
     // Keep representanteTecnicoAtual synchronized with BehaviorSubject
     this.representanteTecnicoSubject.subscribe(representante => {
-      this.representanteTecnicoAtual[0] = representante;
+      const index = representante.principal === 0 ? 0 : 1;
+      this.representanteTecnicoAtual[index] = representante;
     });
   }
 
