@@ -111,32 +111,46 @@ export class RepresentanteTecnicoService {
 
   // Update the current representante tecnico instance
   updateRepresentanteTecnico(index: number): void {
-    this.representanteTecnicoAtual[index].ativo = this.representanteTecnicoAtual[0].ativo === 'S' ? 'S' : 'N';
+    this.representanteTecnicoAtual[index].ativo = 'S';
     this.representanteTecnicoAtual[index].dataAtualizacao = new Date().toISOString();
     this.representanteTecnicoAtual[index].cadastroNacionalId = this.representanteTecnicoAtual[index].cadastroNacionalId || 0;
-
+    this.representanteTecnicoAtual[index].dataNascimento = this.representanteTecnicoAtual[index].dataNascimento || new Date('1900-01-01').toISOString();
+    this.representanteTecnicoAtual[index].cpf = this.representanteTecnicoAtual[index].cpf || '0';
+    if (index === 1) {
+      const firstId = this.representanteTecnicoAtual[0]?.id;
+      this.representanteTecnicoAtual[1].principal =
+        firstId === 0 || firstId == null ? 0 : firstId;
+    }
 
     const { id, ...representanteSemId } = this.representanteTecnicoAtual[index];
     try {
       if (this.representanteTecnicoAtual[index].id === undefined || this.representanteTecnicoAtual[index].id === 0) {
-        this.http.post<RepresentanteTecnico>(this.utilSrv.getApiBaseUrl('representantes-tecnicos'), representanteSemId)
-          .subscribe(representante => {
-            this.representanteTecnicoSubject.next(representante);
-            console.log('Representante técnico criado:', representante);
-          })
+        try {
+          this.http.post<RepresentanteTecnico>(this.utilSrv.getApiBaseUrl('representantes-tecnicos'), representanteSemId)
+            .subscribe(representante => {
+              this.representanteTecnicoSubject.next(representante);
+              console.log('Representante técnico criado:', representante);
+            })
+        } catch (error) {
+          console.log(error);
+        }
       } else {
-        const url = `${this.utilSrv.getApiBaseUrl('representantes-tecnicos')}/${this.representanteTecnicoAtual[index].id}`;
-        this.http.put<RepresentanteTecnico>(url, this.representanteTecnicoAtual[index])
-          .subscribe(representante => {
-            this.representanteTecnicoSubject.next(representante);
-            console.log('Representante técnico atualizado:', representante);
-          })
+        const url = `${this.utilSrv.getApiBaseUrl('representantes-tecnicos')}`;
+        try {
+          this.http.put<RepresentanteTecnico>(url, this.representanteTecnicoAtual[index])
+            .subscribe(representante => {
+              this.representanteTecnicoSubject.next(representante);
+              console.log('Representante técnico atualizado:', representante);
+            })
+        } catch (error) {
+          console.log(error);
+        }
       }
     } catch (error) {
       this.utilSrv.showError('Erro ao atualizar representante técnico', 'Por favor, tente novamente mais tarde.');
       console.error('Erro ao atualizar representante técnico:', error);
     }
-
+    // }
   }
 
   resetRepresentanteTecnico(): void {

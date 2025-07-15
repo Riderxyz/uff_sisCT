@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { QuestionService } from '../../../../../services/question.service';
 import { RepresentanteTecnicoService } from '../../../../../services/representante-tecnico.service';
 import { UtilService } from '../../../../../services/util.service';
+import { CadastroNacionalService } from '../../../../../services/cadastro-nacional.service';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class ResponsavelTecnicoComponent implements AfterViewInit, OnDestroy {
   readonly questionSrv: QuestionService = inject(QuestionService);
   readonly utilSrv: UtilService = inject(UtilService);
   readonly representanteService: RepresentanteTecnicoService = inject(RepresentanteTecnicoService);
+  readonly cadastroService = inject(CadastroNacionalService);
 
   // Use the default instance from the service's BehaviorSubject
   // formModel: RepresentanteTecnicoInterface;
@@ -47,6 +49,7 @@ export class ResponsavelTecnicoComponent implements AfterViewInit, OnDestroy {
 
   onFieldChange(index: number): void {
     // Update both the question service and the representante tecnico service
+    this.representanteService.representanteTecnicoAtual[index].cadastroNacionalId = this.cadastroService.cadastroAtual.id;
     this.representanteService.updateRepresentanteTecnico(index);
   }
 }
