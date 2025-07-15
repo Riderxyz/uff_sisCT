@@ -81,10 +81,10 @@
         <mat-label>Qual o seu papel na composição da mesa diretora da Matriz?</mat-label>
         <mat-select name="mesaDirectoraMatriz" [(ngModel)]="representanteService.representanteAtual.seuPapelnaMatriz"
           #mesaDirectoraMatrizCtrl="ngModel" required>
-          <mat-option value="presidente">Presidente</mat-option>
-          <mat-option value="vice-presidente">Vice-presidente</mat-option>
-          <mat-option value="conselheiro">Conselheiro</mat-option>
-          <mat-option value="outros">Outros</mat-option>
+          <mat-option value="0">Presidente</mat-option>
+          <mat-option value="1">Vice-presidente</mat-option>
+          <mat-option value="2">Conselheiro</mat-option>
+          <mat-option value="3">Outros</mat-option>
         </mat-select>
         <mat-error *ngIf="mesaDirectoraMatrizCtrl.invalid && mesaDirectoraMatrizCtrl.touched">
           Seu papel na Matriz é obrigatório
@@ -101,12 +101,12 @@
         <mat-label>Escolaridade</mat-label>
         <mat-select name="escolaridade" [(ngModel)]="representanteService.representanteAtual.escolaridade"
           #escolaridadeCtrl="ngModel" required>
-          <mat-option value="nível fundamental">Nível Fundamental</mat-option>
-          <mat-option value="nível médio">Nível Médio</mat-option>
-          <mat-option value="Graduação">Graduação</mat-option>
-          <mat-option value="pós-graduação">Pós-Graduação</mat-option>
-          <mat-option value="mestrado">Mestrado</mat-option>
-          <mat-option value="doutorado">Doutorado</mat-option>
+          <mat-option value="0">Nível Fundamental</mat-option>
+          <mat-option value="1">Nível Médio</mat-option>
+          <mat-option value="2">Graduação</mat-option>
+          <mat-option value="3">Pós-Graduação</mat-option>
+          <mat-option value="4">Mestrado</mat-option>
+          <mat-option value="5">Doutorado</mat-option>
         </mat-select>
         <mat-error *ngIf="escolaridadeCtrl.invalid && escolaridadeCtrl.touched">
           Escolaridade é obrigatória

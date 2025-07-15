@@ -58,9 +58,9 @@
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Público</mat-label>
       <mat-select [(ngModel)]="mapa.stPublico">
-        <mat-option value="adultoFeminino">Adulto Feminino</mat-option>
-        <mat-option value="maesNutrizesadulto">Mães Nutriz(es)</mat-option>
-        <mat-option value="adultoMasculino">Adulto Masculino</mat-option>
+        <mat-option value="0">Adulto Feminino</mat-option>
+        <mat-option value="1">Mães Nutriz(es)</mat-option>
+        <mat-option value="2">Adulto Masculino</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
@@ -83,10 +83,10 @@
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Financiamento</mat-label>
       <mat-select name="financiamento" [(ngModel)]="mapa.stFinanciamento" required>
-        <mat-option value="União">União</mat-option>
-        <mat-option value="Estados">Estados</mat-option>
-        <mat-option value="Municipios">Municípios</mat-option>
-        <mat-option value="Entidade">Entidade</mat-option>
+        <mat-option value="0">União</mat-option>
+        <mat-option value="1">Estados</mat-option>
+        <mat-option value="2">Municípios</mat-option>
+        <mat-option value="3">Entidade</mat-option>
       </mat-select>
     </mat-form-field>
   </div>

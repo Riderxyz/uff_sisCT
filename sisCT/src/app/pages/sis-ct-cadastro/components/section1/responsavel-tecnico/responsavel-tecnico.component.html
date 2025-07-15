@@ -63,12 +63,12 @@
       <mat-select name="mesaDirectoraFilial"
         [(ngModel)]="representanteService.representanteTecnicoAtual[0].escolaridade" #escolaridadeCtrl="ngModel"
         (blur)="onFieldChange(0)" required>
-        <mat-option value="nível fundamental">Nível Fundamental</mat-option>
-        <mat-option value="nível médio">Nível Médio</mat-option>
-        <mat-option value="Graduação">Graduação</mat-option>
-        <mat-option value="pós-graduação">Pós-Graduação</mat-option>
-        <mat-option value="mestrado">Mestrado</mat-option>
-        <mat-option value="doutorado">Doutorado</mat-option>
+        <mat-option value="0">Nível Fundamental</mat-option>
+        <mat-option value="1">Nível Médio</mat-option>
+        <mat-option value="2">Graduação</mat-option>
+        <mat-option value="3">Pós-Graduação</mat-option>
+        <mat-option value="4">Mestrado</mat-option>
+        <mat-option value="5">Doutorado</mat-option>
       </mat-select>
       <mat-error *ngIf="escolaridadeCtrl.invalid && escolaridadeCtrl.touched">
         Escolaridade é obrigatório
@@ -176,12 +176,12 @@
           <mat-select name="escolaridadeSubstituto"
             [(ngModel)]="representanteService.representanteTecnicoAtual[1].escolaridade" (blur)="onFieldChange(1)"
             #representanteTecnicoSubstitutoEscolaridadeCtrl="ngModel" required>
-            <mat-option value="nível fundamental">Nível Fundamental</mat-option>
-            <mat-option value="nível médio">Nível Médio</mat-option>
-            <mat-option value="Graduação">Graduação</mat-option>
-            <mat-option value="pós-graduação">Pós-Graduação</mat-option>
-            <mat-option value="mestrado">Mestrado</mat-option>
-            <mat-option value="doutorado">Doutorado</mat-option>
+            <mat-option value="0">Nível Fundamental</mat-option>
+            <mat-option value="1">Nível Médio</mat-option>
+            <mat-option value="2">Graduação</mat-option>
+            <mat-option value="3">Pós-Graduação</mat-option>
+            <mat-option value="4">Mestrado</mat-option>
+            <mat-option value="5">Doutorado</mat-option>
           </mat-select>
           <mat-error *ngIf="
               representanteTecnicoSubstitutoEscolaridadeCtrl.invalid &&
