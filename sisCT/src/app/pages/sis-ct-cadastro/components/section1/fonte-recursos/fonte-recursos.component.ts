@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, inject } from '@angular/core';
-import { FonteRecursosInterface, NivelFonte } from '../../../../../interface/fonteRecursos.interfaces';
-import { CadastroStep1Id } from '../../../../../interface/subSection.interface';
+import { FonteRecursosInterface } from '../../../../../interface/fonteRecursos.interfaces';
+import { RespostaLocalInterface } from '../../../../../interfaces_crud/resposta.interface';
 import { CadastroNacionalService } from '../../../../../services/cadastro-nacional.service';
 import { QuestionService } from '../../../../../services/question.service';
+import { RespostaService } from '../../../../../services/resposta.service';
 import { StatusService } from '../../../../../services/status.service';
 import { UtilService } from '../../../../../services/util.service';
 
@@ -15,6 +16,7 @@ import { UtilService } from '../../../../../services/util.service';
 export class FonteRecursosComponent implements AfterViewInit {
   readonly questionSrv: QuestionService = inject(QuestionService);
   readonly utilSrv: UtilService = inject(UtilService);
+  readonly respostaService: RespostaService = inject(RespostaService);
   formModel: FonteRecursosInterface = {
     receitaBruta: null,
     recursosPublicos: {
@@ -30,10 +32,12 @@ export class FonteRecursosComponent implements AfterViewInit {
     },
   };
 
+
+
   selectedModalidades = 2;
   selectReceitasProprias = 2;
 
-  niveisFonte: NivelFonte[] = ['uniao', 'estadual', 'municipal'];
+  niveisFonte: RespostaLocalInterface[] = [this.respostaService.criarRespostaVazia(0, 'RECURSO_PUBLICO', 'Possui financiamento com a União'), this.respostaService.criarRespostaVazia(1, 'RECURSO_PUBLICO', 'Possui financiamento com o Estado'), this.respostaService.criarRespostaVazia(2, 'RECURSO_PUBLICO', 'Possui financiamento com o município')];
   modalidades = [
     'Contrato',
     'Termo de Fomento',
@@ -45,11 +49,11 @@ export class FonteRecursosComponent implements AfterViewInit {
   ];
 
   receitasProprias = [
-    { label: 'Mensalidades por parte dos acolhidos/famílias', value: 'Mensalidades' },
-    { label: 'Campanhas de arrecadação', value: 'Campanhas' },
-    { label: 'Doações dos associados', value: 'DoacoesAssociados' },
-    { label: 'Venda de produtos', value: 'VendaProdutos' },
-    { label: 'Outros', value: 'Outros' },
+    { label: 'Mensalidades por parte dos acolhidos/famílias', value: '0' },
+    { label: 'Campanhas de arrecadação', value: '1' },
+    { label: 'Doações dos associados', value: '2' },
+    { label: 'Venda de produtos', value: '3' },
+    { label: 'Outros', value: '4' },
   ];
   constructor(
     public cadastroService: CadastroNacionalService,
@@ -61,25 +65,11 @@ export class FonteRecursosComponent implements AfterViewInit {
     // Get current value from service
     const currentCadastro = this.cadastroService.getCurrentCadastro();
     const currentAreaAtuacao = currentCadastro?.stAreaAtuacao;
-
-    // if (currentAreaAtuacao) {
-    //   this.selectedOption = this.opcoes.find(opt => opt.value === currentAreaAtuacao) || null;
-    // }
-
-    // // Subscribe to changes in the cadastro
-    // this.cadastroService.cadastro$.subscribe(cadastro => {
-    //   if (cadastro?.stAreaAtuacao) {
-    //     this.selectedOption = this.opcoes.find(opt => opt.value === cadastro.stAreaAtuacao) || null;
-    //   }
-    // });
-
-    // this.updateStatusService();
   }
 
   ngAfterViewInit(): void { }
 
   onFieldChange() {
-    this.questionSrv.matriz.seccao1.dados.fonteRecursos = this.formModel;
-    this.questionSrv.onMatrizDatachange(CadastroStep1Id.FonteRecursos);
+    this.respostaService.updateResposta(this.niveisFonte, this.cadastroService.cadastroAtual.id);
   }
 }

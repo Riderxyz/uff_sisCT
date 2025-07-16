@@ -376,13 +376,7 @@ export class InfoGeraisComponent implements AfterViewInit, OnInit {
   }
 
   onFieldChange(isItCep?: boolean) {
-    if (isItCep) {
-      this.getEndereco();
-    } else {
-      this.questionSrv.matriz.seccao1.dados.informacaoGerais = this.formModel;
-      this.questionSrv.onMatrizDatachange(CadastroStep1Id.InfoGerais);
-      this.updateCadastroNacional();
-    }
+    this.updateCadastroNacional();
   }
 
   updateCadastroNacional() {

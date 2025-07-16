@@ -1,70 +1,116 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { RlResposta } from '../interfaces_crud/resposta.interface';
-import { environment } from '../../environments/environment';
+import { RespostaInterface, RespostaLocalInterface } from '../interfaces_crud/resposta.interface';
+import { PerguntaService } from './pergunta.service';
+import { UtilService } from './util.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RespostaService {
-  private apiUrl = `${environment.apiUrl}/respostas`;
+  readonly utilSrv: UtilService = inject(UtilService);
+  readonly perguntaSrv: PerguntaService = inject(PerguntaService);
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<RlResposta[]> {
-    return this.http.get<RlResposta[]>(this.apiUrl)
+  criarRespostaVazia(id: number, chave: string, textoPergunta: string): RespostaLocalInterface {
+    return {
+      id: id,
+      co_resposta: '',
+      texto_pergunta: textoPergunta,
+      chave_pergunta: chave
+    }
+  }
+
+  getAll(): Observable<RespostaInterface[]> {
+    return this.http.get<RespostaInterface[]>(this.utilSrv.getApiBaseUrl('respostas'))
       .pipe(
-        catchError(this.handleError<RlResposta[]>('getAll', []))
+        catchError(this.handleError<RespostaInterface[]>('getAll', []))
       );
   }
 
-  getById(id: number): Observable<RlResposta> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<RlResposta>(url)
+  getById(id: number): Observable<RespostaInterface> {
+    const url = `${this.utilSrv.getApiBaseUrl('respostas')}/${id}`;
+    return this.http.get<RespostaInterface>(url)
       .pipe(
-        catchError(this.handleError<RlResposta>(`getById id=${id}`))
+        catchError(this.handleError<RespostaInterface>(`getById id=${id}`))
       );
   }
 
-  getByCadastroNacional(cadastroNacionalId: number): Observable<RlResposta[]> {
-    const url = `${this.apiUrl}/cadastro/${cadastroNacionalId}`;
-    return this.http.get<RlResposta[]>(url)
+  getByCadastroNacional(cadastroNacionalId: number): Observable<RespostaInterface[]> {
+    const url = `${this.utilSrv.getApiBaseUrl('respostas')}/cadastro/${cadastroNacionalId}`;
+    return this.http.get<RespostaInterface[]>(url)
       .pipe(
-        catchError(this.handleError<RlResposta[]>(`getByCadastroNacional id=${cadastroNacionalId}`, []))
+        catchError(this.handleError<RespostaInterface[]>(`getByCadastroNacional id=${cadastroNacionalId}`, []))
       );
   }
 
-  getByPergunta(perguntaId: number): Observable<RlResposta[]> {
-    const url = `${this.apiUrl}/pergunta/${perguntaId}`;
-    return this.http.get<RlResposta[]>(url)
+  getByPergunta(perguntaId: number): Observable<RespostaInterface[]> {
+    const url = `${this.utilSrv.getApiBaseUrl('respostas')}/pergunta/${perguntaId}`;
+    return this.http.get<RespostaInterface[]>(url)
       .pipe(
-        catchError(this.handleError<RlResposta[]>(`getByPergunta id=${perguntaId}`, []))
+        catchError(this.handleError<RespostaInterface[]>(`getByPergunta id=${perguntaId}`, []))
       );
   }
 
-  create(resposta: RlResposta): Observable<RlResposta> {
-    return this.http.post<RlResposta>(this.apiUrl, resposta)
+  create(resposta: RespostaInterface): Observable<RespostaInterface> {
+    return this.http.post<RespostaInterface>(this.utilSrv.getApiBaseUrl('respostas'), resposta)
       .pipe(
-        catchError(this.handleError<RlResposta>('create'))
+        catchError(this.handleError<RespostaInterface>('create'))
       );
   }
 
-  update(resposta: RlResposta): Observable<RlResposta> {
-    const url = `${this.apiUrl}/${resposta.PK_RL_RESPOSTA}`;
-    return this.http.put<RlResposta>(url, resposta)
+  update(resposta: RespostaInterface): Observable<RespostaInterface> {
+    const url = `${this.utilSrv.getApiBaseUrl('respostas')}/${resposta.PK_RL_RESPOSTA}`;
+    return this.http.put<RespostaInterface>(url, resposta)
       .pipe(
-        catchError(this.handleError<RlResposta>('update'))
+        catchError(this.handleError<RespostaInterface>('update'))
       );
   }
 
   delete(id: number): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.utilSrv.getApiBaseUrl('respostas')}/${id}`;
     return this.http.delete<any>(url)
       .pipe(
         catchError(this.handleError<any>('delete'))
       );
+  }
+
+  async updateResposta(respostas: RespostaLocalInterface[], cadastroId: number): Promise<void> {
+    const url = `${this.utilSrv.getApiBaseUrl('respostas')}/cadastro-nacional/${cadastroId}`;
+    let perguntaId = 0;
+    await this.perguntaSrv.getIdByDescricao(respostas[0].chave_pergunta).subscribe(id => {
+      perguntaId = id;
+
+      this.http.get<RespostaInterface[]>(url).subscribe(respostasExistentes => {
+        const perguntasEnviadas = [...new Set(respostasExistentes.map(r => r.PK_PERGUNTAS = perguntaId))];
+
+        const respostasParaDeletar = respostasExistentes.filter(r =>
+          perguntasEnviadas.includes(r.PK_RL_RESPOSTA!)
+        );
+
+        respostasParaDeletar.forEach(resposta => {
+          if (resposta.PK_RL_RESPOSTA) {
+            this.delete(resposta.PK_RL_RESPOSTA).subscribe();
+          }
+        });
+
+        this.perguntaSrv.getIdByDescricao(respostas[0].chave_pergunta).subscribe(perguntaId => {
+          respostas.forEach(resposta => {
+            const r: RespostaInterface = {
+              PK_PERGUNTAS: perguntaId,
+              PK_CADASTRO_NACIONAL: cadastroId,
+              ST_ATIVO: 1,
+              CO_RESPOSTA: resposta.co_resposta || '',
+              DT_ULTIMA_ATUALIZACAO: new Date()
+            };
+            this.create(r).subscribe();
+          });
+        });
+      });
+    });
   }
 
   private handleError<T>(operation = 'operation', result?: T) {

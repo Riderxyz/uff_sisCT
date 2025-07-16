@@ -15,12 +15,12 @@
       <div *ngFor="let nivel of niveisFonte" class="col-12 mb-1">
         <div class="grid align-items-center">
           <div class="col-2">
-            <mat-checkbox [(ngModel)]="formModel.recursosPublicos[nivel].possui" [name]="nivel + '_possui'"
-              (blur)="onFieldChange()">
-              Possui financiamento com {{ nivel }}?
+            <mat-checkbox [(ngModel)]="niveisFonte[nivel.id].co_resposta" [name]="nivel.id + '_possui'"
+              (change)="onFieldChange()">
+              {{ nivel.texto_pergunta }}?
             </mat-checkbox>
           </div>
-          <div class="col-10" *ngIf="formModel.recursosPublicos[nivel].possui">
+          <!-- <div class="col-10" *ngIf="formModel.recursosPublicos[nivel].possui">
             <mat-form-field appearance="outline" class="w-full">
               <mat-label>Modalidades</mat-label>
               <mat-select [(ngModel)]="formModel.recursosPublicos[nivel].modalidades" [name]="nivel + '_modalidades'"
@@ -28,7 +28,7 @@
                 <mat-option *ngFor="let m of modalidades" [value]="m">{{ m }}</mat-option>
               </mat-select>
             </mat-form-field>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
