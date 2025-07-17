@@ -20,12 +20,14 @@
               {{ nivel.texto_pergunta }}?
             </mat-checkbox>
           </div>
-          <div class="col-10" *ngIf="formModel.recursosPublicos[nivel].possui">
+
+          <div class="col-10">
             <mat-form-field appearance="outline" class="w-full">
               <mat-label>Modalidades</mat-label>
-              <mat-select [(ngModel)]="formModel.recursosPublicos[nivel].modalidades" [name]="nivel + '_modalidades'"
-                multiple (blur)="onFieldChange()">
-                <mat-option *ngFor="let m of modalidades" [value]="m">{{ m }}</mat-option>
+              <mat-select [(ngModel)]="niveisMultiplos[nivel.id]" [name]="nivel.id + '_modalidades'" multiple
+                (selectionChange)="onSelectionChange($event)" (closed)="onSelectClosed()"
+                [disabled]="!niveisFonte[nivel.id].co_resposta">
+                <mat-option *ngFor="let m of modalidades" [value]="m.id">{{ m.nome }}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>

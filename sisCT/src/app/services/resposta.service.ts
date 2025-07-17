@@ -115,4 +115,27 @@ export class RespostaService {
       return of(result as T);
     };
   }
+
+   montarRespostas(respostasArray:any[], textoPergunta: string): Promise<RespostaLocalInterface[]> {
+    return new Promise((resolve, reject) => {
+      try {
+        const rlocal: RespostaLocalInterface[] = [];
+
+        for (let index = 0; index < respostasArray.length; index++) {
+          const resposta = respostasArray[index];
+          const r: RespostaLocalInterface = {
+            id: 0,
+            co_resposta: resposta.trim(), // Usando trim() para evitar espaços extras
+            texto_pergunta: textoPergunta,
+            chave_pergunta: textoPergunta
+          };
+          rlocal.push(r);
+        }
+
+        resolve(rlocal); // Resolve com o array preenchido
+      } catch (error) {
+        reject(error); // Trata possíveis erros
+      }
+    });
+  }
 }

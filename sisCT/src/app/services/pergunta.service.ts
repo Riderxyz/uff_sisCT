@@ -13,13 +13,31 @@ export class PerguntaService {
   readonly utilSrv: UtilService = inject(UtilService);
   private apiUrl: string;
 
-  private perguntasIniciais: string[] = [
-    'RECURSO_PUBLICO',
-    'MODALIDADE_FINACIAMENTO_UNIAO',
-    'MODALIDADE_FINACIAMENTO_ESTADUAL',
-    'MODALIDADE_FINACIAMENTO_MUNICIPAL',
-    'OUTRAS_FONTES_RECURSOS',
-    'RECEITAS_PROPRIAS'
+  private perguntasIniciais: any[] = [
+    {
+      "id": 1,
+      "pergunta": "RECURSO_PUBLICO"
+    },
+    {
+      "id": 2,
+      "pergunta": "MODALIDADE_FINACIAMENTO_UNIAO"
+    },
+    {
+      "id": 3,
+      "pergunta": "MODALIDADE_FINACIAMENTO_ESTADUAL"
+    },
+    {
+      "id": 4,
+      "pergunta": "MODALIDADE_FINACIAMENTO_MUNICIPAL"
+    },
+    {
+      "id": 5,
+      "pergunta": "OUTRAS_FONTES_RECURSOS"
+    },
+    {
+      "id": 6,
+      "pergunta": "RECEITAS_PROPRIAS"
+    }
   ];
 
   private perguntaSubject = new BehaviorSubject<Pergunta>({
@@ -132,16 +150,18 @@ export class PerguntaService {
 
   inicializarPerguntas(): void {
     this.getAll().subscribe(perguntasExistentes => {
-      this.perguntasIniciais.forEach(descricaoPergunta => {
+      for (let index = 0; index < this.perguntasIniciais.length; index++) {
+        const perg = this.perguntasIniciais[index];
+
         const perguntaExiste = perguntasExistentes.some(p =>
-          p.descricaoPergunta?.toLowerCase() === descricaoPergunta.toLowerCase()
+          p.descricaoPergunta?.toLowerCase() === perg.pergunta.toLowerCase()
         );
 
         if (!perguntaExiste) {
           const novaPergunta =
           {
-            "id": 0,
-            "descricaoPergunta": descricaoPergunta,
+            "id": perg.id,
+            "descricaoPergunta": perg.pergunta,
             "ativo": "S",
             "ultimaAtualizacao": new Date().toISOString()
           }
@@ -151,13 +171,13 @@ export class PerguntaService {
             erro => console.error('Erro ao criar pergunta:', erro)
           );
         }
-      });
+      };
     });
   }
 
-  verificarPerguntaExiste(pergunta: string): string {
-    return this.perguntasIniciais.some(p => p.toLowerCase() === pergunta.toLowerCase()) ? pergunta : '';
-  }
+  // verificarPerguntaExiste(pergunta: any): string {
+  //   return this.perguntasIniciais.some(p => p.toLowerCase() === pergunta.pergunta.toLowerCase()) ? pergunta : '';
+  // }
 
   getIdByDescricao(descricao: string): Observable<number> {
     return this.getAll().pipe(

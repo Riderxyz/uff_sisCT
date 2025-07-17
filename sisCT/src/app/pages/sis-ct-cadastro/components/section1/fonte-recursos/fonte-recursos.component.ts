@@ -38,16 +38,16 @@ export class FonteRecursosComponent implements AfterViewInit {
   selectReceitasProprias = 2;
 
   niveisFonte: RespostaLocalInterface[] = [this.respostaService.criarRespostaVazia(0, 'RECURSO_PUBLICO', 'Possui financiamento com a União'), this.respostaService.criarRespostaVazia(1, 'RECURSO_PUBLICO', 'Possui financiamento com o Estado'), this.respostaService.criarRespostaVazia(2, 'RECURSO_PUBLICO', 'Possui financiamento com o município')];
+  niveisMultiplos: number[] = [-1, -1, -1, -1, -1, -1, -1];
   modalidades = [
-    'Contrato',
-    'Termo de Fomento',
-    'Termo de Colaboração',
-    'Outros',
-    'Emendas Parlamentares',
-    'Parcerias',
-    'Editais de seleção',
+    { id: 1, nome: 'Contrato' },
+    { id: 2, nome: 'Termo de Fomento' },
+    { id: 3, nome: 'Termo de Colaboração' },
+    { id: 4, nome: 'Outros' },
+    { id: 5, nome: 'Emendas Parlamentares' },
+    { id: 6, nome: 'Parcerias' },
+    { id: 7, nome: 'Editais de seleção' }
   ];
-
   receitasProprias = [
     { label: 'Mensalidades por parte dos acolhidos/famílias', value: '0' },
     { label: 'Campanhas de arrecadação', value: '1' },
@@ -65,11 +65,32 @@ export class FonteRecursosComponent implements AfterViewInit {
     // Get current value from service
     const currentCadastro = this.cadastroService.getCurrentCadastro();
     const currentAreaAtuacao = currentCadastro?.stAreaAtuacao;
+
   }
 
   ngAfterViewInit(): void { }
 
   onFieldChange() {
     this.respostaService.updateResposta(this.niveisFonte, 161); // this.cadastroService.cadastroAtual.id);
+  }
+  onSelectionChange(event: any) {
+    console.log('Valores selecionados:', event.value); // Array de IDs
+    // ou
+    console.log('Opções selecionadas:', event.source.selected); // Array de MatOption
+  }
+
+  // getModalidadesSelecionadas(nivelId: string) {
+  //   const idsSelecionados = this.niveisMultiplos[Number(nivelId)] || [];
+  //   return this.modalidades.filter(m => idsSelecionados.includes(m.id));
+  // }
+  onSelectClosed() {
+    Object.keys(this.niveisMultiplos).forEach(nivelId => {
+      const selecionados = this.niveisMultiplos[Number(nivelId)];
+      console.log(`Nível ${nivelId}:`, selecionados);
+
+      // Para obter os nomes das modalidades selecionadas:
+      // const modalidadesSelecionadas = this.getModalidadesSelecionadas(nivelId);
+      // console.log('Modalidades:', modalidadesSelecionadas.map(m => m.nome));
+    });
   }
 }
