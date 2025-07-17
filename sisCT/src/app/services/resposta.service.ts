@@ -63,7 +63,7 @@ export class RespostaService {
   }
 
   update(resposta: RespostaInterface): Observable<RespostaInterface> {
-    const url = `${this.utilSrv.getApiBaseUrl('respostas')}/${resposta.PK_RL_RESPOSTA}`;
+    const url = `${this.utilSrv.getApiBaseUrl('respostas')}/${resposta.id}`;
     return this.http.put<RespostaInterface>(url, resposta)
       .pipe(
         catchError(this.handleError<RespostaInterface>('update'))
@@ -85,30 +85,26 @@ export class RespostaService {
       perguntaId = id;
 
       this.http.get<RespostaInterface[]>(url).subscribe(respostasExistentes => {
-        const perguntasEnviadas = [...new Set(respostasExistentes.map(r => r.PK_PERGUNTAS = perguntaId))];
+        const perguntasEnviadas = [...new Set(respostasExistentes.map(r => r.perguntaId = perguntaId))];
+        let respostasParaDeletar = [];
 
-        const respostasParaDeletar = respostasExistentes.filter(r =>
-          perguntasEnviadas.includes(r.PK_RL_RESPOSTA!)
-        );
-
-        respostasParaDeletar.forEach(resposta => {
-          if (resposta.PK_RL_RESPOSTA) {
-            this.delete(resposta.PK_RL_RESPOSTA).subscribe();
+        for (let index = 0; index < respostasExistentes.length; index++) {
+          const element = respostasExistentes[index];
+          if (element.perguntaId == perguntaId) {
+            this.delete(element.id!).subscribe();
           }
+        }
+        respostas.forEach(resposta => {
+          const r: RespostaInterface = {
+            perguntaId: perguntaId,
+            cadastroNacionalId: 161, //cadastroId,
+            ativo: 'S',
+            codigoResposta: resposta.co_resposta ? '1' : '0',
+            dataUltimaAtualizacao: new Date()
+          };
+          this.create(r).subscribe();
         });
-
-        this.perguntaSrv.getIdByDescricao(respostas[0].chave_pergunta).subscribe(perguntaId => {
-          respostas.forEach(resposta => {
-            const r: RespostaInterface = {
-              PK_PERGUNTAS: perguntaId,
-              PK_CADASTRO_NACIONAL: cadastroId,
-              ST_ATIVO: 1,
-              CO_RESPOSTA: resposta.co_resposta || '',
-              DT_ULTIMA_ATUALIZACAO: new Date()
-            };
-            this.create(r).subscribe();
-          });
-        });
+        //        });
       });
     });
   }

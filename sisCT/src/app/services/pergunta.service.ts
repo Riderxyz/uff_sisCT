@@ -23,11 +23,10 @@ export class PerguntaService {
   ];
 
   private perguntaSubject = new BehaviorSubject<Pergunta>({
-    PK_PERGUNTAS: undefined,
-    DS_PERGUNTA: '',
-    TAG_PERGUNTA: '',
-    ST_ATIVO: 'S',
-    DT_ULTIMA_ATUALIZACAO: new Date().toISOString()
+    id: undefined,
+    descricaoPergunta: '',
+    ativo: 'S',
+    ultimaAtualizacao: new Date().toISOString()
   });
 
   perguntaAtual: Pergunta = this.perguntaSubject.getValue();
@@ -51,19 +50,19 @@ export class PerguntaService {
   }
 
   updatePergunta(): void {
-    this.perguntaAtual.ST_ATIVO = this.perguntaAtual.ST_ATIVO === 'S' ? 'S' : 'N';
-    this.perguntaAtual.DT_ULTIMA_ATUALIZACAO = new Date().toISOString();
+    this.perguntaAtual.ativo = this.perguntaAtual.ativo === 'S' ? 'S' : 'N';
+    this.perguntaAtual.ultimaAtualizacao = new Date().toISOString();
 
-    const { PK_PERGUNTAS, ...perguntaSemId } = this.perguntaAtual;
+    const { id, ...perguntaSemId } = this.perguntaAtual;
     try {
-      if (this.perguntaAtual.PK_PERGUNTAS === undefined || this.perguntaAtual.PK_PERGUNTAS === 0) {
+      if (this.perguntaAtual.id === undefined || this.perguntaAtual.id === 0) {
         this.http.post<Pergunta>(this.utilSrv.getApiBaseUrl('perguntas'), perguntaSemId)
           .subscribe(pergunta => {
             this.perguntaSubject.next(pergunta);
             console.log('Pergunta criada:', pergunta);
           })
       } else {
-        const url = `${this.utilSrv.getApiBaseUrl('perguntas')}/${this.perguntaAtual.PK_PERGUNTAS}`;
+        const url = `${this.utilSrv.getApiBaseUrl('perguntas')}/${this.perguntaAtual.id}`;
         this.http.put<Pergunta>(url, perguntaSemId)
           .subscribe(pergunta => {
             this.perguntaSubject.next(pergunta);
@@ -78,11 +77,10 @@ export class PerguntaService {
 
   resetPergunta(): void {
     this.perguntaSubject.next({
-      PK_PERGUNTAS: undefined,
-      DS_PERGUNTA: '',
-      TAG_PERGUNTA: '',
-      ST_ATIVO: 'S',
-      DT_ULTIMA_ATUALIZACAO: new Date().toISOString()
+      id: undefined,
+      descricaoPergunta: '',
+      ativo: 'S',
+      ultimaAtualizacao: new Date().toISOString()
     });
   }
 
@@ -117,7 +115,7 @@ export class PerguntaService {
   }
 
   update(pergunta: Pergunta): Observable<Pergunta> {
-    const url = `${this.utilSrv.getApiBaseUrl('perguntas')}/${pergunta.PK_PERGUNTAS}`;
+    const url = `${this.utilSrv.getApiBaseUrl('perguntas')}/${pergunta.id}`;
     return this.http.put<Pergunta>(url, pergunta)
       .pipe(
         catchError(this.handleError<Pergunta>('update'))
@@ -136,7 +134,7 @@ export class PerguntaService {
     this.getAll().subscribe(perguntasExistentes => {
       this.perguntasIniciais.forEach(descricaoPergunta => {
         const perguntaExiste = perguntasExistentes.some(p =>
-          p.DS_PERGUNTA?.toLowerCase() === descricaoPergunta.toLowerCase()
+          p.descricaoPergunta?.toLowerCase() === descricaoPergunta.toLowerCase()
         );
 
         if (!perguntaExiste) {
@@ -169,7 +167,7 @@ export class PerguntaService {
         let result = 0;
         for (let index = 0; index < pe.length; index++) {
           const pergunta: any = pe[index];
-          console.log(`ID: ${pergunta.PK_PERGUNTAS}, Descrição: ${pergunta.DS_PERGUNTA}`);
+          console.log(`ID: ${pergunta.id}, Descrição: ${pergunta.DS_PERGUNTA}`);
           if (pergunta.descricaoPergunta?.toLowerCase().trim() === descricao.toLowerCase().trim()) {
             if (result == 0) {
               result = pergunta.id || 0;
@@ -197,8 +195,8 @@ export class PerguntaService {
       // Depois excluir todas as perguntas
       this.getAll().subscribe(perguntas => {
         perguntas.forEach(pergunta => {
-          if (pergunta.PK_PERGUNTAS) {
-            this.delete(pergunta.PK_PERGUNTAS).subscribe();
+          if (pergunta.id) {
+            this.delete(pergunta.id).subscribe();
           }
         });
       });
