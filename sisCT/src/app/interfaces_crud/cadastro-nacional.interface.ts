@@ -1,11 +1,13 @@
 export interface CadastroNacional {
   id: number;
+  coUser: string;
   dsOutroConselhoMunicipal: string;
   dsEmailInstitucional: string;
   dsInscricaoConselhoEstadual: string;
   dtValidadeLicensa: string; // ou Date se você converter para objeto Date
   noFantasia: string;
   noRazaoSocial: string;
+  nuQtdFiliais: number;
   nuCnpj: string;
   nuCpfOwner: string;
   dsAtividadeFilial: string;

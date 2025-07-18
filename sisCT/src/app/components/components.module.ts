@@ -76,6 +76,8 @@ const agGridComponents = [
   RecursosHumanosComponent,
 ];
 
+import { EntidadesGridComponent } from './entidades-grid/entidades-grid.component';
+
 const dialogsComponents = [
   LoaderComponent,
   ConfirmDialogComponent,
@@ -98,7 +100,7 @@ const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
     MapaDeVagasComponent,
     FooterComponent,
     ...dialogsComponents,
-
+    EntidadesGridComponent,
   ],
   imports: [
     CommonModule,
@@ -113,6 +115,7 @@ const ngxMasks = [NgxMaskDirective, NgxMaskPipe];
     SidebarComponent,
     FooterComponent,
     ...agGridComponents,
+    EntidadesGridComponent,
   ],
   providers: [provideEnvironmentNgxMask()],
 })

@@ -28,6 +28,8 @@ export class AppComponent implements OnInit {
     this.centralRxjs.dataToReceive.subscribe((data) => {
       if (data.key === config.senderKeys.openMenu) {
         this.showMenu = !this.showMenu;
+      } else if (data.key === config.senderKeys.closeMenu) {
+        this.showMenu = false;
       }
     });
 

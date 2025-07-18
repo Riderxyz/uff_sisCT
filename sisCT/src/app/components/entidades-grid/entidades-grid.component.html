@@ -1,0 +1,17 @@
+<div class="entidades-grid-container">
+  <h3>Minhas Entidades</h3>
+  <div class="ag-theme-alpine" style="width: 100%; height: 300px;">
+    <ag-grid-angular
+      style="width: 100%; height: 100%;"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [rowData]="rowData"
+      [pagination]="true"
+      [paginationPageSize]="10"
+      (gridReady)="onGridReady($event)"
+      (rowDoubleClicked)="onRowDoubleClicked($event)"
+      [suppressClickEdit]="true"
+      rowSelection="single">
+    </ag-grid-angular>
+  </div>
+</div>

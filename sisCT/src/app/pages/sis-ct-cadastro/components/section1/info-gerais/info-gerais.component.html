@@ -12,7 +12,8 @@
   </div>
 
   <!-- Razão Social -->
-  <div class="col p-12 pl-1">
+
+  <div class="col p-12 pl-1 col-11">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>Razão social</mat-label>
       <input matInput name="razaoSocial" [(ngModel)]="cadastroService.cadastroAtual.noRazaoSocial"
@@ -22,6 +23,15 @@
       </mat-error>
     </mat-form-field>
   </div>
+
+  <div class="col p-12 pl-1 col-1">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Qtd Filiais</mat-label>
+      <input matInput type="number" name="qtdFiliais" [(ngModel)]="cadastroService.cadastroAtual.nuQtdFiliais"
+        (blur)="onFieldChange()" />
+    </mat-form-field>
+  </div>
+
 
   <div class="grid col-12 p-0 m-0">
     <!-- CNPJ, Email e Nome Fantasia na mesma linha -->
@@ -127,8 +137,8 @@
         <div class="col-1 form-field">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>CEP</mat-label>
-            <input matInput name="cep" [(ngModel)]="enderecoService.enderecoAtual.nuCep" #cepCtrl="ngModel"
-              required mask="00000-000" placeholder="00000-000" (ngModelChange)="onFieldChange(true)" />
+            <input matInput name="cep" [(ngModel)]="enderecoService.enderecoAtual.nuCep" #cepCtrl="ngModel" required
+              mask="00000-000" placeholder="00000-000" (ngModelChange)="onFieldChange(true)" />
             @if ( isLoadingAdress ) {
             <i matSuffix class="fa-solid fa-spin fa-arrows-spin p-3"></i>
             }
@@ -142,8 +152,8 @@
         <div class="col form-field">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Logradouro</mat-label>
-            <input matInput name="logradouro" [(ngModel)]="enderecoService.enderecoAtual.dsLogradouro" #logradouroCtrl="ngModel"
-              required (blur)="onFieldChange()" />
+            <input matInput name="logradouro" [(ngModel)]="enderecoService.enderecoAtual.dsLogradouro"
+              #logradouroCtrl="ngModel" required (blur)="onFieldChange()" />
             <mat-error *ngIf="logradouroCtrl.invalid && logradouroCtrl.touched">
               Logradouro é obrigatório
             </mat-error>
@@ -156,8 +166,8 @@
         <div class="col-1 form-field">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Número</mat-label>
-            <input matInput name="numero" [(ngModel)]="enderecoService.enderecoAtual.nuNumero" #numeroCtrl="ngModel" required
-              (blur)="onFieldChange()" />
+            <input matInput name="numero" [(ngModel)]="enderecoService.enderecoAtual.nuNumero" #numeroCtrl="ngModel"
+              required (blur)="onFieldChange()" />
             <mat-error *ngIf="numeroCtrl.invalid && numeroCtrl.touched">
               Número é obrigatório
             </mat-error>
@@ -213,7 +223,8 @@
         <div class="col form-field">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>País</mat-label>
-            <input matInput name="pais" [(ngModel)]="enderecoService.enderecoAtual.dsPais" #paisCtrl="ngModel" required />
+            <input matInput name="pais" [(ngModel)]="enderecoService.enderecoAtual.dsPais" #paisCtrl="ngModel"
+              required />
             <mat-error *ngIf="paisCtrl.invalid && paisCtrl.touched">
               País é obrigatório
             </mat-error>

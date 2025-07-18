@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { CadastroNacional } from '../interfaces_crud/cadastro-nacional.interface';
 import { EnvironmentService } from './environment.service';
+import { UsuarioService } from './usuario.service';
 import { UtilService } from './util.service';
 
 @Injectable({
@@ -13,19 +14,21 @@ import { UtilService } from './util.service';
 })
 export class CadastroNacionalService {
   readonly utilSrv: UtilService = inject(UtilService);
-  private apiUrl: string;
+  readonly usuarioSrv: UsuarioService = inject(UsuarioService);
 
   public areasAtuacoes: any[] = []; // Array para armazenar itens selecionados
 
   // BehaviorSubject to store and share the current cadastro nacional
   public cadastroSubject = new BehaviorSubject<CadastroNacional>({
     "id": 0,
+    "coUser": "",
     "dsOutroConselhoMunicipal": "",
     "dsInscricaoConselhoEstadual": "",
     "dsEmailInstitucional": "",
     "dtValidadeLicensa": "",
     "noFantasia": "",
     "noRazaoSocial": "",
+    "nuQtdFiliais": 0,
     "nuCnpj": "",
     "nuCpfOwner": "",
     "dsAtividadeFilial": "",
@@ -101,8 +104,6 @@ export class CadastroNacionalService {
     private http: HttpClient,
     private environmentService: EnvironmentService
   ) {
-    this.apiUrl = `${this.environmentService.apiUrl}/cadastro-nacional`;
-
     // Keep cadastroAtual synchronized with cadastroSubject
     this.cadastroSubject.subscribe(cadastro => {
       this.cadastroAtual = cadastro;
@@ -116,6 +117,7 @@ export class CadastroNacionalService {
 
   // Update the current cadastro instance
   updateCadastro(): Promise<boolean> {
+    this.cadastroAtual.coUser = this.usuarioSrv.usuarioAtual.id;
     const { id, ...cadastroSemId } = this.cadastroAtual;
     const url = this.cadastroAtual.id !== 0
       ? `${this.utilSrv.getApiBaseUrl('cadastro-nacional')}/${this.cadastroAtual.id}`
@@ -153,14 +155,15 @@ export class CadastroNacionalService {
   }
 
   getAll(): Observable<CadastroNacional[]> {
-    return this.http.get<CadastroNacional[]>(this.apiUrl)
+    const url = this.utilSrv.getApiBaseUrl('cadastro-nacional');
+    return this.http.get<CadastroNacional[]>(url)
       .pipe(
         catchError(this.handleError<CadastroNacional[]>('getAll', []))
       );
   }
 
   getById(id: number): Observable<CadastroNacional> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.utilSrv.getApiBaseUrl('cadastro-nacional')}/${id}`;
     return this.http.get<CadastroNacional>(url)
       .pipe(
         catchError(this.handleError<CadastroNacional>(`getById id=${id}`))
@@ -168,14 +171,15 @@ export class CadastroNacionalService {
   }
 
   create(cadastroNacional: CadastroNacional): Observable<CadastroNacional> {
-    return this.http.post<CadastroNacional>(this.apiUrl, cadastroNacional)
+    const url = this.utilSrv.getApiBaseUrl('cadastro-nacional');
+    return this.http.post<CadastroNacional>(url, cadastroNacional)
       .pipe(
         catchError(this.handleError<CadastroNacional>('create'))
       );
   }
 
   update(cadastroNacional: CadastroNacional): Observable<CadastroNacional> {
-    const url = `${this.apiUrl}/${cadastroNacional.id}`;
+    const url = `${this.utilSrv.getApiBaseUrl('cadastro-nacional')}/${cadastroNacional.id}`;
     return this.http.put<CadastroNacional>(url, cadastroNacional)
       .pipe(
         catchError(this.handleError<CadastroNacional>('update'))
@@ -183,11 +187,37 @@ export class CadastroNacionalService {
   }
 
   delete(id: number): Observable<any> {
-    const url = `${this.apiUrl}/${id}`;
+    const url = `${this.utilSrv.getApiBaseUrl('cadastro-nacional')}/${id}`;
     return this.http.delete<any>(url)
       .pipe(
         catchError(this.handleError<any>('delete'))
       );
+  }
+
+  getEntidadesByUser(userId: string): Observable<CadastroNacional[]> {
+    const url = `${this.utilSrv.getApiBaseUrl('cadastro-nacional')}/usuario/${userId}`;
+    return this.http.get<CadastroNacional[]>(url)
+      .pipe(
+        catchError(this.handleError<CadastroNacional[]>(`getEntidadesByUser userId=${userId}`, []))
+      );
+  }
+
+  loadEntidade(id: number, cnpj: string): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      this.getById(id).subscribe({
+        next: (cadastro) => {
+          this.cadastroSubject.next(cadastro);
+          this.utilSrv.showSuccess('Entidade carregada', `Entidade ${cadastro.noRazaoSocial} carregada com sucesso.`);
+          console.log('Entidade carregada:', cadastro);
+          resolve(true);
+        },
+        error: (error) => {
+          this.utilSrv.showError('Erro ao carregar entidade', `Não foi possível carregar a entidade com CNPJ ${cnpj}.`);
+          console.error('Erro ao carregar entidade:', error);
+          resolve(false);
+        }
+      });
+    });
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
