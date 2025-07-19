@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ColDef, GridOptions } from 'ag-grid-community';
 import { MapaDeVagas } from '../../../interfaces_crud/mapa_vagas.interface';
+import { CadastroNacionalService } from '../../../services/cadastro-nacional.service';
 import { MapaDeVagasService } from '../../../services/mapa-de-vagas.service';
 import { AdicionarVagaDialogComponent } from '../../dialogs/editar-vaga-dialog/editar-vaga-dialog.component';
 
@@ -12,9 +13,9 @@ import { AdicionarVagaDialogComponent } from '../../dialogs/editar-vaga-dialog/e
   styleUrl: './mapa-de-vagas.component.scss'
 })
 export class MapaDeVagasComponent implements OnInit {
-  // ngOnInit(): void {
-  //   throw new Error('Method not implemented.');
-  // }
+  readonly vagasService: MapaDeVagasService = inject(MapaDeVagasService);
+  readonly cadastroNacionalService: CadastroNacionalService = inject(CadastroNacionalService);
+
   rowData: MapaDeVagas[] = [];
   columnDefs: ColDef<MapaDeVagas, any>[] = [];
   mostrarHistorico = false;
@@ -44,20 +45,21 @@ export class MapaDeVagasComponent implements OnInit {
     }
   };
 
-
-
   abrirDialogoVaga(data?: any): void {
-    this.vagasService.idVagaAtual = data ? data.pkMapaDeVagas : -1; // Define o ID da vaga atual
+    this.vagasService.vagaAtual.id = data ? data.id : -1; // Define o ID da vaga atual
     this.dialog.open(AdicionarVagaDialogComponent, {
       width: '70vw', // Ajuste conforme necessário
       data: data // Passa os dados da linha para o diálogo
     });
   }
 
-  constructor(private vagasService: MapaDeVagasService, private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog) { }
   loadData(hist: boolean = false): void {
-    this.vagasService.vagas$.subscribe(vagas => {
-      this.rowData = vagas.filter(v => v.stAtivo === 1 || hist);
+    this.vagasService.getVagasByCadastroNacional(this.cadastroNacionalService.cadastroAtual.id).subscribe(vagas => {
+      this.rowData = [];
+      for (let v of vagas) {
+        this.rowData.push(v);
+      }
     });
   }
   ngOnInit(): void {
@@ -76,7 +78,7 @@ export class MapaDeVagasComponent implements OnInit {
         headerName: 'Vaga',
         //field: '',
         valueGetter: (params) => {
-          const index = params.data?.pkMapaDeVagas!;
+          const index = params.data?.id!;
           const total = this.rowData.length;
           return `${index.toString().padStart(2, '0')}`;
         },
@@ -194,11 +196,11 @@ export class MapaDeVagasComponent implements OnInit {
   }
 
   private removerVaga(vaga: MapaDeVagas): void {
-    const index = this.rowData.findIndex(v => v.pkMapaDeVagas === vaga.pkMapaDeVagas);
+    const index = this.rowData.findIndex(v => v.id === vaga.id);
     if (index > -1) {
       const vaga = this.rowData[index];
       // this.rowData.splice(index, 1);
-      this.vagasService.desativarVaga(vaga.pkMapaDeVagas!)
+      this.vagasService.desativarVaga(vaga.id!)
       this.loadData();
     }
   }

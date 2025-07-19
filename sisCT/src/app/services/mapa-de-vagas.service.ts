@@ -1,153 +1,264 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { MapaDeVagas } from '../interfaces_crud/mapa_vagas.interface';
+import { EnvironmentService } from './environment.service';
+import { UtilService } from './util.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapaDeVagasService {
-  private vagas: MapaDeVagas[] = [];
+  readonly utilSrv: UtilService = inject(UtilService);
+  private apiUrl: string;
+
+  // Store list of vagas
+  public listMapaVagas: MapaDeVagas[] = [];
+
+  // BehaviorSubject for current vaga
+  private vagaSubject = new BehaviorSubject<MapaDeVagas>({
+    id: 0,
+    stDisponibilidade: '',
+    dsIdentificacaoAcolhido: '',
+    nuCpf: 0,
+    dtNascimento: '',
+    dtIngresso: '',
+    dtSaida: '',
+    stPublico: '',
+    stGratuidade: '',
+    stFinanciamento: '',
+    stAtivo: '1',
+    dtUltimaAtualizacao: new Date().toISOString(),
+    cadastroNacionalId: 0
+  });
+
+  vagaAtual: MapaDeVagas = this.vagaSubject.getValue();
+
+  // Observable to expose the vaga instance
+  public vaga$ = this.vagaSubject.asObservable();
+
+  // BehaviorSubject for list of vagas
   private vagasSubject = new BehaviorSubject<MapaDeVagas[]>([]);
   public vagas$ = this.vagasSubject.asObservable();
-  public idVagaAtual = -1;
 
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+    private environmentService: EnvironmentService
+  ) {
+    this.apiUrl = `${this.environmentService.apiUrl}/mapa-de-vagas`;
 
-
-
-  // Novo método para ajustar quantidade de vagas
-  ajustarQuantidadeVagas(quantidadeDesejada: number): void {
-    const quantidadeAtual = this.vagas.length;
-    const diferenca = quantidadeDesejada - quantidadeAtual;
-
-    if (diferenca > 0) {
-      this.adicionarVagasEmLote(diferenca);
-    }
+    // Keep vagaAtual synchronized with vagaSubject
+    this.vagaSubject.subscribe(vaga => {
+      this.vagaAtual = vaga;
+    });
   }
 
-  // Adiciona múltiplas vagas de uma vez (com notificação única)
-  private adicionarVagasEmLote(quantidade: number): void {
-    // const novasVagas: MapaDeVagas[] = [];
 
-    for (let i = 0; i < quantidade; i++) {
-      // novasVagas.push(this.criarVagaPadrao());
-      this.vagas.push(this.criarVagaPadrao());
-    }
 
-    // this.vagas.push(...novasVagas);
-    this.atualizarObservable();
+  getCurrentVaga(): MapaDeVagas {
+    return this.vagaSubject.getValue();
   }
 
-  // Cria uma vaga com valores padrão
-  private criarVagaPadrao(): MapaDeVagas {
-    let result = {
-      stDisponibilidade: -1,
-      dsIdentificacaoAcolhido: '',
-      nuCpf: null,
-      dtNascimento: '',
-      dtIngresso: '',
-      dtSaida: null,
-      stPublico: -1,
-      stGratuidade: -1,
-      stFinanciamento: -1,
-      stAtivo: 1,
-      pkCadastroNacional: 0,
-      pkMapaDeVagas: this.gerarIdUnico(),
-      dtUltimaAtualizacao: ''
-    };
-    return result;
-  }
+  updateVaga(): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      this.vagaAtual.dtUltimaAtualizacao = new Date().toISOString();
+      this.vagaAtual.stAtivo = '1';
+      const { id, ...vagaSemId } = this.vagaAtual;
 
-  // CREATE
-  adicionarVaga(novaVaga: MapaDeVagas): void {
-    const vagaCompleta: MapaDeVagas = {
-      ...novaVaga,
-      pkMapaDeVagas: this.gerarIdUnico(),
-      dtUltimaAtualizacao: new Date().toISOString()
-    };
-    this.vagas.push(vagaCompleta);
-    this.atualizarObservable();
-  }
-
-  // READ (todos)
-  obterTodasVagas(): MapaDeVagas[] {
-    return [...this.vagas];
-  }
-
-  // READ (por ID)
-  obterVagaPorId(id: number): MapaDeVagas | undefined {
-    return this.vagas.find(v => v.pkMapaDeVagas === id);
-  }
-
-  // UPDATE
-  atualizarVaga(id: number, dadosAtualizados: Partial<MapaDeVagas>): Promise<boolean> {
-    return new Promise((resolve, reject) => {
       try {
-        const index = this.vagas.findIndex(v => v.pkMapaDeVagas === id);
+        const url = this.vagaAtual.id !== 0
+          ? `${this.utilSrv.getApiBaseUrl('mapa-de-vagas')}/${this.vagaAtual.id}`
+          : this.utilSrv.getApiBaseUrl('mapa-de-vagas');
 
-        if (index === -1) {
-          resolve(false);
-          return;
-        }
+        const request = this.vagaAtual.id !== 0
+          ? this.http.put<MapaDeVagas>(url, this.vagaAtual)
+          : this.http.post<MapaDeVagas>(url, vagaSemId);
 
-        this.vagas[index] = {
-          ...this.vagas[index],
-          ...dadosAtualizados,
-          dtUltimaAtualizacao: new Date().toISOString(),
-          pkMapaDeVagas: id
-        };
-
-        this.atualizarObservable();
-        resolve(true);
+        request.subscribe({
+          next: (vaga) => {
+            this.vagaSubject.next(vaga);
+            console.log('Vaga atualizada:', vaga);
+            resolve(true);
+          },
+          error: (error) => {
+            this.utilSrv.showError('Erro ao atualizar vaga', 'Por favor, tente novamente mais tarde.');
+            console.error('Erro ao atualizar vaga:', error);
+            resolve(false);
+          }
+        });
       } catch (error) {
-        reject(error);
+        this.utilSrv.showError('Erro ao atualizar vaga', 'Por favor, tente novamente mais tarde.');
+        console.error('Erro ao atualizar vaga:', error);
+        resolve(false);
       }
     });
   }
 
-  // DELETE
-  removerVaga(id: number): boolean {
-    const initialLength = this.vagas.length;
-    this.vagas = this.vagas.filter(v => v.pkMapaDeVagas !== id);
-
-    if (this.vagas.length !== initialLength) {
-      this.atualizarObservable();
-      return true;
-    }
-    return false;
+  resetVaga(): void {
+    this.vagaSubject.next({
+      id: 0,
+      stDisponibilidade: '',
+      dsIdentificacaoAcolhido: '',
+      nuCpf: 0,
+      dtNascimento: '',
+      dtIngresso: '',
+      dtSaida: '',
+      stPublico: '',
+      stGratuidade: '',
+      stFinanciamento: '',
+      stAtivo: '1',
+      dtUltimaAtualizacao: new Date().toISOString(),
+      cadastroNacionalId: 0
+    });
   }
 
-  private atualizarObservable(): void {
-    this.vagasSubject.next([...this.vagas]);
+  getAll(): Observable<MapaDeVagas[]> {
+    const url = this.utilSrv.getApiBaseUrl('mapa-de-vagas');
+    return this.http.get<MapaDeVagas[]>(url)
+      .pipe(
+        catchError(this.handleError<MapaDeVagas[]>('getAll', []))
+      );
   }
 
-  private gerarIdUnico(): number {
-    if (!this.vagas || this.vagas.length === 0) {
-      console.log('Retornando 1 porque a lista está vazia');
-      return 1;
-    }
+  getById(id: number): Observable<MapaDeVagas> {
+    const url = `${this.utilSrv.getApiBaseUrl('mapa-de-vagas')}/${id}`;
+    return this.http.get<MapaDeVagas>(url)
+      .pipe(
+        catchError(this.handleError<MapaDeVagas>(`getById id=${id}`))
+      );
+  }
 
-    const maxId = this.vagas.reduce((max, vaga) => {
-      const id = vaga.pkMapaDeVagas ?? 0;
-      return id > max ? id : max;
-    }, 0);
+  create(vaga: MapaDeVagas): Observable<MapaDeVagas> {
+    const url = this.utilSrv.getApiBaseUrl('mapa-de-vagas');
+    return this.http.post<MapaDeVagas>(url, vaga)
+      .pipe(
+        catchError(this.handleError<MapaDeVagas>('create'))
+      );
+  }
 
-    console.log('IDs encontrados:', this.vagas.map(v => v.pkMapaDeVagas));
-    console.log('Max ID encontrado:', maxId);
+  update(vaga: MapaDeVagas): Observable<MapaDeVagas> {
+    const url = `${this.utilSrv.getApiBaseUrl('mapa-de-vagas')}/${vaga.id}`;
+    return this.http.put<MapaDeVagas>(url, vaga)
+      .pipe(
+        catchError(this.handleError<MapaDeVagas>('update'))
+      );
+  }
 
-    return maxId + 1;
+  delete(id: number): Observable<any> {
+    const url = `${this.utilSrv.getApiBaseUrl('mapa-de-vagas')}/${id}`;
+    return this.http.delete<any>(url)
+      .pipe(
+        catchError(this.handleError<any>('delete'))
+      );
   }
 
 
   desativarVaga(id: number): boolean {
-    const vaga = this.obterVagaPorId(id);
-    if (!vaga) return false;
-    this.adicionarVaga(this.criarVagaPadrao());
-     this.atualizarVaga(id, {
-      stAtivo: 0,
-      dtUltimaAtualizacao: new Date().toISOString()
-    });
+    // const vaga = this.obterVagaPorId(id);
+    // if (!vaga) return false;
+    // this.adicionarVaga(this.criarVagaPadrao());
+    // this.atualizarVaga(id, {
+    //   stAtivo: 'N',
+    //   dtUltimaAtualizacao: new Date().toISOString()
+    // });
     return true;
+  }
+
+  getVagasByCadastroNacional(cadastroNacionalId: number): Observable<MapaDeVagas[]> {
+    const url = `${this.utilSrv.getApiBaseUrl('cadastro-nacional')}/${cadastroNacionalId}/mapa-de-vagas`;
+    return this.http.get<MapaDeVagas[]>(url)
+      .pipe(
+        catchError(this.handleError<MapaDeVagas[]>(`getVagasByCadastroNacional id=${cadastroNacionalId}`, []))
+      );
+  }
+
+  loadVagasByCadastroNacional(cadastroNacionalId: number): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      if (!cadastroNacionalId) {
+        resolve(false);
+        return;
+      }
+
+      this.getVagasByCadastroNacional(cadastroNacionalId)
+        .subscribe({
+          next: (vagas) => {
+            this.listMapaVagas = vagas;
+            this.vagasSubject.next(vagas);
+            console.log('Vagas carregadas:', vagas);
+            resolve(true);
+          },
+          error: (error) => {
+            this.utilSrv.showError('Erro ao carregar vagas', 'Por favor, tente novamente mais tarde.');
+            console.error('Erro ao carregar vagas:', error);
+            resolve(false);
+          }
+        });
+    });
+  }
+
+  updateMapaVagas(vaga: MapaDeVagas): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      if (!vaga) {
+        resolve(false);
+        return;
+      }
+
+      const urlBase = this.utilSrv.getApiBaseUrl('cadastro-nacional');
+      const getUrl = `${urlBase}/mapa-de-vagas/${vaga.id}`;
+
+      // Primeiro verifica se a vaga existe
+      this.http.get<MapaDeVagas>(getUrl).subscribe({
+        next: (existingVaga) => {
+          // Se existe, faz PUT para atualizar
+          const updateUrl = `${urlBase}/mapa-de-vagas/${vaga.id}`;
+          this.http.put<MapaDeVagas>(updateUrl, vaga).subscribe({
+            next: (updatedVaga) => {
+              // Remove o antigo e adiciona o novo (mesmo ID)
+              this.listMapaVagas = this.listMapaVagas.filter(v => v.id !== vaga.id);
+              this.listMapaVagas.push(updatedVaga);
+              this.vagasSubject.next([...this.listMapaVagas]);
+
+              this.utilSrv.showSuccess('Sucesso', 'Mapa de vagas atualizado com sucesso.');
+              resolve(true);
+            },
+            error: (error) => {
+              this.handleError('Erro ao atualizar mapa de vagas', error);
+              resolve(false);
+            }
+          });
+        },
+        error: (getError) => {
+          if (getError.status === 404) {
+            // Se não existe, faz POST para criar
+            const insertUrl = `${urlBase}/mapa-de-vagas`;
+            this.http.post<MapaDeVagas>(insertUrl, vaga).subscribe({
+              next: (newVaga) => {
+                // Remove se por algum motivo já existia e adiciona o novo
+                this.listMapaVagas = this.listMapaVagas.filter(v => v.id !== newVaga.id);
+                this.listMapaVagas.push(newVaga);
+                this.vagasSubject.next([...this.listMapaVagas]);
+
+                this.utilSrv.showSuccess('Sucesso', 'Mapa de vagas criado com sucesso.');
+                resolve(true);
+              },
+              error: (postError) => {
+                this.handleError('Erro ao criar mapa de vagas', postError);
+                resolve(false);
+              }
+            });
+          } else {
+            this.handleError('Erro ao verificar mapa de vagas', getError);
+            resolve(false);
+          }
+        }
+      });
+    });
+  }
+
+  private handleError(message: string, error: any): void {
+    this.utilSrv.showError(message, 'Por favor, tente novamente mais tarde.');
+    console.error(`${message}:`, error);
   }
 }
