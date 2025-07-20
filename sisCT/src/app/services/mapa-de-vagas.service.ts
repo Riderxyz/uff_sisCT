@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MapaDeVagas } from '../interfaces_crud/mapa_vagas.interface';
+import { CadastroNacionalService } from './cadastro-nacional.service';
 import { EnvironmentService } from './environment.service';
 import { UtilService } from './util.service';
 
@@ -12,6 +13,7 @@ import { UtilService } from './util.service';
 })
 export class MapaDeVagasService {
   readonly utilSrv: UtilService = inject(UtilService);
+  readonly cadastroNacionalService: CadastroNacionalService = inject(CadastroNacionalService);
   private apiUrl: string;
 
   // Store list of vagas
@@ -46,6 +48,7 @@ export class MapaDeVagasService {
   constructor(
     private http: HttpClient,
     private environmentService: EnvironmentService
+
   ) {
     this.apiUrl = `${this.environmentService.apiUrl}/mapa-de-vagas`;
 
@@ -53,6 +56,83 @@ export class MapaDeVagasService {
     this.vagaSubject.subscribe(vaga => {
       this.vagaAtual = vaga;
     });
+  }
+
+  // Método para adicionar vagas em lote
+  adicionarVagasEmLote(qtdVagas: number): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      const cadastroNacionalId = this.cadastroNacionalService.cadastroAtual.id;
+
+      if (!cadastroNacionalId || qtdVagas <= 0) {
+        this.utilSrv.showError('Erro', 'ID do cadastro nacional ou quantidade de vagas inválida.');
+        resolve(false);
+        return;
+      }
+
+      // Verificar quantas vagas já existem para este cadastro nacional
+      this.getVagasByCadastroNacional(cadastroNacionalId).subscribe({
+        next: (vagasExistentes) => {
+          const vagasAtuais = vagasExistentes.length;
+          const vagasParaAdicionar = qtdVagas - vagasAtuais;
+
+          if (vagasParaAdicionar <= 0) {
+            this.utilSrv.showInfo('Informação', `Já existem ${vagasAtuais} vagas cadastradas. Não é necessário adicionar mais.`);
+            resolve(true);
+            return;
+          }
+
+          // Criar array de promessas para adicionar as vagas
+          const promises: Promise<boolean>[] = [];
+
+          for (let i = 0; i < vagasParaAdicionar; i++) {
+            const novaVaga = this.criarVagaPadrao();
+            promises.push(this.updateMapaVagas(novaVaga));
+          }
+
+          // Executar todas as promessas
+          Promise.all(promises)
+            .then((results) => {
+              const sucesso = results.every(result => result === true);
+              if (sucesso) {
+                this.utilSrv.showSuccess('Sucesso', `${vagasParaAdicionar} vagas adicionadas com sucesso.`);
+                // Recarregar a lista de vagas
+                this.loadVagasByCadastroNacional(cadastroNacionalId);
+              } else {
+                this.utilSrv.showWarn('Atenção', 'Algumas vagas não puderam ser adicionadas.');
+              }
+              resolve(sucesso);
+            })
+            .catch((error) => {
+              console.error('Erro ao adicionar vagas em lote:', error);
+              this.utilSrv.showError('Erro', 'Falha ao adicionar vagas em lote.');
+              resolve(false);
+            });
+        },
+        error: (error) => {
+          console.error('Erro ao verificar vagas existentes:', error);
+          this.utilSrv.showError('Erro', 'Falha ao verificar vagas existentes.');
+          resolve(false);
+        }
+      });
+    });
+  }
+
+  private criarVagaPadrao(): MapaDeVagas {
+    return {
+      id: 0,
+      stDisponibilidade: '1',
+      dsIdentificacaoAcolhido: 'Vaga disponível',
+      nuCpf: 0,
+      dtNascimento: '',
+      dtIngresso: '',
+      dtSaida: '',
+      stPublico: '0',
+      stGratuidade: '0',
+      stFinanciamento: '0',
+      stAtivo: '1',
+      cadastroNacionalId: this.cadastroNacionalService.cadastroAtual.id || 0,
+      dtUltimaAtualizacao: new Date().toISOString()
+    };
   }
 
 
@@ -167,11 +247,31 @@ export class MapaDeVagasService {
   }
 
   getVagasByCadastroNacional(cadastroNacionalId: number): Observable<MapaDeVagas[]> {
+    cadastroNacionalId = 318;
     const url = `${this.utilSrv.getApiBaseUrl('cadastro-nacional')}/${cadastroNacionalId}/mapa-de-vagas`;
-    return this.http.get<MapaDeVagas[]>(url)
-      .pipe(
-        catchError(this.handleError<MapaDeVagas[]>(`getVagasByCadastroNacional id=${cadastroNacionalId}`, []))
-      );
+
+    // Cria um observable que atualiza as listas internas
+    return new Observable<MapaDeVagas[]>(observer => {
+      this.http.get<MapaDeVagas[]>(url)
+        .pipe(
+          catchError(this.handleError<MapaDeVagas[]>(`getVagasByCadastroNacional id=${cadastroNacionalId}`, []))
+        )
+        .subscribe({
+          next: (vagas) => {
+            // Atualiza as listas internas
+            this.listMapaVagas = vagas;
+            this.vagasSubject.next(vagas);
+
+            // Emite o resultado para o subscriber original
+            observer.next(vagas);
+            observer.complete();
+          },
+          error: (error) => {
+            console.error('Erro ao obter vagas:', error);
+            observer.error(error);
+          }
+        });
+    });
   }
 
   loadVagasByCadastroNacional(cadastroNacionalId: number): Promise<boolean> {
@@ -184,8 +284,7 @@ export class MapaDeVagasService {
       this.getVagasByCadastroNacional(cadastroNacionalId)
         .subscribe({
           next: (vagas) => {
-            this.listMapaVagas = vagas;
-            this.vagasSubject.next(vagas);
+            // A lista já foi atualizada pelo getVagasByCadastroNacional
             console.log('Vagas carregadas:', vagas);
             resolve(true);
           },
@@ -197,7 +296,6 @@ export class MapaDeVagasService {
         });
     });
   }
-
   updateMapaVagas(vaga: MapaDeVagas): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
       if (!vaga) {
@@ -206,7 +304,7 @@ export class MapaDeVagasService {
       }
 
       const urlBase = this.utilSrv.getApiBaseUrl('cadastro-nacional');
-      const getUrl = `${urlBase}/mapa-de-vagas/${vaga.id}`;
+      const getUrl = `${urlBase}/mapa-de-vagas/${vaga.cadastroNacionalId}`;
 
       // Primeiro verifica se a vaga existe
       this.http.get<MapaDeVagas>(getUrl).subscribe({
@@ -224,7 +322,8 @@ export class MapaDeVagasService {
               resolve(true);
             },
             error: (error) => {
-              this.handleError('Erro ao atualizar mapa de vagas', error);
+              console.error('Erro ao atualizar mapa de vagas:', error);
+              this.utilSrv.showError('Erro ao atualizar mapa de vagas', 'Por favor, tente novamente mais tarde.');
               resolve(false);
             }
           });
@@ -232,8 +331,10 @@ export class MapaDeVagasService {
         error: (getError) => {
           if (getError.status === 404) {
             // Se não existe, faz POST para criar
-            const insertUrl = `${urlBase}/mapa-de-vagas`;
-            this.http.post<MapaDeVagas>(insertUrl, vaga).subscribe({
+            const insertUrl = `${this.utilSrv.getApiBaseUrl()}/mapa-de-vagas`;
+            // Remove o id antes de enviar para criar
+            const { id, ...vagaSemId } = vaga;
+            this.http.post<MapaDeVagas>(insertUrl, vagaSemId).subscribe({
               next: (newVaga) => {
                 // Remove se por algum motivo já existia e adiciona o novo
                 this.listMapaVagas = this.listMapaVagas.filter(v => v.id !== newVaga.id);
@@ -244,12 +345,14 @@ export class MapaDeVagasService {
                 resolve(true);
               },
               error: (postError) => {
-                this.handleError('Erro ao criar mapa de vagas', postError);
+                console.error('Erro ao criar mapa de vagas:', postError);
+                this.utilSrv.showError('Erro ao criar mapa de vagas', 'Por favor, tente novamente mais tarde.');
                 resolve(false);
               }
             });
           } else {
-            this.handleError('Erro ao verificar mapa de vagas', getError);
+            console.error('Erro ao verificar mapa de vagas:', getError);
+            this.utilSrv.showError('Erro ao verificar mapa de vagas', 'Por favor, tente novamente mais tarde.');
             resolve(false);
           }
         }
@@ -257,8 +360,16 @@ export class MapaDeVagasService {
     });
   }
 
-  private handleError(message: string, error: any): void {
-    this.utilSrv.showError(message, 'Por favor, tente novamente mais tarde.');
-    console.error(`${message}:`, error);
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      this.utilSrv.showError(`${operation} falhou`, 'Por favor, tente novamente mais tarde.');
+      console.error(`${operation} error:`, error);
+      return new Observable<T>(observer => {
+        if (result !== undefined) {
+          observer.next(result);
+        }
+        observer.complete();
+      });
+    };
   }
 }

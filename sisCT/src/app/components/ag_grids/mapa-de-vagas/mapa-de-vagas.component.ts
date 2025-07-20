@@ -1,6 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ColDef, GridOptions } from 'ag-grid-community';
+import { Subscription } from 'rxjs';
 import { MapaDeVagas } from '../../../interfaces_crud/mapa_vagas.interface';
 import { CadastroNacionalService } from '../../../services/cadastro-nacional.service';
 import { MapaDeVagasService } from '../../../services/mapa-de-vagas.service';
@@ -12,9 +13,11 @@ import { AdicionarVagaDialogComponent } from '../../dialogs/editar-vaga-dialog/e
   templateUrl: './mapa-de-vagas.component.html',
   styleUrl: './mapa-de-vagas.component.scss'
 })
-export class MapaDeVagasComponent implements OnInit {
+export class MapaDeVagasComponent implements OnInit, OnDestroy {
   readonly vagasService: MapaDeVagasService = inject(MapaDeVagasService);
   readonly cadastroNacionalService: CadastroNacionalService = inject(CadastroNacionalService);
+  
+  private vagasSubscription: Subscription | null = null;
 
   rowData: MapaDeVagas[] = [];
   columnDefs: ColDef<MapaDeVagas, any>[] = [];
@@ -55,16 +58,25 @@ export class MapaDeVagasComponent implements OnInit {
 
   constructor(private dialog: MatDialog) { }
   loadData(hist: boolean = false): void {
-    this.vagasService.getVagasByCadastroNacional(this.cadastroNacionalService.cadastroAtual.id).subscribe(vagas => {
-      this.rowData = [];
-      for (let v of vagas) {
-        this.rowData.push(v);
-      }
-    });
+    this.vagasService.getVagasByCadastroNacional(this.cadastroNacionalService.cadastroAtual.id).subscribe();
+    // No need to manually update rowData here as it's handled by the subscription to vagas$
   }
   ngOnInit(): void {
     this.loadData();
     this.initializeColumns();
+    
+    // Subscribe to vagas$ to keep rowData updated
+    this.vagasSubscription = this.vagasService.vagas$.subscribe(vagas => {
+      this.rowData = vagas;
+    });
+  }
+  
+  ngOnDestroy(): void {
+    // Unsubscribe to prevent memory leaks
+    if (this.vagasSubscription) {
+      this.vagasSubscription.unsubscribe();
+      this.vagasSubscription = null;
+    }
   }
 
   toggleVisualizacao() {

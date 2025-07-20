@@ -70,9 +70,9 @@ export class ComunidadeTerapeuticaComponent implements AfterViewInit {
   //   }
   // }
 
-  onFieldBlur(fieldName: number) {
-    console.log(`Blurred field: ${fieldName}`);
-    this.mapadevagasSrv.ajustarQuantidadeVagas(fieldName)
+  onFieldBlur(qtdVagas: number) {
+    console.log(`Blurred field: ${qtdVagas}`);
+    this.mapadevagasSrv.adicionarVagasEmLote(qtdVagas)
   }
 
   onFieldChange(fieldName: string) {

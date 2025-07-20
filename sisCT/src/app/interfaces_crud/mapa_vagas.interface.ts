@@ -1,6 +1,6 @@
 ﻿export interface MapaDeVagas {
     id?: number;
-    stDisponibilidade: string;
+    stDisponibilidade?: string;
     dsIdentificacaoAcolhido: string;
     nuCpf: number;
     dtNascimento: string;

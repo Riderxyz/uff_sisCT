@@ -20,7 +20,7 @@ export class AdicionarVagaDialogComponent {
     // Inscreve-se no observable para obter os dados
     this.vagasService.vagas$.subscribe(vagas => {
       // Encontra a vaga com o ID atual
-      this.mapa = vagas.find(v => v.pkMapaDeVagas === this.vagasService.idVagaAtual) || null;
+      this.mapa = vagas.find(v => v.id === this.vagasService.vagaAtual.id) || null;
     });
   }
 
@@ -29,19 +29,18 @@ export class AdicionarVagaDialogComponent {
   }
 
   onSubmit(form: NgForm) {
-    this.dialogRef.close(this.mapa);
     try {
       this.mapa.stDisponibilidade = Number(this.mapa.stDisponibilidade);
     } catch (error) {
       this.mapa.stDisponibilidade = -1;
     }
 
-
-    this.vagasService.atualizarVaga(this.mapa.pkMapaDeVagas, this.mapa)
+    this.vagasService.updateMapaVagas(this.mapa)
       .then((success) => {
         if (success) {
           console.log('Vaga atualizada com sucesso');
-          // Adicione qualquer ação adicional após sucesso aqui
+          // Fecha o dialog após salvar com sucesso
+          this.dialogRef.close(this.mapa);
         } else {
           console.error('Falha na atualização: Vaga não encontrada');
           // Tratamento específico para quando a vaga não existe
@@ -59,6 +58,7 @@ export class AdicionarVagaDialogComponent {
 
 
   onCancel() {
+    this.utilSrv.showInfo('Operação cancelada', 'Edição de vaga cancelada pelo usuário.');
     this.dialogRef.close(null);
   }
 
